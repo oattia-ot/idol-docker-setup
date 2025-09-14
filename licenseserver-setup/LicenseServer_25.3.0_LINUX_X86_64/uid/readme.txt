@@ -1,0 +1,1 @@
+Warning : Do not delete the contents of this directory

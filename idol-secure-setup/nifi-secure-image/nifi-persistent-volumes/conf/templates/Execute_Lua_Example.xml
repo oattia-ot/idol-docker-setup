@@ -1,0 +1,951 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<template encoding-version="1.3">
+    <description></description>
+    <groupId>c2875471-017d-1000-a034-2e90a31d0d17</groupId>
+    <name>Execute Lua Example</name>
+    <snippet>
+        <connections>
+            <id>175abbdf-4fd5-3357-0000-000000000000</id>
+            <parentGroupId>17e33a47-4a99-3623-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>17e33a47-4a99-3623-0000-000000000000</groupId>
+                <id>51720868-a242-3a2e-0000-000000000000</id>
+                <type>FUNNEL</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <source>
+                <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                <id>74afba25-3964-3ebd-0000-000000000000</id>
+                <type>OUTPUT_PORT</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>5ac81892-e387-322f-0000-000000000000</id>
+            <parentGroupId>17e33a47-4a99-3623-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                <id>253fc027-dc77-3582-0000-000000000000</id>
+                <type>INPUT_PORT</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <source>
+                <groupId>17e33a47-4a99-3623-0000-000000000000</groupId>
+                <id>fe755657-06c4-36e2-0000-000000000000</id>
+                <type>FUNNEL</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>7815a446-1247-3cf7-0000-000000000000</id>
+            <parentGroupId>17e33a47-4a99-3623-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>17e33a47-4a99-3623-0000-000000000000</groupId>
+                <id>575bf585-ebf8-3c5a-0000-000000000000</id>
+                <type>FUNNEL</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <source>
+                <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                <id>e42ffe7f-cece-3c0a-0000-000000000000</id>
+                <type>OUTPUT_PORT</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>a8c2558d-b15a-3768-0000-000000000000</id>
+            <parentGroupId>17e33a47-4a99-3623-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>17e33a47-4a99-3623-0000-000000000000</groupId>
+                <id>7703856b-af46-3e37-0000-000000000000</id>
+                <type>FUNNEL</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <source>
+                <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                <id>0468b85b-6a83-3c4c-0000-000000000000</id>
+                <type>OUTPUT_PORT</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <controllerServices>
+            <id>ed0a1578-d4ef-3ade-0000-000000000000</id>
+            <parentGroupId>17e33a47-4a99-3623-0000-000000000000</parentGroupId>
+            <bundle>
+                <artifact>idol-nifi-framework</artifact>
+                <group>idol.nifi</group>
+                <version>25.2.0-nifi1</version>
+            </bundle>
+            <comments></comments>
+            <descriptors>
+                <entry>
+                    <key>KeyViewDirectory</key>
+                    <value>
+                        <name>KeyViewDirectory</name>
+                    </value>
+                </entry>
+                <entry>
+                    <key>FileStorageDirectory</key>
+                    <value>
+                        <name>FileStorageDirectory</name>
+                    </value>
+                </entry>
+            </descriptors>
+            <name>KeyViewFilterServiceImpl</name>
+            <persistsState>false</persistsState>
+            <properties>
+                <entry>
+                    <key>KeyViewDirectory</key>
+                    <value>${'KEYVIEW_DIRECTORY'}</value>
+                </entry>
+                <entry>
+                    <key>FileStorageDirectory</key>
+                    <value>${idol.repository.files.storage.dir}</value>
+                </entry>
+            </properties>
+            <state>DISABLED</state>
+            <type>idol.nifi.service.KeyViewFilterServiceImpl</type>
+        </controllerServices>
+        <funnels>
+            <id>51720868-a242-3a2e-0000-000000000000</id>
+            <parentGroupId>17e33a47-4a99-3623-0000-000000000000</parentGroupId>
+            <position>
+                <x>768.4582599730734</x>
+                <y>496.0518345597054</y>
+            </position>
+        </funnels>
+        <funnels>
+            <id>575bf585-ebf8-3c5a-0000-000000000000</id>
+            <parentGroupId>17e33a47-4a99-3623-0000-000000000000</parentGroupId>
+            <position>
+                <x>1023.9960003584451</x>
+                <y>227.92259863177355</y>
+            </position>
+        </funnels>
+        <funnels>
+            <id>7703856b-af46-3e37-0000-000000000000</id>
+            <parentGroupId>17e33a47-4a99-3623-0000-000000000000</parentGroupId>
+            <position>
+                <x>366.3870232990944</x>
+                <y>495.1254581514652</y>
+            </position>
+        </funnels>
+        <funnels>
+            <id>fe755657-06c4-36e2-0000-000000000000</id>
+            <parentGroupId>17e33a47-4a99-3623-0000-000000000000</parentGroupId>
+            <position>
+                <x>572.0545511833875</x>
+                <y>0.0</y>
+            </position>
+        </funnels>
+        <labels>
+            <id>853a77bf-3912-3441-0000-000000000000</id>
+            <parentGroupId>17e33a47-4a99-3623-0000-000000000000</parentGroupId>
+            <position>
+                <x>0.0</x>
+                <y>178.9076223704542</y>
+            </position>
+            <height>115.45122528076172</height>
+            <label>Template for performing Lua Execution
+Two inputs: First assumes no keyview processes done, 
+and a second if Keyview processes have already been complete.
+Requires a lua script to perform the required action. 
+To use, attach a Get Processor, and change the script file as 
+required</label>
+            <style>
+                <entry>
+                    <key>font-size</key>
+                    <value>12px</value>
+                </entry>
+            </style>
+            <width>357.42308044433594</width>
+        </labels>
+        <processGroups>
+            <id>1ee90e04-0dec-3127-0000-000000000000</id>
+            <parentGroupId>17e33a47-4a99-3623-0000-000000000000</parentGroupId>
+            <position>
+                <x>397.86760648651534</x>
+                <y>157.88297453141104</y>
+            </position>
+            <comments></comments>
+            <contents>
+                <connections>
+                    <id>169e6896-2997-305b-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>9a7c65fb-0496-3552-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <selectedRelationships>success</selectedRelationships>
+                    <source>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>64f189bc-f89b-396a-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>1a558e6e-52f6-38d0-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>0468b85b-6a83-3c4c-0000-000000000000</id>
+                        <type>OUTPUT_PORT</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <selectedRelationships>failure</selectedRelationships>
+                    <source>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>9a7c65fb-0496-3552-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>29ce4584-4e77-3d1e-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>9a7c65fb-0496-3552-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <source>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>05000204-e192-39ad-0000-000000000000</id>
+                        <type>INPUT_PORT</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>5b85fd4b-325b-3f17-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>0efa39ee-d511-3947-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <prioritizers>org.apache.nifi.prioritizer.PriorityAttributePrioritizer</prioritizers>
+                    <source>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>fb56b104-1fcf-3e1a-0000-000000000000</id>
+                        <type>FUNNEL</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>5d24ed52-9e68-31af-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>e42ffe7f-cece-3c0a-0000-000000000000</id>
+                        <type>OUTPUT_PORT</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <selectedRelationships>returned</selectedRelationships>
+                    <source>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>9a7c65fb-0496-3552-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>6363ab83-bbfb-3fe9-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>0468b85b-6a83-3c4c-0000-000000000000</id>
+                        <type>OUTPUT_PORT</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <selectedRelationships>failure</selectedRelationships>
+                    <source>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>0efa39ee-d511-3947-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>781ced38-c080-3254-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>64f189bc-f89b-396a-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <selectedRelationships>success</selectedRelationships>
+                    <source>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>0efa39ee-d511-3947-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>7b557728-48a8-3c36-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>fb56b104-1fcf-3e1a-0000-000000000000</id>
+                        <type>FUNNEL</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <source>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>253fc027-dc77-3582-0000-000000000000</id>
+                        <type>INPUT_PORT</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>9a445288-d243-3f46-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>74afba25-3964-3ebd-0000-000000000000</id>
+                        <type>OUTPUT_PORT</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <selectedRelationships>success</selectedRelationships>
+                    <source>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>9a7c65fb-0496-3552-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>ae61fb8d-ef3f-3d7c-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>0468b85b-6a83-3c4c-0000-000000000000</id>
+                        <type>OUTPUT_PORT</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <selectedRelationships>failure</selectedRelationships>
+                    <source>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>64f189bc-f89b-396a-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>c3fce0c0-7c3e-3eb4-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <bends>
+                        <x>-736.0</x>
+                        <y>1184.0</y>
+                    </bends>
+                    <bends>
+                        <x>-952.0</x>
+                        <y>1032.0</y>
+                    </bends>
+                    <destination>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>fb56b104-1fcf-3e1a-0000-000000000000</id>
+                        <type>FUNNEL</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>0</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <selectedRelationships>subfile</selectedRelationships>
+                    <source>
+                        <groupId>1ee90e04-0dec-3127-0000-000000000000</groupId>
+                        <id>0efa39ee-d511-3947-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <funnels>
+                    <id>fb56b104-1fcf-3e1a-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>-1112.0</x>
+                        <y>1008.0</y>
+                    </position>
+                </funnels>
+                <inputPorts>
+                    <id>05000204-e192-39ad-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>-1844.7148154811457</x>
+                        <y>1626.179876462816</y>
+                    </position>
+                    <comments></comments>
+                    <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                    <name>ExecuteLua (Keyview Processes already complete)</name>
+                    <state>STOPPED</state>
+                    <type>INPUT_PORT</type>
+                    <validationErrors>'Port 'ExecuteLua (Keyview Processes already complete)'' is invalid because Port has no incoming connections</validationErrors>
+                </inputPorts>
+                <inputPorts>
+                    <id>253fc027-dc77-3582-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>-1208.0</x>
+                        <y>888.0</y>
+                    </position>
+                    <comments></comments>
+                    <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                    <name>Execute Lua</name>
+                    <state>STOPPED</state>
+                    <type>INPUT_PORT</type>
+                </inputPorts>
+                <outputPorts>
+                    <id>0468b85b-6a83-3c4c-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>-520.5084221621205</x>
+                        <y>1421.6597673873653</y>
+                    </position>
+                    <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                    <name>Failure</name>
+                    <state>STOPPED</state>
+                    <type>OUTPUT_PORT</type>
+                </outputPorts>
+                <outputPorts>
+                    <id>74afba25-3964-3ebd-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>-1212.393208083557</x>
+                        <y>1841.4258002246797</y>
+                    </position>
+                    <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                    <name>Success</name>
+                    <state>STOPPED</state>
+                    <type>OUTPUT_PORT</type>
+                </outputPorts>
+                <outputPorts>
+                    <id>e42ffe7f-cece-3c0a-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>-399.4374717311457</x>
+                        <y>1626.179876462816</y>
+                    </position>
+                    <comments></comments>
+                    <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                    <name>Returned</name>
+                    <state>STOPPED</state>
+                    <type>OUTPUT_PORT</type>
+                </outputPorts>
+                <processors>
+                    <id>0efa39ee-d511-3947-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>-1264.0</x>
+                        <y>1120.0</y>
+                    </position>
+                    <bundle>
+                        <artifact>idol-nifi-framework</artifact>
+                        <group>idol.nifi</group>
+                        <version>25.2.0-nifi1</version>
+                    </bundle>
+                    <config>
+                        <bulletinLevel>ERROR</bulletinLevel>
+                        <comments></comments>
+                        <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                        <descriptors>
+                            <entry>
+<key>KeyViewFilterService</key>
+<value>
+    <identifiesControllerService>idol.nifi.service.KeyViewFilterService</identifiesControllerService>
+    <name>KeyViewFilterService</name>
+</value>
+                            </entry>
+                            <entry>
+<key>IdolLicenseService</key>
+<value>
+    <identifiesControllerService>idol.nifi.service.IdolLicenseService</identifiesControllerService>
+    <name>IdolLicenseService</name>
+</value>
+                            </entry>
+                            <entry>
+<key>DocumentRegistryService</key>
+<value>
+    <identifiesControllerService>idol.nifi.service.DocumentRegistryService</identifiesControllerService>
+    <name>DocumentRegistryService</name>
+</value>
+                            </entry>
+                            <entry>
+<key>ExtractNewFlowFiles</key>
+<value>
+    <name>ExtractNewFlowFiles</name>
+</value>
+                            </entry>
+                            <entry>
+<key>ExtractedFilePartType</key>
+<value>
+    <name>ExtractedFilePartType</name>
+</value>
+                            </entry>
+                            <entry>
+<key>InheritedFieldsRegex</key>
+<value>
+    <name>InheritedFieldsRegex</name>
+</value>
+                            </entry>
+                            <entry>
+<key>NotInheritedFieldsRegex</key>
+<value>
+    <name>NotInheritedFieldsRegex</name>
+</value>
+                            </entry>
+                            <entry>
+<key>MergeMails</key>
+<value>
+    <name>MergeMails</name>
+</value>
+                            </entry>
+                        </descriptors>
+                        <executionNode>ALL</executionNode>
+                        <lossTolerant>false</lossTolerant>
+                        <penaltyDuration>30 sec</penaltyDuration>
+                        <properties>
+                            <entry>
+<key>KeyViewFilterService</key>
+<value>ed0a1578-d4ef-3ade-0000-000000000000</value>
+                            </entry>
+                            <entry>
+<key>IdolLicenseService</key>
+                            </entry>
+                            <entry>
+<key>DocumentRegistryService</key>
+                            </entry>
+                            <entry>
+<key>ExtractNewFlowFiles</key>
+<value>true</value>
+                            </entry>
+                            <entry>
+<key>ExtractedFilePartType</key>
+<value>match_input</value>
+                            </entry>
+                            <entry>
+<key>InheritedFieldsRegex</key>
+<value>.*</value>
+                            </entry>
+                            <entry>
+<key>NotInheritedFieldsRegex</key>
+<value></value>
+                            </entry>
+                            <entry>
+<key>MergeMails</key>
+<value>false</value>
+                            </entry>
+                        </properties>
+                        <runDurationMillis>0</runDurationMillis>
+                        <schedulingPeriod>0 sec</schedulingPeriod>
+                        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                        <yieldDuration>1 sec</yieldDuration>
+                    </config>
+                    <executionNodeRestricted>false</executionNodeRestricted>
+                    <name>KeyViewExtractFiles</name>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>failure</name>
+                    </relationships>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>subfile</name>
+                    </relationships>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>success</name>
+                    </relationships>
+                    <state>STOPPED</state>
+                    <style/>
+                    <type>idol.nifi.processor.KeyViewExtractFiles</type>
+                </processors>
+                <processors>
+                    <id>64f189bc-f89b-396a-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>-1267.393208083557</x>
+                        <y>1377.0324480514278</y>
+                    </position>
+                    <bundle>
+                        <artifact>idol-nifi-framework</artifact>
+                        <group>idol.nifi</group>
+                        <version>25.2.0-nifi1</version>
+                    </bundle>
+                    <config>
+                        <bulletinLevel>ERROR</bulletinLevel>
+                        <comments></comments>
+                        <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                        <descriptors>
+                            <entry>
+<key>KeyViewFilterService</key>
+<value>
+    <identifiesControllerService>idol.nifi.service.KeyViewFilterService</identifiesControllerService>
+    <name>KeyViewFilterService</name>
+</value>
+                            </entry>
+                            <entry>
+<key>IdolLicenseService</key>
+<value>
+    <identifiesControllerService>idol.nifi.service.IdolLicenseService</identifiesControllerService>
+    <name>IdolLicenseService</name>
+</value>
+                            </entry>
+                            <entry>
+<key>ExtractContentText</key>
+<value>
+    <name>ExtractContentText</name>
+</value>
+                            </entry>
+                            <entry>
+<key>ExtractFileMetadata</key>
+<value>
+    <name>ExtractFileMetadata</name>
+</value>
+                            </entry>
+                            <entry>
+<key>FilterTextFromMetadataXPath</key>
+<value>
+    <name>FilterTextFromMetadataXPath</name>
+</value>
+                            </entry>
+                            <entry>
+<key>FilterTextFromHtmlMetadataXPath</key>
+<value>
+    <name>FilterTextFromHtmlMetadataXPath</name>
+</value>
+                            </entry>
+                            <entry>
+<key>FilteredMetadataTarget</key>
+<value>
+    <name>FilteredMetadataTarget</name>
+</value>
+                            </entry>
+                        </descriptors>
+                        <executionNode>ALL</executionNode>
+                        <lossTolerant>false</lossTolerant>
+                        <penaltyDuration>30 sec</penaltyDuration>
+                        <properties>
+                            <entry>
+<key>KeyViewFilterService</key>
+<value>ed0a1578-d4ef-3ade-0000-000000000000</value>
+                            </entry>
+                            <entry>
+<key>IdolLicenseService</key>
+                            </entry>
+                            <entry>
+<key>ExtractContentText</key>
+<value>true</value>
+                            </entry>
+                            <entry>
+<key>ExtractFileMetadata</key>
+<value>true</value>
+                            </entry>
+                            <entry>
+<key>FilterTextFromMetadataXPath</key>
+                            </entry>
+                            <entry>
+<key>FilterTextFromHtmlMetadataXPath</key>
+                            </entry>
+                            <entry>
+<key>FilteredMetadataTarget</key>
+<value>original_field</value>
+                            </entry>
+                        </properties>
+                        <runDurationMillis>0</runDurationMillis>
+                        <schedulingPeriod>0 sec</schedulingPeriod>
+                        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                        <yieldDuration>1 sec</yieldDuration>
+                    </config>
+                    <executionNodeRestricted>false</executionNodeRestricted>
+                    <name>KeyViewFilterDocument</name>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>failure</name>
+                    </relationships>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>success</name>
+                    </relationships>
+                    <state>STOPPED</state>
+                    <style/>
+                    <type>idol.nifi.processor.KeyViewFilterDocument</type>
+                </processors>
+                <processors>
+                    <id>9a7c65fb-0496-3552-0000-000000000000</id>
+                    <parentGroupId>1ee90e04-0dec-3127-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>-1267.393208083557</x>
+                        <y>1586.179876462816</y>
+                    </position>
+                    <bundle>
+                        <artifact>idol-nifi-framework</artifact>
+                        <group>idol.nifi</group>
+                        <version>25.2.0-nifi1</version>
+                    </bundle>
+                    <config>
+                        <bulletinLevel>ERROR</bulletinLevel>
+                        <comments></comments>
+                        <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                        <descriptors>
+                            <entry>
+<key>IdolLicenseService</key>
+<value>
+    <identifiesControllerService>idol.nifi.service.IdolLicenseService</identifiesControllerService>
+    <name>IdolLicenseService</name>
+</value>
+                            </entry>
+                            <entry>
+<key>DocumentRegistryService</key>
+<value>
+    <identifiesControllerService>idol.nifi.service.DocumentRegistryService</identifiesControllerService>
+    <name>DocumentRegistryService</name>
+</value>
+                            </entry>
+                            <entry>
+<key>LuaScriptFile</key>
+<value>
+    <name>LuaScriptFile</name>
+</value>
+                            </entry>
+                            <entry>
+<key>LuaScriptFunction</key>
+<value>
+    <name>LuaScriptFunction</name>
+</value>
+                            </entry>
+                            <entry>
+<key>LuaScriptFunctionArguments</key>
+<value>
+    <name>LuaScriptFunctionArguments</name>
+</value>
+                            </entry>
+                            <entry>
+<key>RouteTo</key>
+<value>
+    <name>RouteTo</name>
+</value>
+                            </entry>
+                            <entry>
+<key>RouteReturnedTo</key>
+<value>
+    <name>RouteReturnedTo</name>
+</value>
+                            </entry>
+                            <entry>
+<key>RouteUntransferredTo</key>
+<value>
+    <name>RouteUntransferredTo</name>
+</value>
+                            </entry>
+                            <entry>
+<key>AdditionalOutputRelationships</key>
+<value>
+    <name>AdditionalOutputRelationships</name>
+</value>
+                            </entry>
+                        </descriptors>
+                        <executionNode>ALL</executionNode>
+                        <lossTolerant>false</lossTolerant>
+                        <penaltyDuration>30 sec</penaltyDuration>
+                        <properties>
+                            <entry>
+<key>IdolLicenseService</key>
+                            </entry>
+                            <entry>
+<key>DocumentRegistryService</key>
+                            </entry>
+                            <entry>
+<key>LuaScriptFile</key>
+<value>function handler(document)
+    -- Write a log message
+    log_info("Processing a document")
+ 
+    -- Perform modifications to the document
+    document:addField("some_field", "some_field_value")
+
+    -- Create and return a new document, routed to the
+    -- relationship specified by the 'Route returned to' property
+    local newDocument = LuaDocument:new("new_document_reference")
+    return newDocument
+end</value>
+                            </entry>
+                            <entry>
+<key>LuaScriptFunction</key>
+<value>handler</value>
+                            </entry>
+                            <entry>
+<key>LuaScriptFunctionArguments</key>
+<value>LuaDocument</value>
+                            </entry>
+                            <entry>
+<key>RouteTo</key>
+<value>success</value>
+                            </entry>
+                            <entry>
+<key>RouteReturnedTo</key>
+<value>returned</value>
+                            </entry>
+                            <entry>
+<key>RouteUntransferredTo</key>
+                            </entry>
+                            <entry>
+<key>AdditionalOutputRelationships</key>
+                            </entry>
+                        </properties>
+                        <runDurationMillis>0</runDurationMillis>
+                        <schedulingPeriod>0 sec</schedulingPeriod>
+                        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                        <yieldDuration>1 sec</yieldDuration>
+                    </config>
+                    <executionNodeRestricted>false</executionNodeRestricted>
+                    <name>ExecuteDocumentLua</name>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>failure</name>
+                    </relationships>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>returned</name>
+                    </relationships>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>success</name>
+                    </relationships>
+                    <state>STOPPED</state>
+                    <style/>
+                    <type>idol.nifi.processor.ExecuteDocumentLua</type>
+                </processors>
+            </contents>
+            <defaultBackPressureDataSizeThreshold>1 GB</defaultBackPressureDataSizeThreshold>
+            <defaultBackPressureObjectThreshold>10000</defaultBackPressureObjectThreshold>
+            <defaultFlowFileExpiration>0 sec</defaultFlowFileExpiration>
+            <flowfileConcurrency>UNBOUNDED</flowfileConcurrency>
+            <flowfileOutboundPolicy>STREAM_WHEN_AVAILABLE</flowfileOutboundPolicy>
+            <name>Lua</name>
+            <variables/>
+        </processGroups>
+    </snippet>
+    <timestamp>03/30/2022 15:11:41 BST</timestamp>
+</template>

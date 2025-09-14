@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<template encoding-version="1.3">
+    <description>Python script intended for embedding generation. Input document is used to generate embeddings, which can then be added to the document as vector fields. </description>
+    <groupId>541aa783-0169-1000-4f07-9eb20070ebed</groupId>
+    <name>Vector Generator Python</name>
+    <snippet>
+        <processGroups>
+            <id>82ed52fc-723e-33a0-0000-000000000000</id>
+            <parentGroupId>554e915e-abf0-3b60-0000-000000000000</parentGroupId>
+            <position>
+                <x>0.0</x>
+                <y>0.0</y>
+            </position>
+            <comments></comments>
+            <contents>
+                <connections>
+                    <id>46b3382a-7cf0-3ab3-0000-000000000000</id>
+                    <parentGroupId>82ed52fc-723e-33a0-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>82ed52fc-723e-33a0-0000-000000000000</groupId>
+                        <id>53b331e7-abf5-3edc-0000-000000000000</id>
+                        <type>OUTPUT_PORT</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <selectedRelationships>failure</selectedRelationships>
+                    <source>
+                        <groupId>82ed52fc-723e-33a0-0000-000000000000</groupId>
+                        <id>756a049b-c1b8-3702-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>6a6b55c8-5a1c-3e17-0000-000000000000</id>
+                    <parentGroupId>82ed52fc-723e-33a0-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>82ed52fc-723e-33a0-0000-000000000000</groupId>
+                        <id>038dcbc1-bf7a-3c42-0000-000000000000</id>
+                        <type>OUTPUT_PORT</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <selectedRelationships>returned</selectedRelationships>
+                    <selectedRelationships>success</selectedRelationships>
+                    <source>
+                        <groupId>82ed52fc-723e-33a0-0000-000000000000</groupId>
+                        <id>756a049b-c1b8-3702-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>b30d873f-39ee-3612-0000-000000000000</id>
+                    <parentGroupId>82ed52fc-723e-33a0-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>82ed52fc-723e-33a0-0000-000000000000</groupId>
+                        <id>756a049b-c1b8-3702-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <source>
+                        <groupId>82ed52fc-723e-33a0-0000-000000000000</groupId>
+                        <id>2176a1cc-55c4-3c84-0000-000000000000</id>
+                        <type>INPUT_PORT</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <inputPorts>
+                    <id>2176a1cc-55c4-3c84-0000-000000000000</id>
+                    <parentGroupId>82ed52fc-723e-33a0-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>1232.0</x>
+                        <y>1272.0</y>
+                    </position>
+                    <comments></comments>
+                    <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                    <name>Input</name>
+                    <state>RUNNING</state>
+                    <type>INPUT_PORT</type>
+                </inputPorts>
+                <outputPorts>
+                    <id>038dcbc1-bf7a-3c42-0000-000000000000</id>
+                    <parentGroupId>82ed52fc-723e-33a0-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>1016.0</x>
+                        <y>1592.0</y>
+                    </position>
+                    <comments></comments>
+                    <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                    <name>Response</name>
+                    <state>RUNNING</state>
+                    <type>OUTPUT_PORT</type>
+                </outputPorts>
+                <outputPorts>
+                    <id>53b331e7-abf5-3edc-0000-000000000000</id>
+                    <parentGroupId>82ed52fc-723e-33a0-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>1464.0</x>
+                        <y>1592.0</y>
+                    </position>
+                    <comments></comments>
+                    <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                    <name>Failures</name>
+                    <state>RUNNING</state>
+                    <type>OUTPUT_PORT</type>
+                </outputPorts>
+                <processors>
+                    <id>756a049b-c1b8-3702-0000-000000000000</id>
+                    <parentGroupId>82ed52fc-723e-33a0-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>1176.0</x>
+                        <y>1376.0</y>
+                    </position>
+                    <bundle>
+                        <artifact>idol-nifi-framework</artifact>
+                        <group>idol.nifi</group>
+                        <version>24.2.0</version>
+                    </bundle>
+                    <config>
+                        <backoffMechanism>PENALIZE_FLOWFILE</backoffMechanism>
+                        <bulletinLevel>ERROR</bulletinLevel>
+                        <comments></comments>
+                        <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                        <descriptors>
+                            <entry>
+<key>IdolLicenseService</key>
+<value>
+    <name>IdolLicenseService</name>
+</value>
+                            </entry>
+                            <entry>
+<key>PythonScriptFile</key>
+<value>
+    <name>PythonScriptFile</name>
+</value>
+                            </entry>
+                            <entry>
+<key>PythonScriptFunction</key>
+<value>
+    <name>PythonScriptFunction</name>
+</value>
+                            </entry>
+                            <entry>
+<key>RouteTo</key>
+<value>
+    <name>RouteTo</name>
+</value>
+                            </entry>
+                            <entry>
+<key>RouteReturnedTo</key>
+<value>
+    <name>RouteReturnedTo</name>
+</value>
+                            </entry>
+                            <entry>
+<key>RouteUntransferredTo</key>
+<value>
+    <name>RouteUntransferredTo</name>
+</value>
+                            </entry>
+                            <entry>
+<key>AdditionalOutputRelationships</key>
+<value>
+    <name>AdditionalOutputRelationships</name>
+</value>
+                            </entry>
+                            <entry>
+<key>py:embeddings</key>
+<value>
+    <name>py:embeddings</name>
+</value>
+                            </entry>
+                        </descriptors>
+                        <executionNode>ALL</executionNode>
+                        <lossTolerant>false</lossTolerant>
+                        <maxBackoffPeriod>10 mins</maxBackoffPeriod>
+                        <penaltyDuration>30 sec</penaltyDuration>
+                        <properties>
+                            <entry>
+<key>IdolLicenseService</key>
+                            </entry>
+                            <entry>
+<key>PythonScriptFile</key>
+<value># BEGIN COPYRIGHT NOTICE
+# Copyright 2024 Open Text.
+#
+# The only warranties for products and services of Open Text and its affiliates and licensors
+# ("Open Text") are as may be set forth in the express warranty statements accompanying such
+# products and services. Nothing herein should be construed as constituting an additional warranty.
+# Open Text shall not be liable for technical or editorial errors or omissions contained herein.
+# The information contained herein is subject to change without notice.
+#
+# END COPYRIGHT NOTICE
+          
+from idolnifi import *
+import embeddings
+import importlib.util
+
+model_cache = {}
+tokenizer_cache = {}
+
+class MyDocModifier(DocumentModifier):
+    xmlmetadata = None
+    MODEL_NAME = "sentence-transformers/sentence-t5-large"
+    DEVICE = "cpu"
+    MAX_SEQ_LEN = 128
+    MIN_FINAL_CHUNK = 50
+    CHUNK_OVERLAP = 10
+    VECTOR_FIELD = "VECTOR"
+
+    def __init__(self):
+        super().__init__()
+        super().preAction(self.preHandler)
+        self.embedder = embeddings.Embedder()
+        super().onContent(self.contentHandler) 
+
+    def preHandler(self, postAction):
+        self.xmlmetadata = postAction.getXmlMetadata() 
+
+    def contentHandler(self, contentAction):
+        def pageReader(s):
+            from sentence_transformers import SentenceTransformer
+            from transformers import AutoTokenizer
+            
+            cache_name = self.MODEL_NAME + "-" + self.DEVICE
+            if cache_name not in model_cache:
+                model_kwargs = {'model_name_or_path': self.MODEL_NAME}
+                model_cache[cache_name] = SentenceTransformer(**model_kwargs).to(self.DEVICE)
+                tokenizer_cache[cache_name] = AutoTokenizer.from_pretrained(self.MODEL_NAME)
+
+            tokenizer = tokenizer_cache[cache_name]
+            model = model_cache[cache_name]
+            
+            text = s.readall().decode("utf-8")
+            
+            vectors = self.embedder.generateEmbeddings(text, model, tokenizer, self.MAX_SEQ_LEN, self.MIN_FINAL_CHUNK, self.CHUNK_OVERLAP)
+            
+            for k,v in vectors.items():
+                vector = ",".join(map(str,v)) + ";source=DRECONTENT[" + k + "]"
+                self.xmlmetadata.addChild(self.VECTOR_FIELD).setValue(vector)
+            
+        contentAction.readContent(pageReader, ReadMode.READ_AND_KEEP) 
+
+def handler(flowfiledocument):
+    if not(importlib.util.find_spec('sentence_transformers') and importlib.util.find_spec('transformers')):
+        print("pip install: ", executePython(['-m', 'pip', 'install', '-U', 'sentence_transformers', 'transformers']))
+    logInfo(f"Generating embeddings for document {flowfiledocument.getReference()}")
+    flowfiledocument.modify(MyDocModifier())</value>
+                            </entry>
+                            <entry>
+<key>PythonScriptFunction</key>
+<value>handler</value>
+                            </entry>
+                            <entry>
+<key>RouteTo</key>
+<value>success</value>
+                            </entry>
+                            <entry>
+<key>RouteReturnedTo</key>
+<value>returned</value>
+                            </entry>
+                            <entry>
+<key>RouteUntransferredTo</key>
+                            </entry>
+                            <entry>
+<key>AdditionalOutputRelationships</key>
+                            </entry>
+                            <entry>
+<key>py:embeddings</key>
+<value># BEGIN COPYRIGHT NOTICE
+# Copyright 2024 Open Text.
+#
+# The only warranties for products and services of Open Text and its affiliates and licensors
+# ("Open Text") are as may be set forth in the express warranty statements accompanying such
+# products and services. Nothing herein should be construed as constituting an additional warranty.
+# Open Text shall not be liable for technical or editorial errors or omissions contained herein.
+# The information contained herein is subject to change without notice.
+#
+# END COPYRIGHT NOTICE
+
+class OffsetPair:
+    '''
+    Stores the start and end offsets of the sub-text in a piece of text.
+    '''
+    start_offset: int
+    end_offset: int
+    
+    def __init__(self, start, end):
+        self.start_offset = start
+        self.end_offset = end
+
+def get_chunk_offsets(tokenizer_output, max_sequence_length=128, minimum_final_chunk_length = 0, chunk_overlap=0):
+    '''
+    Determine which byte offsets from the input text will give us chunks of tokens that are of size
+    max_sequence_length and ensure that the last chunk. It's not clear that either of SentenceTransformer
+    or AutoTokenizer will help us with chunking, so it's done manually here.
+    '''
+    # Ensure that the final chunk is at least half the size of other chunks, if no value is provided (values gets set to -1 in this case).
+    if minimum_final_chunk_length == -1:
+        minimum_final_chunk_length = math.floor(max_sequence_length/2) + 1
+
+    stride_size = max_sequence_length - chunk_overlap
+    offset_mapping = tokenizer_output.offset_mapping
+
+    distance_to_end = len(offset_mapping)
+    offsets = []
+
+    if distance_to_end == 1:
+        return [OffsetPair(offset_mapping[0][0], offset_mapping[0][1])]
+
+    for ii in range(0, len(offset_mapping) - 1, stride_size):
+        if distance_to_end &lt; minimum_final_chunk_length:
+            # If we're on the final chunk then backtrack to ensure that we use at least
+            # minimum_final_chunk_length tokens.
+            optimal_backtrack_length = minimum_final_chunk_length - distance_to_end - 1
+            actual_backtrack_length = min(optimal_backtrack_length, ii)
+
+            offsets.append(OffsetPair(offset_mapping[ii - actual_backtrack_length][0], offset_mapping[-1][1]))
+            break
+
+        # Min call required if minimum_final_chunk_length=0 to deal with the last chunk
+        chunk_end = min(ii + max_sequence_length - 1, len(tokenizer_output.input_ids) - 1)
+        if ii == 0:
+            offsets.append(OffsetPair(offset_mapping[ii][0], offset_mapping[chunk_end][1]))
+        else:
+            offsets.append(OffsetPair(offset_mapping[ii - 1][1], offset_mapping[chunk_end][1]))
+        distance_to_end -= stride_size
+        if (chunk_end == len(tokenizer_output.input_ids) - 1):
+            break
+    return offsets
+
+class Embedder:
+    '''
+    Class for handling embeddings generation and offsets. 
+    '''
+
+    def __init__(self):
+        self.last_offset = 0
+
+    def generateEmbeddings(self, text, model, tokenizer, max_seq_len, min_final_chunk, chunk_overlap):
+        from sentence_transformers import SentenceTransformer
+        from transformers import AutoTokenizer
+        if max_seq_len is None:
+            max_seq_length = model.get_max_seq_length() or 256
+        
+        tokenizer_output = tokenizer(text, return_offsets_mapping=True, add_special_tokens=False)
+        embedding_offsets = get_chunk_offsets(tokenizer_output, 
+                                              max_sequence_length=max_seq_len,
+                                              minimum_final_chunk_length=min_final_chunk,
+                                              chunk_overlap=min(chunk_overlap, max_seq_len - 1))
+        
+        embeddings = {}
+        for offset_pair in embedding_offsets:
+            # Split the text into chunks based on the obtained offsets and genererate embeddings for each chunk of text.
+            text_chunk = text[offset_pair.start_offset : offset_pair.end_offset]
+
+            # compute the byte offsets for this chunk
+            byte_start_offset = len(bytearray(text[:offset_pair.start_offset], "utf8"))
+            byte_end_offset = byte_start_offset + len(bytearray(text_chunk, "utf8"))
+
+            # need to add offsets from previous sections for section-broken documents
+            actual_start_offset = byte_start_offset + self.last_offset
+            actual_end_offset = byte_end_offset + self.last_offset
+
+            # Would be nice to use tokenizer_output to generate the embeddings, just so that we don't perform
+            # tokenization/encoding twice, but the SentenceTransformer class only appears to want to deal with text.
+            embeddings[str(actual_start_offset)+":"+str(actual_end_offset)] = model.encode(text_chunk)
+        # get new value for last_offset
+        self.last_offset = actual_end_offset
+        return embeddings
+</value>
+                            </entry>
+                        </properties>
+                        <retryCount>10</retryCount>
+                        <runDurationMillis>0</runDurationMillis>
+                        <schedulingPeriod>0 sec</schedulingPeriod>
+                        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                        <yieldDuration>1 sec</yieldDuration>
+                    </config>
+                    <executionNodeRestricted>false</executionNodeRestricted>
+                    <name>Python Embedding Generator</name>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>failure</name>
+                        <retry>false</retry>
+                    </relationships>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>returned</name>
+                        <retry>false</retry>
+                    </relationships>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>success</name>
+                        <retry>false</retry>
+                    </relationships>
+                    <state>RUNNING</state>
+                    <style/>
+                    <type>idol.nifi.processor.ExecuteDocumentPython</type>
+                </processors>
+            </contents>
+            <defaultBackPressureDataSizeThreshold>1 GB</defaultBackPressureDataSizeThreshold>
+            <defaultBackPressureObjectThreshold>10000</defaultBackPressureObjectThreshold>
+            <defaultFlowFileExpiration>0 sec</defaultFlowFileExpiration>
+            <flowfileConcurrency>UNBOUNDED</flowfileConcurrency>
+            <flowfileOutboundPolicy>STREAM_WHEN_AVAILABLE</flowfileOutboundPolicy>
+            <logFileSuffix></logFileSuffix>
+            <name>Vector Generator Python</name>
+            <variables/>
+        </processGroups>
+    </snippet>
+    <timestamp>04/17/2024 13:23:08 UTC</timestamp>
+</template>

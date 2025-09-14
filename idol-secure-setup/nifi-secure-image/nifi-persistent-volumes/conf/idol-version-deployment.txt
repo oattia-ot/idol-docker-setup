@@ -1,0 +1,4 @@
+Author name: Oren Attia
+Date information: Sep 01 2025
+Project details: idol deployment on docker compose
+Deployment version: v4.0

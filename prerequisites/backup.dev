@@ -1,0 +1,187 @@
+# Installing IBM API Connect on Minikube
+This guide provides step-by-step instructions to install IBM API Connect on Minikube.
+
+## 1) Prerequisites Software and Hardware
+Before proceeding, ensure you have the following installed:
+- **Operating System**: Ubuntu 24.04 (At least *16 CPU* cores, *40GB RAM*, and *50GB* disk space)
+- **IBM ID Cloud Account**: You must have an IBM ID Cloud account in order to download IBM API Connect for online installation. The key can be found at [IBM Entitlement KEY](https://myibm.ibm.com/products-services/containerlibrary).
+
+## 2) Prerequisites Tool
+This section provides step-by-step instructions to execute the provided scripts for setting up Docker, Docker Compose, Minikube, and Kubernetes utilities. Ensure you follow the steps carefully.
+
+---
+
+### Step 1: Execute the Docker, Docker Compose, Minikube and Kubernetes Utilities Installation Script
+1.1. **Prerequisites** `Run as root user`:
+   - Ensure you have `root` privileges on the system.
+   - Add New Sudo User to the System: `adduser <USER NAME>` and then `su - <USER NAME>`
+   - Add to the docker group the sudo user that executes the installation script: `sudo usermod -aG docker $USER`
+   - Changes the current shell session’s group to docker: `newgrp docker`
+   - Verify that the script `./install_prereqs.sh "<INSTALL_PATH>/autogen-labs" "<INSTALL_PATH>/autogen-labs/logs" "1.0.0" --standalone` is present in the current directory and is executable.
+   - This script will install Docker and Docker Composer on your system.
+
+1.2. **Prerequisites** `Run as sudo user`:
+  - Verify that the script `./install_prereqs.sh "<INSTALL_PATH>/autogen-labs" "<INSTALL_PATH>/autogen-labs/logs" "1.0.0" --standalone` is present in the current directory and is executable.
+  - **note**: When enabling the Docker daemon, you may be asked to enter the sudo user password several times.
+  -  Verify that Docker is installed properly: `$ docker version` make sure both "Client: Docker Engine - Community" and "Server: Docker Engine - Community" are installed.
+  - Verify that Docker Composer is installed properly: `$ docker-compose version`
+  - This script will install Minikube on your system.
+
+1.3. **Required Open Network Ports** - The following ports must be open on the target host.
+    - Execute the following iptables commands:
+      ```bash
+          sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+          sudo iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+          sudo iptables -A INPUT -p tcp --dport 4443 -j ACCEPT
+          sudo iptables -A INPUT -p tcp --dport 8080 -j ACCEPT
+      ```
+
+---
+
+### Step 2: Execute the IBM API Connect Installation Script
+2.1. **Prerequisites** `Run as sudo user`:
+  - Verify that the script `./install_ibm_apic.sh "<INSTALL_PATH>/autogen-labs" "<INSTALL_PATH>/autogen-labs/logs" "1.0.0" --standalone` is present in the current directory and is executable.
+
+2.2. **Execution**:
+   - Run the following script command:
+     ```bash
+     cd <INSTALL_PATH>/
+     ./install_ibm_apic.sh "<INSTALL_PATH>/autogen-labs" "<INSTALL_PATH>/autogen-labs/logs" "1.0.0" --standalone
+     ```
+   - This script will install IBM API Connect on your system.
+   - **note**: When enabling the Docker daemon, you may be asked to enter the sudo user password several times.
+  
+2.3. **Verification**:
+   - After the script completes, verify the Minikube profile is running:
+     ```bash
+     minikube -p <MINIKUBE_PROFILE>
+     ```
+   - Verify Kubernetes utilities:
+     ```bash
+     kubectl version --client
+     helm3 version
+     ```
+
+---
+
+### Additional Notes
+- **Registry Container Name**: Ensure the registry container name is correctly formatted and matches the IP address of your system. This is crucial for Minikube to interact with the local Docker registry.
+- **Troubleshooting**:
+  - If any script fails, check the logs for errors and ensure all prerequisites are met.
+  - For Minikube issues, refer to the [Minikube documentation](https://minikube.sigs.k8s.io/docs/).
+- **Security**: Always ensure scripts are obtained from trusted sources to avoid security risks.
+
+---
+
+## 3) Configure Registry
+
+3.1. **Prerequisites** - Configure DNS: 
+  - If this URL still doesn't resolve, try updating the DNS, for example setup DNS on IBM Cloud: 
+   - Update DNS
+     ```bash
+     sudo nano /etc/systemd/resolved.conf
+     - update --> DNS=8.8.8.8 8.8.4.4
+     ```
+   - Restart systemd-resolved
+     ```bash
+      systemctl restart systemd-resolved
+      - Test it by execute: ping cp.icr.io
+     ```
+  
+3.2. **Configure using IBM Public Registry** - (On-Line) 
+  - When installing online, make sure you successfully ping the IBM Public Registry URL by executing: ping cp.icr.io.
+  - Get the Entitlement key: https://myibm.ibm.com/products-services/containerlibrary
+
+3.3. **Configure with Harbor Private Registry** - (Air-Gap) `Optional`
+
+This section provides step-by-step instructions to configuer Harbor private registry.
+Make sure to get the offline **IBM® API Connect v10.0.9.0 for Containers** images before setting up the air-gap installation.
+The following link is now available: [IBM® API Connect v10.0.9.0 is now available](https://www.ibm.com/support/pages/ibm%C2%AE-api-connect-v10090-now-available). 
+The file apiconnect-image-tool_10.0.1.9.tar.gz can be downloaded.
+Make sure you properly follow the instructions.
+
+**Execution**:
+  - Run the script as a **sudo user** using the following command:
+    ```bash
+    cd <INSTALL_PATH>/
+    ./install_harbor.sh "<INSTALL_PATH>/autogen-labs" "<INSTALL_PATH>/autogen-labs/logs" "1.0.0" --standalone
+    ```
+
+**Setting Harbor project and user via UI**
+- Execute the following tasks from the Harbor UI:
+      login to: [e.g. https://hcr.161.156.164.61.nip.io]
+  ```bash
+    - Create Harbor project
+          Project name: apic
+    - Create Harbor user
+          User name: apic-cr
+    - Attched Harbor user to project
+        apic-cr --> apic
+  ```
+**Verify Harbor installation**
+- Verify Harbor Kubernetes are ready
+  ```bash
+    kubectl get pods
+    kubectl get pvc
+    kubectl get svc
+    kubectl get ingress
+  ```
+**Verify access to the private docker repository**:
+  Execute the following command:
+  ```bash
+  docker login https://hcr.<IP>.nip.io -u HARBOR_USER_NAME -P HARBOR_PASSWORD
+  ```
+
+3.4. Testing Harbor Private Container Registry availability
+   - Testing Docker pull image from the HOST machine.
+     Validate pullig 'hello-world' image and push it to the container registry:
+     ```bash
+        docker pull hello-world
+        docker tag hello-world hcr.161.156.164.61.nip.io:443/test/hello-world
+
+        docker login hcr.161.156.164.61.nip.io:443 -u apic-cr -p Harbor12345
+        docker push hcr.161.156.164.61.nip.io:443/test/hello-world
+     ```
+     Validate pullig 'apiconnect-image-tool_10.0.9.0.tar.gz' image and push it to the container registry:
+     ```bash
+        docker load -i /tmp/apiconnect-image-tool_10.0.9.0.tar.gz
+        docker login hcr.161.156.164.61.nip.io:443 -u apic-cr -p Harbor12345
+
+        docker push hcr.161.156.164.61.nip.io:443/apic9/apiconnect-image-tool-10.0.9.0
+     ```
+     **If the apic image was successfully pushed, be sure to delete it from the registry.**
+   - Testing Minikube pull image from the HOST machine container registry (e.g Harbor).
+     Validate pullig 'ibm-apiconnect-operator' image and push it to the minikube container registry:
+     ```bash  
+        sudo minikube -p YOUR_MINIKUBE_PROFIE ssh
+        sudo crictl pull --creds "apic-cr:Harbor12345" hcr.161.156.164.61.nip.io/test/hello-world
+        sudo crictl pull --creds "apic-cr:Harbor12345" hcr.161.156.164.61.nip.io/apic9tst/ibm-apiconnect-operator@sha256:4ffc70c2e4a4fbb00a617bf79e13633359d6c13c52d21864de9ccadb886afd18
+        sudo crictl pull --creds "apic-cr:Harbor12345" hcr.161.156.164.61.nip.io/apic9tst/ibm-apiconnect-management-edb-licence@sha256:4d2f2b6aaf59f0e3e3bcfc4e8c55bef586ec4b1a497d3b8ff976b9e1c89ec3b2
+        sudo crictl pull --creds "apic-cr:Harbor12345" hcr.161.156.164.61.nip.io/apic9tst/ibm-apiconnect-management-edb-operator@sha256:075d7d6a303f1bec7106b4ffdb0220e6fb0ce497255593ca4615f108c08eaa13
+     ```
+
+3.5. Loading API Connect Images to the Harbor Private Container Registry
+  Loading 'apiconnect-image-tool-10.0.9.0' from HOST container registry to Minikube registry
+  - Loading all 'apic' images to private container registry:
+    ```bash
+      docker run --rm apiconnect-image-tool-10.0.9.0 upload hcr.158.176.5.141.nip.io:443/apic --username apic-cr --password Harbor12345 --tls-verify=false
+    ```
+    
+#### Troubleshooting
+- Review log file for any potential configuration issues
+- Ensure all system requirements are met before installation
+
+---
+#
+## Conclusion
+
+You have successfully installed IBM API Connect on Minikube. You can now start configuring APIs and managing services.
+
+Let me know if you need any modifications!
+
+## Acknowledgments 🙏
+
+A heartfelt thank you to my colleague **Yaniv Yuzis** for guiding me through the development of this technological solution. Your unwavering support and profound insights were instrumental in transforming our challenge into a meaningful technological contribution.
+
+**With deepest gratitude,**
+Oren Attia

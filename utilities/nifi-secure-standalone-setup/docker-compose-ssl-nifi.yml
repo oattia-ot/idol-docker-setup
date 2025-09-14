@@ -1,0 +1,45 @@
+version: "3.9"
+services:
+  nifi:
+    image: apache/nifi:2.0.0
+    container_name: nifi
+    restart: unless-stopped
+    ports:
+      - "8445:8445"
+    volumes:
+      - ./certs:/opt/certs:ro
+    environment:
+      # HTTPS listener
+      NIFI_WEB_HTTPS_HOST: 0.0.0.0
+      NIFI_WEB_HTTPS_PORT: 8445
+      # Security: keystore and truststore from TLS Toolkit
+      NIFI_SECURITY_KEYSTORE: /opt/certs/nifi/keystore.jks
+      NIFI_SECURITY_KEYSTORE_TYPE: JKS
+      NIFI_SECURITY_KEYSTORE_PASSWD_FILE: /opt/certs/nifi/nifi-key.pass
+      NIFI_SECURITY_TRUSTSTORE: /opt/certs/nifi/truststore.jks
+      NIFI_SECURITY_TRUSTSTORE_TYPE: JKS
+      NIFI_SECURITY_TRUSTSTORE_PASSWD_FILE: /opt/certs/nifi/nifi-key.pass
+      # Initial admin identity – must match your generated client cert DN
+      NIFI_INITIAL_ADMIN_IDENTITY: "CN=admin, OU=NIFI"
+      # Disable anonymous authentication for security
+      NIFI_SECURITY_USER_AUTHORIZER: single-user-authorizer
+      NIFI_SECURITY_USER_LOGIN_IDENTITY_PROVIDER: single-user-provider
+      SINGLE_USER_CREDENTIALS_USERNAME: admin
+      SINGLE_USER_CREDENTIALS_PASSWORD: yourpasswordheremustbeatleast12characters
+      
+    depends_on:
+      - tls-toolkit
+
+  # Service to generate certificates before NiFi starts
+  tls-toolkit:
+    image: apache/nifi-toolkit:1.28.1
+    container_name: nifi-tls-toolkit
+    volumes:
+      - ./certs:/opt/certs
+    user: "${UID:-1000}:${GID:-1000}"
+    command: >
+      tls-toolkit standalone
+      -n 'nifi'
+      -C 'CN=admin,OU=NIFI'
+      -o /opt/certs
+    restart: "no"

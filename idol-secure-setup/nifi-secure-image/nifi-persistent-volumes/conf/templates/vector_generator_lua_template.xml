@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<template encoding-version="1.3">
+    <description>Lua script which calls out to QMS modelencode action to generate vector embeddings for given input documents. </description>
+    <groupId>541aa783-0169-1000-4f07-9eb20070ebed</groupId>
+    <name>Vector Generator Lua</name>
+    <snippet>
+        <processGroups>
+            <id>4b026c9f-fe79-3827-0000-000000000000</id>
+            <parentGroupId>554e915e-abf0-3b60-0000-000000000000</parentGroupId>
+            <position>
+                <x>0.0</x>
+                <y>0.0</y>
+            </position>
+            <comments></comments>
+            <contents>
+                <connections>
+                    <id>06031a28-b6d2-37c6-0000-000000000000</id>
+                    <parentGroupId>4b026c9f-fe79-3827-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>4b026c9f-fe79-3827-0000-000000000000</groupId>
+                        <id>4c88f41d-cb08-39db-0000-000000000000</id>
+                        <type>OUTPUT_PORT</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <selectedRelationships>failure</selectedRelationships>
+                    <source>
+                        <groupId>4b026c9f-fe79-3827-0000-000000000000</groupId>
+                        <id>0807ad2f-e955-3fb5-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>64f5adf4-805e-3886-0000-000000000000</id>
+                    <parentGroupId>4b026c9f-fe79-3827-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>4b026c9f-fe79-3827-0000-000000000000</groupId>
+                        <id>a5ab3193-997a-3765-0000-000000000000</id>
+                        <type>OUTPUT_PORT</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <selectedRelationships>returned</selectedRelationships>
+                    <selectedRelationships>success</selectedRelationships>
+                    <source>
+                        <groupId>4b026c9f-fe79-3827-0000-000000000000</groupId>
+                        <id>0807ad2f-e955-3fb5-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>af1cbb58-ab11-369f-0000-000000000000</id>
+                    <parentGroupId>4b026c9f-fe79-3827-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>4b026c9f-fe79-3827-0000-000000000000</groupId>
+                        <id>0807ad2f-e955-3fb5-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <source>
+                        <groupId>4b026c9f-fe79-3827-0000-000000000000</groupId>
+                        <id>1a802023-553a-364d-0000-000000000000</id>
+                        <type>INPUT_PORT</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <inputPorts>
+                    <id>1a802023-553a-364d-0000-000000000000</id>
+                    <parentGroupId>4b026c9f-fe79-3827-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>1896.0</x>
+                        <y>1280.0</y>
+                    </position>
+                    <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                    <name>Input</name>
+                    <state>RUNNING</state>
+                    <type>INPUT_PORT</type>
+                </inputPorts>
+                <outputPorts>
+                    <id>4c88f41d-cb08-39db-0000-000000000000</id>
+                    <parentGroupId>4b026c9f-fe79-3827-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>2144.0</x>
+                        <y>1592.0</y>
+                    </position>
+                    <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                    <name>Failures</name>
+                    <state>RUNNING</state>
+                    <type>OUTPUT_PORT</type>
+                </outputPorts>
+                <outputPorts>
+                    <id>a5ab3193-997a-3765-0000-000000000000</id>
+                    <parentGroupId>4b026c9f-fe79-3827-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>1712.0</x>
+                        <y>1592.0</y>
+                    </position>
+                    <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                    <name>Response</name>
+                    <state>RUNNING</state>
+                    <type>OUTPUT_PORT</type>
+                </outputPorts>
+                <processors>
+                    <id>0807ad2f-e955-3fb5-0000-000000000000</id>
+                    <parentGroupId>4b026c9f-fe79-3827-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>1848.0</x>
+                        <y>1384.0</y>
+                    </position>
+                    <bundle>
+                        <artifact>idol-nifi-framework</artifact>
+                        <group>idol.nifi</group>
+                        <version>23.4.0</version>
+                    </bundle>
+                    <config>
+                        <bulletinLevel>ERROR</bulletinLevel>
+                        <comments></comments>
+                        <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                        <descriptors>
+                            <entry>
+<key>IdolLicenseService</key>
+<value>
+    <name>IdolLicenseService</name>
+</value>
+                            </entry>
+                            <entry>
+<key>DocumentRegistryService</key>
+<value>
+    <name>DocumentRegistryService</name>
+</value>
+                            </entry>
+                            <entry>
+<key>LuaScriptFile</key>
+<value>
+    <name>LuaScriptFile</name>
+</value>
+                            </entry>
+                            <entry>
+<key>LuaScriptFunction</key>
+<value>
+    <name>LuaScriptFunction</name>
+</value>
+                            </entry>
+                            <entry>
+<key>LuaScriptFunctionArguments</key>
+<value>
+    <name>LuaScriptFunctionArguments</name>
+</value>
+                            </entry>
+                            <entry>
+<key>RouteTo</key>
+<value>
+    <name>RouteTo</name>
+</value>
+                            </entry>
+                            <entry>
+<key>RouteReturnedTo</key>
+<value>
+    <name>RouteReturnedTo</name>
+</value>
+                            </entry>
+                            <entry>
+<key>RouteUntransferredTo</key>
+<value>
+    <name>RouteUntransferredTo</name>
+</value>
+                            </entry>
+                            <entry>
+<key>AdditionalOutputRelationships</key>
+<value>
+    <name>AdditionalOutputRelationships</name>
+</value>
+                            </entry>
+                        </descriptors>
+                        <executionNode>ALL</executionNode>
+                        <lossTolerant>false</lossTolerant>
+                        <penaltyDuration>30 sec</penaltyDuration>
+                        <properties>
+                            <entry>
+<key>IdolLicenseService</key>
+                            </entry>
+                            <entry>
+<key>DocumentRegistryService</key>
+                            </entry>
+                            <entry>
+<key>LuaScriptFile</key>
+<value>function handler(document)
+    -- Ask our QMS server to generate embeddings for given document content and add them to the document
+
+    -- THE USER SHOULD MODIFY THESE PARAMETERS AS APPROPRIATE
+    local HOST = "idol-qms"
+    local PORT = "16000"
+    local MODEL = "SentenceTransformer"
+
+    log_info(string.format("Processing document '%s'...", document:getReference()))
+    local config_string =
+        [===[
+        [http]
+        ]===]
+
+    local config = LuaConfig:new(config_string)
+    local request = LuaHttpRequest:new(config, "http")
+
+    -- details such as port and host should be set by the user
+    request:set_url(string.format("http://%s:%s/action=modelencode&amp;model=%s", HOST, PORT, MODEL))
+    request:set_method("POST")
+    request:set_header("content-type", "application/x-www-form-urlencoded")
+
+    -- generate embeddings for each section and add them to the document
+    local document_offset = 0
+    local final_offset = 0
+    local section = document
+    while section do
+        document_offset = final_offset
+        local to_send = section:getContent()
+        request:set_body(string.format("text=%s", url_escape(to_send)))
+
+        local response = request:send()
+
+        if 200 == response:get_http_code() then
+            local body = response:get_body()
+            for vector in string.gmatch(body, "&lt;autn:vector[ start=\"[0-9]*\" end=\"[0-9]*\" length=\"[0-9]*\"]?&gt;.-&lt;/autn:vector&gt;") do
+                local start_offset = string.match(vector, "start=\"([0-9]*)\"")
+                local end_offset = string.match(vector, "end=\"([0-9]*)\"")
+                if start_offset ~= nil and end_offset ~= nil then
+                    local actual_start_offset = tonumber(start_offset) + document_offset
+                    local actual_end_offset = tonumber(end_offset) + document_offset
+                    local i, j = string.find(vector, "&gt;.-&lt;")
+                    vector_with_offsets = "&lt;autn:vector&gt;"..vector:sub(i+1, j-1)..";source=DRECONTENT["..actual_start_offset..":"..actual_end_offset.."]"..vector:sub(j,-1)
+                    local xml = parse_xml(vector_with_offsets)
+                    document:insertXml(xml:root(), "VECTOR")
+                    final_offset = actual_end_offset
+                else
+                    local xml = parse_xml(vector)
+                    document:insertXml(xml:root(), "VECTOR")
+                end
+            end
+            log_info(string.format("Generated embeddings for document '%s'", document:getReference()))
+        else
+            log_error(string.format("Failed to get response from server for document '%s': %s (%d)", document:getReference(), response:get_body(), response:get_http_code()))
+        end
+        section = section:getNextSection()
+    end
+end</value>
+                            </entry>
+                            <entry>
+<key>LuaScriptFunction</key>
+<value>handler</value>
+                            </entry>
+                            <entry>
+<key>LuaScriptFunctionArguments</key>
+<value>LuaDocument</value>
+                            </entry>
+                            <entry>
+<key>RouteTo</key>
+<value>success</value>
+                            </entry>
+                            <entry>
+<key>RouteReturnedTo</key>
+<value>returned</value>
+                            </entry>
+                            <entry>
+<key>RouteUntransferredTo</key>
+                            </entry>
+                            <entry>
+<key>AdditionalOutputRelationships</key>
+                            </entry>
+                        </properties>
+                        <runDurationMillis>0</runDurationMillis>
+                        <schedulingPeriod>0 sec</schedulingPeriod>
+                        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                        <yieldDuration>1 sec</yieldDuration>
+                    </config>
+                    <executionNodeRestricted>false</executionNodeRestricted>
+                    <name>Vector Embedding Generator</name>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>failure</name>
+                    </relationships>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>returned</name>
+                    </relationships>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>success</name>
+                    </relationships>
+                    <state>RUNNING</state>
+                    <style/>
+                    <type>idol.nifi.processor.ExecuteDocumentLua</type>
+                </processors>
+            </contents>
+            <defaultBackPressureDataSizeThreshold>1 GB</defaultBackPressureDataSizeThreshold>
+            <defaultBackPressureObjectThreshold>10000</defaultBackPressureObjectThreshold>
+            <defaultFlowFileExpiration>0 sec</defaultFlowFileExpiration>
+            <flowfileConcurrency>UNBOUNDED</flowfileConcurrency>
+            <flowfileOutboundPolicy>STREAM_WHEN_AVAILABLE</flowfileOutboundPolicy>
+            <name>Vector Generator Lua</name>
+            <variables/>
+        </processGroups>
+    </snippet>
+    <timestamp>08/29/2023 14:27:54 UTC</timestamp>
+</template>
+

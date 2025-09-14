@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<template encoding-version="1.3">
+    <description></description>
+    <groupId>fe4a8c59-0177-1000-bd3e-251820559171</groupId>
+    <name>Process TMT Zip</name>
+    <snippet>
+        <connections>
+            <id>78257db1-fdc0-3dad-0000-000000000000</id>
+            <parentGroupId>aa5e56db-66f4-3452-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>aa5e56db-66f4-3452-0000-000000000000</groupId>
+                <id>0d72baea-ec1d-377e-0000-000000000000</id>
+                <type>FUNNEL</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <selectedRelationships>taskerdoc</selectedRelationships>
+            <source>
+                <groupId>aa5e56db-66f4-3452-0000-000000000000</groupId>
+                <id>eb46636e-2f19-3e28-0000-000000000000</id>
+                <type>PROCESSOR</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>8857f9c6-80ed-3dda-0000-000000000000</id>
+            <parentGroupId>aa5e56db-66f4-3452-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>aa5e56db-66f4-3452-0000-000000000000</groupId>
+                <id>889050b6-ffdb-3969-0000-000000000000</id>
+                <type>FUNNEL</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <selectedRelationships>failure</selectedRelationships>
+            <source>
+                <groupId>aa5e56db-66f4-3452-0000-000000000000</groupId>
+                <id>eb46636e-2f19-3e28-0000-000000000000</id>
+                <type>PROCESSOR</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>8e09b639-bd8c-3e4e-0000-000000000000</id>
+            <parentGroupId>aa5e56db-66f4-3452-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>aa5e56db-66f4-3452-0000-000000000000</groupId>
+                <id>eb46636e-2f19-3e28-0000-000000000000</id>
+                <type>PROCESSOR</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <source>
+                <groupId>aa5e56db-66f4-3452-0000-000000000000</groupId>
+                <id>1700641f-7965-3505-0000-000000000000</id>
+                <type>FUNNEL</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>ccb796aa-cc79-358e-0000-000000000000</id>
+            <parentGroupId>aa5e56db-66f4-3452-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>aa5e56db-66f4-3452-0000-000000000000</groupId>
+                <id>9edace4b-a3dc-359c-0000-000000000000</id>
+                <type>FUNNEL</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <selectedRelationships>original</selectedRelationships>
+            <source>
+                <groupId>aa5e56db-66f4-3452-0000-000000000000</groupId>
+                <id>eb46636e-2f19-3e28-0000-000000000000</id>
+                <type>PROCESSOR</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>defc20c9-379c-3945-0000-000000000000</id>
+            <parentGroupId>aa5e56db-66f4-3452-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>aa5e56db-66f4-3452-0000-000000000000</groupId>
+                <id>f937c471-96ef-3155-0000-000000000000</id>
+                <type>FUNNEL</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <selectedRelationships>doclibdoc</selectedRelationships>
+            <source>
+                <groupId>aa5e56db-66f4-3452-0000-000000000000</groupId>
+                <id>eb46636e-2f19-3e28-0000-000000000000</id>
+                <type>PROCESSOR</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <funnels>
+            <id>0d72baea-ec1d-377e-0000-000000000000</id>
+            <parentGroupId>aa5e56db-66f4-3452-0000-000000000000</parentGroupId>
+            <position>
+                <x>664.0</x>
+                <y>112.0</y>
+            </position>
+        </funnels>
+        <funnels>
+            <id>1700641f-7965-3505-0000-000000000000</id>
+            <parentGroupId>aa5e56db-66f4-3452-0000-000000000000</parentGroupId>
+            <position>
+                <x>200.0</x>
+                <y>0.0</y>
+            </position>
+        </funnels>
+        <funnels>
+            <id>889050b6-ffdb-3969-0000-000000000000</id>
+            <parentGroupId>aa5e56db-66f4-3452-0000-000000000000</parentGroupId>
+            <position>
+                <x>0.0</x>
+                <y>320.0</y>
+            </position>
+        </funnels>
+        <funnels>
+            <id>9edace4b-a3dc-359c-0000-000000000000</id>
+            <parentGroupId>aa5e56db-66f4-3452-0000-000000000000</parentGroupId>
+            <position>
+                <x>400.0</x>
+                <y>320.0</y>
+            </position>
+        </funnels>
+        <funnels>
+            <id>f937c471-96ef-3155-0000-000000000000</id>
+            <parentGroupId>aa5e56db-66f4-3452-0000-000000000000</parentGroupId>
+            <position>
+                <x>664.0</x>
+                <y>192.0</y>
+            </position>
+        </funnels>
+        <processors>
+            <id>eb46636e-2f19-3e28-0000-000000000000</id>
+            <parentGroupId>aa5e56db-66f4-3452-0000-000000000000</parentGroupId>
+            <position>
+                <x>48.0</x>
+                <y>112.0</y>
+            </position>
+            <bundle>
+                <artifact>idol-nifi-framework</artifact>
+                <group>idol.nifi</group>
+                <version>25.2.0-nifi1</version>
+            </bundle>
+            <config>
+                <annotationData></annotationData>
+                <bulletinLevel>ERROR</bulletinLevel>
+                <comments></comments>
+                <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                <descriptors>
+                    <entry>
+                        <key>IdolLicenseService</key>
+                        <value>
+                            <identifiesControllerService>idol.nifi.service.IdolLicenseService</identifiesControllerService>
+                            <name>IdolLicenseService</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>DocumentRegistryService</key>
+                        <value>
+                            <identifiesControllerService>idol.nifi.service.DocumentRegistryService</identifiesControllerService>
+                            <name>DocumentRegistryService</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>LuaScriptFile</key>
+                        <value>
+                            <name>LuaScriptFile</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>LuaScriptFunction</key>
+                        <value>
+                            <name>LuaScriptFunction</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>LuaScriptFunctionArguments</key>
+                        <value>
+                            <name>LuaScriptFunctionArguments</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>RouteTo</key>
+                        <value>
+                            <name>RouteTo</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>RouteReturnedTo</key>
+                        <value>
+                            <name>RouteReturnedTo</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>RouteUntransferredTo</key>
+                        <value>
+                            <name>RouteUntransferredTo</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>AdditionalOutputRelationships</key>
+                        <value>
+                            <name>AdditionalOutputRelationships</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>lua:zip_reader</key>
+                        <value>
+                            <name>lua:zip_reader</name>
+                        </value>
+                    </entry>
+                </descriptors>
+                <executionNode>ALL</executionNode>
+                <lossTolerant>false</lossTolerant>
+                <penaltyDuration>30 sec</penaltyDuration>
+                <properties>
+                    <entry>
+                        <key>IdolLicenseService</key>
+                    </entry>
+                    <entry>
+                        <key>DocumentRegistryService</key>
+                    </entry>
+                    <entry>
+                        <key>LuaScriptFile</key>
+                        <value>local tmt_zip_reader = require("tmt_zip_reader")
+
+function handler(flowfiledocument, session)
+    
+    local ref = flowfiledocument:getReference()
+    local refAction = flowfiledocument:getReferenceAction()
+    local metadata = nil
+    local zipsData = {}
+    
+    -- Read zip content into zipsData
+    flowfiledocument:read({
+        preAction = function(action)
+            metadata = action:getXmlMetadata()
+        end,
+        defaultFileAction = function(action)
+            action:readAsFilename(
+                function(filename)
+                    local zipData = tmt_zip_reader.readZipFile(filename)
+                    if zipData.id ~= nil then
+                        table.insert(zipsData, zipData)
+                    end
+                end)
+        end})
+    
+    -- Process zipsData by generating and transferring output FlowFiles
+    for _,zipData in ipairs(zipsData) do
+        
+        local ffdoct = session:create(ref..":"..zipData.id, refAction, flowfiledocument)
+        local metat = nil
+        ffdoct:modify({
+            postAction = function(action)
+                if zipData.printpreview_tempfile ~= nil then
+                    action:addFilename(zipData.printpreview_tempfile, true, "application/pdf")
+                end
+                metat = action:getXmlMetadata()
+                for _,e in ipairs({ metadata:getChildren() }) do
+                    metat:appendChild(e)
+                end
+                for k,v in pairs(zipData.taskermetadata) do
+                    metat:addChild(k):setValue(v)
+                end
+            end})
+        
+        for _,docLibDoc in ipairs(zipData.doclibs) do
+                
+            local ffdocd = session:create(
+                ref..":"..zipData.id..":"..docLibDoc.library_name.."/"..docLibDoc.document_name, refAction, ffdoct)
+            ffdocd:modify({
+                postAction = function(action)
+                    if docLibDoc.document_tempfile ~= nil then
+                        action:addFilename(docLibDoc.document_tempfile, true)
+                    end
+                    local metad = action:getXmlMetadata()
+                    for _,e in ipairs({ metat:getChildren() }) do
+                        metad:appendChild(e)
+                    end
+                    for k,v in pairs(docLibDoc) do
+                        if k ~= "document_tempfile" then
+                        	metad:addChild(k):setValue(v)
+                        end
+                    end
+                end})
+            
+            session:transfer(ffdocd, "doclibdoc")
+                
+        end
+
+        session:transfer(ffdoct, "taskerdoc")
+        
+    end
+end
+</value>
+                    </entry>
+                    <entry>
+                        <key>LuaScriptFunction</key>
+                        <value>handler</value>
+                    </entry>
+                    <entry>
+                        <key>LuaScriptFunctionArguments</key>
+                        <value>LuaFlowFileDocument,LuaProcessorSession</value>
+                    </entry>
+                    <entry>
+                        <key>RouteTo</key>
+                        <value>original</value>
+                    </entry>
+                    <entry>
+                        <key>RouteReturnedTo</key>
+                        <value></value>
+                    </entry>
+                    <entry>
+                        <key>RouteUntransferredTo</key>
+                    </entry>
+                    <entry>
+                        <key>AdditionalOutputRelationships</key>
+                        <value>taskerdoc,doclibdoc</value>
+                    </entry>
+                    <entry>
+                        <key>lua:tmt_zip_reader</key>
+                        <value>-- TMT zip reader
+-- The readZipFile function returns a structure as follows:
+--
+-- {
+--     id = 'prefix from [ID]_TaskerMetadata.xml file in zip',
+--     printpreview_tempfile = 'temporary filename to PrintPreview.pdf',
+--     taskermetadata = {
+--         key = 'value',
+--         ...
+--     },
+--     doclibs = {
+--         1 = {
+--             library_name = 'library name',
+--             library_siteurl = 'library siteurl',
+--             document_type = 'type'
+--             document_modifiedby = 'modifiedby'
+--             document_modifieddate = 'modifieddate'
+--             document_name = 'name'
+--             document_tempfile = 'temporary filename to document'
+--         },
+--         2 = {...},
+--         ...
+--     }
+-- }
+--
+-- Usage:
+--   local tmt_zip_reader = require("tmt_zip_reader")
+--   tmt_zip_reader.readZipFile(zipfilename)
+
+local tmt_zip_reader = {}
+
+function readFile(filename)
+    local f = io.open(filename, "rb")
+    local content = f:read("a")
+    f:close()
+    return content
+end
+
+function readFileFromZipToStr(zipfilename, file)
+    local temp = get_temp_file()
+    zip_extract(zipfilename, file, temp)
+    local content = readFile(temp)
+    os.remove(temp)
+    return content
+end
+
+function taskerMetadataRead(xmlstring)
+    local xml = parse_xml(xmlstring)
+    local nodes = xml:XPathExecute("/Tasker/Attribute")
+    local data = {}
+    for _,node in nodes:ipairs() do
+        local name = node:attribute("Name"):value()
+        local type = node:attribute("Type"):value()
+        local content = node:content()
+        if type == "System.String" then
+            data[name] = content:sub(2,-2)
+        else
+            data[name] = content
+        end
+    end
+    return data
+end
+
+function spMetadataRead(zipfilename, xmlstring, doclib_name, data)
+    local xml = parse_xml(xmlstring)
+    local nodes = xml:XPathExecute("/Documents/Library")
+    for _,node in nodes:ipairs() do
+        local libraryName = node:attribute("Name"):value()
+        local siteUrl = node:attribute("SiteUrl"):value()
+        local docNode = node:firstChild()
+        while docNode ~= nil do
+            local docData = { library_name=libraryName, library_siteurl=siteUrl }
+            docData.document_type = docNode:attribute("Type"):value()
+            docData.document_modifiedby = docNode:attribute("ModifiedBy"):value()
+            docData.document_modifieddate = docNode:attribute("ModifiedDate"):value()
+            docData.document_name = docNode:content()
+            local temp = get_temp_file("", "."..docData.document_type)
+            if zip_extract(zipfilename, "DocLibs/"..doclib_name.."/"..docData.document_name, temp) then
+  				docData.document_tempfile = temp
+            end
+            table.insert(data, docData)
+            docNode = docNode:next()
+        end
+    end
+end
+
+function tmt_zip_reader.readZipFile(zipfilename)
+    local files = { zip_list(zipfilename) }
+    local result = {}
+    for _,file in pairs(files) do
+        result.id = file:match("^([^/]+)_TaskerMetadata%.xml$")
+        if result.id ~= nil then
+  			result.taskermetadata = taskerMetadataRead(readFileFromZipToStr(zipfilename, file))
+            break
+        end
+	end
+    if result.id ~= nil then
+        for _,file in pairs(files) do
+            if file == result.id.."_PrintPreview.pdf" then
+                local temp = get_temp_file("", ".pdf")
+                if zip_extract(zipfilename, file, temp) then
+                    result.printpreview_tempfile = temp
+                end
+            else
+                if result.doclibs == nil then
+                    result.doclibs = {}
+                end
+                local doclib_name = file:match("^DocLibs/([^/]+)_SPMetadata.xml$")
+                if doclib_name ~= nil then
+                	spMetadataRead(zipfilename, readFileFromZipToStr(zipfilename, file), doclib_name, result.doclibs)
+                end
+            end
+        end
+    end
+    return result
+end
+
+return tmt_zip_reader</value>
+                    </entry>
+                </properties>
+                <runDurationMillis>0</runDurationMillis>
+                <schedulingPeriod>0 sec</schedulingPeriod>
+                <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                <yieldDuration>1 sec</yieldDuration>
+            </config>
+            <executionNodeRestricted>false</executionNodeRestricted>
+            <name>Process TMT Zip</name>
+            <relationships>
+                <autoTerminate>false</autoTerminate>
+                <name>doclibdoc</name>
+            </relationships>
+            <relationships>
+                <autoTerminate>false</autoTerminate>
+                <name>failure</name>
+            </relationships>
+            <relationships>
+                <autoTerminate>false</autoTerminate>
+                <name>original</name>
+            </relationships>
+            <relationships>
+                <autoTerminate>false</autoTerminate>
+                <name>taskerdoc</name>
+            </relationships>
+            <state>STOPPED</state>
+            <style/>
+            <type>idol.nifi.processor.ExecuteDocumentLua</type>
+        </processors>
+    </snippet>
+    <timestamp>03/11/2021 15:06:07 GMT</timestamp>
+</template>

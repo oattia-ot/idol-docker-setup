@@ -1,0 +1,34 @@
+{
+    "applications": [
+        {
+            "applicationName": "IDOL Documentation",
+            "url": "https://www.microfocus.com/documentation/idol/",
+            "openInNewTab": true,
+            "enabled": true
+        },
+        {
+            "applicationName": "NiFi Flow",
+            "url": "/nifi/",
+            "openInNewTab": true,
+            "enabled": true
+        },
+        {
+            "applicationName": "IDOL Media",
+            "url": "/media/videos",
+            "openInNewTab": true,
+            "enabled": true
+        },
+        {
+            "applicationName": "IDOL Admin (Content)",
+            "url": "http://localhost:9100/a=admin",
+            "openInNewTab": true,
+            "enabled": true
+        },
+        {
+            "applicationName": "IDOL Admin (Community)",
+            "url": "http://localhost:9030/a=admin",
+            "openInNewTab": true,
+            "enabled": true
+        }
+    ]
+}
