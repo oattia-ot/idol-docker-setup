@@ -1,6 +1,6 @@
 # IDOL Setup and Installation Guide
 
-This README documents the complete configuration and installation process for OpenText IDOL (Intelligent Data Operating Layer) deployment.
+This README documents the complete configuration and installation process for OpenText Knowledge Discovery (IDOL) deployment.
 
 ## 🚀 Features
 
