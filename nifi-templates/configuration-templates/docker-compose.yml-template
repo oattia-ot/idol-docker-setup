@@ -59,30 +59,30 @@ services:
     image: ${IDOL_REGISTRY}/agentstore:${IDOL_SERVER_VERSION}
     networks:
       - idol-network
-    environment:
+    #HTTPS-PLACEHOLDERenvironment:
       #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_CERT_PATH=/certs/nifi-cert.pem
       #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_KEY_PATH=/certs/nifi-key.key
-    volumes:
+    #HTTPS-PLACEHOLDERvolumes:
       #HTTPS-PLACEHOLDER- CERTS-PATH-PLACEHOLDER:/certs
   idol-categorisation-agentstore:
     <<: *common-server
     image: ${IDOL_REGISTRY}/categorisation-agentstore:${IDOL_SERVER_VERSION}
     networks:
       - idol-network
-    environment:
+    #HTTPS-PLACEHOLDERenvironment:
       #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_CERT_PATH=/certs/nifi-cert.pem
       #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_KEY_PATH=/certs/nifi-key.key
-    volumes:
+    #HTTPS-PLACEHOLDERvolumes:
       #HTTPS-PLACEHOLDER- CERTS-PATH-PLACEHOLDER:/certs
   idol-community:
     <<: *common-server
     image: ${IDOL_REGISTRY}/community:${IDOL_SERVER_VERSION}
     networks:
       - idol-network
-    environment:
+    #HTTPS-PLACEHOLDERenvironment:
       #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_CERT_PATH=/certs/nifi-cert.pem
       #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_KEY_PATH=/certs/nifi-key.key
-    volumes:
+    #HTTPS-PLACEHOLDERvolumes:
       #HTTPS-PLACEHOLDER- CERTS-PATH-PLACEHOLDER:/certs
     depends_on:
       - idol-content
@@ -92,10 +92,10 @@ services:
     image: ${IDOL_REGISTRY}/view:${IDOL_SERVER_VERSION}
     networks:
       - idol-network
-    environment:
+    #HTTPS-PLACEHOLDERenvironment:
       #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_CERT_PATH=/certs/nifi-cert.pem
       #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_KEY_PATH=/certs/nifi-key.key
-    volumes:
+    #HTTPS-PLACEHOLDERvolumes:
       #HTTPS-PLACEHOLDER- CERTS-PATH-PLACEHOLDER:/certs
     depends_on:
       - idol-agentstore
