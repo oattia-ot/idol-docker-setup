@@ -43,9 +43,9 @@ source env/export-env-variables.sh
 # 4. Install IDOL
 ./install-idol.sh
 
-# 5. Start IDOL License Server
+# 5. Check if IDOL License Server is availabe if not start it:
 cd idol-docker-setup/licenseserver-setup/
-./bounce.sh
+./deploy-license-server.sh
 
 # 6. Deploy IDOL containers
 cd /opt/idol/idol-containers-toolkit/basic-idol/

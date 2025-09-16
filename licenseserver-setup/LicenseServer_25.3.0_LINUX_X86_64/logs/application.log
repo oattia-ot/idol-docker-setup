@@ -1348,3 +1348,35 @@
 14/09/2025 20:31:51 [0] 00-Always: Starting main service...
 14/09/2025 20:31:51 [0] 00-Always: ACI Server attached to port 20000
 14/09/2025 20:31:51 [0] 00-Always: ACI Server attached to port 20000
+16/09/2025 11:40:10 [0] 00-Always: Application log stream started
+16/09/2025 11:40:10 [0] 00-Always: Reading configuration files...
+16/09/2025 11:40:10 [0] 00-Always: Read configuration file successfully.
+16/09/2025 11:40:11 [0] 30-Normal: ACI Server validated operations key.
+16/09/2025 11:40:11 [0] 30-Normal: ACI Server has no QPS limit.
+16/09/2025 11:40:11 [0] 30-Normal: ACI Server is licensed for SSL encryption.
+16/09/2025 11:40:11 [0] 30-Normal: Performed hostname lookup and converted ADMINCLIENTS from [*.*.*.*] -> [*].
+16/09/2025 11:40:11 [0] 30-Normal: Performed hostname lookup and converted USERCLIENTS from [*.*.*.*,*.*.*.*] -> [*,*].
+16/09/2025 11:40:11 [0] 30-Normal: ACI Server setting MaxInputString to 64000.
+16/09/2025 11:40:11 [0] 30-Normal: ACI Server is configured for XSLT templating.
+16/09/2025 11:40:11 [0] 50-Warning: XSLT template directory not found (/LicenseServer_25.3.0_LINUX_X86_64/templates).
+16/09/2025 11:40:11 [0] 30-Normal: ACI Server successfully loaded online help.
+16/09/2025 11:40:11 [0] 30-Normal: ACI Server successfully loaded admin UI.
+16/09/2025 11:40:11 [0] 00-Always: Starting main service...
+16/09/2025 11:40:11 [0] 00-Always: ACI Server attached to port 20000
+16/09/2025 11:40:11 [0] 00-Always: ACI Server attached to port 20000
+16/09/2025 11:45:43 [0] 00-Always: Application log stream started
+16/09/2025 11:45:43 [0] 00-Always: Reading configuration files...
+16/09/2025 11:45:43 [0] 00-Always: Read configuration file successfully.
+16/09/2025 11:45:43 [0] 30-Normal: ACI Server validated operations key.
+16/09/2025 11:45:43 [0] 30-Normal: ACI Server has no QPS limit.
+16/09/2025 11:45:43 [0] 30-Normal: ACI Server is licensed for SSL encryption.
+16/09/2025 11:45:43 [0] 30-Normal: Performed hostname lookup and converted ADMINCLIENTS from [*.*.*.*] -> [*].
+16/09/2025 11:45:43 [0] 30-Normal: Performed hostname lookup and converted USERCLIENTS from [*.*.*.*,*.*.*.*] -> [*,*].
+16/09/2025 11:45:43 [0] 30-Normal: ACI Server setting MaxInputString to 64000.
+16/09/2025 11:45:43 [0] 30-Normal: ACI Server is configured for XSLT templating.
+16/09/2025 11:45:43 [0] 50-Warning: XSLT template directory not found (/LicenseServer_25.3.0_LINUX_X86_64/templates).
+16/09/2025 11:45:43 [0] 30-Normal: ACI Server successfully loaded online help.
+16/09/2025 11:45:43 [0] 30-Normal: ACI Server successfully loaded admin UI.
+16/09/2025 11:45:43 [0] 00-Always: Starting main service...
+16/09/2025 11:45:43 [0] 00-Always: ACI Server attached to port 20000
+16/09/2025 11:45:43 [0] 00-Always: ACI Server attached to port 20000

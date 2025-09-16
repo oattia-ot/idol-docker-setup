@@ -154,63 +154,110 @@ setup_idol_licenseserver() {
     log "${CALLING_SCRIPT} ${YELLOW}Setup License Server...${NC}"
 
     # Display Info
-    log "${CALLING_SCRIPT} ${GREEN}####################################################${NC}"
-    log "${CALLING_SCRIPT} ${GREEN}##### License Server - Collect Setup Parameters ####${NC}"
-    log "${CALLING_SCRIPT} ${GREEN}####################################################${NC}"
+    log "${CALLING_SCRIPT} ${GREEN}#########################################################${NC}"
+    log "${CALLING_SCRIPT} ${GREEN}##### IDOL License Server - Collect Setup Parameters ####${NC}"
+    log "${CALLING_SCRIPT} ${GREEN}#########################################################${NC}"
     log "${CALLING_SCRIPT} ${GREEN}##### $(date +"%Y-%m-%d")                ${NC}"
 
-    # Considered of setup IDOL License Server
-    if prompt_yn "Do you want to setup IDOL License Server?" "Y"; then  
-        export IDOL_LICENSE_SERVER_STATUS="VALIDATE"
-    else   
-        export IDOL_LICENSE_SERVER_STATUS="UnVALIDATE"
-    fi
-    echo "export IDOL_LICENSE_SERVER_STATUS=${IDOL_LICENSE_SERVER_STATUS}" >> $IDOL_ENV 
+    echo -e "${YELLOW}Select the IDOL License Server Connecting Mode: ${NC}"
+    echo -e "${YELLOW}1) Provide an active License Server URL: ${ORANGE}[default] ${NC}"
+    echo -e "${YELLOW}2) Deploy an entirely new instance of License Server  ${NC}"
+    local selection
+    echo -e "${BLUE}--------------------${YELLOW}"
+    while true; do
+        read -p "Enter selection [1]: " selection
+        selection=${selection:-1}
+        case $selection in
+            1)
+                export IDOL_LICENSE_SERVER_MODE=URL
+                read -p "Enter the license server URL [Format: http://<server>:<port>] (e.g., http://license.company.com:20000):" license_server_url
+                IDOL_LICENSE_SERVER_URL="${license_server_url}/a=getlicenseinfo"
 
-    # Define IDOL License Server path
-    while [ "$IDOL_LICENSE_SERVER_STATUS" = "VALIDATE" ]; do
-        echo -e "${LIGHTER_YELLOW}Enter IDOL ${ORANGE}[licensekey.dat]${LIGHTER_YELLOW} file:${ORANGE}"
-        read -p "   [default /mnt/c/OpenText/licensekey.dat Or type a custom path] " licensekey_path
-        licensekey_path=${licensekey_path:-"/mnt/c/OpenText/licensekey.dat"}
+                break
+                ;;
+            2)
+                export IDOL_LICENSE_SERVER_MODE=NEW
+                
+                # IMPORTANT!!! In order to create a new IDOL license server instance, provide the necessary license details.
+                log "${CALLING_SCRIPT}📌 ${YELLOW}IMPORTANT NOTE!!! - Please provide the IDOL license server details below:                      ${NC}"
+                log "${CALLING_SCRIPT}📌        ${PURPLE}Location of the key file [licensekey.dat] for License Server.                  ${NC}"
+                log "${CALLING_SCRIPT}📌        ${PURPLE}To download IDOL images, you must provide your Docker Personal Access token.   ${NC}"
+            
+                # Define IDOL License Server path
+                while true; do
+                    echo -e "${LIGHTER_YELLOW}Enter IDOL ${ORANGE}[licensekey.dat]${LIGHTER_YELLOW} file:${ORANGE}"
+                    read -p "   [default /mnt/c/OpenText/licensekey.dat Or type a custom path] " source_licensekey_file
+                    source_licensekey_file=${source_licensekey_file:-"/mnt/c/OpenText/licensekey.dat"}
 
-        # Ensure filename is licensekey.dat and file exists   
-        if [[ "$(basename "$licensekey_path")" = "licensekey.dat" && -f "$licensekey_path" ]]; then
-            log "${CALLING_SCRIPT} ${LIGHTER_YELLOW}File exists:${GREEN} [$licensekey_path]${NC}"
-            break
-        else
-            echo -e "${LIGHTER_YELLOW}File ${RED}[$licensekey_path] ${LIGHTER_YELLOW}does not exist, There is no file with the name ${ORANGE}[licensekey.dat]${LIGHTER_YELLOW} Please try again.${LIGHTER_YELLOW}"
-        fi
+                    # Compute SHA-256 checksum of source file and save to variable
+                    checksum_source=$(sha256sum "$source_licensekey_file" | awk '{print $1}')
+                    log "${CALLING_SCRIPT} ${LIGHTER_YELLOW}Source - SHA-256 checksum of [licensekey.dat] is:${ORANGE} [$checksum_source]${NC}"
+
+                    # Ensure filename is licensekey.dat and file exists   
+                    if [[ "$(basename "$source_licensekey_file")" = "licensekey.dat" && -f "$source_licensekey_file" ]]; then
+                        log "${CALLING_SCRIPT} ${LIGHTER_YELLOW}File exists:${GREEN} [$source_licensekey_file]${NC}"
+                        break
+                    else
+                        echo -e "${LIGHTER_YELLOW}File ${RED}[$source_licensekey_file] ${LIGHTER_YELLOW}does not exist, There is no file with the name ${ORANGE}[licensekey.dat]${LIGHTER_YELLOW} Please try again.${LIGHTER_YELLOW}"
+                    fi
+                done
+
+                # Copy the [licensekey.dat] file
+                target_licenseserver_path="$(cd "$(dirname "${IDOL_TOOLKIT_PATH}")" && pwd)"
+                cp -a ./licenseserver-setup "${target_licenseserver_path}/"
+                log "${CALLING_SCRIPT} ${LIGHTER_YELLOW}Copy folder [licenseserver-setup] to: ${GREEN}[${target_licenseserver_path}/licenseserver-setup/]${NC}"
+                
+                export IDOL_LICENSE_SERVER_PATH="${target_licenseserver_path}/licenseserver-setup"
+                echo "export IDOL_LICENSE_SERVER_PATH=${IDOL_LICENSE_SERVER_PATH}" >> "$IDOL_ENV"  
+
+                target_licensekey_file="$target_licenseserver_path/licenseserver-setup/LicenseServer_25.3.0_LINUX_X86_64/licensekey.dat"
+                cp -p "$source_licensekey_file" "$target_licensekey_file"
+                log "${CALLING_SCRIPT} ${LIGHTER_YELLOW}Copy the [licensekey.dat] file to: ${GREEN}[${target_licenseserver_path}]${NC}"          
+
+                # Compute SHA-256 checksum of target file and save to variable
+                checksum_target=$(sha256sum "$target_licensekey_file" | awk '{print $1}')
+                log "${CALLING_SCRIPT} ${LIGHTER_YELLOW}Target - SHA-256 checksum of [licensekey.dat] is:${ORANGE} [$checksum_target]${NC}"
+
+                # Get IDOL personal access token
+                while true; do
+                    echo -e "${LIGHTER_YELLOW}Enter IDOL ${ORANGE}[Docker Personal Access]${LIGHTER_YELLOW} token${ORANGE}"
+                    read -p "   [e.g dckr_pat_XxxxxxxxxxxxX-XxxxxxxxxxxxX] " idol_docker_personal_access
+
+                    # Save to file
+                    echo "${idol_docker_personal_access}" > "${target_licenseserver_path}/licenseserver-setup/idol_docker_key.txt"
+                    log "${CALLING_SCRIPT} ${LIGHTER_YELLOW}Save token to: ${GREEN}[${target_licenseserver_path}/licenseserver-setup/idol_docker_key.txt]${NC}"          
+                
+                    # Validate IDOL Docker access token
+                    if echo "$idol_docker_personal_access" | docker login --username microfocusidolreadonly --password-stdin; then
+                        echo -e "${GREEN}Docker access token is valid.${NC}"
+                        log "${CALLING_SCRIPT} ${LIGHTER_YELLOW}IDOL Docker access token is: ${GREEN}[validate]${NC}"
+                        break
+                    else
+                        echo -e "${RED}Invalid Docker access token. Please try again.${NC}"
+                    fi
+                done
+
+                IDOL_LICENSE_SERVER_URL="http://localhost:20000/a=getlicenseinfo"
+                break
+                ;;
+            *)
+                echo -e "${RED}Invalid selection. Please choose 1, or 2.${NC}"
+                ;;
+        esac
     done
+    log "${CALLING_SCRIPT} License Server Connecting Mode: ${ORANGE}$IDOL_LICENSE_SERVER_MODE${NC}"
+    echo "export IDOL_LICENSE_SERVER_MODE=${IDOL_LICENSE_SERVER_MODE}" >> "$IDOL_ENV"   
+    echo "export IDOL_LICENSE_SERVER_URL=${IDOL_LICENSE_SERVER_URL}" >> "$IDOL_ENV"   
 
-    # Copy the [licensekey.dat] file
-    if [ "$IDOL_LICENSE_SERVER_STATUS" = "VALIDATE" ];then
-        cp $licensekey_path  ./licenseserver-setup/LicenseServer_25.3.0_LINUX_X86_64/licensekey.dat
+    # Check License Server validation
+    if curl -s $IDOL_LICENSE_SERVER_URL | grep -q "LicenseInfo"; then
+        log "${CALLING_SCRIPT} License Server info is: ${GREEN}[VALID]${NC}"
+    else
+        log "${CALLING_SCRIPT} License Server info is: ${RED}[NOT VALID]${NC}"
+        log "${CALLING_SCRIPT} ${RED}Aborting operation${NC}"
+        log "${CALLING_SCRIPT} ⚠️ ${LIGHTER_YELLOW} Consider to copy maually the [licensekey.dat] to target: ${RED}[${IDOL_LICENSE_SERVER_PATH}/LicenseServer_25.3.0_LINUX_X86_64]${NC}"
+        exit 1
     fi
-
-    # Get IDOL personal access token
-    while [ "$IDOL_LICENSE_SERVER_STATUS" = "VALIDATE" ]; do
-        echo -e "${LIGHTER_YELLOW}Enter IDOL ${ORANGE}[Docker Personal Access]${LIGHTER_YELLOW} token${ORANGE}"
-        read -p "   [e.g dckr_pat_XxxxxxxxxxxxX-XxxxxxxxxxxxX] " idol_docker_personal_access
-
-        # Save to file
-        echo "${idol_docker_personal_access}" > "./licenseserver-setup/idol_docker_key.txt"
-
-        # Validate IDOL Docker access token
-        if echo "$idol_docker_personal_access" | docker login --username microfocusidolreadonly --password-stdin; then
-            echo -e "${GREEN}Docker access token is valid.${NC}"
-            log "${CALLING_SCRIPT} ${LIGHTER_YELLOW}IDOL Docker access token is: ${GREEN}[validate]${NC}"
-            break
-        else
-            echo -e "${RED}Invalid Docker access token. Please try again.${NC}"
-        fi
-    done
-
-    # IMPORTANT!!! After setting up IDOL License Server...
-    log "${CALLING_SCRIPT}📌 ${YELLOW}IMPORTANT NOTE!!! - IDOL License Server${NC}"
-    log "${CALLING_SCRIPT}📌 ${YELLOW}IDOL License Server status: ${ORANGE}[${IDOL_LICENSE_SERVER_STATUS}]${NC}"
-    log "${CALLING_SCRIPT}📌        ${PURPLE}Ensure that the IDOL License Server is up and running.                               ${NC}"
-    log "${CALLING_SCRIPT}📌        ${PURPLE}The deployment of the IDOL solution depends on a valid and reachable license server. ${NC}"
-    log "${CALLING_SCRIPT}📌        ${PURPLE}If the license server is not available, the installation will fail.                  ${NC}"
 }
 
 ################
@@ -841,6 +888,7 @@ set_idol_toolkit_path(){
         fi
     done
     log "${CALLING_SCRIPT} ${ORANGE}IDOL toolkit path is: ${GREEN}[${host_toolkit_path}]${NC}"
+    export IDOL_TOOLKIT_PATH=$host_toolkit_path
     echo "export IDOL_TOOLKIT_PATH=${host_toolkit_path}" >> "$IDOL_ENV"
 }
 
@@ -1141,9 +1189,6 @@ idol_deployment_preparation() {
 
     # Create IDOL host storage mapping
     create_idol_host_storage_mapping
-
-    # Previewing environment related variables
-    show_env_variables
 }
 
 #####################
@@ -1163,9 +1208,8 @@ setup_nifi_registry() {
 
 
     # Considered of enabling the IDOL [NIFI] preserve registry [Yes/No]
-    if prompt_yn "Do you want to preserve [NIFI REGISTRY] data outside the container?" "Y"; then  
+    if prompt_yn "Do you want to preserve [NIFI REGISTRY] data outside the container?" "n"; then  
         export IS_IDOL_NIFI_REGISTRY_PRESERVE="TRUE"
-        log "${CALLING_SCRIPT} Enable IDOL preserve [NIFI REGISTRY] data outside the container set to: ${YELLOW}[$IS_IDOL_NIFI_REGISTRY_PRESERVE]${NC}"
         
         # --- end of script output ---
         echo ''
@@ -1177,10 +1221,10 @@ setup_nifi_registry() {
     else   
         export IS_IDOL_NIFI_REGISTRY_PRESERVE="FALSE"
     fi
+    
     echo "export IS_IDOL_NIFI_REGISTRY_PRESERVE=${IS_IDOL_NIFI_REGISTRY_PRESERVE}" >> $IDOL_ENV 
-
-    # Previewing environment related variables
-    show_env_variables
+    log "${CALLING_SCRIPT} Enable IDOL preserve [NIFI REGISTRY] data outside the container set to: ${YELLOW}[$IS_IDOL_NIFI_REGISTRY_PRESERVE]${NC}"
+    echo ''
 }
 
 ################
@@ -1195,6 +1239,9 @@ main() {
     #Setup Nif Registry
     setup_nifi_registry
 
+    # Previewing environment related variables
+    show_env_variables
+
     # Setup License Server
     setup_idol_licenseserver
 }
@@ -1208,4 +1255,4 @@ main "$@"
 source ./env/export-env-variables.sh 
 
 echo ''
-log "${CALLING_SCRIPT} ${YELLOW}Log files are located at ${ORANGE}[/opt/idol/setup-idol/logs] ${YELLOW}folder.${NC}"
+log "${CALLING_SCRIPT} ${YELLOW}Log files are located at ${ORANGE}[$(pwd)/logs] ${YELLOW}folder.${NC}"

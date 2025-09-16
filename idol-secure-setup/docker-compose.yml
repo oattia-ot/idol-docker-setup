@@ -131,7 +131,7 @@ services:
     volumes:
       - idol-ingest-volume:/idol-ingest
       - ./certs/ca-certs:/ssl
-      #IS-IDOL-NIFI-PRESERVE- :/opt/nifi/nifi-current
+      #IS-IDOL-NIFI-PRESERVE#HTTPS-DISABLE- NIFI-PATH-PLACEHOLDER:/opt/nifi/nifi-current
       #HTTP-PLACEHOLDER- ./nifi/resources/import-flow.sh:/opt/nifi/scripts/import-flow.sh
       #HTTP-PLACEHOLDER- ./nifi/resources/basic-idol-entrypoint.sh:/opt/nifi/scripts/basic-idol-entrypoint.sh
       #HTTP-PLACEHOLDER- ./nifi/flow/basic.json:/opt/nifi/scripts/flow-basic-idol.json

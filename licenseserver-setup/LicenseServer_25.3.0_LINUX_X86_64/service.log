@@ -1,20 +1,20 @@
-14/09/2025 20:31:51 SERVICE: Error queue created
-14/09/2025 20:31:51 SERVICE: ACI Server validated operations key.
+16/09/2025 11:45:43 SERVICE: Error queue created
+16/09/2025 11:45:43 SERVICE: ACI Server validated operations key.
 
-14/09/2025 20:31:51 SERVICE: ACI Server has no QPS limit.
+16/09/2025 11:45:43 SERVICE: ACI Server has no QPS limit.
 
-14/09/2025 20:31:51 SERVICE: ACI Server is licensed for SSL encryption.
+16/09/2025 11:45:43 SERVICE: ACI Server is licensed for SSL encryption.
 
-14/09/2025 20:31:51 SERVICE: Performed hostname lookup and converted SERVICEADMINCLIENTS from [*.*.*.*] -> [*].
+16/09/2025 11:45:43 SERVICE: Performed hostname lookup and converted SERVICEADMINCLIENTS from [*.*.*.*] -> [*].
 
-14/09/2025 20:31:51 SERVICE: Performed hostname lookup and converted SERVICESTATUSCLIENTS from [*.*.*.*,*.*.*.*] -> [*,*].
+16/09/2025 11:45:43 SERVICE: Performed hostname lookup and converted SERVICESTATUSCLIENTS from [*.*.*.*,*.*.*.*] -> [*,*].
 
-14/09/2025 20:31:51 SERVICE: ACI Server setting MaxInputString to 64000.
+16/09/2025 11:45:43 SERVICE: ACI Server setting MaxInputString to 64000.
 
-14/09/2025 20:31:51 SERVICE: ACI Server setting MaxResponseBuffer to "unlimited".
+16/09/2025 11:45:43 SERVICE: ACI Server setting MaxResponseBuffer to "unlimited".
 
-14/09/2025 20:31:51 SERVICE: ACI Server is configured for XSLT templating.
+16/09/2025 11:45:43 SERVICE: ACI Server is configured for XSLT templating.
 
-14/09/2025 20:31:51 SERVICE: XSLT template directory not found (/LicenseServer_25.3.0_LINUX_X86_64/templates).
+16/09/2025 11:45:43 SERVICE: XSLT template directory not found (/LicenseServer_25.3.0_LINUX_X86_64/templates).
 
-14/09/2025 20:31:51:licenseserver v25.3.0.1971140
+16/09/2025 11:45:43:licenseserver v25.3.0.1971140

@@ -18,7 +18,7 @@ EXE_SCRIPT_NAME=$(basename "$0")
 
 # Define global log file path and ensure log directory exists
 export LOGFILE="./logs/${EXE_SCRIPT_NAME%.*}_$(date +"%Y%m%d").log"
-mkdir -p "$(dirname "$LOGFILE")"
+mkdir -p $(dirname "$LOGFILE")
 
 log() {
     # Ensure log file exists
@@ -174,8 +174,11 @@ update_idol_dockercompose_file(){
     
     # --------------------------------------------------------------------------
     
-    # Set IDOL [NIFI] persistence flag
-    if [ "${IS_IDOL_PRESERVE}" = "TRUE" ]; then
+    # IDOL nifi persistence is [ENABLED]
+    if [ "${IS_IDOL_NIFI_PRESERVE}" = "TRUE" ]; then
+        update_prefix_entry_in_file "#IS-IDOL-NIFI-PRESERVE" "" "${TARGET_PATH}"
+        log "${CALLING_SCRIPT} ⚠️ ${LIGHTER_YELLOW} IDOL nifi persistence is ${GREEN}[ENABLED]${NC}"
+
         update_prefix_entry_in_file "NIFI-PATH-PLACEHOLDER" "${IDOL_PRESERVE_NIFI_PATH}" "${TARGET_PATH}"
         log "${CALLING_SCRIPT} ${LIGHTER_YELLOW}Nifi persistence path: ${GREEN}[${IDOL_PRESERVE_NIFI_PATH}].${NC}"
     else
@@ -196,12 +199,6 @@ update_idol_dockercompose_file(){
 
     update_prefix_entry_in_file "NIFI-FQDN-PLACEHOLDER" "${IDOL_HOST_FQDN}" "${TARGET_PATH}"
     log "${CALLING_SCRIPT} ⚠️ ${LIGHTER_YELLOW} IDOL FQDN is ${ORANGE}[${IDOL_HOST_FQDN}]${NC}"
-
-    # IDOL nifi persistence is [ENABLED]
-    if [ "${IS_IDOL_NIFI_PRESERVE}" = "TRUE" ]; then
-        update_prefix_entry_in_file "#IS-IDOL-NIFI-PRESERVE" "" "${TARGET_PATH}"
-        log "${CALLING_SCRIPT} ⚠️ ${LIGHTER_YELLOW} IDOL nifi persistence is ${GREEN}[ENABLED]${NC}"
-    fi
 
     # Check if IDOL_ENABLE_SSL is [TRUE]
     if [ "${IDOL_ENABLE_SSL}" != "TRUE" ]; then
@@ -318,11 +315,9 @@ pull_idol_containers_toolkit() {
     # Ensure target directory exists
     mkdir -p $IDOL_TOOLKIT_PATH
 
-    # Remove existing repo if it already exists
-    if [ -d "${IDOL_TOOLKIT_PATH}/.git" ]; then
-        log "${CALLING_SCRIPT} ${YELLOW}Existing repo found, removing...${NC}"
-        rm -rf $IDOL_TOOLKIT_PATH
-    fi
+    # Remove existing [idol-containers-toolkit] if it already exists
+    rm -rf $IDOL_TOOLKIT_PATH
+    log "${CALLING_SCRIPT} ${YELLOW}Remove existing [idol-containers-toolkit] if it already exists, removing...${NC}"
 
     # Attempt to clone the repository
     if git clone https://github.com/opentext-idol/idol-containers-toolkit.git $IDOL_TOOLKIT_PATH; then
@@ -386,7 +381,6 @@ main_upgrade_idol_deployment() {
 #####################
 ## Setup Nif Registry 
 #####################
-# Function to Setup Nif Registry
 setup_nifi_registry() {
     export CALLING_SCRIPT="${CYAN}${EXE_SCRIPT_NAME%.*} [setup_nifi_registry] module${ORANGE}"
     echo ''
@@ -401,7 +395,7 @@ setup_nifi_registry() {
     mkdir -p $target_nifi_registry_persistent_data_path
 
     # Copy [NIFI REGISTRY] persistent data path
-    if [ "$IS_IDOL_PRESERVE" = "TRUE" ]; then
+    if [ "$IS_IDOL_NIFI_REGISTRY_PRESERVE" = "TRUE" ]; then
         # list of folders to copy
         mkdir -p $target_nifi_registry_persistent_data_path
         for d in conf database flow_storage; do
@@ -423,16 +417,43 @@ setup_nifi_registry() {
         log "${CALLING_SCRIPT} ⚠️ ${LIGHTER_YELLOW} Copy [NIFI REGISTRY] preserve data script: ${ORANGE}[deploy-nifi-registry.sh]${NC}"
 
         # Deploy NiFi registry
-        if [ "${IS_IDOL_NIFI_REGISTRY_PRESERVE}" = "TRUE" ]; then
-            docker compose -f "${target_nifi_registry_persistent_data_path}/docker-compose.nifi-registry.yml" up -d
-            log "${CALLING_SCRIPT} ⚠️ ${LIGHTER_YELLOW} Deploy [NIFI REGISTRY] executed ${NC}"
+        docker compose -f "${target_nifi_registry_persistent_data_path}/docker-compose.nifi-registry.yml" up -d
+        log "${CALLING_SCRIPT} ⚠️ ${LIGHTER_YELLOW} Deploy [NIFI REGISTRY] executed ${NC}"
 
-            log "${CALLING_SCRIPT} ${YELLOW}Setup Nif Registry is ${GREEN}[ENABLE]${NC}"
-        fi
+        log "${CALLING_SCRIPT} ${YELLOW}Setup Nif Registry is ${GREEN}[ENABLE]${NC}"
+        echo ''
+        log "${CALLING_SCRIPT} ${YELLOW}====================================${NC}"
+        log "${CALLING_SCRIPT} ${YELLOW} NiFi access information            ${NC}"
+        log "${CALLING_SCRIPT} ${YELLOW}------------------------------------${NC}"
+        log "${CALLING_SCRIPT} ${YELLOW} Username: ${ORANGE}admin           ${NC}"
+        log "${CALLING_SCRIPT} ${YELLOW} Password: ${ORANGE}Nifi-Admin1!    ${NC}"
+        log "${CALLING_SCRIPT} ${YELLOW}====================================${NC}"
+        echo ''
 
         return 0
     fi
     log "${CALLING_SCRIPT} ${YELLOW}Setup Nif Registry is ${RED}[DISABLE]${NC}"
+}
+
+#############################
+## Deploy IDOL License Server 
+#############################
+deploy_license_server() {
+    export CALLING_SCRIPT="${CYAN}${EXE_SCRIPT_NAME%.*} [deploy_license_server] module${ORANGE}"
+    echo ''
+    log "${CALLING_SCRIPT} ${YELLOW}Deploy IDOL License Server...${NC}"
+
+    # Execute IDOL License Server deployment
+    $IDOL_LICENSE_SERVER_PATH/deploy-license-server.sh
+    rc=$?
+
+    if [ $rc -eq 0 ]; then
+        log "${CALLING_SCRIPT} ${YELLOW}Deploy IDOL License Server ${GREEN}[successfully]${NC}"
+    else
+        log "${CALLING_SCRIPT} ${RED}Failed to deploy IDOL License Server ${RED}failed with exit code: [$rc]${NC}"
+        log "${CALLING_SCRIPT} ${RED}Aborting operation${NC}"
+        exit 1
+    fi
 }
 
 # ********************************** #
@@ -442,12 +463,7 @@ main_upgrade_idol_deployment "$@"
 
 setup_nifi_registry
 
+deploy_license_server
+
 echo ''
-log "${CALLING_SCRIPT} ${YELLOW}====================================${NC}"
-log "${CALLING_SCRIPT} ${YELLOW} NiFi access information            ${NC}"
-log "${CALLING_SCRIPT} ${YELLOW}------------------------------------${NC}"
-log "${CALLING_SCRIPT} ${YELLOW} Username: ${ORANGE}admin           ${NC}"
-log "${CALLING_SCRIPT} ${YELLOW} Password: ${ORANGE}Nifi-Admin1!    ${NC}"
-log "${CALLING_SCRIPT} ${YELLOW}====================================${NC}"
-echo ''
-log "${CALLING_SCRIPT} ${YELLOW}Log files are located at ${ORANGE}[/opt/idol/setup-idol/logs] ${YELLOW}folder.${NC}"
+log "${CALLING_SCRIPT} ${YELLOW}Log files are located at ${ORANGE}[$(pwd)/logs] ${YELLOW}folder.${NC}"

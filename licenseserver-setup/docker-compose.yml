@@ -16,9 +16,9 @@ services:
       - 20000:20000
       - 20002:20002
     networks:
-      - idol-licenseserver-network
+      - idol-network
 
 # NETWORK DEFINITIONS
 networks:
-  idol-licenseserver-network:
+  idol-network:
     external: true
