@@ -1,5 +1,7 @@
 logs/
 *.log
-
 env/
 *.env
+licenseserver-setup/idol_docker_key.txt
+licenseserver-setup/LicenseServer_25.3.0_LINUX_X86_64/licensekey.dat
+source_persistent_data_path/
