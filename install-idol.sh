@@ -140,7 +140,7 @@ update_idol_dockercompose_file(){
     # Set [idol-containers-toolkit] persistent data
     if [ -d "$IDOL_PRESERVE_PATH" ]; then
         log "${CALLING_SCRIPT} ${YELLOW}Directory already exists, skipping: [${IDOL_PRESERVE_PATH}] ${NC}"
-    else
+    elif [ "$IS_IDOL_PRESERVE" = "TRUE" ]; then
         mkdir -p "$IDOL_PRESERVE_PATH"
         sudo chown $USER:$USER $IDOL_PRESERVE_PATH
         log "${CALLING_SCRIPT} ${YELLOW}Directory created: [${IDOL_PRESERVE_PATH}] ${NC}"
@@ -149,7 +149,7 @@ update_idol_dockercompose_file(){
     # Get source [IDOL] persistence data path
     export source_persistent_data_path="./persistent-data"
 
-    mkdir -p source_persistent_data_path
+    mkdir -p $source_persistent_data_path
 
     # Copy [persistent-data/content] persistent data path
     cp -r $source_persistent_data_path/content $IDOL_PRESERVE_PATH
@@ -362,11 +362,32 @@ upgrade_idol_deployment_scripts(){
     log "${CALLING_SCRIPT} ${YELLOW}Copy script ${ORANGE}[docker-compose.expose-ports.yml]${NC}"
 }
 
+# Function to verify IDOL environment variables
+verify_idol_environment() {
+    export CALLING_SCRIPT="${CYAN}${EXE_SCRIPT_NAME%.*} [verify_idol_environment] module${ORANGE}"
+
+    log "${CALLING_SCRIPT} ${YELLOW}Verify IDOL environment variables...${NC}"
+    
+    local count=$(env | grep IDOL | wc -l)
+    
+    if [ $count -gt 5 ]; then
+        log "${CALLING_SCRIPT} ${YELLOW}Found ${GREEN}[${count}]${YELLOW} IDOL variables${NC}"
+        return 0
+    else
+        log "${CALLING_SCRIPT} ${YELLOW}Only ${RED}Exit - [${count}] IDOL variables found ${YELLOW}(expected more)${NC}"
+        log "${CALLING_SCRIPT} ${YELLOW}Execute ${ORANGE}[source ./env/export-env-variables.sh]${YELLOW} rerun the installation script${NC}"
+        exit 1
+    fi
+}
+
 ###############################
 ## Main Upgrade IDOL Deployment
 ###############################
 main_upgrade_idol_deployment() {
     export CALLING_SCRIPT="${CYAN}${EXE_SCRIPT_NAME%.*} [main_upgrade_idol_deployment] module${ORANGE}"
+
+    # verify that [env | grep IDOL] returns more than 5 rows if not EXIT
+    verify_idol_environment
 
     # IDOL pre-deployment 
     idol_predeployment
@@ -435,35 +456,12 @@ setup_nifi_registry() {
     log "${CALLING_SCRIPT} ${YELLOW}Setup Nif Registry is ${RED}[DISABLE]${NC}"
 }
 
-#############################
-## Deploy IDOL License Server 
-#############################
-deploy_license_server() {
-    export CALLING_SCRIPT="${CYAN}${EXE_SCRIPT_NAME%.*} [deploy_license_server] module${ORANGE}"
-    echo ''
-    log "${CALLING_SCRIPT} ${YELLOW}Deploy IDOL License Server...${NC}"
-
-    # Execute IDOL License Server deployment
-    $IDOL_LICENSE_SERVER_PATH/deploy-license-server.sh
-    rc=$?
-
-    if [ $rc -eq 0 ]; then
-        log "${CALLING_SCRIPT} ${YELLOW}Deploy IDOL License Server ${GREEN}[successfully]${NC}"
-    else
-        log "${CALLING_SCRIPT} ${RED}Failed to deploy IDOL License Server ${RED}failed with exit code: [$rc]${NC}"
-        log "${CALLING_SCRIPT} ${RED}Aborting operation${NC}"
-        exit 1
-    fi
-}
-
 # ********************************** #
 # ********** MAIN SECTION ********** #
 # ********************************** #
 main_upgrade_idol_deployment "$@"
 
 setup_nifi_registry
-
-deploy_license_server
 
 echo ''
 log "${CALLING_SCRIPT} ${YELLOW}Log files are located at ${ORANGE}[$(pwd)/logs] ${YELLOW}folder.${NC}"

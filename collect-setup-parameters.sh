@@ -129,7 +129,7 @@ prompt_yn() {
     local default="$2"
     local response
 
-    echo -e "${LIGHTER_YELLOW}"
+    echo -e "${PURPLE}"
     while true; do
         read -p "$prompt (Y/n): [default $default] " response
         response=${response:-${default}}
@@ -144,13 +144,76 @@ prompt_yn() {
     echo -e "${NC}"
 }
 
+# Function to write data to file
+write_to_file() {
+    local file_path="$1"
+    local data="$2"
+    
+    if [ -z "$file_path" ] || [ -z "$data" ]; then
+        echo "Usage: write_to_file <file_path> <data>"
+        return 1
+    fi
+    
+    echo "$data" > "$file_path"
+    return $?
+}
+
 ############################
 ## Setup IDOL License Server
 ############################
-# Function to Setup License Server
+# Function to get License Server IP address
+get_license_server_ip() {
+    export CALLING_SCRIPT="${CYAN}${EXE_SCRIPT_NAME%.*} [get_license_server_ip] module${ORANGE}"
+
+    log "${CALLING_SCRIPT} ${YELLOW}Get License Server IP address...${NC}"
+
+    local url="$1"
+    
+    if [ -z "$url" ]; then
+        log "${CALLING_SCRIPT} URL parameter is required: ${RED}[ERROR]${NC}"
+        log "${CALLING_SCRIPT} ${RED}Aborting operation${NC}"
+        return 1
+    fi
+    
+    # Display License Server URL
+    log "${CALLING_SCRIPT} ${LIGHTER_YELLOW}License Server URL is:${ORANGE} [$url]${NC}"
+
+    # Extract & Display License Server URL 
+    local domain=$(echo "$url" | sed -E 's|https?://([^:/]+).*|\1|')
+    log "${CALLING_SCRIPT} ${LIGHTER_YELLOW}License Server Domain is:${ORANGE} [$domain]${NC}"
+    
+    # Get IP using Python
+    local ip=$(python3 -c "
+import socket
+try:
+    ip = socket.gethostbyname('$domain')
+    print(ip)
+except:
+    pass
+" 2>/dev/null)
+    
+    if [ -n "$ip" ]; then
+        # Check if IP is localhost and exit if it is
+        if [ "$ip" = "127.0.0.1" ]; then
+            ip=$IDOL_NET_HOST_IP
+        fi
+        log "${CALLING_SCRIPT} ${LIGHTER_YELLOW}License Server IP is:${ORANGE} [$ip]${NC}"
+
+        echo "export IDOL_LICENSE_SERVER_URL=${url}" >> "$IDOL_ENV"  
+        echo "export IDOL_LICENSE_SERVER_DOMAIN=${domain}" >> "$IDOL_ENV"  
+        echo "export IDOL_LICENSE_SERVER_IP=${ip}" >> "$IDOL_ENV"  
+
+        return 0
+    else
+        log "${CALLING_SCRIPT} ${LIGHTER_YELLOW}Failed to resolve IP for License Server domain:${RED} [$domain]${NC}"
+        return 1
+    fi
+}
+
+# Function to get access to IDOL License Server
 setup_idol_licenseserver() {
     export CALLING_SCRIPT="${CYAN}${EXE_SCRIPT_NAME%.*} [setup_idol_licenseserver] module${ORANGE}"
-
+    echo ''
     log "${CALLING_SCRIPT} ${YELLOW}Setup License Server...${NC}"
 
     # Display Info
@@ -158,7 +221,7 @@ setup_idol_licenseserver() {
     log "${CALLING_SCRIPT} ${GREEN}##### IDOL License Server - Collect Setup Parameters ####${NC}"
     log "${CALLING_SCRIPT} ${GREEN}#########################################################${NC}"
     log "${CALLING_SCRIPT} ${GREEN}##### $(date +"%Y-%m-%d")                ${NC}"
-
+    echo ''
     echo -e "${YELLOW}Select the IDOL License Server Connecting Mode: ${NC}"
     echo -e "${YELLOW}1) Provide an active License Server URL: ${ORANGE}[default] ${NC}"
     echo -e "${YELLOW}2) Deploy an entirely new instance of License Server  ${NC}"
@@ -170,8 +233,12 @@ setup_idol_licenseserver() {
         case $selection in
             1)
                 export IDOL_LICENSE_SERVER_MODE=URL
-                read -p "Enter the license server URL [Format: http://<server>:<port>] (e.g., http://license.company.com:20000):" license_server_url
+                echo -e "${PURPLE}"
+                read -p "Enter the license server URL [Format: http://<server>:<port>] (e.g., http://license.company.com:20000):  " license_server_url
                 IDOL_LICENSE_SERVER_URL="${license_server_url}/a=getlicenseinfo"
+
+                # Get License Server IP address
+                get_license_server_ip $license_server_url
 
                 break
                 ;;
@@ -211,7 +278,10 @@ setup_idol_licenseserver() {
                 echo "export IDOL_LICENSE_SERVER_PATH=${IDOL_LICENSE_SERVER_PATH}" >> "$IDOL_ENV"  
 
                 target_licensekey_file="$target_licenseserver_path/licenseserver-setup/LicenseServer_25.3.0_LINUX_X86_64/licensekey.dat"
-                cp -p "$source_licensekey_file" "$target_licensekey_file"
+            
+                # Read source file content and pass as parameter
+                source_content=$(cat "$source_licensekey_file")
+                write_to_file "$target_licensekey_file" "$source_content"
                 log "${CALLING_SCRIPT} ${LIGHTER_YELLOW}Copy the [licensekey.dat] file to: ${GREEN}[${target_licenseserver_path}]${NC}"          
 
                 # Compute SHA-256 checksum of target file and save to variable
@@ -237,7 +307,12 @@ setup_idol_licenseserver() {
                     fi
                 done
 
+                # Get the licenseserver-setup folder path
+                licenseserver_setup_path=$(dirname "$(dirname "$target_licensekey_file")")
                 IDOL_LICENSE_SERVER_URL="http://localhost:20000/a=getlicenseinfo"
+                # Deploy a new IDOL License Server
+                deploy_new_license_server "$licenseserver_setup_path" "$IDOL_LICENSE_SERVER_URL"
+
                 break
                 ;;
             *)
@@ -252,12 +327,41 @@ setup_idol_licenseserver() {
     # Check License Server validation
     if curl -s $IDOL_LICENSE_SERVER_URL | grep -q "LicenseInfo"; then
         log "${CALLING_SCRIPT} License Server info is: ${GREEN}[VALID]${NC}"
+        echo "export IS_IDOL_VALIDATION_MET=TRUE" > $IDOL_ENV 
+        echo ''
     else
         log "${CALLING_SCRIPT} License Server info is: ${RED}[NOT VALID]${NC}"
         log "${CALLING_SCRIPT} ${RED}Aborting operation${NC}"
         log "${CALLING_SCRIPT} ⚠️ ${LIGHTER_YELLOW} Consider to copy maually the [licensekey.dat] to target: ${RED}[${IDOL_LICENSE_SERVER_PATH}/LicenseServer_25.3.0_LINUX_X86_64]${NC}"
+        echo "export IS_IDOL_VALIDATION_MET=ERROR" > $IDOL_ENV 
         exit 1
     fi
+}
+
+#################################
+## Deploy new IDOL License Server 
+#################################
+deploy_new_license_server(){
+    export CALLING_SCRIPT="${CYAN}${EXE_SCRIPT_NAME%.*} [deploy_new_license_server] module${ORANGE}"
+    echo ''
+    log "${CALLING_SCRIPT} ${YELLOW}Deploy new IDOL License Server...${NC}"
+
+    local file_path="$1"
+    local license_server_url="$2"
+
+    docker network create idol-network 
+
+    docker compose -f $file_path/docker-compose.yml down
+
+    sudo rm $file_path/LicenseServer_25.3.0_LINUX_X86_64/licenseserver.lck
+    sudo rm -fr $file_path/LicenseServer_25.3.0_LINUX_X86_64/uid
+    sudo rm -fr $file_path/LicenseServer_25.3.0_LINUX_X86_64/license
+
+    docker compose -f $file_path/docker-compose.yml up -d --build licenseserver
+
+    sleep 3
+
+    curl $license_server_url
 }
 
 ################
@@ -483,10 +587,11 @@ validate_idol_components(){
         log "${CALLING_SCRIPT} 🔔 ${PURPLE}To apply the changes, restart ${LIGHTER_YELLOW}[Docker]${NC}"
     fi
 }
-validate_prerequisites(){
-    export CALLING_SCRIPT="${CYAN}${EXE_SCRIPT_NAME%.*} [validate_prerequisites] module${ORANGE}"
 
-    log "${CALLING_SCRIPT} ${YELLOW}Validate Prerequisites...${NC} ${YELLOW}"
+validate_idol_prerequisites(){
+    export CALLING_SCRIPT="${CYAN}${EXE_SCRIPT_NAME%.*} [validate_idol_prerequisites] module${ORANGE}"
+
+    log "${CALLING_SCRIPT} ${YELLOW}Validate IDOL Prerequisites...${NC} ${YELLOW}"
 
     # Validate IDOL Prerequisites is Met
     echo "export IS_IDOL_VALIDATION_MET=UNVALIDATION" > $IDOL_ENV 
@@ -736,10 +841,12 @@ get_idol_cluster_ip() {
     case "$prompt_msg" in
         Host)
             # Selected Host IP
+            export IDOL_NET_HOST_IP=$selected_ip
             echo "export IDOL_NET_HOST_IP=$selected_ip" >> "$IDOL_ENV"
             ;;
         Guest)
             # Selected Guest IP
+            export IDOL_NET_GUEST_IP=$selected_ip
             echo "export IDOL_NET_GUEST_IP=$selected_ip" >> "$IDOL_ENV"
             ;;
         *)
@@ -873,7 +980,7 @@ set_idol_toolkit_path(){
     log "${CALLING_SCRIPT} ${YELLOW}Set IDOL toolkit path...${NC}"
     # Define IDOL toolkit path
     while true; do
-        echo -e "${LIGHTER_YELLOW}Enter IDOL toolkit path:${ORANGE}"
+        echo -e "${LIGHTER_YELLOW}Enter IDOL toolkit path:${PURPLE}" 
         read -p "   [default /opt/idol/idol-containers-toolkit Or type a custom path] " host_toolkit_path
         host_toolkit_path=${host_toolkit_path:-"/opt/idol/idol-containers-toolkit"}
 
@@ -898,14 +1005,22 @@ get_idol_preserve_status(){
     echo ''
     log "${CALLING_SCRIPT} ${YELLOW}Set IDOL preserve status [Yes/No]...${NC}"
 
+    # IMPORTANT!!! Before setting up NiFi container...
+    log "${CALLING_SCRIPT}📌 ${YELLOW}Data Preservation Options:${NC}"
+    log "${CALLING_SCRIPT}📌    ${PURPLE}1. Preserve data OUTSIDE container (Recommended - Select ${YELLOW}YES${PURPLE}) ${NC}"
+    log "${CALLING_SCRIPT}📌    ${PURPLE}   - Data persists when container is removed/recreated                          ${NC}"
+    log "${CALLING_SCRIPT}📌    ${PURPLE}   - The [NIFI] should be set to an ${YELLOW}EXISTING${PURPLE} NIFI backup path ${NC}"
+    log "${CALLING_SCRIPT}📌    ${PURPLE}2. Keep data INSIDE container (Select ${YELLOW}NO${PURPLE})                     ${NC}"
+    log "${CALLING_SCRIPT}📌    ${PURPLE}   - Data is lost when container is removed                                     ${NC}"
+
     # Considered of enabling the IDOL preserve status [Yes/No]
-    if prompt_yn "Do you want to enable the IDOL preserve data [./content and ./find] folders outside the containers?" "Y"; then  
+    if prompt_yn "Do you want to enable the IDOL preserve data folders outside the containers?" "Y"; then  
         IS_IDOL_PRESERVE="TRUE"
     else   
         IS_IDOL_PRESERVE="FALSE"
     fi
     echo "export IS_IDOL_PRESERVE=${IS_IDOL_PRESERVE}" >> $IDOL_ENV 
-    log "${CALLING_SCRIPT} Enable IDOL preserve data [./content and ./find] outside the container set to: ${YELLOW}[$IS_IDOL_PRESERVE]${NC}"
+    log "${CALLING_SCRIPT} Enable IDOL preserve data outside the container set to: ${YELLOW}[$IS_IDOL_PRESERVE]${NC}"
 
     # IDOL preserve data outside the container is [ENABLED]
     if [ "$IS_IDOL_PRESERVE" = "TRUE" ]; then
@@ -916,25 +1031,17 @@ get_idol_preserve_status(){
         set_idol_preserve_find_path
     fi
 
-    # IMPORTANT!!! Before setting up NiFi container...
-    log "${CALLING_SCRIPT}📌 ${YELLOW}Data Preservation Options:${NC}"
-    log "${CALLING_SCRIPT}📌        ${PURPLE}1. Preserve data OUTSIDE container (Recommended - Select YES)                   ${NC}"
-    log "${CALLING_SCRIPT}📌        ${PURPLE}   - Data persists when container is removed/recreated                          ${NC}"
-    log "${CALLING_SCRIPT}📌        ${PURPLE}   - The [NIFI] should be set to an ${YELLOW}EXISTING${PURPLE} NIFI backup path ${NC}"
-    log "${CALLING_SCRIPT}📌        ${PURPLE}2. Keep data INSIDE container (Select NO)                                       ${NC}"
-    log "${CALLING_SCRIPT}📌        ${PURPLE}   - Data is lost when container is removed                                     ${NC}"
-
-    # Considered of enabling the IDOL [NIFI] preserve status [Yes/No]
-    if prompt_yn "Do you want to preserve [NIFI] data outside the container?" "n"; then  
+    # Considered of enabling the IDOL nifi preserve status [Yes/No]
+    if prompt_yn "Do you want to preserve NIFI data outside the container?" "n"; then  
         export IS_IDOL_NIFI_PRESERVE="TRUE"
+
+        # Set IDOL nifi persistence path
+        set_idol_nifi_persistence_path
     else   
         export IS_IDOL_NIFI_PRESERVE="FALSE"
     fi
     echo "export IS_IDOL_NIFI_PRESERVE=${IS_IDOL_NIFI_PRESERVE}" >> $IDOL_ENV 
-    log "${CALLING_SCRIPT} Enable IDOL preserve [NIFI] data outside the container set to: ${YELLOW}[$IS_IDOL_NIFI_PRESERVE]${NC}"
-
-    # Set IDOL nifi persistence path
-    set_idol_nifi_persistence_path
+    log "${CALLING_SCRIPT} Enable IDOL preserve NIFI data outside the container set to: ${YELLOW}[$IS_IDOL_NIFI_PRESERVE]${NC}"
 }
 
 # Set IDOL local Preserve [CONTENT] path
@@ -1012,7 +1119,7 @@ create_idol_host_storage_mapping(){
     log "${CALLING_SCRIPT} ${YELLOW}Create idol host storage mapping...${NC}"
     # Define IDOL host storage mapping 
     while true; do
-        echo -e "${LIGHTER_YELLOW}Enter IDOL host storage mapping path:${ORANGE}"
+        echo -e "${LIGHTER_YELLOW}Enter IDOL host storage mapping path:${PURPLE}"
         read -p "   default /mnt/c/OpenText/hotfolder Or type a custom path] " host_path
         host_path=${host_path:-"/mnt/c/OpenText/hotfolder"}
 
@@ -1163,7 +1270,7 @@ idol_deployment_preparation() {
     log "Script started. Log path: ${LOGFILE}"
 
     # validate idol prerequisites components
-    validate_prerequisites
+    validate_idol_prerequisites
 
     # Get IDOL host FQDN
     get_idol_host_fqdn
@@ -1251,8 +1358,6 @@ main() {
 # ********************************** #
 echo "export IS_IDOL_VALIDATION_MET=INIT" > $IDOL_ENV 
 main "$@"
-
-source ./env/export-env-variables.sh 
 
 echo ''
 log "${CALLING_SCRIPT} ${YELLOW}Log files are located at ${ORANGE}[$(pwd)/logs] ${YELLOW}folder.${NC}"
