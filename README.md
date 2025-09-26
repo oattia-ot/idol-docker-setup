@@ -14,7 +14,7 @@ This README documents the complete configuration and installation process for Op
 
 ## 📋 Requirements
 
-- **Operating System**: WSL Ubuntu 24.04 (Tested with 6 processors, 50 GB disk, and 64 GB memory)
+- **Operating System**: Ubuntu 24.04 (Tested with 6 processors, 50 GB disk, and 64 GB memory over **WSL** Env.)
 - **Privileges**: Root or sudo access required
 - **Network**: Internet connection for Docker installation
 - **License**: IDOL license file (`licensekey.dat`) 
@@ -41,7 +41,11 @@ The script can optionally validate the following prerequisites:
 
 ## Installation Workflow
 
-### Step 1: Parameter Collection
+### Step 1: Clone the Repository
+```bash
+git clone https://github.com/oattia-ot/idol-docker-setup.git
+```
+### Step 2: Parameter Collection
 ```bash
 cd setup-idol/
 ./collect-setup-parameters.sh
@@ -51,14 +55,14 @@ cd setup-idol/
 - Validates license and Docker access
 - Optionally validates prerequisites
 
-### Step 2: Environment Setup
+### Step 3: Environment Setup
 ```bash
 source env/export-env-variables.sh
 ```
 - Loads all configuration variables into the shell environment
 - Required before running the installation script
 
-### Step 3: IDOL Installation
+### Step 4: IDOL Installation
 ```bash
 ./install-idol.sh
 ```
