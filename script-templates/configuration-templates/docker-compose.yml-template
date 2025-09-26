@@ -1,0 +1,178 @@
+# ==============================
+# === Updated by: Oren Attia
+# ==============================
+
+###
+# Copyright (c) 2019-2020 Micro Focus or one of its affiliates.
+#
+# Licensed under the MIT License (the "License"); you may not use this file
+# except in compliance with the License.
+#
+# The only warranties for products and services of Micro Focus and its affiliates
+# and licensors ("Micro Focus") are as may be set forth in the express warranty
+# statements accompanying such products and services. Nothing herein should be
+# construed as constituting an additional warranty. Micro Focus shall not be
+# liable for technical or editorial errors or omissions contained herein. The
+# information contained herein is subject to change without notice.
+###
+
+# Basic IDOL container setup
+# Uses nifi to ingest and index data into content
+# Uses find to make search results available
+# Default admin user is created for find in the community service
+#  - see community/run_community.sh for details
+
+version: "3.8"
+name: idol-demo
+
+x-common-labels: &common-labels
+  docker-compose/instance: ${INSTANCE:-basic-idol}
+
+x-common-server: &common-server
+# Change the IP to the address of an external IDOL LicenseServer instance
+  extra_hosts:
+  - idol-licenseserver:${LICENSESERVER_IP}
+  labels:
+    <<: *common-labels
+
+# Any files dropped into this volume will be ingested and indexed
+volumes:
+  idol-ingest-volume:
+    labels:
+      <<: *common-labels
+
+services:
+  idol-content: 
+    <<: *common-server
+    image: ${IDOL_REGISTRY}/content:${IDOL_SERVER_VERSION}
+    #HTTPS-PLACEHOLDERenvironment:
+      #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_CERT_PATH=/certs/nifi-cert.pem
+      #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_KEY_PATH=/certs/nifi-key.key
+    volumes:
+      #HTTPS-PLACEHOLDER- CERTS-PATH-PLACEHOLDER:/certs
+      - CONTENT-PATH-PLACEHOLDER/cfg:/content/cfg # this mounts an external cfg folder
+      - CONTENT-PATH-PLACEHOLDER/index:/content/index # this mounts an external index
+    networks:
+      - idol-network
+  idol-agentstore:
+    <<: *common-server
+    image: ${IDOL_REGISTRY}/agentstore:${IDOL_SERVER_VERSION}
+    networks:
+      - idol-network
+    #HTTPS-PLACEHOLDERenvironment:
+      #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_CERT_PATH=/certs/nifi-cert.pem
+      #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_KEY_PATH=/certs/nifi-key.key
+    #HTTPS-PLACEHOLDERvolumes:
+      #HTTPS-PLACEHOLDER- CERTS-PATH-PLACEHOLDER:/certs
+  idol-categorisation-agentstore:
+    <<: *common-server
+    image: ${IDOL_REGISTRY}/categorisation-agentstore:${IDOL_SERVER_VERSION}
+    networks:
+      - idol-network
+    #HTTPS-PLACEHOLDERenvironment:
+      #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_CERT_PATH=/certs/nifi-cert.pem
+      #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_KEY_PATH=/certs/nifi-key.key
+    #HTTPS-PLACEHOLDERvolumes:
+      #HTTPS-PLACEHOLDER- CERTS-PATH-PLACEHOLDER:/certs
+  idol-community:
+    <<: *common-server
+    image: ${IDOL_REGISTRY}/community:${IDOL_SERVER_VERSION}
+    networks:
+      - idol-network
+    #HTTPS-PLACEHOLDERenvironment:
+      #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_CERT_PATH=/certs/nifi-cert.pem
+      #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_KEY_PATH=/certs/nifi-key.key
+    #HTTPS-PLACEHOLDERvolumes:
+      #HTTPS-PLACEHOLDER- CERTS-PATH-PLACEHOLDER:/certs
+    depends_on:
+      - idol-content
+      - idol-agentstore
+  idol-view:
+    <<: *common-server
+    image: ${IDOL_REGISTRY}/view:${IDOL_SERVER_VERSION}
+    networks:
+      - idol-network
+    #HTTPS-PLACEHOLDERenvironment:
+      #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_CERT_PATH=/certs/nifi-cert.pem
+      #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_KEY_PATH=/certs/nifi-key.key
+    #HTTPS-PLACEHOLDERvolumes:
+      #HTTPS-PLACEHOLDER- CERTS-PATH-PLACEHOLDER:/certs
+    depends_on:
+      - idol-agentstore
+  idol-nifi:
+    <<: *common-server
+    image: ${IDOL_REGISTRY}/NIFI-IMAGE-NAME-PLACEHOLDER:${IDOL_SERVER_VERSION} # choose nifi-minimal or nifi-full
+    shm_size: 256m
+    networks:
+      - idol-network
+    environment:
+      - NIFI_WEB_PROXY_CONTEXT_PATH=/idol-nifi
+      - NIFI_SENSITIVE_PROPS_KEY=my_nifi_sensitive_props_key
+      #HTTP: configuration Section
+      #HTTP-PLACEHOLDER- NIFI_WEB_HTTP_PORT=8081
+      #HTTP-PLACEHOLDER- IDOL_NIFI_FLOWFILE=/opt/nifi/scripts/flow-basic-idol.json
+      #HTTPS: configuration Section
+      #HTTPS-PLACEHOLDER- NIFI_WEB_HTTPS_PORT=NIFI-PORT-PLACEHOLDER
+      #HTTPS-PLACEHOLDER- NIFI_WEB_PROXY_HOST=localhost,127.0.0.1,idol-docker-host:NIFI-PORT-PLACEHOLDER,NIFI-FQDN-PLACEHOLDER:NIFI-PORT-PLACEHOLDER
+      #HTTPS-PLACEHOLDER- SINGLE_USER_CREDENTIALS_USERNAME=admin
+      #HTTPS-PLACEHOLDER- SINGLE_USER_CREDENTIALS_PASSWORD=Nifi-Admin1!
+      #HTTPS Security: keystore and truststore from TLS Toolkit Section
+      #HTTPS-PLACEHOLDER- NIFI_SECURITY_KEYSTORE=/ssl/keystore.jks
+      #HTTPS-PLACEHOLDER- NIFI_SECURITY_KEYSTORE_TYPE=JKS
+      #HTTPS-PLACEHOLDER- NIFI_SECURITY_KEYSTORE_PASSWD=tzw3M41HnOuYbClTJVCMc6fSCre4pI9HEuGxBRWxVko
+      #HTTPS-PLACEHOLDER- NIFI_SECURITY_TRUSTSTORE=/ssl/truststore.jks
+      #HTTPS-PLACEHOLDER- NIFI_SECURITY_TRUSTSTORE_TYPE=JKS
+      #HTTPS-PLACEHOLDER- NIFI_SECURITY_TRUSTSTORE_PASSWD=jbtRNhoigLhvXtgsrox99MJgBOQSh63/aHrYyPNCpZw
+      #HTTPS persistent: Enable IDOL preserve data outside the container Section
+      #HTTPS-PLACEHOLDER- NIFI_DATABASE_DIRECTORY=./database_repository
+      #HTTPS-PLACEHOLDER- NIFI_FLOWFILE_REPOSITORY_DIRECTORY=./flowfile_repository
+      #HTTPS-PLACEHOLDER- NIFI_PROVENANCE_REPOSITORY_DIRECTORY_DEFAULT=./provenance_repository
+      #HTTPS-PLACEHOLDER- NIFI_CONTENT_REPOSITORY_DIRECTORY_DEFAULT=./content_repository
+    volumes:
+      - idol-ingest-volume:/idol-ingest
+      #HTTPS-PLACEHOLDER- ./certs/ca-certs:/ssl
+      #IS-IDOL-NIFI-PRESERVE- NIFI-PATH-PLACEHOLDER:/opt/nifi/nifi-current
+      #HTTP-PLACEHOLDER- ./nifi/resources/import-flow.sh:/opt/nifi/scripts/import-flow.sh
+      #HTTP-PLACEHOLDER- ./nifi/resources/basic-idol-entrypoint.sh:/opt/nifi/scripts/basic-idol-entrypoint.sh
+      #HTTP-PLACEHOLDER- ./nifi/flow/basic.json:/opt/nifi/scripts/flow-basic-idol.json
+    #HTTP-PLACEHOLDERentrypoint:
+      #HTTP-PLACEHOLDER- sh
+      #HTTP-PLACEHOLDER- -c
+      #HTTP-PLACEHOLDER- "/opt/nifi/scripts/basic-idol-entrypoint.sh"
+  idol-find:
+    image: ${IDOL_REGISTRY}/find:${IDOL_SERVER_VERSION}
+    volumes:
+      - FIND-PATH-PLACEHOLDER/home:/opt/find/home
+      #HTTPS-PLACEHOLDER- CERTS-PATH-PLACEHOLDER:/certs
+    networks:
+      - idol-network
+    labels:
+      <<: *common-labels
+    environment:
+      - IDOL_UI_CFG=config_basic.json # this controls the configuration of Find
+      #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_CERT_PATH=/certs/nifi-cert.pem
+      #HTTPS-PLACEHOLDER- IDOL_SSL_COMPONENT_KEY_PATH=/certs/nifi-key.key
+      #HTTPS-PLACEHOLDER- IDOL_UI_SSL_PKCS_FILE=/certs/find-ui.pkcs12
+      #HTTPS-PLACEHOLDER- IDOL_UI_SSL_PKCS_PASS=1234
+      #HTTPS-PLACEHOLDER- IDOL_UI_ROOT_CERTIFICATE=/certs/nifi-cert.pem
+    depends_on:
+      - idol-community
+      - idol-view
+  httpd-reverse-proxy:
+    image: httpd:2.4
+    networks:
+      - idol-network
+    labels:
+      <<: *common-labels
+    volumes:
+      - ./httpd-reverse-proxy/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
+    depends_on:
+      - idol-find
+      - idol-nifi
+    ports:
+      - 8080:8080
+
+# NETWORK DEFINITIONS
+networks:
+  idol-network:
+    external: true

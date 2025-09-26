@@ -1,0 +1,392 @@
+{
+	"flowContents": {
+		"identifier": "af040c09-f06c-33f4-8d22-2f617f089e67",
+		"instanceIdentifier": "48d7c0c0-0193-1000-8500-3e78c03a3411",
+		"name": "Process TMT Zip",
+		"comments": "",
+		"position": {
+			"x": 592.0,
+			"y": 432.0
+		},
+		"processGroups": [],
+		"remoteProcessGroups": [],
+		"processors": [
+			{
+				"identifier": "0bdec3c7-1e5e-3382-8a53-398ccc77f160",
+				"instanceIdentifier": "eb46636e-2f19-3e28-fac3-2cbc603a52fb",
+				"name": "Process TMT Zip",
+				"comments": "",
+				"position": {
+					"x": 837.0000049636444,
+					"y": 433.99999327583796
+				},
+				"type": "idol.nifi.processor.ExecuteDocumentLua",
+				"bundle": {
+					"group": "idol.nifi",
+					"artifact": "idol-nifi-framework",
+					"version": "25.1.0-nifi1-SNAPSHOT"
+				},
+				"properties": {
+					"LuaScriptFunctionArguments": "LuaFlowFileDocument,LuaProcessorSession",
+					"AdditionalOutputRelationships": "taskerdoc,doclibdoc",
+					"LuaScriptFile": "local tmt_zip_reader = require(\"tmt_zip_reader\")\n\nfunction handler(flowfiledocument, session)\n    \n    local ref = flowfiledocument:getReference()\n    local refAction = flowfiledocument:getReferenceAction()\n    local metadata = nil\n    local zipsData = {}\n    \n    -- Read zip content into zipsData\n    flowfiledocument:read({\n        preAction = function(action)\n            metadata = action:getXmlMetadata()\n        end,\n        defaultFileAction = function(action)\n            action:readAsFilename(\n                function(filename)\n                    local zipData = tmt_zip_reader.readZipFile(filename)\n                    if zipData.id ~= nil then\n                        table.insert(zipsData, zipData)\n                    end\n                end)\n        end})\n    \n    -- Process zipsData by generating and transferring output FlowFiles\n    for _,zipData in ipairs(zipsData) do\n        \n        local ffdoct = session:create(ref..\":\"..zipData.id, refAction, flowfiledocument)\n        local metat = nil\n        ffdoct:modify({\n            postAction = function(action)\n                if zipData.printpreview_tempfile ~= nil then\n                    action:addFilename(zipData.printpreview_tempfile, true, \"application/pdf\")\n                end\n                metat = action:getXmlMetadata()\n                for _,e in ipairs({ metadata:getChildren() }) do\n                    metat:appendChild(e)\n                end\n                for k,v in pairs(zipData.taskermetadata) do\n                    metat:addChild(k):setValue(v)\n                end\n            end})\n        \n        for _,docLibDoc in ipairs(zipData.doclibs) do\n                \n            local ffdocd = session:create(\n                ref..\":\"..zipData.id..\":\"..docLibDoc.library_name..\"/\"..docLibDoc.document_name, refAction, ffdoct)\n            ffdocd:modify({\n                postAction = function(action)\n                    if docLibDoc.document_tempfile ~= nil then\n                        action:addFilename(docLibDoc.document_tempfile, true)\n                    end\n                    local metad = action:getXmlMetadata()\n                    for _,e in ipairs({ metat:getChildren() }) do\n                        metad:appendChild(e)\n                    end\n                    for k,v in pairs(docLibDoc) do\n                        if k ~= \"document_tempfile\" then\n                        \tmetad:addChild(k):setValue(v)\n                        end\n                    end\n                end})\n            \n            session:transfer(ffdocd, \"doclibdoc\")\n                \n        end\n\n        session:transfer(ffdoct, \"taskerdoc\")\n        \n    end\nend\n",
+					"RouteUntransferredTo": null,
+					"DocumentRegistryService": null,
+					"RouteReturnedTo": "",
+					"EnableDebugger": "false",
+					"IdolLicenseService": "#{Idol License Service}",
+					"RouteTo": "original",
+					"LuaScriptFunction": "handler",
+					"lua:tmt_zip_reader": "-- TMT zip reader\n-- The readZipFile function returns a structure as follows:\n--\n-- {\n--     id = 'prefix from [ID]_TaskerMetadata.xml file in zip',\n--     printpreview_tempfile = 'temporary filename to PrintPreview.pdf',\n--     taskermetadata = {\n--         key = 'value',\n--         ...\n--     },\n--     doclibs = {\n--         1 = {\n--             library_name = 'library name',\n--             library_siteurl = 'library siteurl',\n--             document_type = 'type'\n--             document_modifiedby = 'modifiedby'\n--             document_modifieddate = 'modifieddate'\n--             document_name = 'name'\n--             document_tempfile = 'temporary filename to document'\n--         },\n--         2 = {...},\n--         ...\n--     }\n-- }\n--\n-- Usage:\n--   local tmt_zip_reader = require(\"tmt_zip_reader\")\n--   tmt_zip_reader.readZipFile(zipfilename)\n\nlocal tmt_zip_reader = {}\n\nfunction readFile(filename)\n    local f = io.open(filename, \"rb\")\n    local content = f:read(\"a\")\n    f:close()\n    return content\nend\n\nfunction readFileFromZipToStr(zipfilename, file)\n    local temp = get_temp_file()\n    zip_extract(zipfilename, file, temp)\n    local content = readFile(temp)\n    os.remove(temp)\n    return content\nend\n\nfunction taskerMetadataRead(xmlstring)\n    local xml = parse_xml(xmlstring)\n    local nodes = xml:XPathExecute(\"/Tasker/Attribute\")\n    local data = {}\n    for _,node in nodes:ipairs() do\n        local name = node:attribute(\"Name\"):value()\n        local type = node:attribute(\"Type\"):value()\n        local content = node:content()\n        if type == \"System.String\" then\n            data[name] = content:sub(2,-2)\n        else\n            data[name] = content\n        end\n    end\n    return data\nend\n\nfunction spMetadataRead(zipfilename, xmlstring, doclib_name, data)\n    local xml = parse_xml(xmlstring)\n    local nodes = xml:XPathExecute(\"/Documents/Library\")\n    for _,node in nodes:ipairs() do\n        local libraryName = node:attribute(\"Name\"):value()\n        local siteUrl = node:attribute(\"SiteUrl\"):value()\n        local docNode = node:firstChild()\n        while docNode ~= nil do\n            local docData = { library_name=libraryName, library_siteurl=siteUrl }\n            docData.document_type = docNode:attribute(\"Type\"):value()\n            docData.document_modifiedby = docNode:attribute(\"ModifiedBy\"):value()\n            docData.document_modifieddate = docNode:attribute(\"ModifiedDate\"):value()\n            docData.document_name = docNode:content()\n            local temp = get_temp_file(\"\", \".\"..docData.document_type)\n            if zip_extract(zipfilename, \"DocLibs/\"..doclib_name..\"/\"..docData.document_name, temp) then\n  \t\t\t\tdocData.document_tempfile = temp\n            end\n            table.insert(data, docData)\n            docNode = docNode:next()\n        end\n    end\nend\n\nfunction tmt_zip_reader.readZipFile(zipfilename)\n    local files = { zip_list(zipfilename) }\n    local result = {}\n    for _,file in pairs(files) do\n        result.id = file:match(\"^([^/]+)_TaskerMetadata%.xml$\")\n        if result.id ~= nil then\n  \t\t\tresult.taskermetadata = taskerMetadataRead(readFileFromZipToStr(zipfilename, file))\n            break\n        end\n\tend\n    if result.id ~= nil then\n        for _,file in pairs(files) do\n            if file == result.id..\"_PrintPreview.pdf\" then\n                local temp = get_temp_file(\"\", \".pdf\")\n                if zip_extract(zipfilename, file, temp) then\n                    result.printpreview_tempfile = temp\n                end\n            else\n                if result.doclibs == nil then\n                    result.doclibs = {}\n                end\n                local doclib_name = file:match(\"^DocLibs/([^/]+)_SPMetadata.xml$\")\n                if doclib_name ~= nil then\n                \tspMetadataRead(zipfilename, readFileFromZipToStr(zipfilename, file), doclib_name, result.doclibs)\n                end\n            end\n        end\n    end\n    return result\nend\n\nreturn tmt_zip_reader"
+				},
+				"propertyDescriptors": {
+					"LuaScriptFunctionArguments": {
+						"name": "LuaScriptFunctionArguments",
+						"displayName": "Lua script function arguments",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"AdditionalOutputRelationships": {
+						"name": "AdditionalOutputRelationships",
+						"displayName": "Additional output relationships",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"LuaScriptFile": {
+						"name": "LuaScriptFile",
+						"displayName": "Lua script file",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"RouteUntransferredTo": {
+						"name": "RouteUntransferredTo",
+						"displayName": "Route untransferred to",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"DocumentRegistryService": {
+						"name": "DocumentRegistryService",
+						"displayName": "Document Registry Service",
+						"identifiesControllerService": true,
+						"sensitive": false
+					},
+					"RouteReturnedTo": {
+						"name": "RouteReturnedTo",
+						"displayName": "Route returned to",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"EnableDebugger": {
+						"name": "EnableDebugger",
+						"displayName": "Enable Debugger",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"RouteTo": {
+						"name": "RouteTo",
+						"displayName": "Route to",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"LuaScriptFunction": {
+						"name": "LuaScriptFunction",
+						"displayName": "Lua script function",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"lua:tmt_zip_reader": {
+						"name": "lua:tmt_zip_reader",
+						"displayName": "lua:tmt_zip_reader",
+						"identifiesControllerService": false,
+						"sensitive": false
+					}
+				},
+				"style": {},
+				"annotationData": "",
+				"schedulingPeriod": "0 sec",
+				"schedulingStrategy": "TIMER_DRIVEN",
+				"executionNode": "ALL",
+				"penaltyDuration": "30 sec",
+				"yieldDuration": "1 sec",
+				"bulletinLevel": "ERROR",
+				"runDurationMillis": 0,
+				"concurrentlySchedulableTaskCount": 1,
+				"autoTerminatedRelationships": [],
+				"scheduledState": "ENABLED",
+				"retryCount": 0,
+				"retriedRelationships": [],
+				"backoffMechanism": "PENALIZE_FLOWFILE",
+				"maxBackoffPeriod": "10 mins",
+				"componentType": "PROCESSOR",
+				"groupIdentifier": "af040c09-f06c-33f4-8d22-2f617f089e67"
+			}
+		],
+		"inputPorts": [],
+		"outputPorts": [],
+		"connections": [
+			{
+				"identifier": "39aa1d9a-26ed-3084-8a9a-a0ad3d3de653",
+				"instanceIdentifier": "78257db1-fdc0-3dad-8dad-fff8767bd970",
+				"name": "",
+				"source": {
+					"id": "0bdec3c7-1e5e-3382-8a53-398ccc77f160",
+					"type": "PROCESSOR",
+					"groupId": "af040c09-f06c-33f4-8d22-2f617f089e67",
+					"name": "Process TMT Zip",
+					"comments": "",
+					"instanceIdentifier": "eb46636e-2f19-3e28-fac3-2cbc603a52fb"
+				},
+				"destination": {
+					"id": "622eb241-56f5-3e03-8b35-96cfe334e018",
+					"type": "FUNNEL",
+					"groupId": "af040c09-f06c-33f4-8d22-2f617f089e67",
+					"name": "Funnel",
+					"comments": "",
+					"instanceIdentifier": "0d72baea-ec1d-377e-1359-7f367f6548cf"
+				},
+				"labelIndex": 1,
+				"zIndex": 0,
+				"selectedRelationships": [
+					"taskerdoc"
+				],
+				"backPressureObjectThreshold": 10000,
+				"backPressureDataSizeThreshold": "1 GB",
+				"flowFileExpiration": "0 sec",
+				"prioritizers": [],
+				"bends": [],
+				"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+				"partitioningAttribute": "",
+				"loadBalanceCompression": "DO_NOT_COMPRESS",
+				"componentType": "CONNECTION",
+				"groupIdentifier": "af040c09-f06c-33f4-8d22-2f617f089e67"
+			},
+			{
+				"identifier": "de21af9e-2290-3be2-b77f-39eb768d8a41",
+				"instanceIdentifier": "defc20c9-379c-3945-db2e-2afc83056c99",
+				"name": "",
+				"source": {
+					"id": "0bdec3c7-1e5e-3382-8a53-398ccc77f160",
+					"type": "PROCESSOR",
+					"groupId": "af040c09-f06c-33f4-8d22-2f617f089e67",
+					"name": "Process TMT Zip",
+					"comments": "",
+					"instanceIdentifier": "eb46636e-2f19-3e28-fac3-2cbc603a52fb"
+				},
+				"destination": {
+					"id": "6ea671c8-19cf-39ea-b783-d2457adcf20e",
+					"type": "FUNNEL",
+					"groupId": "af040c09-f06c-33f4-8d22-2f617f089e67",
+					"name": "Funnel",
+					"comments": "",
+					"instanceIdentifier": "f937c471-96ef-3155-9808-6ddba67276ef"
+				},
+				"labelIndex": 1,
+				"zIndex": 0,
+				"selectedRelationships": [
+					"doclibdoc"
+				],
+				"backPressureObjectThreshold": 10000,
+				"backPressureDataSizeThreshold": "1 GB",
+				"flowFileExpiration": "0 sec",
+				"prioritizers": [],
+				"bends": [],
+				"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+				"partitioningAttribute": "",
+				"loadBalanceCompression": "DO_NOT_COMPRESS",
+				"componentType": "CONNECTION",
+				"groupIdentifier": "af040c09-f06c-33f4-8d22-2f617f089e67"
+			},
+			{
+				"identifier": "3ca0ff97-607f-33f5-8dbc-965b6621d7d3",
+				"instanceIdentifier": "8e09b639-bd8c-3e4e-728f-256a72f71fa3",
+				"name": "",
+				"source": {
+					"id": "1d5d15d4-1ce1-3e5d-b482-1903965d5838",
+					"type": "FUNNEL",
+					"groupId": "af040c09-f06c-33f4-8d22-2f617f089e67",
+					"name": "Funnel",
+					"comments": "",
+					"instanceIdentifier": "1700641f-7965-3505-1beb-e4cfa176d1a5"
+				},
+				"destination": {
+					"id": "0bdec3c7-1e5e-3382-8a53-398ccc77f160",
+					"type": "PROCESSOR",
+					"groupId": "af040c09-f06c-33f4-8d22-2f617f089e67",
+					"name": "Process TMT Zip",
+					"comments": "",
+					"instanceIdentifier": "eb46636e-2f19-3e28-fac3-2cbc603a52fb"
+				},
+				"labelIndex": 1,
+				"zIndex": 0,
+				"selectedRelationships": [
+					""
+				],
+				"backPressureObjectThreshold": 10000,
+				"backPressureDataSizeThreshold": "1 GB",
+				"flowFileExpiration": "0 sec",
+				"prioritizers": [],
+				"bends": [],
+				"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+				"partitioningAttribute": "",
+				"loadBalanceCompression": "DO_NOT_COMPRESS",
+				"componentType": "CONNECTION",
+				"groupIdentifier": "af040c09-f06c-33f4-8d22-2f617f089e67"
+			},
+			{
+				"identifier": "8e5c5037-ad20-38d6-aa14-cdce1bddab61",
+				"instanceIdentifier": "8857f9c6-80ed-3dda-c5bd-e37a9643647d",
+				"name": "",
+				"source": {
+					"id": "0bdec3c7-1e5e-3382-8a53-398ccc77f160",
+					"type": "PROCESSOR",
+					"groupId": "af040c09-f06c-33f4-8d22-2f617f089e67",
+					"name": "Process TMT Zip",
+					"comments": "",
+					"instanceIdentifier": "eb46636e-2f19-3e28-fac3-2cbc603a52fb"
+				},
+				"destination": {
+					"id": "6b7a02a2-c217-345b-8ea2-c24696d66f4c",
+					"type": "FUNNEL",
+					"groupId": "af040c09-f06c-33f4-8d22-2f617f089e67",
+					"name": "Funnel",
+					"comments": "",
+					"instanceIdentifier": "889050b6-ffdb-3969-b934-4ae471b180de"
+				},
+				"labelIndex": 1,
+				"zIndex": 0,
+				"selectedRelationships": [
+					"failure"
+				],
+				"backPressureObjectThreshold": 10000,
+				"backPressureDataSizeThreshold": "1 GB",
+				"flowFileExpiration": "0 sec",
+				"prioritizers": [],
+				"bends": [],
+				"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+				"partitioningAttribute": "",
+				"loadBalanceCompression": "DO_NOT_COMPRESS",
+				"componentType": "CONNECTION",
+				"groupIdentifier": "af040c09-f06c-33f4-8d22-2f617f089e67"
+			},
+			{
+				"identifier": "9a95e178-9532-36e4-be70-1c189c5e8e5c",
+				"instanceIdentifier": "ccb796aa-cc79-358e-64bb-b6a3962b4c5c",
+				"name": "",
+				"source": {
+					"id": "0bdec3c7-1e5e-3382-8a53-398ccc77f160",
+					"type": "PROCESSOR",
+					"groupId": "af040c09-f06c-33f4-8d22-2f617f089e67",
+					"name": "Process TMT Zip",
+					"comments": "",
+					"instanceIdentifier": "eb46636e-2f19-3e28-fac3-2cbc603a52fb"
+				},
+				"destination": {
+					"id": "1aeb846f-d9a1-3682-bb64-e19116b0ab3d",
+					"type": "FUNNEL",
+					"groupId": "af040c09-f06c-33f4-8d22-2f617f089e67",
+					"name": "Funnel",
+					"comments": "",
+					"instanceIdentifier": "9edace4b-a3dc-359c-c1ef-27f3ab5c9de5"
+				},
+				"labelIndex": 1,
+				"zIndex": 0,
+				"selectedRelationships": [
+					"original"
+				],
+				"backPressureObjectThreshold": 10000,
+				"backPressureDataSizeThreshold": "1 GB",
+				"flowFileExpiration": "0 sec",
+				"prioritizers": [],
+				"bends": [],
+				"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+				"partitioningAttribute": "",
+				"loadBalanceCompression": "DO_NOT_COMPRESS",
+				"componentType": "CONNECTION",
+				"groupIdentifier": "af040c09-f06c-33f4-8d22-2f617f089e67"
+			}
+		],
+		"labels": [],
+		"funnels": [
+			{
+				"identifier": "1aeb846f-d9a1-3682-bb64-e19116b0ab3d",
+				"instanceIdentifier": "9edace4b-a3dc-359c-c1ef-27f3ab5c9de5",
+				"position": {
+					"x": 1189.0000049636445,
+					"y": 641.9999932758379
+				},
+				"componentType": "FUNNEL",
+				"groupIdentifier": "af040c09-f06c-33f4-8d22-2f617f089e67"
+			},
+			{
+				"identifier": "622eb241-56f5-3e03-8b35-96cfe334e018",
+				"instanceIdentifier": "0d72baea-ec1d-377e-1359-7f367f6548cf",
+				"position": {
+					"x": 1453.0000049636445,
+					"y": 433.99999327583796
+				},
+				"componentType": "FUNNEL",
+				"groupIdentifier": "af040c09-f06c-33f4-8d22-2f617f089e67"
+			},
+			{
+				"identifier": "1d5d15d4-1ce1-3e5d-b482-1903965d5838",
+				"instanceIdentifier": "1700641f-7965-3505-1beb-e4cfa176d1a5",
+				"position": {
+					"x": 989.0000049636444,
+					"y": 321.99999327583796
+				},
+				"componentType": "FUNNEL",
+				"groupIdentifier": "af040c09-f06c-33f4-8d22-2f617f089e67"
+			},
+			{
+				"identifier": "6ea671c8-19cf-39ea-b783-d2457adcf20e",
+				"instanceIdentifier": "f937c471-96ef-3155-9808-6ddba67276ef",
+				"position": {
+					"x": 1453.0000049636445,
+					"y": 513.9999932758379
+				},
+				"componentType": "FUNNEL",
+				"groupIdentifier": "af040c09-f06c-33f4-8d22-2f617f089e67"
+			},
+			{
+				"identifier": "6b7a02a2-c217-345b-8ea2-c24696d66f4c",
+				"instanceIdentifier": "889050b6-ffdb-3969-b934-4ae471b180de",
+				"position": {
+					"x": 789.0000049636444,
+					"y": 641.9999932758379
+				},
+				"componentType": "FUNNEL",
+				"groupIdentifier": "af040c09-f06c-33f4-8d22-2f617f089e67"
+			}
+		],
+		"controllerServices": [],
+		"variables": {},
+		"parameterContextName": "Process TMT Zip Parameters",
+		"defaultFlowFileExpiration": "0 sec",
+		"defaultBackPressureObjectThreshold": 10000,
+		"defaultBackPressureDataSizeThreshold": "1 GB",
+		"logFileSuffix": "",
+		"componentType": "PROCESS_GROUP",
+		"flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE",
+		"flowFileConcurrency": "UNBOUNDED"
+	},
+	"externalControllerServices": {},
+	"parameterContexts": {
+		"Process TMT Zip Parameters": {
+			"name": "Process TMT Zip Parameters",
+			"parameters": [
+				{
+					"name": "Idol License Service",
+					"description": "",
+					"sensitive": false,
+					"provided": false,
+					"value": "c0b6b907-9763-35fc-b7e6-2615ec27bce7"
+				}
+			],
+			"inheritedParameterContexts": [],
+			"componentType": "PARAMETER_CONTEXT"
+		}
+	},
+	"flowEncodingVersion": "1.0",
+	"parameterProviders": {},
+	"latest": false
+}

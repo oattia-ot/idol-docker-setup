@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<template encoding-version="1.2">
+    <description>Used to route documents based upon the Reference Action (i.e. add, remove, update, ...)</description>
+    <groupId>0163101e-7c29-1d8f-f78f-0fb216cbd925</groupId>
+    <name>Route On Reference Action</name>
+    <snippet>
+        <processors>
+            <id>8135b481-c235-32e3-0000-000000000000</id>
+            <parentGroupId>a3622e3e-1761-33a7-0000-000000000000</parentGroupId>
+            <position>
+                <x>0.0</x>
+                <y>0.0</y>
+            </position>
+            <bundle>
+                <artifact>nifi-standard-nar</artifact>
+                <group>org.apache.nifi</group>
+                <version>1.5.0</version>
+            </bundle>
+            <config>
+                <bulletinLevel>WARN</bulletinLevel>
+                <comments></comments>
+                <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                <descriptors>
+                    <entry>
+                        <key>Routing Strategy</key>
+                        <value>
+                            <name>Routing Strategy</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>add</key>
+                        <value>
+                            <name>add</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>remove</key>
+                        <value>
+                            <name>remove</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>update</key>
+                        <value>
+                            <name>update</name>
+                        </value>
+                    </entry>
+                </descriptors>
+                <executionNode>ALL</executionNode>
+                <lossTolerant>false</lossTolerant>
+                <penaltyDuration>30 sec</penaltyDuration>
+                <properties>
+                    <entry>
+                        <key>Routing Strategy</key>
+                        <value>Route to Property name</value>
+                    </entry>
+                    <entry>
+                        <key>add</key>
+                        <value>${idol.reference.action:equalsIgnoreCase('add')}</value>
+                    </entry>
+                    <entry>
+                        <key>remove</key>
+                        <value>${idol.reference.action:equalsIgnoreCase('remove')}</value>
+                    </entry>
+                    <entry>
+                        <key>update</key>
+                        <value>${idol.reference.action:equalsIgnoreCase('update')}</value>
+                    </entry>
+                </properties>
+                <runDurationMillis>0</runDurationMillis>
+                <schedulingPeriod>0 sec</schedulingPeriod>
+                <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                <yieldDuration>1 sec</yieldDuration>
+            </config>
+            <name>RouteOnReferenceAction</name>
+            <relationships>
+                <autoTerminate>false</autoTerminate>
+                <name>add</name>
+            </relationships>
+            <relationships>
+                <autoTerminate>false</autoTerminate>
+                <name>remove</name>
+            </relationships>
+            <relationships>
+                <autoTerminate>false</autoTerminate>
+                <name>unmatched</name>
+            </relationships>
+            <relationships>
+                <autoTerminate>false</autoTerminate>
+                <name>update</name>
+            </relationships>
+            <state>STOPPED</state>
+            <style/>
+            <type>org.apache.nifi.processors.standard.RouteOnAttribute</type>
+        </processors>
+    </snippet>
+    <timestamp>05/30/2018 16:14:31 BST</timestamp>
+</template>

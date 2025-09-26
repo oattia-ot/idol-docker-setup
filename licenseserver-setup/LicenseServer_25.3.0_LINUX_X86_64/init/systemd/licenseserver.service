@@ -1,0 +1,46 @@
+[Unit]
+Description=IDOL License Server
+Requires=network.target
+After=network.target
+# Add other dependency if required, eg. NFS mount
+# RequiresMountsFor=/mnt/data
+# After=mnt-data.mount
+
+[Service]
+# ExecStart is the main process of the service
+Type=simple
+# ExecStart=__COMPONENT_INSTALL_DIR__/licenseserver.exe -configfile __COMPONENT_INSTALL_DIR__/licenseserver.cfg
+ExecStart=/opt/idol/licenseserver/licenseserver.exe -configfile /opt/idol/licenseserver/licenseserver.cfg
+
+# Ensures stdin, stdout and stderr are all connected to /dev/null
+StandardInput=null
+StandardOutput=null
+StandardError=null
+
+# Uncomment to set the LD_LIBRARY_PATH
+#Environment="LD_LIBRARY_PATH=__COMPONENT_LD_LIBRARY_PATH__"
+
+# Set the user and group to execute the process as
+# User=__USER__
+# Group=__GROUP__
+User=kduser
+Group=kduser
+
+# WorkingDirectory=__COMPONENT_INSTALL_DIR__
+WorkingDirectory=/opt/idol/licenseserver
+
+# Waits 60 seconds on startup before considered failed
+TimeoutStartSec=60
+# Waits 30 seconds on shutdown before sending a SIGTERM, then a further 30 seconds before sending a SIGKILL
+TimeoutStopSec=30
+
+#To override the default limit on the number of open files, uncomment the line below
+#LimitNOFILE=65536
+
+#If using a systemd-style environment file to set environment variables for the process, uncomment the line below 
+#EnvironmentFile=__ENVIRONMENT_FILE__
+
+[Install]
+# Start on machine startup
+WantedBy=multi-user.target
+

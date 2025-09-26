@@ -1,0 +1,16 @@
+logs/
+*.log
+env/
+*.env
+troubleshooting/
+utilities/
+licenseserver-setup/idol_docker_key.txt
+licenseserver-setup/LicenseServer_25.3.0_LINUX_X86_64/licenseserver.lck
+licenseserver-setup/LicenseServer_25.3.0_LINUX_X86_64/licensekey.dat
+<<<<<<< HEAD
+source_persistent_data_path/
+=======
+licenseserver-setup/LicenseServer_25.3.0_LINUX_X86_64/uid/
+licenseserver-setup/LicenseServer_25.3.0_LINUX_X86_64/license/
+source_persistent_data_path/
+>>>>>>> 1a77886 (v32 commit)

@@ -1,0 +1,24 @@
+version: '3.8'
+name: idol-demo
+
+services:
+  licenseserver:
+    hostname: licenseserver
+    mac_address: MAC-ADDRESS-PLACEHOLDER
+    container_name: licenseserver
+    build:
+      context: ./
+      dockerfile: dockerfile
+    image: licenseserver:latest
+    volumes:
+      - ./LicenseServer_25.3.0_LINUX_X86_64:/LicenseServer_25.3.0_LINUX_X86_64
+    ports:
+      - 20000:20000
+      - 20002:20002
+    networks:
+      - idol-network
+
+# NETWORK DEFINITIONS
+networks:
+  idol-network:
+    external: true

@@ -1,0 +1,70 @@
+################
+## Pre Setup
+################
+# Function to prefix entry in file
+update_prefix_entry_in_file() {
+    export CALLING_SCRIPT="${CYAN}${EXE_SCRIPT_NAME%.*} [update_prefix_entry_in_file] module${ORANGE}"
+
+    local match_string="$1"
+    local new_string="$2"
+    local file_path="$3"
+
+    # Check if match_string exists
+    if ! grep -q -- "${match_string}" "$file_path"; then
+        log "${CALLING_SCRIPT} ${RED}${match_string}' Not found in ${file_path} exiting...${NC}"
+        log "${CALLING_SCRIPT} ${RED}${match_string}' Check in [script-templates/configuration-templates/] folder the content of [${file_path}]. exiting...${NC}"
+    fi
+    # Replace the whole line with match_string=new_string
+    sed -i "s|${match_string}|${new_string}|g" "$file_path"
+    log "${CALLING_SCRIPT} ${YELLOW}Replace match value ${ORANGE}[${match_string}]${YELLOW} with ${ORANGE}[${new_string}] ${YELLOW}in file ${ORANGE}[${file_path}]${NC}"
+}
+
+# Use the collected parameter values to update the [nifi.properties] file
+update_idol_secure_nifi_properties_file(){
+    export CALLING_SCRIPT="${CYAN}${EXE_SCRIPT_NAME%.*} [update_idol_secure_nifi_properties_file] module${ORANGE}"
+
+    log "${CALLING_SCRIPT} ${YELLOW}Use the collected parameter values to update the [nifi.properties] file...${NC}"
+
+    # Update [nifi.properties] file
+    TEMPLATE_PATH="./script-templates/configuration-templates/nifi.properties-secure-template"
+    TARGET_PATH="./${IDOL_SETUP_TYPE}/nifi.properties"
+    cp $TEMPLATE_PATH $TARGET_PATH
+    log "${CALLING_SCRIPT} ${YELLOW}Copy [${TEMPLATE_PATH}] to [$TARGET_PATH] ${NC}"
+ 
+    update_prefix_entry_in_file "#HTTPS-PLACEHOLDER" "" "${TARGET_PATH}"
+    log "${CALLING_SCRIPT} ${LIGHTER_YELLOW} IDOL SSL is ${GREEN}[ENABLE]${NC}"
+
+    update_prefix_entry_in_file "NIFI-PORT-PLACEHOLDER" "${IDOL_NIFI_PORT_NUMBER}" "${TARGET_PATH}"
+    log "${CALLING_SCRIPT} ${LIGHTER_YELLOW}Nifi port number is ${GREEN}[${IDOL_NIFI_PORT_NUMBER}].${NC}"
+}
+
+# Use the collected parameter values to update the [docker-compose.ssl.yml] file
+update_idol_dockercompose_ssl_file(){
+    export CALLING_SCRIPT="${CYAN}${EXE_SCRIPT_NAME%.*} [update_idol_dockercompose_ssl_file] module${ORANGE}"
+
+    log "${CALLING_SCRIPT} ${YELLOW}Use the collected parameter values to update the [docker-compose.ssl.yml] file...${NC}"
+
+    # Update [docker-compose.ssl.yml] file
+    TEMPLATE_PATH="./script-templates/configuration-templates/docker-compose.ssl.yml-template"
+    TARGET_PATH="./${IDOL_SETUP_TYPE}/docker-compose.ssl.yml"
+    cp $TEMPLATE_PATH $TARGET_PATH
+    log "${CALLING_SCRIPT} ${YELLOW}Copy [${TEMPLATE_PATH}] to [$TARGET_PATH] ${NC}"
+ 
+    ### THIS SECTION IS DISABLE AS NO CHAGES NEED TO BE TO [docker-compose.ssl.yml] FILE
+    ### update_prefix_entry_in_file "NIFI-IMAGE-NAME-PLACEHOLDER" "${IDOL_NIFI_DEPLOY_TYPE}" "${TARGET_PATH}"
+    ### log "${CALLING_SCRIPT} ⚠️ ${LIGHTER_YELLOW} IDOL deployment type is ${ORANGE}[${IDOL_NIFI_DEPLOY_TYPE}]${NC}"
+}
+
+# Copy ssl certificates files to [./idol-containers-toolkit/basic-idol/certs] folder
+copy_ssl_certificates_to_idol_toolkit(){
+    export CALLING_SCRIPT="${CYAN}${EXE_SCRIPT_NAME%.*} [copy_ssl_certificates_to_idol_toolkit] module${ORANGE}"
+
+    log "${CALLING_SCRIPT} ${YELLOW}Copy ${ORANGE}[SSL certificates files to [./idol-containers-toolkit/basic-idol/certs]${YELLOW} folder...${NC}"
+
+    # Update [docker-compose.ssl.yml] file
+    SOURCE_PATH="./idol-secure-setup/certs/"
+    TARGET_PATH="${IDOL_TOOLKIT_PATH}/basic-idol/"
+    cp -r $SOURCE_PATH $TARGET_PATH
+    log "${CALLING_SCRIPT} ${YELLOW}Copy ssl certificates from ${ORANGE}[${SOURCE_PATH}]${YELLOW} to ${ORANGE}[$TARGET_PATH] ${NC}"
+    log "${CALLING_SCRIPT} ${YELLOW}    Copy command: ${ORANGE}[cp -r ${SOURCE_PATH} ${TARGET_PATH}] ${NC}"
+}

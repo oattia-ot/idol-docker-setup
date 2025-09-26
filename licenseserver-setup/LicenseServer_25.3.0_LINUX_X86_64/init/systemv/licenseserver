@@ -1,0 +1,229 @@
+#!/bin/bash
+# IDOL License Server auto-start
+#
+# chkconfig: 2345 69 31
+# description: Auto-starts IDOL License Server
+
+# Paths and executables
+
+# Uncomment to set the LD_LIBRARY_PATH
+# export LD_LIBRARY_PATH=__COMPONENT_LD_LIBRARY_PATH__
+EXEC_DIR=__COMPONENT_INSTALL_DIR__
+EXECUTABLE=licenseserver.exe
+SSD_LOCKFILE=/var/lock/licenseserver.pid
+LOCKFILES=(__COMPONENT_INSTALL_DIR__/Q.PID __COMPONENT_INSTALL_DIR__/licenseserver.pid)
+STARTUP_LOG=__COMPONENT_INSTALL_DIR__/licenseserver.log
+
+# User settings
+MYUSER="__USER__"
+MYGROUP="__GROUP__"
+
+# ACI Server port
+ACIPORT=__COMPONENT_ACI_PORT__
+SERVICEPORT=__COMPONENT_SERVICE_PORT__
+
+#Uncomment if using SSL
+#URL_START=https://localhost:
+#SERVICEPORT_URL_START=https://localhost:
+
+# If using a bash-style environment file for setting environment variables, uncomment the below
+#source __ENVIRONMENT_FILE__
+
+# Leave as defaults
+SLEEPTIME=2
+URL_START=${URL_START-"http://localhost:"}
+SERVICEPORT_URL_START=${SERVICEPORT_URL_START-"http://localhost:"}
+URL_END=${URL_END-"/a=getpid"}
+LOOKING_FOR="SUCCESS"
+SERVICEPORT=${SERVICEPORT--1}
+
+which start-stop-daemon > /dev/null 2>&1
+HAVE_STARTSTOPDAEMON=$?
+
+if [ $HAVE_STARTSTOPDAEMON -eq 0 ]
+then
+    LOCKFILE=$SSD_LOCKFILE
+else
+    for L in ${LOCKFILES[@]}; do
+        if [ -f $L ]
+        then
+            LOCKFILE=$L
+            break
+        fi
+    done
+fi
+
+waitForPid() {
+    if [ -z "$1" ]
+    then
+        echo "No PID passed to waitForPid - returning"
+        return 0
+    else
+        local PID=$1
+        echo "Waiting for process" $PID "to terminate"
+        while [ -e /proc/$PID ];
+        do
+            sleep $SLEEPTIME
+        done
+        echo "Process" $PID "has terminated"
+        return 0
+    fi
+}
+
+isAciServerUp() {
+    which curl >> /dev/null
+    if [ $? -eq 1 ]
+    then
+        echo "Cannot check status of ACI server as curl is not installed"
+        echo "Assuming that ACI server is OK"
+        return 0
+    fi
+
+    curl -s --insecure $URL_START$ACIPORT$URL_END | grep $LOOKING_FOR >> /dev/null
+    return $?
+}
+
+
+waitForSuccess() {
+    echo "Waiting for ACI server on" $ACIPORT "to be available"
+    isAciServerUp
+    while [ $? -ne 0 ]
+    do
+        sleep $SLEEPTIME
+        isAciServerUp
+    done
+    echo "ACI server on port" $ACIPORT "reports successful launch"
+    return 0
+}
+
+startComponent() {
+    echo "Attempting to start IDOL Component:" $EXECUTABLE
+
+    if [[ "$MYUSER" == $USER ]]
+    then
+        echo "Already running as user"
+        if [ $HAVE_STARTSTOPDAEMON -eq 0 ]
+        then
+            echo "Starting using start-stop-daemon"
+            start-stop-daemon --start \
+                --exec $EXEC_DIR/$EXECUTABLE \
+                -d $EXEC_DIR \
+                -m --pidfile $LOCKFILE \
+                &>$STARTUP_LOG &
+        else
+            echo "Starting using nohup"
+            cd $EXEC_DIR && nohup $EXEC_DIR/$EXECUTABLE &>$STARTUP_LOG &
+            for L in ${LOCKFILES[@]}; do
+                if [ -f $L ]
+                then
+                    LOCKFILE=$L
+                    break
+                fi
+            done
+        fi
+    else
+        echo "Starting" $EXECUTABLE "as" $MYUSER
+        if [ $HAVE_STARTSTOPDAEMON -eq 0 ]
+        then
+            echo "Starting using start-stop-daemon"
+            start-stop-daemon --start \
+                --exec $EXEC_DIR/$EXECUTABLE \
+                -d $EXEC_DIR \
+                --user $MYUSER --group $MYGROUP --chuid $MYUSER \
+                -m --pidfile $LOCKFILE \
+                &>$STARTUP_LOG &
+        else
+            echo "Starting using nohup"
+            cd $EXEC_DIR && su $MYUSER -c "nohup $EXEC_DIR/$EXECUTABLE &>$STARTUP_LOG &"
+            for L in ${LOCKFILES[@]}; do
+                if [ -f $L ]
+                then
+                    LOCKFILE=$L
+                    break
+                fi
+            done
+        fi
+    fi
+    waitForSuccess
+    return 0
+}
+
+stopComponent() {
+
+    printStatus
+    STATUS=$?
+
+    if [ $STATUS -eq 0 ]
+    then
+        local PID=`cat $LOCKFILE`
+
+        if [ $SERVICEPORT -eq -1 ]
+        then
+            kill $PID
+            echo "Killed" $EXECUTABLE "process"
+        else
+            local STOP_COMMAND="/action=stop"
+            curl -s --insecure $SERVICEPORT_URL_START$SERVICEPORT$STOP_COMMAND >> /dev/null
+            echo "Issued stop command to" $EXECUTABLE ": $SERVICEPORT_URL_START$SERVICEPORT$STOP_COMMAND"
+        fi
+
+        waitForPid $PID
+
+        if [ -e /proc/$PID ]
+        then
+            echo "Process didn't die or isn't dead yet..."
+            echo "Leaving lock file - may become stale"
+        else
+            echo "Process is dead - removing lock file"
+            rm $LOCKFILE
+        fi
+    else
+        echo $EXECUTABLE "not running - aborting stop command"
+    fi
+    return 0
+}
+
+restartComponent() {
+    local PID=`cat $LOCKFILE`
+
+    echo "Stopping" $EXECUTABLE
+    stopComponent
+
+    echo "Starting" $EXECUTABLE
+    startComponent
+    return 0
+}
+
+printStatus() {
+    if [ -f "$LOCKFILE" ]
+    then
+        if ps --no-headers -p `cat $LOCKFILE` > /dev/null
+        then
+            echo "Running"
+            return 0
+        else
+            echo "Not running - PID is stale or process has terminated"
+            return 2
+        fi
+    else
+        echo "Not running - no lockfile"
+        return 2
+    fi
+}
+
+
+case $1 in
+    start)
+        startComponent
+    ;;
+    stop)
+        stopComponent
+    ;;
+    restart)
+        restartComponent
+    ;;
+    status)
+        printStatus
+esac
+exit $?
+

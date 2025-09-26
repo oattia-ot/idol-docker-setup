@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<template encoding-version="1.2">
+    <description></description>
+    <groupId>6b948ec5-016c-1000-5b76-99d0f1a7d14d</groupId>
+    <name>Connector ACI Server</name>
+    <snippet>
+        <connections>
+            <id>4c22a466-0fb4-3332-0000-000000000000</id>
+            <parentGroupId>f903c499-0d3d-3ba5-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>f903c499-0d3d-3ba5-0000-000000000000</groupId>
+                <id>b5657ccf-9bd2-3aa8-0000-000000000000</id>
+                <type>OUTPUT_PORT</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <source>
+                <groupId>b1d86658-b987-39dc-0000-000000000000</groupId>
+                <id>f78ce253-298c-3d98-0000-000000000000</id>
+                <type>OUTPUT_PORT</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>ad1f31c5-745d-3722-0000-000000000000</id>
+            <parentGroupId>f903c499-0d3d-3ba5-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <destination>
+                <groupId>f903c499-0d3d-3ba5-0000-000000000000</groupId>
+                <id>b1033f0a-09c8-3933-0000-000000000000</id>
+                <type>OUTPUT_PORT</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <source>
+                <groupId>b1d86658-b987-39dc-0000-000000000000</groupId>
+                <id>6f844989-76ef-3a1d-0000-000000000000</id>
+                <type>OUTPUT_PORT</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>f12515a4-339d-39c1-0000-000000000000</id>
+            <parentGroupId>f903c499-0d3d-3ba5-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <bends>
+                <x>297.2036125144186</x>
+                <y>217.93464664293623</y>
+            </bends>
+            <destination>
+                <groupId>b1d86658-b987-39dc-0000-000000000000</groupId>
+                <id>86b57e74-a6f1-32c3-0000-000000000000</id>
+                <type>INPUT_PORT</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>1</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <selectedRelationships>response</selectedRelationships>
+            <source>
+                <groupId>f903c499-0d3d-3ba5-0000-000000000000</groupId>
+                <id>239cbd5e-64b0-31aa-0000-000000000000</id>
+                <type>PROCESSOR</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <connections>
+            <id>f21ed1df-7e0b-3927-0000-000000000000</id>
+            <parentGroupId>f903c499-0d3d-3ba5-0000-000000000000</parentGroupId>
+            <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+            <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+            <bends>
+                <x>63.17844905074878</x>
+                <y>218.25270850804037</y>
+            </bends>
+            <destination>
+                <groupId>f903c499-0d3d-3ba5-0000-000000000000</groupId>
+                <id>239cbd5e-64b0-31aa-0000-000000000000</id>
+                <type>PROCESSOR</type>
+            </destination>
+            <flowFileExpiration>0 sec</flowFileExpiration>
+            <labelIndex>0</labelIndex>
+            <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+            <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+            <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+            <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+            <name></name>
+            <source>
+                <groupId>b1d86658-b987-39dc-0000-000000000000</groupId>
+                <id>23d66ee6-a683-3f4b-0000-000000000000</id>
+                <type>OUTPUT_PORT</type>
+            </source>
+            <zIndex>0</zIndex>
+        </connections>
+        <outputPorts>
+            <id>b1033f0a-09c8-3933-0000-000000000000</id>
+            <parentGroupId>f903c499-0d3d-3ba5-0000-000000000000</parentGroupId>
+            <position>
+                <x>630.4297317427043</x>
+                <y>3.780120922591152</y>
+            </position>
+            <comments></comments>
+            <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+            <name>ACI Success</name>
+            <state>STOPPED</state>
+            <transmitting>false</transmitting>
+            <type>OUTPUT_PORT</type>
+        </outputPorts>
+        <outputPorts>
+            <id>b5657ccf-9bd2-3aa8-0000-000000000000</id>
+            <parentGroupId>f903c499-0d3d-3ba5-0000-000000000000</parentGroupId>
+            <position>
+                <x>629.4297317427043</x>
+                <y>102.26711280491537</y>
+            </position>
+            <comments></comments>
+            <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+            <name>ACI Failure</name>
+            <state>STOPPED</state>
+            <transmitting>false</transmitting>
+            <type>OUTPUT_PORT</type>
+        </outputPorts>
+        <processGroups>
+            <id>b1d86658-b987-39dc-0000-000000000000</id>
+            <parentGroupId>f903c499-0d3d-3ba5-0000-000000000000</parentGroupId>
+            <position>
+                <x>0.0</x>
+                <y>0.0</y>
+            </position>
+            <comments></comments>
+            <contents>
+                <connections>
+                    <id>0f62db07-29f3-32d7-0000-000000000000</id>
+                    <parentGroupId>b1d86658-b987-39dc-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>b1d86658-b987-39dc-0000-000000000000</groupId>
+                        <id>23d66ee6-a683-3f4b-0000-000000000000</id>
+                        <type>OUTPUT_PORT</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <selectedRelationships>request</selectedRelationships>
+                    <source>
+                        <groupId>b1d86658-b987-39dc-0000-000000000000</groupId>
+                        <id>12715781-e597-3a2b-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>386f7ff3-6ec3-3aec-0000-000000000000</id>
+                    <parentGroupId>b1d86658-b987-39dc-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>b1d86658-b987-39dc-0000-000000000000</groupId>
+                        <id>6f844989-76ef-3a1d-0000-000000000000</id>
+                        <type>OUTPUT_PORT</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <selectedRelationships>success</selectedRelationships>
+                    <source>
+                        <groupId>b1d86658-b987-39dc-0000-000000000000</groupId>
+                        <id>c256515e-ba0c-38fb-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>9eca771c-b24e-3c55-0000-000000000000</id>
+                    <parentGroupId>b1d86658-b987-39dc-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>b1d86658-b987-39dc-0000-000000000000</groupId>
+                        <id>c256515e-ba0c-38fb-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <source>
+                        <groupId>b1d86658-b987-39dc-0000-000000000000</groupId>
+                        <id>86b57e74-a6f1-32c3-0000-000000000000</id>
+                        <type>INPUT_PORT</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <connections>
+                    <id>d155ac17-f464-3d66-0000-000000000000</id>
+                    <parentGroupId>b1d86658-b987-39dc-0000-000000000000</parentGroupId>
+                    <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+                    <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+                    <destination>
+                        <groupId>b1d86658-b987-39dc-0000-000000000000</groupId>
+                        <id>f78ce253-298c-3d98-0000-000000000000</id>
+                        <type>OUTPUT_PORT</type>
+                    </destination>
+                    <flowFileExpiration>0 sec</flowFileExpiration>
+                    <labelIndex>1</labelIndex>
+                    <loadBalanceCompression>DO_NOT_COMPRESS</loadBalanceCompression>
+                    <loadBalancePartitionAttribute></loadBalancePartitionAttribute>
+                    <loadBalanceStatus>LOAD_BALANCE_NOT_CONFIGURED</loadBalanceStatus>
+                    <loadBalanceStrategy>DO_NOT_LOAD_BALANCE</loadBalanceStrategy>
+                    <name></name>
+                    <selectedRelationships>failure</selectedRelationships>
+                    <source>
+                        <groupId>b1d86658-b987-39dc-0000-000000000000</groupId>
+                        <id>c256515e-ba0c-38fb-0000-000000000000</id>
+                        <type>PROCESSOR</type>
+                    </source>
+                    <zIndex>0</zIndex>
+                </connections>
+                <controllerServices>
+                    <id>5824bbdb-0d96-3332-0000-000000000000</id>
+                    <parentGroupId>b1d86658-b987-39dc-0000-000000000000</parentGroupId>
+                    <bundle>
+                        <artifact>idol-nifi-framework</artifact>
+                        <group>idol.nifi</group>
+                    </bundle>
+                    <descriptors>
+                        <entry>
+                            <key>Asynchronous Request Expiration</key>
+                            <value>
+<name>Asynchronous Request Expiration</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>DatabaseService</key>
+                            <value>
+<identifiesControllerService>idol.nifi.service.DatabaseService</identifiesControllerService>
+<name>DatabaseService</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Maximum Outstanding Asynchronous Requests</key>
+                            <value>
+<name>Maximum Outstanding Asynchronous Requests</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Asynchronous Response Expiration</key>
+                            <value>
+<name>Asynchronous Response Expiration</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Maximum Outstanding Synchronous Requests</key>
+                            <value>
+<name>Maximum Outstanding Synchronous Requests</name>
+                            </value>
+                        </entry>
+                        <entry>
+                            <key>Synchronous Request Expiration</key>
+                            <value>
+<name>Synchronous Request Expiration</name>
+                            </value>
+                        </entry>
+                    </descriptors>
+                    <name>AciContextServiceImpl</name>
+                    <persistsState>false</persistsState>
+                    <properties>
+                        <entry>
+                            <key>Asynchronous Request Expiration</key>
+                        </entry>
+                        <entry>
+                            <key>DatabaseService</key>
+                        </entry>
+                        <entry>
+                            <key>Maximum Outstanding Asynchronous Requests</key>
+                        </entry>
+                        <entry>
+                            <key>Asynchronous Response Expiration</key>
+                        </entry>
+                        <entry>
+                            <key>Maximum Outstanding Synchronous Requests</key>
+                        </entry>
+                        <entry>
+                            <key>Synchronous Request Expiration</key>
+                        </entry>
+                    </properties>
+                    <state>ENABLED</state>
+                    <type>idol.nifi.service.AciContextServiceImpl</type>
+                </controllerServices>
+                <inputPorts>
+                    <id>86b57e74-a6f1-32c3-0000-000000000000</id>
+                    <parentGroupId>b1d86658-b987-39dc-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>270.6390380859375</x>
+                        <y>323.0000029122968</y>
+                    </position>
+                    <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                    <name>Connector Response</name>
+                    <state>STOPPED</state>
+                    <type>INPUT_PORT</type>
+                </inputPorts>
+                <outputPorts>
+                    <id>23d66ee6-a683-3f4b-0000-000000000000</id>
+                    <parentGroupId>b1d86658-b987-39dc-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>-127.3609619140625</x>
+                        <y>324.0000029122968</y>
+                    </position>
+                    <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                    <name>Connector Request</name>
+                    <state>STOPPED</state>
+                    <type>OUTPUT_PORT</type>
+                </outputPorts>
+                <outputPorts>
+                    <id>6f844989-76ef-3a1d-0000-000000000000</id>
+                    <parentGroupId>b1d86658-b987-39dc-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>822.5000026751384</x>
+                        <y>133.0000029122968</y>
+                    </position>
+                    <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                    <name>Connector ACI Success</name>
+                    <state>STOPPED</state>
+                    <type>OUTPUT_PORT</type>
+                </outputPorts>
+                <outputPorts>
+                    <id>f78ce253-298c-3d98-0000-000000000000</id>
+                    <parentGroupId>b1d86658-b987-39dc-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>822.5000026751384</x>
+                        <y>217.0000029122968</y>
+                    </position>
+                    <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                    <name>Connector ACI Failure</name>
+                    <state>STOPPED</state>
+                    <type>OUTPUT_PORT</type>
+                </outputPorts>
+                <processors>
+                    <id>12715781-e597-3a2b-0000-000000000000</id>
+                    <parentGroupId>b1d86658-b987-39dc-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>-182.3609619140625</x>
+                        <y>131.44851684570312</y>
+                    </position>
+                    <bundle>
+                        <artifact>idol-nifi-framework</artifact>
+                        <group>idol.nifi</group>
+                    </bundle>
+                    <config>
+                        <bulletinLevel>WARN</bulletinLevel>
+                        <comments></comments>
+                        <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                        <descriptors>
+                            <entry>
+<key>ACI Context Service</key>
+<value>
+    <identifiesControllerService>idol.nifi.service.AciContextService</identifiesControllerService>
+    <name>ACI Context Service</name>
+</value>
+                            </entry>
+                            <entry>
+<key>container-queue-size</key>
+<value>
+    <name>container-queue-size</name>
+</value>
+                            </entry>
+                            <entry>
+<key>request</key>
+<value>
+    <name>request</name>
+</value>
+                            </entry>
+                            <entry>
+<key>SSL Context Service</key>
+<value>
+    <identifiesControllerService>org.apache.nifi.ssl.RestrictedSSLContextService</identifiesControllerService>
+    <name>SSL Context Service</name>
+</value>
+                            </entry>
+                            <entry>
+<key>Hostname</key>
+<value>
+    <name>Hostname</name>
+</value>
+                            </entry>
+                            <entry>
+<key>sync-actions</key>
+<value>
+    <name>sync-actions</name>
+</value>
+                            </entry>
+                            <entry>
+<key>Listening Port</key>
+<value>
+    <name>Listening Port</name>
+</value>
+                            </entry>
+                        </descriptors>
+                        <executionNode>ALL</executionNode>
+                        <lossTolerant>false</lossTolerant>
+                        <penaltyDuration>30 sec</penaltyDuration>
+                        <properties>
+                            <entry>
+<key>ACI Context Service</key>
+<value>5824bbdb-0d96-3332-0000-000000000000</value>
+                            </entry>
+                            <entry>
+<key>container-queue-size</key>
+<value>50</value>
+                            </entry>
+                            <entry>
+<key>request</key>
+<value>synchronize|purgedatastore|synchronizegroups|collect|view|insert|delete|hold|releasehold|identifiers|update</value>
+                            </entry>
+                            <entry>
+<key>SSL Context Service</key>
+                            </entry>
+                            <entry>
+<key>Hostname</key>
+                            </entry>
+                            <entry>
+<key>sync-actions</key>
+<value>view</value>
+                            </entry>
+                            <entry>
+<key>Listening Port</key>
+<value>${connector.aci.port}</value>
+                            </entry>
+                        </properties>
+                        <runDurationMillis>0</runDurationMillis>
+                        <schedulingPeriod>0 sec</schedulingPeriod>
+                        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                        <yieldDuration>1 sec</yieldDuration>
+                    </config>
+                    <executionNodeRestricted>false</executionNodeRestricted>
+                    <name>HandleAciRequest</name>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>request</name>
+                    </relationships>
+                    <state>STOPPED</state>
+                    <style/>
+                    <type>idol.nifi.processor.HandleAciRequest</type>
+                </processors>
+                <processors>
+                    <id>c256515e-ba0c-38fb-0000-000000000000</id>
+                    <parentGroupId>b1d86658-b987-39dc-0000-000000000000</parentGroupId>
+                    <position>
+                        <x>215.6390380859375</x>
+                        <y>131.44851684570312</y>
+                    </position>
+                    <bundle>
+                        <artifact>idol-nifi-framework</artifact>
+                        <group>idol.nifi</group>
+                    </bundle>
+                    <config>
+                        <bulletinLevel>WARN</bulletinLevel>
+                        <comments></comments>
+                        <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                        <descriptors>
+                            <entry>
+<key>ACI Context Service</key>
+<value>
+    <identifiesControllerService>idol.nifi.service.AciContextService</identifiesControllerService>
+    <name>ACI Context Service</name>
+</value>
+                            </entry>
+                        </descriptors>
+                        <executionNode>ALL</executionNode>
+                        <lossTolerant>false</lossTolerant>
+                        <penaltyDuration>30 sec</penaltyDuration>
+                        <properties>
+                            <entry>
+<key>ACI Context Service</key>
+<value>5824bbdb-0d96-3332-0000-000000000000</value>
+                            </entry>
+                        </properties>
+                        <runDurationMillis>0</runDurationMillis>
+                        <schedulingPeriod>0 sec</schedulingPeriod>
+                        <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                        <yieldDuration>1 sec</yieldDuration>
+                    </config>
+                    <executionNodeRestricted>false</executionNodeRestricted>
+                    <name>HandleAciResponse</name>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>failure</name>
+                    </relationships>
+                    <relationships>
+                        <autoTerminate>false</autoTerminate>
+                        <name>success</name>
+                    </relationships>
+                    <state>STOPPED</state>
+                    <style/>
+                    <type>idol.nifi.processor.HandleAciResponse</type>
+                </processors>
+            </contents>
+            <name>Connector ACI</name>
+            <variables>
+                <entry>
+                    <key>connector.aci.port</key>
+                    <value>10000</value>
+                </entry>
+            </variables>
+        </processGroups>
+        <processors>
+            <id>239cbd5e-64b0-31aa-0000-000000000000</id>
+            <parentGroupId>f903c499-0d3d-3ba5-0000-000000000000</parentGroupId>
+            <position>
+                <x>10.005842582548098</x>
+                <y>264.8619004025716</y>
+            </position>
+            <bundle>
+                <artifact>idol-nifi-connector-router-nar</artifact>
+                <group>idol.nifi.connector</group>
+            </bundle>
+            <config>
+                <bulletinLevel>ERROR</bulletinLevel>
+                <comments></comments>
+                <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                <descriptors>
+                    <entry>
+                        <key>DatabaseService</key>
+                        <value>
+                            <identifiesControllerService>idol.nifi.service.DatabaseService</identifiesControllerService>
+                            <name>DatabaseService</name>
+                        </value>
+                    </entry>
+                </descriptors>
+                <executionNode>ALL</executionNode>
+                <lossTolerant>false</lossTolerant>
+                <penaltyDuration>30 sec</penaltyDuration>
+                <properties>
+                    <entry>
+                        <key>DatabaseService</key>
+                    </entry>
+                </properties>
+                <runDurationMillis>0</runDurationMillis>
+                <schedulingPeriod>0 sec</schedulingPeriod>
+                <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                <yieldDuration>1 sec</yieldDuration>
+            </config>
+            <executionNodeRestricted>false</executionNodeRestricted>
+            <name>ConnectorGroupRouter</name>
+            <relationships>
+                <autoTerminate>false</autoTerminate>
+                <name>response</name>
+            </relationships>
+            <state>STOPPED</state>
+            <style/>
+            <type>idol.nifi.connector.router.ConnectorGroupRouter</type>
+        </processors>
+    </snippet>
+    <timestamp>08/09/2019 11:03:15 BST</timestamp>
+</template>

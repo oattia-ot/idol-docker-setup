@@ -1,0 +1,2690 @@
+{
+	"flowContents": {
+		"identifier": "aa62691d-4605-3747-be93-9cbdfb9169f2",
+		"instanceIdentifier": "455d945b-0193-1000-3a7f-89c5c085384f",
+		"name": "Eduction And Lua Combination",
+		"comments": "",
+		"position": {
+			"x": -320.0,
+			"y": 880.0
+		},
+		"processGroups": [
+			{
+				"identifier": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+				"instanceIdentifier": "47bca8ad-0b8c-3348-3293-b06d26d8497a",
+				"name": "Eduction",
+				"comments": "",
+				"position": {
+					"x": 678.2046414947483,
+					"y": 732.9337577716369
+				},
+				"processGroups": [],
+				"remoteProcessGroups": [],
+				"processors": [
+					{
+						"identifier": "7ca2685b-a659-31a5-9758-86ca0c8785e3",
+						"instanceIdentifier": "4d736400-f382-305f-17c3-5e0539c3af98",
+						"name": "KeyViewExtractFiles",
+						"comments": "",
+						"position": {
+							"x": -1264.0,
+							"y": 1104.0
+						},
+						"type": "idol.nifi.processor.KeyViewExtractFiles",
+						"bundle": {
+							"group": "idol.nifi",
+							"artifact": "idol-nifi-framework",
+							"version": "25.1.0-nifi1-SNAPSHOT"
+						},
+						"properties": {
+							"KeyViewFilterService": "#{KeyView Filter Service}",
+							"UseLocalTempFile": "false",
+							"ExtractedFilePartType": "match_input",
+							"MergeMails": "false",
+							"DocumentRegistryService": null,
+							"InheritedFieldsRegex": ".*",
+							"IdolLicenseService": "#{IDOL License Service}",
+							"ExtractNewFlowFiles": "true",
+							"NotInheritedFieldsRegex": ""
+						},
+						"propertyDescriptors": {
+							"UseLocalTempFile": {
+								"name": "UseLocalTempFile",
+								"displayName": "Use Local Temp File",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"ExtractedFilePartType": {
+								"name": "ExtractedFilePartType",
+								"displayName": "Extracted File Part Type",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"MergeMails": {
+								"name": "MergeMails",
+								"displayName": "Merge mails",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"DocumentRegistryService": {
+								"name": "DocumentRegistryService",
+								"displayName": "Document Registry Service",
+								"identifiesControllerService": true,
+								"sensitive": false
+							},
+							"InheritedFieldsRegex": {
+								"name": "InheritedFieldsRegex",
+								"displayName": "Inherited Fields Regex",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"ExtractNewFlowFiles": {
+								"name": "ExtractNewFlowFiles",
+								"displayName": "Create new FlowFiles from sub-files",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"NotInheritedFieldsRegex": {
+								"name": "NotInheritedFieldsRegex",
+								"displayName": "Not Inherited Fields Regex",
+								"identifiesControllerService": false,
+								"sensitive": false
+							}
+						},
+						"style": {},
+						"schedulingPeriod": "0 sec",
+						"schedulingStrategy": "TIMER_DRIVEN",
+						"executionNode": "ALL",
+						"penaltyDuration": "30 sec",
+						"yieldDuration": "1 sec",
+						"bulletinLevel": "ERROR",
+						"runDurationMillis": 0,
+						"concurrentlySchedulableTaskCount": 1,
+						"autoTerminatedRelationships": [],
+						"scheduledState": "ENABLED",
+						"retryCount": 0,
+						"retriedRelationships": [],
+						"backoffMechanism": "PENALIZE_FLOWFILE",
+						"maxBackoffPeriod": "10 mins",
+						"componentType": "PROCESSOR",
+						"groupIdentifier": "1320ed45-ea8c-338b-870b-4c23fb92b71a"
+					},
+					{
+						"identifier": "dc0a554e-9090-35a8-94a3-8b1e7247a31c",
+						"instanceIdentifier": "03daab71-272b-3711-c4a1-a37c702d07a6",
+						"name": "Eduction",
+						"comments": "",
+						"position": {
+							"x": -1256.6268118518734,
+							"y": 1607.5617900991497
+						},
+						"type": "idol.nifi.processor.Eduction",
+						"bundle": {
+							"group": "idol.nifi",
+							"artifact": "idol-nifi-framework",
+							"version": "25.1.0-nifi1-SNAPSHOT"
+						},
+						"properties": {
+							"Entity": "#{Entity}",
+							"CJKNormalization": null,
+							"EnableComponents": "false",
+							"RedactionType": "Replace",
+							"SearchFields": "DRECONTENT",
+							"MatchWholeWord": "true",
+							"TableCellPath": null,
+							"PreFilterTask": null,
+							"IdolLicenseService": "#{IDOL License Service}",
+							"RedactionOutputString": null,
+							"MaxEntityLength": "256",
+							"HeaderEntity": null,
+							"CountOutput": "false",
+							"InlineResults": "false",
+							"ColumnSpanAttribute": "COLSPAN",
+							"SimpleOutput": "true",
+							"ColumnSpanFieldPath": "span",
+							"MaxMatchesPerDoc": null,
+							"EnableUniqueMatches": "false",
+							"AllowOverlaps": "false",
+							"NonGreedyMatch": "false",
+							"EntityField": "#{Entity Field}",
+							"CellEntity": null,
+							"MinScore": null,
+							"CaseNormalization": "None",
+							"TokenWithPunctuation": "false",
+							"TableEntityField": null,
+							"MaxSearchHeaderRow": "1",
+							"CaseNormalizationBehavior": "Default",
+							"PostProcessThreshold": null,
+							"TangibleCharacters": null,
+							"RedactedOutput": "false",
+							"TableCellValuePath": "\".\",\"region/text\"",
+							"ResourceFiles": "#{Resource Files}",
+							"MatchCase": "true",
+							"RedactionReplacementCharacter": null,
+							"PostProcessingTask": null,
+							"AllowMultipleResults": "No"
+						},
+						"propertyDescriptors": {
+							"Entity": {
+								"name": "Entity",
+								"displayName": "Entity",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"CJKNormalization": {
+								"name": "CJKNormalization",
+								"displayName": "CJK Normalization",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"EnableComponents": {
+								"name": "EnableComponents",
+								"displayName": "Enable Components",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"RedactionType": {
+								"name": "RedactionType",
+								"displayName": "Redaction Type",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"SearchFields": {
+								"name": "SearchFields",
+								"displayName": "Search Fields",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"MatchWholeWord": {
+								"name": "MatchWholeWord",
+								"displayName": "Match Whole Word",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"TableCellPath": {
+								"name": "TableCellPath",
+								"displayName": "Table Cell Path",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"PreFilterTask": {
+								"name": "PreFilterTask",
+								"displayName": "Pre Filtering Tasks",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"RedactionOutputString": {
+								"name": "RedactionOutputString",
+								"displayName": "Redaction Output String",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"MaxEntityLength": {
+								"name": "MaxEntityLength",
+								"displayName": "Max Entity Length",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"HeaderEntity": {
+								"name": "HeaderEntity",
+								"displayName": "Table Header Entity",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"CountOutput": {
+								"name": "CountOutput",
+								"displayName": "Count Output",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"InlineResults": {
+								"name": "InlineResults",
+								"displayName": "Inline Results",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"ColumnSpanAttribute": {
+								"name": "ColumnSpanAttribute",
+								"displayName": "Table Cell Column Span Attribute",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"SimpleOutput": {
+								"name": "SimpleOutput",
+								"displayName": "Simple Output",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"ColumnSpanFieldPath": {
+								"name": "ColumnSpanFieldPath",
+								"displayName": "Table Cell Column Span Path",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"MaxMatchesPerDoc": {
+								"name": "MaxMatchesPerDoc",
+								"displayName": "Max Matches Per Doc",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"EnableUniqueMatches": {
+								"name": "EnableUniqueMatches",
+								"displayName": "Enable Unique Matches",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"AllowOverlaps": {
+								"name": "AllowOverlaps",
+								"displayName": "Allow Overlaps",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"NonGreedyMatch": {
+								"name": "NonGreedyMatch",
+								"displayName": "Non Greedy Match",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"EntityField": {
+								"name": "EntityField",
+								"displayName": "Entity Field",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"CellEntity": {
+								"name": "CellEntity",
+								"displayName": "Table Cell Entity",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"MinScore": {
+								"name": "MinScore",
+								"displayName": "Min Score",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"CaseNormalization": {
+								"name": "CaseNormalization",
+								"displayName": "Case Normalization",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"TokenWithPunctuation": {
+								"name": "TokenWithPunctuation",
+								"displayName": "Token With Punctuation",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"TableEntityField": {
+								"name": "TableEntityField",
+								"displayName": "Table Entity Field",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"MaxSearchHeaderRow": {
+								"name": "MaxSearchHeaderRow",
+								"displayName": "Table Max Search Header Row",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"CaseNormalizationBehavior": {
+								"name": "CaseNormalizationBehavior",
+								"displayName": "Case Normalization Behavior",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"PostProcessThreshold": {
+								"name": "PostProcessThreshold",
+								"displayName": "Post Process Threshold",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"TangibleCharacters": {
+								"name": "TangibleCharacters",
+								"displayName": "Tangible Characters",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"RedactedOutput": {
+								"name": "RedactedOutput",
+								"displayName": "Redacted Output",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"TableCellValuePath": {
+								"name": "TableCellValuePath",
+								"displayName": "Table Cell Value Path",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"ResourceFiles": {
+								"name": "ResourceFiles",
+								"displayName": "Resource Files",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"MatchCase": {
+								"name": "MatchCase",
+								"displayName": "Match Case",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"RedactionReplacementCharacter": {
+								"name": "RedactionReplacementCharacter",
+								"displayName": "Redaction Replacement Character",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"PostProcessingTask": {
+								"name": "PostProcessingTask",
+								"displayName": "Post Processing Tasks",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"AllowMultipleResults": {
+								"name": "AllowMultipleResults",
+								"displayName": "Allow Multiple Results",
+								"identifiesControllerService": false,
+								"sensitive": false
+							}
+						},
+						"style": {},
+						"schedulingPeriod": "0 sec",
+						"schedulingStrategy": "TIMER_DRIVEN",
+						"executionNode": "ALL",
+						"penaltyDuration": "30 sec",
+						"yieldDuration": "1 sec",
+						"bulletinLevel": "ERROR",
+						"runDurationMillis": 0,
+						"concurrentlySchedulableTaskCount": 1,
+						"autoTerminatedRelationships": [],
+						"scheduledState": "ENABLED",
+						"retryCount": 0,
+						"retriedRelationships": [],
+						"backoffMechanism": "PENALIZE_FLOWFILE",
+						"maxBackoffPeriod": "10 mins",
+						"componentType": "PROCESSOR",
+						"groupIdentifier": "1320ed45-ea8c-338b-870b-4c23fb92b71a"
+					},
+					{
+						"identifier": "5e99ae1e-6029-3d2b-a146-54947dded51b",
+						"instanceIdentifier": "598581f4-6b56-3485-ac63-dee9bd5152fa",
+						"name": "KeyViewFilterDocument",
+						"comments": "",
+						"position": {
+							"x": -1260.5227615883592,
+							"y": 1369.9700701217403
+						},
+						"type": "idol.nifi.processor.KeyViewFilterDocument",
+						"bundle": {
+							"group": "idol.nifi",
+							"artifact": "idol-nifi-framework",
+							"version": "25.1.0-nifi1-SNAPSHOT"
+						},
+						"properties": {
+							"KeyViewFilterService": "#{KeyView Filter Service}",
+							"UseLocalTempFile": "false",
+							"HiddenTintedText": "false",
+							"FilteredMetadataTarget": "original_field",
+							"OutputTableInfo": "false",
+							"IdolLicenseService": "#{IDOL License Service}",
+							"ExtractFileMetadata": "true",
+							"FilterTextFromMetadataXPath": null,
+							"ExtractContentText": "true",
+							"RevisionMarks": "false",
+							"ImportExtractToCText": "false",
+							"PDFSectioning": "false",
+							"HiddenTintedTextDefault": "false",
+							"FilterTextFromHtmlMetadataXPath": null,
+							"MaxPageMemBytes": "1048576"
+						},
+						"propertyDescriptors": {
+							"UseLocalTempFile": {
+								"name": "UseLocalTempFile",
+								"displayName": "Use Local Temp File",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"HiddenTintedText": {
+								"name": "HiddenTintedText",
+								"displayName": "Hidden Tinted Text",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"FilteredMetadataTarget": {
+								"name": "FilteredMetadataTarget",
+								"displayName": "Filtered Metadata Target",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"OutputTableInfo": {
+								"name": "OutputTableInfo",
+								"displayName": "Output Table Info",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"ExtractFileMetadata": {
+								"name": "ExtractFileMetadata",
+								"displayName": "Extract file metadata",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"FilterTextFromMetadataXPath": {
+								"name": "FilterTextFromMetadataXPath",
+								"displayName": "Filter Metadata XPath",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"ExtractContentText": {
+								"name": "ExtractContentText",
+								"displayName": "Extract content text",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"RevisionMarks": {
+								"name": "RevisionMarks",
+								"displayName": "Revision Marks",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"ImportExtractToCText": {
+								"name": "ImportExtractToCText",
+								"displayName": "Import Extract Table of Contents Text",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"PDFSectioning": {
+								"name": "PDFSectioning",
+								"displayName": "PDF Sectioning",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"HiddenTintedTextDefault": {
+								"name": "HiddenTintedTextDefault",
+								"displayName": "Hidden Tinted Text Default",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"FilterTextFromHtmlMetadataXPath": {
+								"name": "FilterTextFromHtmlMetadataXPath",
+								"displayName": "Filter HTML Metadata XPath",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"MaxPageMemBytes": {
+								"name": "MaxPageMemBytes",
+								"displayName": "Max Page Memory Bytes",
+								"identifiesControllerService": false,
+								"sensitive": false
+							}
+						},
+						"style": {},
+						"schedulingPeriod": "0 sec",
+						"schedulingStrategy": "TIMER_DRIVEN",
+						"executionNode": "ALL",
+						"penaltyDuration": "30 sec",
+						"yieldDuration": "1 sec",
+						"bulletinLevel": "ERROR",
+						"runDurationMillis": 0,
+						"concurrentlySchedulableTaskCount": 1,
+						"autoTerminatedRelationships": [],
+						"scheduledState": "ENABLED",
+						"retryCount": 0,
+						"retriedRelationships": [],
+						"backoffMechanism": "PENALIZE_FLOWFILE",
+						"maxBackoffPeriod": "10 mins",
+						"componentType": "PROCESSOR",
+						"groupIdentifier": "1320ed45-ea8c-338b-870b-4c23fb92b71a"
+					}
+				],
+				"inputPorts": [
+					{
+						"identifier": "688c8952-efd6-326f-ac5a-4ebbdfdae829",
+						"instanceIdentifier": "4203008b-5a12-316b-cd26-d2904864e239",
+						"name": "Eduction (Keyview Processes already complete)",
+						"position": {
+							"x": -1748.6360725769867,
+							"y": 1650.225120645471
+						},
+						"type": "INPUT_PORT",
+						"concurrentlySchedulableTaskCount": 1,
+						"scheduledState": "ENABLED",
+						"allowRemoteAccess": false,
+						"componentType": "INPUT_PORT",
+						"groupIdentifier": "1320ed45-ea8c-338b-870b-4c23fb92b71a"
+					},
+					{
+						"identifier": "0b808f86-5e79-31eb-a7fd-60080b2b1f4e",
+						"instanceIdentifier": "54c8e751-9a68-3669-36a8-2c482186c04f",
+						"name": "Eduction",
+						"comments": "",
+						"position": {
+							"x": -1208.0,
+							"y": 896.0
+						},
+						"type": "INPUT_PORT",
+						"concurrentlySchedulableTaskCount": 1,
+						"scheduledState": "ENABLED",
+						"allowRemoteAccess": false,
+						"componentType": "INPUT_PORT",
+						"groupIdentifier": "1320ed45-ea8c-338b-870b-4c23fb92b71a"
+					}
+				],
+				"outputPorts": [
+					{
+						"identifier": "08fc97b8-c47e-3ba6-a4aa-6c66bfc77a04",
+						"instanceIdentifier": "a9e554d3-c952-3d2e-7043-f57e2d0cce47",
+						"name": "Success",
+						"position": {
+							"x": -1199.3604141183126,
+							"y": 1843.7151068653048
+						},
+						"type": "OUTPUT_PORT",
+						"concurrentlySchedulableTaskCount": 1,
+						"scheduledState": "ENABLED",
+						"allowRemoteAccess": false,
+						"componentType": "OUTPUT_PORT",
+						"groupIdentifier": "1320ed45-ea8c-338b-870b-4c23fb92b71a"
+					},
+					{
+						"identifier": "0b08076c-810f-3e75-9cfb-89910696dda9",
+						"instanceIdentifier": "f532d4f3-c535-3801-3fbd-23b5857611e0",
+						"name": "Failure",
+						"position": {
+							"x": -640.0,
+							"y": 1408.0
+						},
+						"type": "OUTPUT_PORT",
+						"concurrentlySchedulableTaskCount": 1,
+						"scheduledState": "ENABLED",
+						"allowRemoteAccess": false,
+						"componentType": "OUTPUT_PORT",
+						"groupIdentifier": "1320ed45-ea8c-338b-870b-4c23fb92b71a"
+					}
+				],
+				"connections": [
+					{
+						"identifier": "6395fd87-0d3e-3abb-ae45-71258558ac29",
+						"instanceIdentifier": "dfd2fa61-1bb6-3236-38b8-4866124cc8cb",
+						"name": "",
+						"source": {
+							"id": "5e99ae1e-6029-3d2b-a146-54947dded51b",
+							"type": "PROCESSOR",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "KeyViewFilterDocument",
+							"comments": "",
+							"instanceIdentifier": "598581f4-6b56-3485-ac63-dee9bd5152fa"
+						},
+						"destination": {
+							"id": "dc0a554e-9090-35a8-94a3-8b1e7247a31c",
+							"type": "PROCESSOR",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "Eduction",
+							"comments": "",
+							"instanceIdentifier": "03daab71-272b-3711-c4a1-a37c702d07a6"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							"success"
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [],
+						"bends": [],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "1320ed45-ea8c-338b-870b-4c23fb92b71a"
+					},
+					{
+						"identifier": "ca26e2ba-4c37-370e-a891-dcb32f9ebaa5",
+						"instanceIdentifier": "51a230c1-2b52-3c33-4778-9cb768e39954",
+						"name": "",
+						"source": {
+							"id": "7ca2685b-a659-31a5-9758-86ca0c8785e3",
+							"type": "PROCESSOR",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "KeyViewExtractFiles",
+							"comments": "",
+							"instanceIdentifier": "4d736400-f382-305f-17c3-5e0539c3af98"
+						},
+						"destination": {
+							"id": "5e99ae1e-6029-3d2b-a146-54947dded51b",
+							"type": "PROCESSOR",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "KeyViewFilterDocument",
+							"comments": "",
+							"instanceIdentifier": "598581f4-6b56-3485-ac63-dee9bd5152fa"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							"success"
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [],
+						"bends": [],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "1320ed45-ea8c-338b-870b-4c23fb92b71a"
+					},
+					{
+						"identifier": "9453e89e-bb6a-331e-ae9e-9fe3e3d33121",
+						"instanceIdentifier": "7d7b5ae7-2366-382f-8d1f-7ec1d615eebf",
+						"name": "",
+						"source": {
+							"id": "d4e4fc1b-527b-3b3b-97c2-149c6ed2ff43",
+							"type": "FUNNEL",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "Funnel",
+							"comments": "",
+							"instanceIdentifier": "9cf1ab7a-f543-3c05-6b0d-1cba84c18dd6"
+						},
+						"destination": {
+							"id": "7ca2685b-a659-31a5-9758-86ca0c8785e3",
+							"type": "PROCESSOR",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "KeyViewExtractFiles",
+							"comments": "",
+							"instanceIdentifier": "4d736400-f382-305f-17c3-5e0539c3af98"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							""
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [
+							"org.apache.nifi.prioritizer.PriorityAttributePrioritizer"
+						],
+						"bends": [],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "1320ed45-ea8c-338b-870b-4c23fb92b71a"
+					},
+					{
+						"identifier": "84b3300b-8cba-323d-a286-ab3d3ea25cce",
+						"instanceIdentifier": "7091cc25-e551-394c-adb7-c47c70f4bab1",
+						"name": "",
+						"source": {
+							"id": "688c8952-efd6-326f-ac5a-4ebbdfdae829",
+							"type": "INPUT_PORT",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "Eduction (Keyview Processes already complete)",
+							"instanceIdentifier": "4203008b-5a12-316b-cd26-d2904864e239"
+						},
+						"destination": {
+							"id": "dc0a554e-9090-35a8-94a3-8b1e7247a31c",
+							"type": "PROCESSOR",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "Eduction",
+							"comments": "",
+							"instanceIdentifier": "03daab71-272b-3711-c4a1-a37c702d07a6"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							""
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [],
+						"bends": [],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "1320ed45-ea8c-338b-870b-4c23fb92b71a"
+					},
+					{
+						"identifier": "bcacf7de-7596-3767-9ee8-09abe0e1c348",
+						"instanceIdentifier": "718dcd49-9662-3d6c-d1ee-b5362cc729aa",
+						"name": "",
+						"source": {
+							"id": "5e99ae1e-6029-3d2b-a146-54947dded51b",
+							"type": "PROCESSOR",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "KeyViewFilterDocument",
+							"comments": "",
+							"instanceIdentifier": "598581f4-6b56-3485-ac63-dee9bd5152fa"
+						},
+						"destination": {
+							"id": "0b08076c-810f-3e75-9cfb-89910696dda9",
+							"type": "OUTPUT_PORT",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "Failure",
+							"instanceIdentifier": "f532d4f3-c535-3801-3fbd-23b5857611e0"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							"failure"
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [],
+						"bends": [],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "1320ed45-ea8c-338b-870b-4c23fb92b71a"
+					},
+					{
+						"identifier": "eca7979a-d408-3200-b6c6-4473a5097c6d",
+						"instanceIdentifier": "2c77973a-bcc8-30e9-c795-1d57d4ea174c",
+						"name": "",
+						"source": {
+							"id": "dc0a554e-9090-35a8-94a3-8b1e7247a31c",
+							"type": "PROCESSOR",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "Eduction",
+							"comments": "",
+							"instanceIdentifier": "03daab71-272b-3711-c4a1-a37c702d07a6"
+						},
+						"destination": {
+							"id": "0b08076c-810f-3e75-9cfb-89910696dda9",
+							"type": "OUTPUT_PORT",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "Failure",
+							"instanceIdentifier": "f532d4f3-c535-3801-3fbd-23b5857611e0"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							"failure"
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [],
+						"bends": [],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "1320ed45-ea8c-338b-870b-4c23fb92b71a"
+					},
+					{
+						"identifier": "f8bc462c-1c22-37ac-94dc-44e262dd6754",
+						"instanceIdentifier": "6f4977ff-0893-30d7-8138-21ae3f2bde40",
+						"name": "",
+						"source": {
+							"id": "dc0a554e-9090-35a8-94a3-8b1e7247a31c",
+							"type": "PROCESSOR",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "Eduction",
+							"comments": "",
+							"instanceIdentifier": "03daab71-272b-3711-c4a1-a37c702d07a6"
+						},
+						"destination": {
+							"id": "08fc97b8-c47e-3ba6-a4aa-6c66bfc77a04",
+							"type": "OUTPUT_PORT",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "Success",
+							"instanceIdentifier": "a9e554d3-c952-3d2e-7043-f57e2d0cce47"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							"success"
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [],
+						"bends": [],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "1320ed45-ea8c-338b-870b-4c23fb92b71a"
+					},
+					{
+						"identifier": "2f9a8ae1-a65d-3aac-b5ba-3e0be05c66c9",
+						"instanceIdentifier": "20dca17b-c11c-3e0f-6dd2-1a676886c855",
+						"name": "",
+						"source": {
+							"id": "7ca2685b-a659-31a5-9758-86ca0c8785e3",
+							"type": "PROCESSOR",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "KeyViewExtractFiles",
+							"comments": "",
+							"instanceIdentifier": "4d736400-f382-305f-17c3-5e0539c3af98"
+						},
+						"destination": {
+							"id": "d4e4fc1b-527b-3b3b-97c2-149c6ed2ff43",
+							"type": "FUNNEL",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "Funnel",
+							"comments": "",
+							"instanceIdentifier": "9cf1ab7a-f543-3c05-6b0d-1cba84c18dd6"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							"subfile"
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [],
+						"bends": [
+							{
+								"x": -864.0,
+								"y": 1168.0
+							},
+							{
+								"x": -864.0,
+								"y": 1024.0
+							}
+						],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "1320ed45-ea8c-338b-870b-4c23fb92b71a"
+					},
+					{
+						"identifier": "78c8f931-4823-3d56-b48a-68cab47018db",
+						"instanceIdentifier": "000c2f0a-8029-3cde-46f1-3e0802884f2e",
+						"name": "",
+						"source": {
+							"id": "0b808f86-5e79-31eb-a7fd-60080b2b1f4e",
+							"type": "INPUT_PORT",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "Eduction",
+							"comments": "",
+							"instanceIdentifier": "54c8e751-9a68-3669-36a8-2c482186c04f"
+						},
+						"destination": {
+							"id": "d4e4fc1b-527b-3b3b-97c2-149c6ed2ff43",
+							"type": "FUNNEL",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "Funnel",
+							"comments": "",
+							"instanceIdentifier": "9cf1ab7a-f543-3c05-6b0d-1cba84c18dd6"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							""
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [],
+						"bends": [],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "1320ed45-ea8c-338b-870b-4c23fb92b71a"
+					},
+					{
+						"identifier": "1d812715-b717-3141-a855-c963a5c76794",
+						"instanceIdentifier": "d5b20628-8905-346d-9572-71f959452e75",
+						"name": "",
+						"source": {
+							"id": "7ca2685b-a659-31a5-9758-86ca0c8785e3",
+							"type": "PROCESSOR",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "KeyViewExtractFiles",
+							"comments": "",
+							"instanceIdentifier": "4d736400-f382-305f-17c3-5e0539c3af98"
+						},
+						"destination": {
+							"id": "0b08076c-810f-3e75-9cfb-89910696dda9",
+							"type": "OUTPUT_PORT",
+							"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+							"name": "Failure",
+							"instanceIdentifier": "f532d4f3-c535-3801-3fbd-23b5857611e0"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							"failure"
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [],
+						"bends": [],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "1320ed45-ea8c-338b-870b-4c23fb92b71a"
+					}
+				],
+				"labels": [],
+				"funnels": [
+					{
+						"identifier": "d4e4fc1b-527b-3b3b-97c2-149c6ed2ff43",
+						"instanceIdentifier": "9cf1ab7a-f543-3c05-6b0d-1cba84c18dd6",
+						"position": {
+							"x": -1112.0,
+							"y": 1000.0
+						},
+						"componentType": "FUNNEL",
+						"groupIdentifier": "1320ed45-ea8c-338b-870b-4c23fb92b71a"
+					}
+				],
+				"controllerServices": [],
+				"variables": {},
+				"parameterContextName": "Eduction And Lua Combination",
+				"defaultFlowFileExpiration": "0 sec",
+				"defaultBackPressureObjectThreshold": 10000,
+				"defaultBackPressureDataSizeThreshold": "1 GB",
+				"componentType": "PROCESS_GROUP",
+				"flowFileConcurrency": "UNBOUNDED",
+				"flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			},
+			{
+				"identifier": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+				"instanceIdentifier": "82260dc8-7627-32f2-7768-f5522743c095",
+				"name": "Lua",
+				"comments": "",
+				"position": {
+					"x": 1568.3020110430619,
+					"y": 1022.05219357619
+				},
+				"processGroups": [],
+				"remoteProcessGroups": [],
+				"processors": [
+					{
+						"identifier": "c7020872-2375-358f-86ac-286fa4ad80ef",
+						"instanceIdentifier": "30d6482a-33c5-39f4-9a34-208a7d35e383",
+						"name": "KeyViewFilterDocument",
+						"comments": "",
+						"position": {
+							"x": -1267.393208083557,
+							"y": 1377.0324480514278
+						},
+						"type": "idol.nifi.processor.KeyViewFilterDocument",
+						"bundle": {
+							"group": "idol.nifi",
+							"artifact": "idol-nifi-framework",
+							"version": "25.1.0-nifi1-SNAPSHOT"
+						},
+						"properties": {
+							"KeyViewFilterService": "#{KeyView Filter Service}",
+							"UseLocalTempFile": "false",
+							"HiddenTintedText": "false",
+							"FilteredMetadataTarget": "original_field",
+							"OutputTableInfo": "false",
+							"IdolLicenseService": "#{IDOL License Service}",
+							"ExtractFileMetadata": "true",
+							"FilterTextFromMetadataXPath": null,
+							"ExtractContentText": "true",
+							"RevisionMarks": "false",
+							"ImportExtractToCText": "false",
+							"PDFSectioning": "false",
+							"HiddenTintedTextDefault": "false",
+							"FilterTextFromHtmlMetadataXPath": null,
+							"MaxPageMemBytes": "1048576"
+						},
+						"propertyDescriptors": {
+							"UseLocalTempFile": {
+								"name": "UseLocalTempFile",
+								"displayName": "Use Local Temp File",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"HiddenTintedText": {
+								"name": "HiddenTintedText",
+								"displayName": "Hidden Tinted Text",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"FilteredMetadataTarget": {
+								"name": "FilteredMetadataTarget",
+								"displayName": "Filtered Metadata Target",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"OutputTableInfo": {
+								"name": "OutputTableInfo",
+								"displayName": "Output Table Info",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"ExtractFileMetadata": {
+								"name": "ExtractFileMetadata",
+								"displayName": "Extract file metadata",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"FilterTextFromMetadataXPath": {
+								"name": "FilterTextFromMetadataXPath",
+								"displayName": "Filter Metadata XPath",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"ExtractContentText": {
+								"name": "ExtractContentText",
+								"displayName": "Extract content text",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"RevisionMarks": {
+								"name": "RevisionMarks",
+								"displayName": "Revision Marks",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"ImportExtractToCText": {
+								"name": "ImportExtractToCText",
+								"displayName": "Import Extract Table of Contents Text",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"PDFSectioning": {
+								"name": "PDFSectioning",
+								"displayName": "PDF Sectioning",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"HiddenTintedTextDefault": {
+								"name": "HiddenTintedTextDefault",
+								"displayName": "Hidden Tinted Text Default",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"FilterTextFromHtmlMetadataXPath": {
+								"name": "FilterTextFromHtmlMetadataXPath",
+								"displayName": "Filter HTML Metadata XPath",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"MaxPageMemBytes": {
+								"name": "MaxPageMemBytes",
+								"displayName": "Max Page Memory Bytes",
+								"identifiesControllerService": false,
+								"sensitive": false
+							}
+						},
+						"style": {},
+						"schedulingPeriod": "0 sec",
+						"schedulingStrategy": "TIMER_DRIVEN",
+						"executionNode": "ALL",
+						"penaltyDuration": "30 sec",
+						"yieldDuration": "1 sec",
+						"bulletinLevel": "ERROR",
+						"runDurationMillis": 0,
+						"concurrentlySchedulableTaskCount": 1,
+						"autoTerminatedRelationships": [],
+						"scheduledState": "ENABLED",
+						"retryCount": 0,
+						"retriedRelationships": [],
+						"backoffMechanism": "PENALIZE_FLOWFILE",
+						"maxBackoffPeriod": "10 mins",
+						"componentType": "PROCESSOR",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					},
+					{
+						"identifier": "b4870974-430b-3694-9571-25f35ac8eb4a",
+						"instanceIdentifier": "cac7f7c7-6131-3482-6511-c602eb70b5a4",
+						"name": "KeyViewExtractFiles",
+						"comments": "",
+						"position": {
+							"x": -1264.0,
+							"y": 1136.0
+						},
+						"type": "idol.nifi.processor.KeyViewExtractFiles",
+						"bundle": {
+							"group": "idol.nifi",
+							"artifact": "idol-nifi-framework",
+							"version": "25.1.0-nifi1-SNAPSHOT"
+						},
+						"properties": {
+							"KeyViewFilterService": "#{KeyView Filter Service}",
+							"UseLocalTempFile": "false",
+							"ExtractedFilePartType": "match_input",
+							"MergeMails": "false",
+							"DocumentRegistryService": null,
+							"InheritedFieldsRegex": ".*",
+							"IdolLicenseService": "#{IDOL License Service}",
+							"ExtractNewFlowFiles": "true",
+							"NotInheritedFieldsRegex": ""
+						},
+						"propertyDescriptors": {
+							"UseLocalTempFile": {
+								"name": "UseLocalTempFile",
+								"displayName": "Use Local Temp File",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"ExtractedFilePartType": {
+								"name": "ExtractedFilePartType",
+								"displayName": "Extracted File Part Type",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"MergeMails": {
+								"name": "MergeMails",
+								"displayName": "Merge mails",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"DocumentRegistryService": {
+								"name": "DocumentRegistryService",
+								"displayName": "Document Registry Service",
+								"identifiesControllerService": true,
+								"sensitive": false
+							},
+							"InheritedFieldsRegex": {
+								"name": "InheritedFieldsRegex",
+								"displayName": "Inherited Fields Regex",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"ExtractNewFlowFiles": {
+								"name": "ExtractNewFlowFiles",
+								"displayName": "Create new FlowFiles from sub-files",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"NotInheritedFieldsRegex": {
+								"name": "NotInheritedFieldsRegex",
+								"displayName": "Not Inherited Fields Regex",
+								"identifiesControllerService": false,
+								"sensitive": false
+							}
+						},
+						"style": {},
+						"schedulingPeriod": "0 sec",
+						"schedulingStrategy": "TIMER_DRIVEN",
+						"executionNode": "ALL",
+						"penaltyDuration": "30 sec",
+						"yieldDuration": "1 sec",
+						"bulletinLevel": "ERROR",
+						"runDurationMillis": 0,
+						"concurrentlySchedulableTaskCount": 1,
+						"autoTerminatedRelationships": [],
+						"scheduledState": "ENABLED",
+						"retryCount": 0,
+						"retriedRelationships": [],
+						"backoffMechanism": "PENALIZE_FLOWFILE",
+						"maxBackoffPeriod": "10 mins",
+						"componentType": "PROCESSOR",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					},
+					{
+						"identifier": "1379b605-7228-3aab-a396-eb65472487c6",
+						"instanceIdentifier": "7470991a-d559-322e-9b72-2f64f7be89e6",
+						"name": "ExecuteDocumentLua",
+						"comments": "",
+						"position": {
+							"x": -1267.393208083557,
+							"y": 1586.179876462816
+						},
+						"type": "idol.nifi.processor.ExecuteDocumentLua",
+						"bundle": {
+							"group": "idol.nifi",
+							"artifact": "idol-nifi-framework",
+							"version": "25.1.0-nifi1-SNAPSHOT"
+						},
+						"properties": {
+							"LuaScriptFunctionArguments": "LuaDocument",
+							"AdditionalOutputRelationships": null,
+							"LuaScriptFile": "function handler(document)\n    -- Write a log message\n    log_info(\"Processing a document\")\n \n    -- Perform modifications to the document\n    document:addField(\"some_field\", \"some_field_value\")\n\n    if document:hasField(\"NZTOWNS\") then\n        return document\n    end\nend",
+							"RouteUntransferredTo": null,
+							"DocumentRegistryService": null,
+							"RouteReturnedTo": "returned",
+							"EnableDebugger": "false",
+							"IdolLicenseService": "#{IDOL License Service}",
+							"RouteTo": "success",
+							"LuaScriptFunction": "handler"
+						},
+						"propertyDescriptors": {
+							"LuaScriptFunctionArguments": {
+								"name": "LuaScriptFunctionArguments",
+								"displayName": "Lua script function arguments",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"AdditionalOutputRelationships": {
+								"name": "AdditionalOutputRelationships",
+								"displayName": "Additional output relationships",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"LuaScriptFile": {
+								"name": "LuaScriptFile",
+								"displayName": "Lua script file",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"RouteUntransferredTo": {
+								"name": "RouteUntransferredTo",
+								"displayName": "Route untransferred to",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"DocumentRegistryService": {
+								"name": "DocumentRegistryService",
+								"displayName": "Document Registry Service",
+								"identifiesControllerService": true,
+								"sensitive": false
+							},
+							"RouteReturnedTo": {
+								"name": "RouteReturnedTo",
+								"displayName": "Route returned to",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"EnableDebugger": {
+								"name": "EnableDebugger",
+								"displayName": "Enable Debugger",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"RouteTo": {
+								"name": "RouteTo",
+								"displayName": "Route to",
+								"identifiesControllerService": false,
+								"sensitive": false
+							},
+							"LuaScriptFunction": {
+								"name": "LuaScriptFunction",
+								"displayName": "Lua script function",
+								"identifiesControllerService": false,
+								"sensitive": false
+							}
+						},
+						"style": {},
+						"schedulingPeriod": "0 sec",
+						"schedulingStrategy": "TIMER_DRIVEN",
+						"executionNode": "ALL",
+						"penaltyDuration": "30 sec",
+						"yieldDuration": "1 sec",
+						"bulletinLevel": "ERROR",
+						"runDurationMillis": 0,
+						"concurrentlySchedulableTaskCount": 1,
+						"autoTerminatedRelationships": [],
+						"scheduledState": "ENABLED",
+						"retryCount": 0,
+						"retriedRelationships": [],
+						"backoffMechanism": "PENALIZE_FLOWFILE",
+						"maxBackoffPeriod": "10 mins",
+						"componentType": "PROCESSOR",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					}
+				],
+				"inputPorts": [
+					{
+						"identifier": "76c4c5d6-575d-3f40-b101-6fbac82570cc",
+						"instanceIdentifier": "02569370-4a8f-3487-8ef8-abf270edd560",
+						"name": "Execute Lua",
+						"comments": "",
+						"position": {
+							"x": -1216.0,
+							"y": 912.0
+						},
+						"type": "INPUT_PORT",
+						"concurrentlySchedulableTaskCount": 1,
+						"scheduledState": "ENABLED",
+						"allowRemoteAccess": false,
+						"componentType": "INPUT_PORT",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					},
+					{
+						"identifier": "b0165384-2f24-3dd7-aa3a-4032123f6f06",
+						"instanceIdentifier": "d504e672-e15b-3870-c6be-c90b10f9a1b3",
+						"name": "ExecuteLua (Keyview Processes already complete)",
+						"comments": "",
+						"position": {
+							"x": -1808.0,
+							"y": 1624.0
+						},
+						"type": "INPUT_PORT",
+						"concurrentlySchedulableTaskCount": 1,
+						"scheduledState": "ENABLED",
+						"allowRemoteAccess": false,
+						"componentType": "INPUT_PORT",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					}
+				],
+				"outputPorts": [
+					{
+						"identifier": "2e00a885-5cab-3027-9b27-14f0ec379628",
+						"instanceIdentifier": "4341caeb-0e04-3e8e-7c64-d70d09eb39b8",
+						"name": "Success",
+						"position": {
+							"x": -1212.393208083557,
+							"y": 1841.4258002246798
+						},
+						"type": "OUTPUT_PORT",
+						"concurrentlySchedulableTaskCount": 1,
+						"scheduledState": "ENABLED",
+						"allowRemoteAccess": false,
+						"componentType": "OUTPUT_PORT",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					},
+					{
+						"identifier": "e6d10912-1bb8-3a63-b947-f1f3237569af",
+						"instanceIdentifier": "861aff40-2c33-3ea4-b0a4-04d903fa2ec8",
+						"name": "Failure",
+						"position": {
+							"x": -632.0,
+							"y": 1416.0
+						},
+						"type": "OUTPUT_PORT",
+						"concurrentlySchedulableTaskCount": 1,
+						"scheduledState": "ENABLED",
+						"allowRemoteAccess": false,
+						"componentType": "OUTPUT_PORT",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					},
+					{
+						"identifier": "eb2b06e7-bcea-39a8-acef-e9d39c555cab",
+						"instanceIdentifier": "cd5c4c75-9012-3c2f-b119-ae3b638b6f93",
+						"name": "Returned",
+						"comments": "",
+						"position": {
+							"x": -752.0,
+							"y": 1840.0
+						},
+						"type": "OUTPUT_PORT",
+						"concurrentlySchedulableTaskCount": 1,
+						"scheduledState": "ENABLED",
+						"allowRemoteAccess": false,
+						"componentType": "OUTPUT_PORT",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					}
+				],
+				"connections": [
+					{
+						"identifier": "db7e84c0-32f9-3423-98d5-47eb626279ce",
+						"instanceIdentifier": "f74a471e-8c3d-306a-3bab-d257ab6b8f3a",
+						"name": "",
+						"source": {
+							"id": "b4870974-430b-3694-9571-25f35ac8eb4a",
+							"type": "PROCESSOR",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "KeyViewExtractFiles",
+							"comments": "",
+							"instanceIdentifier": "cac7f7c7-6131-3482-6511-c602eb70b5a4"
+						},
+						"destination": {
+							"id": "883e1a04-04bb-3d5a-9f03-84f2396a82ca",
+							"type": "FUNNEL",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "Funnel",
+							"comments": "",
+							"instanceIdentifier": "6d0c8a53-d462-358b-8a2d-56a3ad7b27ae"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							"subfile"
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [],
+						"bends": [
+							{
+								"x": -856.0,
+								"y": 1200.0
+							},
+							{
+								"x": -856.0,
+								"y": 1048.0
+							}
+						],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					},
+					{
+						"identifier": "e4cc73cb-44d4-305a-8ef2-ac79e9590cfe",
+						"instanceIdentifier": "d5d3c520-0db4-388e-0482-26eaa74c0e5b",
+						"name": "",
+						"source": {
+							"id": "76c4c5d6-575d-3f40-b101-6fbac82570cc",
+							"type": "INPUT_PORT",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "Execute Lua",
+							"comments": "",
+							"instanceIdentifier": "02569370-4a8f-3487-8ef8-abf270edd560"
+						},
+						"destination": {
+							"id": "883e1a04-04bb-3d5a-9f03-84f2396a82ca",
+							"type": "FUNNEL",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "Funnel",
+							"comments": "",
+							"instanceIdentifier": "6d0c8a53-d462-358b-8a2d-56a3ad7b27ae"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							""
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [],
+						"bends": [],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					},
+					{
+						"identifier": "56c1ba26-c551-3a21-9222-21021389aad4",
+						"instanceIdentifier": "6a2ddb70-21a0-3175-f74b-ce3d72ea58ce",
+						"name": "",
+						"source": {
+							"id": "883e1a04-04bb-3d5a-9f03-84f2396a82ca",
+							"type": "FUNNEL",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "Funnel",
+							"comments": "",
+							"instanceIdentifier": "6d0c8a53-d462-358b-8a2d-56a3ad7b27ae"
+						},
+						"destination": {
+							"id": "b4870974-430b-3694-9571-25f35ac8eb4a",
+							"type": "PROCESSOR",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "KeyViewExtractFiles",
+							"comments": "",
+							"instanceIdentifier": "cac7f7c7-6131-3482-6511-c602eb70b5a4"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							""
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [
+							"org.apache.nifi.prioritizer.PriorityAttributePrioritizer"
+						],
+						"bends": [],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					},
+					{
+						"identifier": "ba9b3b96-7f8b-3297-83d4-fb69f089f059",
+						"instanceIdentifier": "d60ae9ca-ff02-317e-04f9-73409365e50a",
+						"name": "",
+						"source": {
+							"id": "1379b605-7228-3aab-a396-eb65472487c6",
+							"type": "PROCESSOR",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "ExecuteDocumentLua",
+							"comments": "",
+							"instanceIdentifier": "7470991a-d559-322e-9b72-2f64f7be89e6"
+						},
+						"destination": {
+							"id": "2e00a885-5cab-3027-9b27-14f0ec379628",
+							"type": "OUTPUT_PORT",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "Success",
+							"instanceIdentifier": "4341caeb-0e04-3e8e-7c64-d70d09eb39b8"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							"success"
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [],
+						"bends": [],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					},
+					{
+						"identifier": "a2fff354-4d59-30a4-9580-948faa7d6bd0",
+						"instanceIdentifier": "b94ea55d-1249-3d62-9d7b-05b8c02bda5d",
+						"name": "",
+						"source": {
+							"id": "1379b605-7228-3aab-a396-eb65472487c6",
+							"type": "PROCESSOR",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "ExecuteDocumentLua",
+							"comments": "",
+							"instanceIdentifier": "7470991a-d559-322e-9b72-2f64f7be89e6"
+						},
+						"destination": {
+							"id": "e6d10912-1bb8-3a63-b947-f1f3237569af",
+							"type": "OUTPUT_PORT",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "Failure",
+							"instanceIdentifier": "861aff40-2c33-3ea4-b0a4-04d903fa2ec8"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							"failure"
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [],
+						"bends": [],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					},
+					{
+						"identifier": "25ba717e-fb2b-3274-b426-9556088e732f",
+						"instanceIdentifier": "7612a140-9bbe-383d-533e-a48c0d3a87ba",
+						"name": "",
+						"source": {
+							"id": "c7020872-2375-358f-86ac-286fa4ad80ef",
+							"type": "PROCESSOR",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "KeyViewFilterDocument",
+							"comments": "",
+							"instanceIdentifier": "30d6482a-33c5-39f4-9a34-208a7d35e383"
+						},
+						"destination": {
+							"id": "1379b605-7228-3aab-a396-eb65472487c6",
+							"type": "PROCESSOR",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "ExecuteDocumentLua",
+							"comments": "",
+							"instanceIdentifier": "7470991a-d559-322e-9b72-2f64f7be89e6"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							"success"
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [],
+						"bends": [],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					},
+					{
+						"identifier": "9fa524e8-53c8-36de-9b07-d723e5cb1e16",
+						"instanceIdentifier": "7b34311e-e7cd-3210-4de3-a30829bd1fe3",
+						"name": "",
+						"source": {
+							"id": "c7020872-2375-358f-86ac-286fa4ad80ef",
+							"type": "PROCESSOR",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "KeyViewFilterDocument",
+							"comments": "",
+							"instanceIdentifier": "30d6482a-33c5-39f4-9a34-208a7d35e383"
+						},
+						"destination": {
+							"id": "e6d10912-1bb8-3a63-b947-f1f3237569af",
+							"type": "OUTPUT_PORT",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "Failure",
+							"instanceIdentifier": "861aff40-2c33-3ea4-b0a4-04d903fa2ec8"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							"failure"
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [],
+						"bends": [],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					},
+					{
+						"identifier": "a98730f0-2b8b-385c-91df-9f534dd48aab",
+						"instanceIdentifier": "d590f288-e3e2-30d1-fac8-10e20d4ab60d",
+						"name": "",
+						"source": {
+							"id": "1379b605-7228-3aab-a396-eb65472487c6",
+							"type": "PROCESSOR",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "ExecuteDocumentLua",
+							"comments": "",
+							"instanceIdentifier": "7470991a-d559-322e-9b72-2f64f7be89e6"
+						},
+						"destination": {
+							"id": "eb2b06e7-bcea-39a8-acef-e9d39c555cab",
+							"type": "OUTPUT_PORT",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "Returned",
+							"comments": "",
+							"instanceIdentifier": "cd5c4c75-9012-3c2f-b119-ae3b638b6f93"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							"returned"
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [],
+						"bends": [],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					},
+					{
+						"identifier": "017f223c-86db-3896-a57a-491a36e88df4",
+						"instanceIdentifier": "e4288246-1d27-3498-e2a9-e376f95c9131",
+						"name": "",
+						"source": {
+							"id": "b0165384-2f24-3dd7-aa3a-4032123f6f06",
+							"type": "INPUT_PORT",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "ExecuteLua (Keyview Processes already complete)",
+							"comments": "",
+							"instanceIdentifier": "d504e672-e15b-3870-c6be-c90b10f9a1b3"
+						},
+						"destination": {
+							"id": "1379b605-7228-3aab-a396-eb65472487c6",
+							"type": "PROCESSOR",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "ExecuteDocumentLua",
+							"comments": "",
+							"instanceIdentifier": "7470991a-d559-322e-9b72-2f64f7be89e6"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							""
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [],
+						"bends": [],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					},
+					{
+						"identifier": "74cb66eb-a413-3855-8d65-c1461e67d998",
+						"instanceIdentifier": "37285769-6f10-3225-00a2-05ef1ef2b9fa",
+						"name": "",
+						"source": {
+							"id": "b4870974-430b-3694-9571-25f35ac8eb4a",
+							"type": "PROCESSOR",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "KeyViewExtractFiles",
+							"comments": "",
+							"instanceIdentifier": "cac7f7c7-6131-3482-6511-c602eb70b5a4"
+						},
+						"destination": {
+							"id": "c7020872-2375-358f-86ac-286fa4ad80ef",
+							"type": "PROCESSOR",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "KeyViewFilterDocument",
+							"comments": "",
+							"instanceIdentifier": "30d6482a-33c5-39f4-9a34-208a7d35e383"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							"success"
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [],
+						"bends": [],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					},
+					{
+						"identifier": "b88b7ddf-ce2b-3c47-8afa-bcb8a75ffd12",
+						"instanceIdentifier": "3cb2a977-143b-3e07-13e3-9aeb24d60441",
+						"name": "",
+						"source": {
+							"id": "b4870974-430b-3694-9571-25f35ac8eb4a",
+							"type": "PROCESSOR",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "KeyViewExtractFiles",
+							"comments": "",
+							"instanceIdentifier": "cac7f7c7-6131-3482-6511-c602eb70b5a4"
+						},
+						"destination": {
+							"id": "e6d10912-1bb8-3a63-b947-f1f3237569af",
+							"type": "OUTPUT_PORT",
+							"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+							"name": "Failure",
+							"instanceIdentifier": "861aff40-2c33-3ea4-b0a4-04d903fa2ec8"
+						},
+						"labelIndex": 1,
+						"zIndex": 0,
+						"selectedRelationships": [
+							"failure"
+						],
+						"backPressureObjectThreshold": 10000,
+						"backPressureDataSizeThreshold": "1 GB",
+						"flowFileExpiration": "0 sec",
+						"prioritizers": [],
+						"bends": [],
+						"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+						"partitioningAttribute": "",
+						"loadBalanceCompression": "DO_NOT_COMPRESS",
+						"componentType": "CONNECTION",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					}
+				],
+				"labels": [],
+				"funnels": [
+					{
+						"identifier": "883e1a04-04bb-3d5a-9f03-84f2396a82ca",
+						"instanceIdentifier": "6d0c8a53-d462-358b-8a2d-56a3ad7b27ae",
+						"position": {
+							"x": -1120.0,
+							"y": 1024.0
+						},
+						"componentType": "FUNNEL",
+						"groupIdentifier": "562cf39e-8f9d-339f-b4a0-33408b777c70"
+					}
+				],
+				"controllerServices": [],
+				"variables": {
+					"script": "function handler(document)\n    -- Write a log message\n    log_info(\"Processing a document\")\n \n    -- Perform modifications to the document\n    document:addField(\"some_field\", \"some_field_value\")\n\n    if document:hasField(\"NZTOWNS\") then\n        return document\n    end\nend"
+				},
+				"parameterContextName": "Eduction And Lua Combination",
+				"defaultFlowFileExpiration": "0 sec",
+				"defaultBackPressureObjectThreshold": 10000,
+				"defaultBackPressureDataSizeThreshold": "1 GB",
+				"componentType": "PROCESS_GROUP",
+				"flowFileConcurrency": "UNBOUNDED",
+				"flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			}
+		],
+		"remoteProcessGroups": [],
+		"processors": [
+			{
+				"identifier": "228e62c9-6216-3e20-9efd-944a74656d37",
+				"instanceIdentifier": "bda8a8d7-f128-3340-7f3b-32aba4d8e7ec",
+				"name": "GetFileSystem",
+				"comments": "",
+				"position": {
+					"x": 693.2046414947483,
+					"y": 382.99999327583796
+				},
+				"type": "idol.nifi.connector.GetFileSystem",
+				"bundle": {
+					"group": "idol.nifi.connector",
+					"artifact": "idol-nifi-connector-filesystem",
+					"version": "25.1.0-nifi1-SNAPSHOT"
+				},
+				"properties": {
+					"SecurityUseSIDs": "false",
+					"IngestIfLastAccessChanged": "false",
+					"DocumentRegistryService": null,
+					"OutputDateFormat": "EPOCHSECONDS",
+					"IdolLicenseService": "#{IDOL License Service}",
+					"DirectoryFileAttributeIgnoreFilter": null,
+					"PathRegexCaseInsensitive": "false",
+					"PathMustHaveRegex": null,
+					"ParseIdx": "true",
+					"UseStubXml": "false",
+					"ShareLevelSecurity": "false",
+					"MaxDeletionPercentage": "99",
+					"DirectoryFileCreatedBefore": null,
+					"EnableProgressAndDatastore": "true",
+					"DirectoryFileSizeMaximum": null,
+					"ParseXml": "false",
+					"PathNoCrawlRegex": null,
+					"DeleteAfterIngest": "false",
+					"DirectoryFileModifiedSince": null,
+					"UseStubIdx": "false",
+					"DebugSecurity": "false",
+					"ExtractOwner": "false",
+					"DirectoryFileSizeMinimum": null,
+					"PathCrawlRegex": null,
+					"DirectoryFileModifiedBefore": null,
+					"NetwareServer": null,
+					"NetwareTree": null,
+					"DatabaseService": null,
+					"DirectoryFileCreatedSince": null,
+					"DirectoryPathCSVs": "#{Directory Paths}",
+					"MappedSecurity": "false",
+					"NetwareContext": null,
+					"PathCantHaveRegex": null,
+					"AlternateDomain": null,
+					"DirectoryRecursive": "true",
+					"DirectoryAccessCheckFile": null,
+					"DirectoryFileMatch": null
+				},
+				"propertyDescriptors": {
+					"SecurityUseSIDs": {
+						"name": "SecurityUseSIDs",
+						"displayName": "Security use SIDs",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"IngestIfLastAccessChanged": {
+						"name": "IngestIfLastAccessChanged",
+						"displayName": "Ingest if last access changed",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"DocumentRegistryService": {
+						"name": "DocumentRegistryService",
+						"displayName": "Document Registry Service",
+						"identifiesControllerService": true,
+						"sensitive": false
+					},
+					"OutputDateFormat": {
+						"name": "OutputDateFormat",
+						"displayName": "Output date format",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"DirectoryFileAttributeIgnoreFilter": {
+						"name": "DirectoryFileAttributeIgnoreFilter",
+						"displayName": "Attribute filter value",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"PathRegexCaseInsensitive": {
+						"name": "PathRegexCaseInsensitive",
+						"displayName": "Path regex case insensitive",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"PathMustHaveRegex": {
+						"name": "PathMustHaveRegex",
+						"displayName": "Path must have regex",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"ParseIdx": {
+						"name": "ParseIdx",
+						"displayName": "Parse IDX",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"UseStubXml": {
+						"name": "UseStubXml",
+						"displayName": "Use stub XML",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"ShareLevelSecurity": {
+						"name": "ShareLevelSecurity",
+						"displayName": "Share level security",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"MaxDeletionPercentage": {
+						"name": "MaxDeletionPercentage",
+						"displayName": "Maximum deletion percentage",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"DirectoryFileCreatedBefore": {
+						"name": "DirectoryFileCreatedBefore",
+						"displayName": "Ignore files created since",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"ReadUsername": {
+						"name": "ReadUsername",
+						"displayName": "Read username",
+						"identifiesControllerService": false,
+						"sensitive": true
+					},
+					"NetwareUsername": {
+						"name": "NetwareUsername",
+						"displayName": "Netware username",
+						"identifiesControllerService": false,
+						"sensitive": true
+					},
+					"EnableProgressAndDatastore": {
+						"name": "EnableProgressAndDatastore",
+						"displayName": "Enable progress and datastore",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"DirectoryFileSizeMaximum": {
+						"name": "DirectoryFileSizeMaximum",
+						"displayName": "Maximum file size",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"ParseXml": {
+						"name": "ParseXml",
+						"displayName": "Parse XML",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"PathNoCrawlRegex": {
+						"name": "PathNoCrawlRegex",
+						"displayName": "Path no crawl regex",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"DeleteAfterIngest": {
+						"name": "DeleteAfterIngest",
+						"displayName": "Delete on success",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"DirectoryFileModifiedSince": {
+						"name": "DirectoryFileModifiedSince",
+						"displayName": "Ignore files modified before",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"UseStubIdx": {
+						"name": "UseStubIdx",
+						"displayName": "Use stub IDX",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"ReadPassword": {
+						"name": "ReadPassword",
+						"displayName": "Read password",
+						"identifiesControllerService": false,
+						"sensitive": true
+					},
+					"DebugSecurity": {
+						"name": "DebugSecurity",
+						"displayName": "Security debug logging",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"ExtractOwner": {
+						"name": "ExtractOwner",
+						"displayName": "Extract owner",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"DirectoryFileSizeMinimum": {
+						"name": "DirectoryFileSizeMinimum",
+						"displayName": "Minimum file size",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"PathCrawlRegex": {
+						"name": "PathCrawlRegex",
+						"displayName": "Path crawl regex",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"DirectoryFileModifiedBefore": {
+						"name": "DirectoryFileModifiedBefore",
+						"displayName": "Ignore files modified since",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"NetwareServer": {
+						"name": "NetwareServer",
+						"displayName": "Netware server",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"NetwareTree": {
+						"name": "NetwareTree",
+						"displayName": "Netware tree",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"DatabaseService": {
+						"name": "DatabaseService",
+						"displayName": "State Database Service",
+						"identifiesControllerService": true,
+						"sensitive": false
+					},
+					"DirectoryFileCreatedSince": {
+						"name": "DirectoryFileCreatedSince",
+						"displayName": "Ignore files created before",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"DirectoryPathCSVs": {
+						"name": "DirectoryPathCSVs",
+						"displayName": "Directory Paths",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"MappedSecurity": {
+						"name": "MappedSecurity",
+						"displayName": "Mapped security",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"NetwareContext": {
+						"name": "NetwareContext",
+						"displayName": "Netware context",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"PathCantHaveRegex": {
+						"name": "PathCantHaveRegex",
+						"displayName": "Path cant have regex",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"NetwarePassword": {
+						"name": "NetwarePassword",
+						"displayName": "Netware password",
+						"identifiesControllerService": false,
+						"sensitive": true
+					},
+					"AlternateDomain": {
+						"name": "AlternateDomain",
+						"displayName": "Security alternate domain",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"DirectoryRecursive": {
+						"name": "DirectoryRecursive",
+						"displayName": "Directory Recursive",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"DirectoryAccessCheckFile": {
+						"name": "DirectoryAccessCheckFile",
+						"displayName": "Directory access check file",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"DirectoryFileMatch": {
+						"name": "DirectoryFileMatch",
+						"displayName": "File name pattern",
+						"identifiesControllerService": false,
+						"sensitive": false
+					}
+				},
+				"style": {},
+				"schedulingPeriod": "1 hour",
+				"schedulingStrategy": "TIMER_DRIVEN",
+				"executionNode": "ALL",
+				"penaltyDuration": "30 sec",
+				"yieldDuration": "1 sec",
+				"bulletinLevel": "ERROR",
+				"runDurationMillis": 0,
+				"concurrentlySchedulableTaskCount": 1,
+				"autoTerminatedRelationships": [
+					"failed identifiers",
+					"response",
+					"report"
+				],
+				"scheduledState": "ENABLED",
+				"retryCount": 0,
+				"retriedRelationships": [],
+				"backoffMechanism": "PENALIZE_FLOWFILE",
+				"maxBackoffPeriod": "10 mins",
+				"componentType": "PROCESSOR",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			}
+		],
+		"inputPorts": [],
+		"outputPorts": [],
+		"connections": [
+			{
+				"identifier": "5acc470d-66a5-37be-b7be-bc8504c190c8",
+				"instanceIdentifier": "83f10029-7da1-3ad7-8912-f24fe0b5a380",
+				"name": "",
+				"source": {
+					"id": "228e62c9-6216-3e20-9efd-944a74656d37",
+					"type": "PROCESSOR",
+					"groupId": "aa62691d-4605-3747-be93-9cbdfb9169f2",
+					"name": "GetFileSystem",
+					"comments": "",
+					"instanceIdentifier": "bda8a8d7-f128-3340-7f3b-32aba4d8e7ec"
+				},
+				"destination": {
+					"id": "64bc9dc3-00a0-3b62-86f3-ba6bb306d39c",
+					"type": "FUNNEL",
+					"groupId": "aa62691d-4605-3747-be93-9cbdfb9169f2",
+					"name": "Funnel",
+					"comments": "",
+					"instanceIdentifier": "6d147d2a-0a02-31ff-7a52-92a7ebf10532"
+				},
+				"labelIndex": 1,
+				"zIndex": 0,
+				"selectedRelationships": [
+					"success"
+				],
+				"backPressureObjectThreshold": 10000,
+				"backPressureDataSizeThreshold": "1 GB",
+				"flowFileExpiration": "0 sec",
+				"prioritizers": [],
+				"bends": [],
+				"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+				"partitioningAttribute": "",
+				"loadBalanceCompression": "DO_NOT_COMPRESS",
+				"componentType": "CONNECTION",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			},
+			{
+				"identifier": "d33647d0-5d7f-3a20-a7d0-10b03aee27e0",
+				"instanceIdentifier": "e677c804-86be-3d48-fced-7d860064b579",
+				"name": "",
+				"source": {
+					"id": "bc5b54f1-1274-3f46-9b44-a0298126dc02",
+					"type": "FUNNEL",
+					"groupId": "aa62691d-4605-3747-be93-9cbdfb9169f2",
+					"name": "Funnel",
+					"comments": "",
+					"instanceIdentifier": "e4d965dc-2436-384a-5ab5-8c1a9ef1edc8"
+				},
+				"destination": {
+					"id": "76c4c5d6-575d-3f40-b101-6fbac82570cc",
+					"type": "INPUT_PORT",
+					"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+					"name": "Execute Lua",
+					"comments": "",
+					"instanceIdentifier": "02569370-4a8f-3487-8ef8-abf270edd560"
+				},
+				"labelIndex": 1,
+				"zIndex": 0,
+				"selectedRelationships": [
+					""
+				],
+				"backPressureObjectThreshold": 10000,
+				"backPressureDataSizeThreshold": "1 GB",
+				"flowFileExpiration": "0 sec",
+				"prioritizers": [],
+				"bends": [],
+				"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+				"partitioningAttribute": "",
+				"loadBalanceCompression": "DO_NOT_COMPRESS",
+				"componentType": "CONNECTION",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			},
+			{
+				"identifier": "01ff730a-3824-37de-9ae5-41929d333da2",
+				"instanceIdentifier": "d123b2a4-ae38-3fd3-adbb-bc2e75be18d6",
+				"name": "",
+				"source": {
+					"id": "64bc9dc3-00a0-3b62-86f3-ba6bb306d39c",
+					"type": "FUNNEL",
+					"groupId": "aa62691d-4605-3747-be93-9cbdfb9169f2",
+					"name": "Funnel",
+					"comments": "",
+					"instanceIdentifier": "6d147d2a-0a02-31ff-7a52-92a7ebf10532"
+				},
+				"destination": {
+					"id": "0b808f86-5e79-31eb-a7fd-60080b2b1f4e",
+					"type": "INPUT_PORT",
+					"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+					"name": "Eduction",
+					"comments": "",
+					"instanceIdentifier": "54c8e751-9a68-3669-36a8-2c482186c04f"
+				},
+				"labelIndex": 1,
+				"zIndex": 0,
+				"selectedRelationships": [
+					""
+				],
+				"backPressureObjectThreshold": 10000,
+				"backPressureDataSizeThreshold": "1 GB",
+				"flowFileExpiration": "0 sec",
+				"prioritizers": [],
+				"bends": [],
+				"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+				"partitioningAttribute": "",
+				"loadBalanceCompression": "DO_NOT_COMPRESS",
+				"componentType": "CONNECTION",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			},
+			{
+				"identifier": "b183af0c-7f08-3901-a894-0023fd309fd3",
+				"instanceIdentifier": "b3c8faf8-b9cc-38c0-b5de-4784dada6483",
+				"name": "",
+				"source": {
+					"id": "0b08076c-810f-3e75-9cfb-89910696dda9",
+					"type": "OUTPUT_PORT",
+					"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+					"name": "Failure",
+					"instanceIdentifier": "f532d4f3-c535-3801-3fbd-23b5857611e0"
+				},
+				"destination": {
+					"id": "97ea2449-c714-326b-ae32-c9067d6c1581",
+					"type": "FUNNEL",
+					"groupId": "aa62691d-4605-3747-be93-9cbdfb9169f2",
+					"name": "Funnel",
+					"comments": "",
+					"instanceIdentifier": "d0c79218-2ab7-3ee1-5ecc-7ba38c7cec81"
+				},
+				"labelIndex": 1,
+				"zIndex": 0,
+				"selectedRelationships": [
+					""
+				],
+				"backPressureObjectThreshold": 10000,
+				"backPressureDataSizeThreshold": "1 GB",
+				"flowFileExpiration": "0 sec",
+				"prioritizers": [],
+				"bends": [],
+				"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+				"partitioningAttribute": "",
+				"loadBalanceCompression": "DO_NOT_COMPRESS",
+				"componentType": "CONNECTION",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			},
+			{
+				"identifier": "fe0d174c-a1cd-33c1-aa59-6a44ee0cdd2d",
+				"instanceIdentifier": "29366ead-0e15-3b52-b107-c42f7279a698",
+				"name": "",
+				"source": {
+					"id": "2e00a885-5cab-3027-9b27-14f0ec379628",
+					"type": "OUTPUT_PORT",
+					"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+					"name": "Success",
+					"instanceIdentifier": "4341caeb-0e04-3e8e-7c64-d70d09eb39b8"
+				},
+				"destination": {
+					"id": "1f6ddc79-3c1f-3474-856a-153ac054ad54",
+					"type": "FUNNEL",
+					"groupId": "aa62691d-4605-3747-be93-9cbdfb9169f2",
+					"name": "Funnel",
+					"comments": "",
+					"instanceIdentifier": "f3da7c9a-ea48-3d8b-55cd-e9d7cf85298e"
+				},
+				"labelIndex": 1,
+				"zIndex": 0,
+				"selectedRelationships": [
+					""
+				],
+				"backPressureObjectThreshold": 10000,
+				"backPressureDataSizeThreshold": "1 GB",
+				"flowFileExpiration": "0 sec",
+				"prioritizers": [],
+				"bends": [],
+				"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+				"partitioningAttribute": "",
+				"loadBalanceCompression": "DO_NOT_COMPRESS",
+				"componentType": "CONNECTION",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			},
+			{
+				"identifier": "777d7798-9ff4-3115-b684-0e7a65d15407",
+				"instanceIdentifier": "edb9febe-79e1-3a30-fb98-36bdf7862002",
+				"name": "",
+				"source": {
+					"id": "a3403f46-06f1-3cd2-b0cc-529e50072775",
+					"type": "FUNNEL",
+					"groupId": "aa62691d-4605-3747-be93-9cbdfb9169f2",
+					"name": "Funnel",
+					"comments": "",
+					"instanceIdentifier": "6cc3c3f3-d9e9-32a0-a400-5ae668e487d7"
+				},
+				"destination": {
+					"id": "b0165384-2f24-3dd7-aa3a-4032123f6f06",
+					"type": "INPUT_PORT",
+					"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+					"name": "ExecuteLua (Keyview Processes already complete)",
+					"comments": "",
+					"instanceIdentifier": "d504e672-e15b-3870-c6be-c90b10f9a1b3"
+				},
+				"labelIndex": 1,
+				"zIndex": 0,
+				"selectedRelationships": [
+					""
+				],
+				"backPressureObjectThreshold": 10000,
+				"backPressureDataSizeThreshold": "1 GB",
+				"flowFileExpiration": "0 sec",
+				"prioritizers": [],
+				"bends": [],
+				"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+				"partitioningAttribute": "",
+				"loadBalanceCompression": "DO_NOT_COMPRESS",
+				"componentType": "CONNECTION",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			},
+			{
+				"identifier": "a6b7d0e4-1da5-3ccd-b558-13c35842a9be",
+				"instanceIdentifier": "d6df1597-cce5-36ac-7af8-55f3d757959f",
+				"name": "",
+				"source": {
+					"id": "e6d10912-1bb8-3a63-b947-f1f3237569af",
+					"type": "OUTPUT_PORT",
+					"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+					"name": "Failure",
+					"instanceIdentifier": "861aff40-2c33-3ea4-b0a4-04d903fa2ec8"
+				},
+				"destination": {
+					"id": "d9681abb-d652-31cc-a9e8-a3c54a8d2eff",
+					"type": "FUNNEL",
+					"groupId": "aa62691d-4605-3747-be93-9cbdfb9169f2",
+					"name": "Funnel",
+					"comments": "",
+					"instanceIdentifier": "ddc3e1fd-ac1d-3797-8704-e5fe0b35cd66"
+				},
+				"labelIndex": 1,
+				"zIndex": 0,
+				"selectedRelationships": [
+					""
+				],
+				"backPressureObjectThreshold": 10000,
+				"backPressureDataSizeThreshold": "1 GB",
+				"flowFileExpiration": "0 sec",
+				"prioritizers": [],
+				"bends": [],
+				"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+				"partitioningAttribute": "",
+				"loadBalanceCompression": "DO_NOT_COMPRESS",
+				"componentType": "CONNECTION",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			},
+			{
+				"identifier": "8769a5c5-e2cd-30e9-9dec-8068deada70a",
+				"instanceIdentifier": "0751a234-652a-3e76-9ef1-d77cf35f8dd3",
+				"name": "",
+				"source": {
+					"id": "08fc97b8-c47e-3ba6-a4aa-6c66bfc77a04",
+					"type": "OUTPUT_PORT",
+					"groupId": "1320ed45-ea8c-338b-870b-4c23fb92b71a",
+					"name": "Success",
+					"instanceIdentifier": "a9e554d3-c952-3d2e-7043-f57e2d0cce47"
+				},
+				"destination": {
+					"id": "a3403f46-06f1-3cd2-b0cc-529e50072775",
+					"type": "FUNNEL",
+					"groupId": "aa62691d-4605-3747-be93-9cbdfb9169f2",
+					"name": "Funnel",
+					"comments": "",
+					"instanceIdentifier": "6cc3c3f3-d9e9-32a0-a400-5ae668e487d7"
+				},
+				"labelIndex": 1,
+				"zIndex": 0,
+				"selectedRelationships": [
+					""
+				],
+				"backPressureObjectThreshold": 10000,
+				"backPressureDataSizeThreshold": "1 GB",
+				"flowFileExpiration": "0 sec",
+				"prioritizers": [],
+				"bends": [],
+				"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+				"partitioningAttribute": "",
+				"loadBalanceCompression": "DO_NOT_COMPRESS",
+				"componentType": "CONNECTION",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			},
+			{
+				"identifier": "11b48551-fbfa-36e0-8ca2-cf1bc8e55fcd",
+				"instanceIdentifier": "919ac41e-8ba2-352b-144c-31560a7768fc",
+				"name": "",
+				"source": {
+					"id": "eb2b06e7-bcea-39a8-acef-e9d39c555cab",
+					"type": "OUTPUT_PORT",
+					"groupId": "562cf39e-8f9d-339f-b4a0-33408b777c70",
+					"name": "Returned",
+					"comments": "",
+					"instanceIdentifier": "cd5c4c75-9012-3c2f-b119-ae3b638b6f93"
+				},
+				"destination": {
+					"id": "6775a7d5-8b93-3150-b950-c8b30b116b06",
+					"type": "FUNNEL",
+					"groupId": "aa62691d-4605-3747-be93-9cbdfb9169f2",
+					"name": "Funnel",
+					"comments": "",
+					"instanceIdentifier": "15e4085b-c347-3799-33c4-c07c61ee9199"
+				},
+				"labelIndex": 1,
+				"zIndex": 0,
+				"selectedRelationships": [
+					""
+				],
+				"backPressureObjectThreshold": 10000,
+				"backPressureDataSizeThreshold": "1 GB",
+				"flowFileExpiration": "0 sec",
+				"prioritizers": [],
+				"bends": [],
+				"loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+				"partitioningAttribute": "",
+				"loadBalanceCompression": "DO_NOT_COMPRESS",
+				"componentType": "CONNECTION",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			}
+		],
+		"labels": [
+			{
+				"identifier": "8bf2ce91-28ad-3a0e-88d0-bcfb93226f1a",
+				"instanceIdentifier": "bf2f55d4-5810-30d3-e2d1-00b5d07e9eec",
+				"position": {
+					"x": 1155.6985030474564,
+					"y": 826.6118755949208
+				},
+				"label": "Template Showing an example of mixing Eduction and \nExecuteLua processors \nUsing the Eduction processor and add Metadata to certain files\nThe lua processor then splits the files dependent on whether the\nmetadata is added.\n\nTo use, simply use the get processor to get the wanted files, add the\ncorrect grammar file to the Eduction processor with the correct\nentity/entity fields.\nThen adjust the Lua script based on your eduction processor.\n",
+				"zIndex": 0,
+				"width": 400.3070831298828,
+				"height": 171.5303192138672,
+				"style": {
+					"font-size": "12px"
+				},
+				"componentType": "LABEL",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			}
+		],
+		"funnels": [
+			{
+				"identifier": "bc5b54f1-1274-3f46-9b44-a0298126dc02",
+				"instanceIdentifier": "e4d965dc-2436-384a-5ab5-8c1a9ef1edc8",
+				"position": {
+					"x": 1734.3020110430619,
+					"y": 789.9855155841367
+				},
+				"componentType": "FUNNEL",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			},
+			{
+				"identifier": "d9681abb-d652-31cc-a9e8-a3c54a8d2eff",
+				"instanceIdentifier": "ddc3e1fd-ac1d-3797-8704-e5fe0b35cd66",
+				"position": {
+					"x": 1527.6686908767304,
+					"y": 1329.2946771962443
+				},
+				"componentType": "FUNNEL",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			},
+			{
+				"identifier": "97ea2449-c714-326b-ae32-c9067d6c1581",
+				"instanceIdentifier": "d0c79218-2ab7-3ee1-5ecc-7ba38c7cec81",
+				"position": {
+					"x": 626.0000202224335,
+					"y": 1094.00043576369
+				},
+				"componentType": "FUNNEL",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			},
+			{
+				"identifier": "64bc9dc3-00a0-3b62-86f3-ba6bb306d39c",
+				"instanceIdentifier": "6d147d2a-0a02-31ff-7a52-92a7ebf10532",
+				"position": {
+					"x": 844.2046414947483,
+					"y": 597.7499322406817
+				},
+				"componentType": "FUNNEL",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			},
+			{
+				"identifier": "a3403f46-06f1-3cd2-b0cc-529e50072775",
+				"instanceIdentifier": "6cc3c3f3-d9e9-32a0-a400-5ae668e487d7",
+				"position": {
+					"x": 1035.5712568964125,
+					"y": 1089.00043576369
+				},
+				"componentType": "FUNNEL",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			},
+			{
+				"identifier": "6775a7d5-8b93-3150-b950-c8b30b116b06",
+				"instanceIdentifier": "15e4085b-c347-3799-33c4-c07c61ee9199",
+				"position": {
+					"x": 2185.2776679360815,
+					"y": 1084.05219357619
+				},
+				"componentType": "FUNNEL",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			},
+			{
+				"identifier": "1f6ddc79-3c1f-3474-856a-153ac054ad54",
+				"instanceIdentifier": "f3da7c9a-ea48-3d8b-55cd-e9d7cf85298e",
+				"position": {
+					"x": 1942.2399275507094,
+					"y": 1325.2210536044846
+				},
+				"componentType": "FUNNEL",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			}
+		],
+		"controllerServices": [
+			{
+				"identifier": "76a422e9-b52a-30a1-b80b-f602dd4dcb53",
+				"instanceIdentifier": "62302858-3019-35f5-02bf-faaf9e40398a",
+				"name": "KeyViewFilterServiceImpl",
+				"comments": "",
+				"type": "idol.nifi.service.KeyViewFilterServiceImpl",
+				"bundle": {
+					"group": "idol.nifi",
+					"artifact": "idol-nifi-framework",
+					"version": "25.1.0-nifi1-SNAPSHOT"
+				},
+				"properties": {
+					"FileStorageDirectory": "${idol.repository.files.storage.dir}",
+					"KeyViewDirectory": "${'KEYVIEW_DIRECTORY'}"
+				},
+				"propertyDescriptors": {
+					"FileStorageDirectory": {
+						"name": "FileStorageDirectory",
+						"displayName": "File storage directory",
+						"identifiesControllerService": false,
+						"sensitive": false
+					},
+					"KeyViewDirectory": {
+						"name": "KeyViewDirectory",
+						"displayName": "KeyView directory",
+						"identifiesControllerService": false,
+						"sensitive": false
+					}
+				},
+				"controllerServiceApis": [
+					{
+						"type": "idol.nifi.service.KeyViewFilterService",
+						"bundle": {
+							"group": "idol.nifi",
+							"artifact": "idol-nifi-framework-api",
+							"version": "25.1.0-nifi1-SNAPSHOT"
+						}
+					}
+				],
+				"scheduledState": "DISABLED",
+				"bulletinLevel": "WARN",
+				"componentType": "CONTROLLER_SERVICE",
+				"groupIdentifier": "aa62691d-4605-3747-be93-9cbdfb9169f2"
+			}
+		],
+		"variables": {},
+		"parameterContextName": "Eduction And Lua Combination",
+		"defaultFlowFileExpiration": "0 sec",
+		"defaultBackPressureObjectThreshold": 10000,
+		"defaultBackPressureDataSizeThreshold": "1 GB",
+		"logFileSuffix": "",
+		"componentType": "PROCESS_GROUP",
+		"flowFileConcurrency": "UNBOUNDED",
+		"flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE"
+	},
+	"externalControllerServices": {},
+	"parameterContexts": {
+		"Eduction And Lua Combination Parameters": {
+			"name": "Eduction And Lua Combination Parameters",
+			"parameters": [
+				{
+					"name": "Entity",
+					"description": "",
+					"sensitive": false,
+					"provided": false,
+					"value": "place/city1/engnz"
+				},
+				{
+					"name": "Directory Paths",
+					"description": "",
+					"sensitive": false,
+					"provided": false,
+					"value": "./data"
+				},
+				{
+					"name": "Resource Files",
+					"description": "",
+					"sensitive": false,
+					"provided": false,
+					"value": "\\grammars\\place_engnz.ecr"
+				},
+				{
+					"name": "IDOL License Service",
+					"description": "",
+					"sensitive": false,
+					"provided": false,
+					"value": "c0b6b907-9763-35fc-b7e6-2615ec27bce7"
+				},
+				{
+					"name": "KeyView Filter Service",
+					"description": "",
+					"sensitive": false,
+					"provided": false,
+					"value": "76a422e9-b52a-30a1-b80b-f602dd4dcb53"
+				},
+				{
+					"name": "Entity Field",
+					"description": "",
+					"sensitive": false,
+					"provided": false,
+					"value": "NZTOWNS"
+				}
+			],
+			"inheritedParameterContexts": [],
+			"componentType": "PARAMETER_CONTEXT"
+		}
+	},
+	"flowEncodingVersion": "1.0",
+	"parameterProviders": {},
+	"latest": false
+}
