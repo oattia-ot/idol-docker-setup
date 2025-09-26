@@ -88,53 +88,15 @@ This repository provides a comprehensive, production-ready deployment solution f
 - **Docker Hub**: Personal access token for IDOL images
 - **Network Access**: Outbound HTTPS (443) for image pulls
 
-## Quick Start
+## Installation Guide
 
-### 1. Clone Repository
-
+### Phase 1: Clone Repository
 ```bash
 git clone https://github.com/oattia-ot/idol-docker-setup.git
 cd idol-docker-setup
 ```
 
-### 2. Run Setup
-
-```bash
-# Make scripts executable
-chmod +x *.sh
-
-# Start interactive setup
-./collect-setup-parameters.sh
-```
-
-### 3. Deploy IDOL
-
-```bash
-# Load environment variables
-source env/export-env-variables.sh
-
-# Execute installation
-./install-idol.sh
-
-# Deploy containers
-cd /opt/idol/idol-containers-toolkit/basic-idol/
-./deploy.sh up -d
-```
-
-### 4. Verify Deployment
-
-```bash
-# Check container status
-docker ps
-
-# Verify services
-curl -k https://localhost:8443/idol-find
-```
-
-## Installation Guide
-
-### Phase 1: Environment Preparation
-
+### Phase 2: Environment Preparation
 The setup process begins with parameter collection and environment validation:
 
 ```bash
@@ -148,8 +110,7 @@ The setup process begins with parameter collection and environment validation:
 - Security certificate configuration
 - License server parameters
 
-### Phase 2: Infrastructure Setup
-
+### Phase 3: Infrastructure Setup
 Environment variable loading and system preparation:
 
 ```bash
@@ -164,7 +125,7 @@ source env/export-env-variables.sh
 - Docker Compose template preparation
 - Network bridge creation
 
-### Phase 3: Service Deployment
+### Phase 4: Service Deployment
 
 Container orchestration and service startup:
 
@@ -179,6 +140,23 @@ cd /opt/idol/idol-containers-toolkit/basic-idol/
 - NiFi Data Processing
 - License Server
 - Supporting infrastructure services
+
+### Phase 5: Verify Deployment
+
+```bash
+# Check container status
+docker ps
+
+# Verify services
+<img width="675" height="363" alt="image" src="https://github.com/user-attachments/assets/f77864a4-f507-4fb3-8e6a-ca3be68fd5da" />
+````
+
+### Phase 6: (Optional) Check if IDOL License Server is availabe if not start it:
+cd idol-docker-setup/licenseserver-setup/
+./deploy-license-server.sh
+````
+> **Note**
+> Although the IDOL License Server is automatically deployed during setup, you can use the section 6 instructions to manually install it if necessary.
 
 ## Configuration
 
