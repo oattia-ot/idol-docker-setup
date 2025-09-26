@@ -14,11 +14,15 @@ This README documents the complete configuration and installation process for Op
 
 ## 📋 Requirements
 
-- **Operating System**: Ubuntu 24.04
+- **Operating System**: Ubuntu 24.04 (Hardware tested Env. Memory: 64GB, Disk: 50GB, CPUs: 6)
 - **Privileges**: Root or sudo access required
 - **Network**: Internet connection for Docker installation
-- **License**: IDOL license file (`licensekey.dat`)
-- **Authentication**: Docker personal access token
+- **License**: IDOL license file (`licensekey.dat`) 
+    - You need to provide the following info in order to generate it:
+      1) Host Name
+      2) Mail Address
+      3) MAC Address
+- **Authentication**: IDOL Docker personal access token
 
 ## Quick Start
 
@@ -30,6 +34,9 @@ git clone https://github.com/oattia-ot/idol-docker-setup.git
 ```
 **Execute the following commands in sequence:**
 
+Here’s the markdown with the **NOTE** highlighted in a box:
+
+````markdown
 ```bash
 # 1. Navigate to setup directory
 cd idol-docker-setup/
@@ -43,14 +50,17 @@ source env/export-env-variables.sh
 # 4. Install IDOL
 ./install-idol.sh
 
-# 5. Check if IDOL License Server is availabe if not start it:
-cd idol-docker-setup/licenseserver-setup/
-./deploy-license-server.sh
-
-# 6. Deploy IDOL containers
+# 5. Deploy IDOL containers
 cd /opt/idol/idol-containers-toolkit/basic-idol/
 ./deploy.sh up -d
-```
+
+# 6. (Optional) Check if IDOL License Server is availabe if not start it:
+cd idol-docker-setup/licenseserver-setup/
+./deploy-license-server.sh
+````
+
+> **Note**
+> Although the IDOL License Server is automatically deployed during setup, you can use the section 6 instructions to manually install it if necessary.
 
 ## Overview
 
@@ -66,108 +76,6 @@ The script can optionally validate the following prerequisites:
 - User permissions for Docker operations
 
 **Note**: Prerequisites validation can be skipped during setup if requirements are already met.
-
-## Configuration Process
-
-### Step 1: Parameter Collection (`./collect-setup-parameters.sh`)
-
-This script collects the following configuration parameters:
-
-#### Network Configuration
-- **Host FQDN**: `${IDOL_HOST_FQDN}`
-- **Host IP**: `${IDOL_NET_HOST_IP}` (selected from available interfaces)
-- **Guest IP**: `${IDOL_NET_GUEST_IP}` (selected from routing table)
-
-#### IDOL Version Selection
-- **Version Options**: 25.2 (default), 25.1
-- **Selected**: `${IDOL_VERSION}`
-
-#### Security Configuration
-- **Setup Type Options**: 
-  - Secure NiFi (default)
-  - Secure all IDOL components
-  - Standard
-- **Selected**: `${IDOL_SETUP_TYPE}`
-- **SSL Enabled**: `${IDOL_ENABLE_SSL}`
-- **NiFi Secure Port**: `${IDOL_NIFI_PORT_NUMBER}` (default: 8443)
-
-#### NiFi Deployment Details
-- **Version**: NiFi Version 2 (minimal deployment)
-- **Type**: `${IDOL_NIFI_DEPLOY_TYPE}`
-- **Version**: `${IDOL_NIFI_DEPLOY_VERSION}`
-
-### Step 2: Data Persistence Configuration
-
-#### IDOL Core Data
-- **Persistence Enabled**: `${IS_IDOL_PRESERVE}`
-- **Base Path**: `${IDOL_PRESERVE_PATH}` (default: `/opt/idol/persistent-data`)
-- **Content Path**: `${IDOL_CONTENT_PATH}`
-- **Find Path**: `${IDOL_FIND_PATH}`
-
-#### NiFi Data
-- **Persistence Enabled**: `${IS_IDOL_NIFI_PRESERVE}` (typically FALSE)
-
-#### NiFi Registry Data
-- **Persistence Enabled**: `${IS_IDOL_NIFI_REGISTRY_PRESERVE}`
-- **Registry URL**: `http://idol-docker-host:18080/nifi-registry`
-
-#### Storage Mapping
-- **Toolkit Path**: `${IDOL_TOOLKIT_PATH}` (default: `/opt/idol/idol-containers-toolkit`)
-- **Host Storage Path**: `${IDOL_HOST_STORAGE_PATH}` (default: `/mnt/c/OpenText/hotfolder`)
-
-### Step 3: License Server Configuration
-
-#### License Key
-- **Path**: Custom path to `licensekey.dat` file
-- **Status**: Must be validated before installation
-
-#### Docker Access
-- **Token**: Docker Personal Access Token (format: `dckr_pat_XXXXXXXXX`)
-- **Status**: Must be valid and authenticated
-
-#### Important Notes
-- ⚠️ **License Server must be running before installation**
-- The deployment depends on a valid and reachable license server
-- Installation will fail if license server is not available
-
-## Environment Variables
-
-The script generates the following environment variables (sourced via `export-env-variables.sh`):
-
-```bash
-export IS_IDOL_VALIDATION_MET=${IS_IDOL_VALIDATION_MET}
-export IDOL_HOST_FQDN=${IDOL_HOST_FQDN}
-export IDOL_NET_HOST_IP=${IDOL_NET_HOST_IP}
-export IDOL_NET_GUEST_IP=${IDOL_NET_GUEST_IP}
-export IDOL_VERSION=${IDOL_VERSION}
-export IDOL_SETUP_TYPE=${IDOL_SETUP_TYPE}
-export IDOL_ENABLE_SSL=${IDOL_ENABLE_SSL}
-export IDOL_NIFI_PORT_NUMBER=${IDOL_NIFI_PORT_NUMBER}
-export IDOL_NIFI_DEPLOY_TYPE=${IDOL_NIFI_DEPLOY_TYPE}
-export IDOL_NIFI_DEPLOY_VERSION=${IDOL_NIFI_DEPLOY_VERSION}
-export IS_IDOL_PRESERVE=${IS_IDOL_PRESERVE}
-export IDOL_PRESERVE_PATH=${IDOL_PRESERVE_PATH}
-export IDOL_CONTENT_PATH=${IDOL_CONTENT_PATH}
-export IDOL_FIND_PATH=${IDOL_FIND_PATH}
-export IS_IDOL_NIFI_PRESERVE=${IS_IDOL_NIFI_PRESERVE}
-export IDOL_TOOLKIT_PATH=${IDOL_TOOLKIT_PATH}
-export IDOL_HOST_STORAGE_PATH=${IDOL_HOST_STORAGE_PATH}
-export IS_IDOL_NIFI_REGISTRY_PRESERVE=${IS_IDOL_NIFI_REGISTRY_PRESERVE}
-```
-
-## Data Preservation Options
-
-The script offers two data persistence strategies:
-
-### 1. Preserve Data Outside Container (Recommended) ✅
-- Data persists when containers are removed/recreated
-- Enables backup and recovery procedures
-- Typically selected for IDOL core components (Content and Find)
-
-### 2. Keep Data Inside Container
-- Data is lost when container is removed
-- Simpler setup but higher risk of data loss
-- May be selected for NiFi components based on requirements
 
 ## Installation Workflow
 
@@ -206,6 +114,24 @@ cd /opt/idol/idol-containers-toolkit/basic-idol/
 - Starts all services in detached mode
 - Applies final configurations
 - Establishes service connectivity
+
+## Environment Variables
+
+The script generates the following environment variables (sourced via `export-env-variables.sh`):
+
+## Data Preservation Options
+
+The script offers two data persistence strategies:
+
+### 1. Preserve Data Outside Container (Recommended) ✅
+- Data persists when containers are removed/recreated
+- Enables backup and recovery procedures
+- Typically selected for IDOL core components (Content and Find)
+
+### 2. Keep Data Inside Container
+- Data is lost when container is removed
+- Simpler setup but higher risk of data loss
+- May be selected for NiFi components based on requirements
 
 ## Log Files
 
