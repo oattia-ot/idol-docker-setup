@@ -3,21 +3,22 @@
 [![License](https://img.shields.io/badge/license-OpenText-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Ubuntu%2024.04-orange.svg)]()
 [![Docker](https://img.shields.io/badge/docker-%E2%89%A5%2020.10-blue.svg)]()
-[![Status](https://img.shields.io/badge/status-production--ready-brightgreen.svg)]()
+[![Status](https://img.shields.io/badge/status-demo/mvp--ready-brightgreen.svg)]()
 
-> **Enterprise-grade automated deployment solution for OpenText Knowledge Discovery (IDOL) with Docker Compose**
+Enterprise-grade automated deployment solution for OpenText Knowledge Discovery (IDOL) with Docker Compose.
 
 ## Table of Contents
 
-- [Overview](#overview)
+- [Overview](##overview)
 - [Features](#features)
 - [Prerequisites](#prerequisites)
-- [Quick Start](#quick-start)
 - [Installation Guide](#installation-guide)
 - [Configuration](#configuration)
 - [Architecture](#architecture)
 - [Operations](#operations)
 - [Troubleshooting](#troubleshooting)
+- [Security](#security)
+- [Performance](#performance)
 - [Contributing](#contributing)
 - [Support](#support)
 
@@ -27,15 +28,15 @@ This repository provides a comprehensive, production-ready deployment solution f
 
 ### Key Benefits
 
-- **Zero-downtime deployment** with containerized architecture
-- **Automated infrastructure provisioning** and dependency management
-- **Enterprise security** with SSL/TLS encryption and access controls
-- **Scalable configuration** supporting various deployment topologies
-- **Production monitoring** with comprehensive logging and health checks
+- Zero-downtime deployment with containerized architecture
+- Automated infrastructure provisioning and dependency management
+- Enterprise security with SSL/TLS encryption and access controls
+- Scalable configuration supporting various deployment topologies
+- Production monitoring with comprehensive logging and health checks
 
 ## Features
 
-### 🚀 Core Capabilities
+### Core Capabilities
 
 | Feature | Description | Status |
 |---------|-------------|--------|
@@ -46,7 +47,7 @@ This repository provides a comprehensive, production-ready deployment solution f
 | **Health Monitoring** | Container health checks and comprehensive logging | ✅ |
 | **Network Intelligence** | Automatic network discovery and configuration validation | ✅ |
 
-### 🛠 Technical Features
+### Technical Features
 
 - **Infrastructure as Code**: Declarative configuration management
 - **Container Orchestration**: Docker Compose with service dependencies
@@ -60,7 +61,7 @@ This repository provides a comprehensive, production-ready deployment solution f
 
 | Component | Requirement | Notes |
 |-----------|-------------|-------|
-| **OS** | Ubuntu 24.04 LTS | Tested configuration |
+| **Operating System** | Ubuntu 24.04 LTS | Tested configuration |
 | **CPU** | 6+ cores | Recommended for production |
 | **Memory** | 64 GB RAM | Minimum for full deployment |
 | **Storage** | 50+ GB disk space | SSD recommended |
@@ -68,18 +69,16 @@ This repository provides a comprehensive, production-ready deployment solution f
 
 ### Software Dependencies
 
-```bash
-# Required (auto-installed if missing)
+**Required (auto-installed if missing):**
 - Docker Engine >= 20.10
 - Docker Compose >= 2.0
 - Java Runtime Environment
 - OpenSSL
 
-# Optional (for development)
+**Optional (for development):**
 - Git
 - curl/wget
 - jq (for JSON processing)
-```
 
 ### Access Requirements
 
@@ -90,7 +89,7 @@ This repository provides a comprehensive, production-ready deployment solution f
 
 ## Installation Guide
 
-### Phase 1: Clone Repository
+### Phase 1: Repository Setup
 ```bash
 git clone https://github.com/oattia-ot/idol-docker-setup.git
 cd idol-docker-setup
@@ -103,7 +102,7 @@ The setup process begins with parameter collection and environment validation:
 ./collect-setup-parameters.sh
 ```
 
-**Configuration collected:**
+**Configuration Parameters:**
 - Network interface selection and IP validation
 - IDOL version and deployment type
 - Data persistence strategy
@@ -118,7 +117,7 @@ source env/export-env-variables.sh
 ./install-idol.sh
 ```
 
-**Operations performed:**
+**Operations Performed:**
 - Docker and dependency installation (if required)
 - SSL certificate generation
 - Persistent storage configuration
@@ -134,29 +133,32 @@ cd /opt/idol/idol-containers-toolkit/basic-idol/
 ./deploy.sh up -d
 ```
 
-**Services deployed:**
+**Services Deployed:**
 - IDOL Content Engine
 - IDOL Find Interface  
 - NiFi Data Processing
 - License Server
 - Supporting infrastructure services
 
-### Phase 5: Verify Deployment
+### Phase 5: Deployment Verification
 
 ```bash
 # Check container status
 docker ps
 
 # Verify services
-<img width="675" height="363" alt="image" src="https://github.com/user-attachments/assets/f77864a4-f507-4fb3-8e6a-ca3be68fd5da" />
-````
+```
 
-### Phase 6: (Optional) Check if IDOL License Server is availabe if not start it:
+### Phase 6: Optional License Server Setup
+
+If the IDOL License Server requires manual deployment:
+
+```bash
 cd idol-docker-setup/licenseserver-setup/
 ./deploy-license-server.sh
-````
-> **Note**
-> Although the IDOL License Server is automatically deployed during setup, you can use the section 6 instructions to manually install it if necessary.
+```
+
+> **Note:** Although the IDOL License Server is automatically deployed during setup, you can use the Phase 6 instructions to manually install it if necessary.
 
 ## Configuration
 
@@ -216,23 +218,23 @@ IDOL_CERT_PATH=/opt/idol/certs
 
 ```
 idol-docker-setup/
-├── 📁 configurations/
+├── configurations/
 │   ├── idol-secure-setup/     # Production security configs
 │   ├── idol-standard-setup/   # Standard deployment configs
 │   └── licenseserver-setup/   # License server templates
-├── 📁 infrastructure/
+├── infrastructure/
 │   ├── prerequisites/         # System dependency checks
 │   ├── utilities/            # Helper scripts and tools
 │   └── env/                  # Environment management
-├── 📁 templates/
+├── templates/
 │   └── nifi-templates/       # NiFi workflow templates
-├── 📁 data/
+├── data/
 │   └── persistent-data/      # Container persistence mount
-├── 📁 monitoring/
+├── monitoring/
 │   └── logs/                 # Centralized logging
-├── 🔧 collect-setup-parameters.sh
-├── 🔧 install-idol.sh
-└── 📖 README.md
+├── collect-setup-parameters.sh
+├── install-idol.sh
+└── README.md
 ```
 
 ### Service Dependencies
@@ -320,54 +322,66 @@ journalctl -u docker -f
 
 ### Common Issues & Solutions
 
-#### 🔍 License Server Connectivity
+#### License Server Connectivity
 
-**Problem**: License validation failures
+**Problem:** License validation failures
+
+**Diagnosis:**
 ```bash
-# Diagnosis
 docker logs idol-license-server
 curl -v http://localhost:20000/
+```
 
-# Resolution
+**Resolution:**
+```bash
 ./licenseserver-setup/deploy-license-server.sh
 ```
 
-#### 🔍 Docker Authentication Issues
+#### Docker Authentication Issues
 
-**Problem**: Image pull authentication failures
+**Problem:** Image pull authentication failures
+
+**Diagnosis:**
 ```bash
-# Diagnosis  
 docker login --username your-username
+```
 
-# Resolution
+**Resolution:**
+```bash
 # Update Docker Hub personal access token
 echo $DOCKER_TOKEN | docker login --username your-username --password-stdin
 ```
 
-#### 🔍 Network Connectivity Problems
+#### Network Connectivity Problems
 
-**Problem**: Service discovery failures
+**Problem:** Service discovery failures
+
+**Diagnosis:**
 ```bash
-# Diagnosis
 docker network ls
 docker network inspect idol-network
+```
 
-# Resolution
+**Resolution:**
+```bash
 # Recreate Docker network
 docker-compose down
 docker network prune
 docker-compose up -d
 ```
 
-#### 🔍 Storage Permission Issues
+#### Storage Permission Issues
 
-**Problem**: Persistent storage access denied
+**Problem:** Persistent storage access denied
+
+**Diagnosis:**
 ```bash
-# Diagnosis
 ls -la ${IDOL_PRESERVE_PATH}
 docker exec idol-content ls -la /opt/idol/content
+```
 
-# Resolution
+**Resolution:**
+```bash
 sudo chown -R 1000:1000 ${IDOL_PRESERVE_PATH}
 sudo chmod -R 755 ${IDOL_PRESERVE_PATH}
 ```
@@ -445,7 +459,7 @@ Tested configuration performance metrics:
 | **Startup Time** | < 5 minutes | Full stack deployment |
 | **Memory Usage** | 32-48 GB | Typical production load |
 | **Storage I/O** | 1000+ IOPS | SSD storage recommended |
-| **Network** | < 100ms | Service-to-service latency |
+| **Network Latency** | < 100ms | Service-to-service communication |
 
 ### Scaling Considerations
 
@@ -487,7 +501,7 @@ git push origin feature/enhancement-name
 
 1. **Documentation**: Review this README and inline documentation
 2. **Troubleshooting**: Check the [troubleshooting section](#troubleshooting)
-3. **Logs**: Examine logs in `./logs/` directory
+3. **Logs**: Examine logs in the `./logs/` directory
 4. **Community**: OpenText IDOL community forums
 
 ### Issue Reporting
@@ -507,18 +521,15 @@ For enterprise support and professional services:
 - Professional Services engagement
 - Training and certification programs
 
----
-
 ## Acknowledgments
 
-**Special Recognition** 🙏
+**Special Recognition**
 
 Deep gratitude to **Vinay Joseph** for exceptional technical mentorship and collaboration throughout this project's development. Your expertise and guidance were instrumental in delivering this enterprise-grade solution.
 
 **Development Team:**
-- **Oren Attia** - Lead DevOps Engineer & Solution Architect
-
----
+- **Oren Attia** - Solution Consulting
+- Linkedin: https://www.linkedin.com/in/oren-attia
 
 ## License
 
@@ -528,7 +539,7 @@ This project operates under OpenText IDOL licensing agreements. See [LICENSE](LI
 
 <div align="center">
 
-**OpenText IDOL Docker Deployment** | Made with ❤️ for the DevOps Community
+**OpenText IDOL Docker Deployment** | Made with ❤️ for the IDOL Community
 
 [![OpenText](https://img.shields.io/badge/OpenText-IDOL-blue.svg)](https://www.opentext.com/products/idol)
 [![Docker](https://img.shields.io/badge/Powered%20by-Docker-blue.svg)](https://docker.com)
