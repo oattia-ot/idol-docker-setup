@@ -146,7 +146,27 @@ cd /opt/idol/idol-containers-toolkit/basic-idol/
 # Check container status
 docker ps
 
-# Verify services
+# IDOL Demo Stack
+**Network:** idol-demo
+
+| Container Name | Image | Status | Uptime | Health |
+|---------------|--------|---------|---------|---------|
+| **httpd:2.4** | idol-demo-httpd-reverse-proxy-1 | Running | Up 9 hours | - |
+| **IDOL Agent Store** | microfocusidolserver/agentstore:25.2 | Running | Up 9 hours | Healthy |
+| **IDOL Categorisation Agent Store** | microfocusidolserver/categorisation-agentstore:25.2 | Running | Up 9 hours | - |
+| **IDOL Community** | microfocusidolserver/community:25.2 | Running | Up 9 hours | Healthy |
+| **IDOL Content** | microfocusidolserver/content:25.2 | Running | Up 9 hours | Healthy |
+| **IDOL Find** | microfocusidolserver/find:25.2 | Running | Up 9 hours | Healthy |
+| **IDOL NiFi** | microfocusidolserver/nifi-ver2-minimal:25.2 | Running | Up less than a minute | - |
+| **IDOL View** | microfocusidolserver/view:25.2 | Running | Up 9 hours | Healthy |
+| **License Server** | licenseserver:latest | Running | Up 9 hours | - |
+
+# NiFi Registry Stack
+**Network:** nifi-registry
+
+| Container Name | Image | Status | Uptime | Health |
+|---------------|--------|---------|---------|---------|
+| **NiFi Registry** | apache/nifi-registry:2.0.0 | Running | Up 12 hours | - |
 ```
 
 ### Phase 6: Optional License Server Setup
