@@ -14,7 +14,7 @@ This README documents the complete configuration and installation process for Op
 
 ## 📋 Requirements
 
-- **Operating System**: Ubuntu 24.04 (Hardware tested Env. Memory: 64GB, Disk: 50GB, CPUs: 6)
+- **Operating System**: WSL Ubuntu 24.04 (Tested with 6 processors, 50 GB disk, and 64 GB memory)
 - **Privileges**: Root or sudo access required
 - **Network**: Internet connection for Docker installation
 - **License**: IDOL license file (`licensekey.dat`) 
