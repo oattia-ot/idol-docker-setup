@@ -146,7 +146,7 @@ cd /opt/idol/idol-containers-toolkit/basic-idol/
 # Check container status
 docker ps
 ```
-### IDOL Demo Stack
+#### IDOL Demo Stack
 **Network:** idol-demo
 
 | Container Name | Image | Status | Uptime | Health |
@@ -161,7 +161,7 @@ docker ps
 | **IDOL View** | microfocusidolserver/view:25.2 | Running | Up 9 hours | Healthy |
 | **License Server** | licenseserver:latest | Running | Up 9 hours | - |
 
-### NiFi Registry Stack
+#### NiFi Registry Stack
 **Network:** nifi-registry
 
 | Container Name | Image | Status | Uptime | Health |
