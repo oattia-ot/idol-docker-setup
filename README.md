@@ -24,44 +24,6 @@ This README documents the complete configuration and installation process for Op
       3) MAC Address
 - **Authentication**: IDOL Docker personal access token
 
-## Quick Start
-
-## 🛠️ Installation
-
-**Clone the repository:**
-```bash
-git clone https://github.com/oattia-ot/idol-docker-setup.git
-```
-**Execute the following commands in sequence:**
-
-Here’s the markdown with the **NOTE** highlighted in a box:
-
-````markdown
-```bash
-# 1. Navigate to setup directory
-cd idol-docker-setup/
-
-# 2. Collect setup parameters
-./collect-setup-parameters.sh
-
-# 3. Source environment variables
-source env/export-env-variables.sh
-
-# 4. Install IDOL
-./install-idol.sh
-
-# 5. Deploy IDOL containers
-cd /opt/idol/idol-containers-toolkit/basic-idol/
-./deploy.sh up -d
-
-# 6. (Optional) Check if IDOL License Server is availabe if not start it:
-cd idol-docker-setup/licenseserver-setup/
-./deploy-license-server.sh
-````
-
-> **Note**
-> Although the IDOL License Server is automatically deployed during setup, you can use the section 6 instructions to manually install it if necessary.
-
 ## Overview
 
 The IDOL setup process involves parameter collection, environment configuration, installation, and container deployment. This guide documents the setup for a secure NiFi deployment with IDOL version 25.2 including License Server configuration.
@@ -105,7 +67,7 @@ source env/export-env-variables.sh
 - Sets up persistent storage volumes
 - Prepares Docker Compose configurations
 
-### Step 4: Container Deployment
+### Step 5: Container Deployment
 ```bash
 cd /opt/idol/idol-containers-toolkit/basic-idol/
 ./deploy.sh up -d
@@ -114,6 +76,12 @@ cd /opt/idol/idol-containers-toolkit/basic-idol/
 - Starts all services in detached mode
 - Applies final configurations
 - Establishes service connectivity
+
+### Step 6: (Optional) Check if IDOL License Server is availabe if not start it:
+cd idol-docker-setup/licenseserver-setup/
+./deploy-license-server.sh
+> **Note**
+> Although the IDOL License Server is automatically deployed during setup, you can use the section 6 instructions to manually install it if necessary.
 
 ## Environment Variables
 
