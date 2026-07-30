@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IDOL Deployment Setup Manager</title>
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../static/config-idol/css/idol-setup.css">
+</head>
+<body>
+<!-- ════════════════════ SIDEBAR ════════════════════ -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon"><i class="fas fa-rocket"></i></div>
+    <h1>IDOL Deployment<br>Setup Manager</h1>
+    <p>Configure &amp; manage deployment</p>
+    <div class="sidebar-date" id="currentDate"></div>
+  </div>
+  <div class="nav-section-label">Quick Access</div>
+  <div class="nav-item active" data-section="information"><div class="nav-icon"><i class="fas fa-th-large"></i></div>Information</div>
+  <div class="nav-section-label">Configuration Steps</div>
+  <div class="nav-item" data-section="basic"><div class="nav-icon"><i class="fas fa-star"></i></div>Basic Config<span class="step-badge">01</span></div>
+  <div class="nav-item" data-section="network"><div class="nav-icon"><i class="fas fa-network-wired"></i></div>Network<span class="step-badge">02</span></div>
+  <div class="nav-item" data-section="nifi"><div class="nav-icon"><i class="fas fa-stream"></i></div>NiFi Config<span class="step-badge">03</span></div>
+  <div class="nav-item" data-section="ports"><div class="nav-icon"><i class="fas fa-plug"></i></div>Ports Config<span class="step-badge">04</span></div>
+  <div class="nav-item" data-section="license"><div class="nav-icon"><i class="fas fa-key"></i></div>License Server<span class="step-badge">05</span></div>
+  <div class="nav-item" data-section="storage"><div class="nav-icon"><i class="fas fa-database"></i></div>Storage &amp; Paths<span class="step-badge">06</span></div>
+  <div class="nav-item" data-section="summary"><div class="nav-icon"><i class="fas fa-file-export"></i></div>Summary &amp; Export<span class="step-badge">07</span></div>
+  <div class="sidebar-footer">v3.7 &nbsp;&middot;&nbsp; KD Dashboard<br>Updated April 2026</div>
+</nav>
+<!-- ════════════════════ MAIN ════════════════════ -->
+<div class="main">
+  <div class="topbar">
+    <!-- LEFT SIDE: icon + title (no breadcrumb for IDOL) -->
+    <div class="topbar-left" style="display: flex; align-items: center; gap: 16px;">
+      <div class="section-icon" id="topbarIcon"><i class="fas fa-th-large"></i></div>
+      <span class="topbar-title" id="topbarTitle">Information</span>
+    </div>
+
+    <!-- RIGHT SIDE: LocalStorage controls then Back to Home -->
+    <div class="topbar-actions" style="display: flex; align-items: center; gap: 12px;">
+      <!-- Save button -->
+      <button type="button" onclick="saveConfigToLocalStorage()" class="btn btn-secondary" title="Save selected fields to browser localStorage">
+        <i class="fas fa-save"></i> Save to Browser
+      </button>
+      <!-- Load button -->
+      <button type="button" onclick="loadConfigFromLocalStorage()" class="btn btn-secondary" title="Load saved configuration from localStorage">
+        <i class="fas fa-upload"></i> Load from Browser
+      </button>
+      <!-- Clear button -->
+      <button type="button" onclick="clearLocalStorageConfig()" class="btn btn-danger" title="Clear all saved configuration from localStorage">
+        <i class="fas fa-trash-alt"></i> Clear Browser
+      </button>
+      <!-- Auto-save toggle + label -->
+      <label class="professional-switch" title="Enable automatic saving of selected fields">
+        <input type="checkbox" id="autoSaveToggle" checked onchange="toggleAutoSave()">
+        <span class="professional-slider"></span>
+      </label>
+      <span style="font-size: 12px; color: var(--text-muted);">Auto-save</span>
+      <!-- Back to Home button (rightmost) -->
+      <a class="home-btn" id="homeBtn" href="http://localhost:5000" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 6px;">
+        <i class="fas fa-external-link-alt"></i> Back to Home
+      </a>
+    </div>
+  </div>
+
+  <div class="content">
+    <!-- ══════════════ INFORMATION ══════════════ -->
+    <div id="information" class="section active">
+
+        <!-- ════════ IMPORT / EXPORT ════════ -->
+        <div class="section-header">
+            <h2>Import / Export Configuration</h2>
+            <p>Manage import and export operations for your IDOL server configuration</p>
+        </div>
+
+        <button type="button" class="btn btn-primary" id="globalExportBtn">
+            <i class="fas fa-download"></i> Export All Fields (JSON)
+        </button>
+        <button type="button" class="btn btn-primary" id="globalImportBtn">
+            <i class="fas fa-upload"></i> Import All Fields (JSON)
+        </button>
+        <input type="file" id="importFileInput" accept=".json" style="display:none;">
+
+        <hr style="margin:16px 0;">
+
+        <div class="page-header">
+          <div>
+            <h1>IDOL Service Quick Access</h1>
+            <p>Direct links &amp; credentials for all running services &mdash; click a URL to open, <i class="far fa-copy"></i> to copy</p>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <label style="display: flex; align-items: center; gap: 6px; font-size: 0.9rem; cursor: pointer;">
+              <input type="checkbox" id="hostToggleSwitch"
+                onclick="if(this.checked) document.getElementById('ipToggleSwitch').checked = false; updateHomeBtnHref();">
+              <span>Use FQDN instead of <code>idol-docker-host</code></span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 6px; font-size: 0.9rem; cursor: pointer;">
+              <input type="checkbox" id="ipToggleSwitch" checked 
+                onclick="if(this.checked) document.getElementById('hostToggleSwitch').checked = false; updateHomeBtnHref();">
+              <span>Use IP address <code id="ipToggleLabel">–</code></span>
+            </label>
+            <button class="btn-expand" onclick="toggleAll(this)">
+              <i class="fas fa-expand-alt"></i> Expand all
+            </button>
+          </div>
+        </div>
+
+        <div class="grid" id="grid">
+
+          <!-- ═══ NiFi ═══ -->
+          <div class="card">
+            <div class="card-head" onclick="toggle(this)">
+              <div class="icon-dot dot-blue"><i class="fas fa-stream"></i></div>
+              <div class="card-title">
+                <strong>NiFi <span class="badge">Primary</span></strong>
+                <span>Data flow management &amp; version control</span>
+              </div>
+              <i class="fas fa-chevron-down chevron"></i>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <span class="row-label">NiFi UI</span>
+                <div class="row-links">
+                  <a id="dyn-nifi-card-link" class="svc-link" href="#" target="_blank">:8443/nifi</a>
+                  <span class="cred">admin / OpenText2026!</span>
+                  <button class="copy-btn" data-copy="OpenText2026!" title="Copy password"><i class="far fa-copy"></i> pwd</button>
+                </div>
+                <button class="copy-btn" id="dyn-nifi-card-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <div class="row">
+                <span class="row-label">NiFi Registry</span>
+                <div class="row-links">
+                  <a id="dyn-nifi-registry-link" class="svc-link" href="#" target="_blank">:18080/nifi-registry</a>
+                </div>
+                <button class="copy-btn" id="dyn-nifi-registry-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══ Basic IDOL ═══ -->
+          <div class="card">
+            <div class="card-head" onclick="toggle(this)">
+              <div class="icon-dot dot-amber"><i class="fas fa-database"></i></div>
+              <div class="card-title">
+                <strong>Basic IDOL</strong>
+                <span>Category, Community, Content, AgentStore, View</span>
+              </div>
+              <i class="fas fa-chevron-down chevron"></i>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <span class="row-label">Category</span>
+                <div class="row-links">
+                  <a id="dyn-category-link"       class="svc-link" href="#" target="_blank">:9020</a>
+                  <a data-grl="category-bi"       class="pill-tag" href="#" target="_blank">a=grl</a>
+                </div>
+                <button class="copy-btn" id="dyn-category-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <div class="row">
+                <span class="row-label">Community</span>
+                <div class="row-links">
+                  <a id="dyn-community-link"      class="svc-link" href="#" target="_blank">:9030</a>
+                  <a data-grl="community-bi"      class="pill-tag" href="#" target="_blank">a=grl</a>
+                </div>
+                <button class="copy-btn" id="dyn-community-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <div class="row">
+                <span class="row-label">Content</span>
+                <div class="row-links">
+                  <a id="dyn-content-link"        class="svc-link" href="#" target="_blank">:9100</a>
+                  <a data-grl="content-bi"        class="pill-tag" href="#" target="_blank">a=grl</a>
+                </div>
+                <button class="copy-btn" id="dyn-content-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <div class="row">
+                <span class="row-label">AgentStore</span>
+                <div class="row-links">
+                  <a id="dyn-agentstore-link"     class="svc-link" href="#" target="_blank">:9050</a>
+                  <a data-grl="agentstore-bi"     class="pill-tag" href="#" target="_blank">a=grl</a>
+                </div>
+                <button class="copy-btn" id="dyn-agentstore-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <div class="row">
+                <span class="row-label">Cat. AgentStore</span>
+                <div class="row-links">
+                  <a id="dyn-catagentstore-link"  class="svc-link" href="#" target="_blank">:9180</a>
+                  <a data-grl="catagentstore-bi"  class="pill-tag" href="#" target="_blank">a=grl</a>
+                </div>
+                <button class="copy-btn" id="dyn-catagentstore-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <div class="row">
+                <span class="row-label">View</span>
+                <div class="row-links">
+                  <a id="dyn-view-link"           class="svc-link" href="#" target="_blank">:9080</a>
+                  <a data-grl="view-bi"           class="pill-tag" href="#" target="_blank">a=grl</a>
+                </div>
+                <button class="copy-btn" id="dyn-view-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══ Data Admin Classic ═══ -->
+          <div class="card">
+            <div class="card-head" onclick="toggle(this)">
+              <div class="icon-dot dot-amber"><i class="fas fa-server"></i></div>
+              <div class="card-title">
+                <strong>Data Admin – Classic IDOL</strong>
+                <span>Community, View Server, Passage Extractor</span>
+              </div>
+              <i class="fas fa-chevron-down chevron"></i>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <span class="row-label">Community (DA)</span>
+                <div class="row-links">
+                  <a id="dyn-da-community-link"    class="svc-link" href="#" target="_blank">:9033</a>
+                  <a id="dyn-rest-comm-status"     class="pill-tag" href="#" target="_blank">GetStatus</a>
+                  <a data-grl="community-da"       class="pill-tag" href="#" target="_blank">a=grl</a>
+                </div>
+                <button class="copy-btn" id="dyn-da-community-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <div class="row">
+                <span class="row-label">View Server (DA)</span>
+                <div class="row-links">
+                  <a id="dyn-da-view-link"         class="svc-link" href="#" target="_blank">:9083</a>
+                  <a data-grl="viewserver-da"      class="pill-tag" href="#" target="_blank">a=grl</a>
+                </div>
+                <button class="copy-btn" id="dyn-da-view-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <div class="row">
+                <span class="row-label">Passage Extractor (DA)</span>
+                <div class="row-links">
+                  <a id="dyn-da-content-link"      class="svc-link" href="#" target="_blank">:9103</a>
+                  <a id="dyn-rest-cont-status"     class="pill-tag" href="#" target="_blank">GetStatus</a>
+                  <a data-grl="passagecontent-da"  class="pill-tag" href="#" target="_blank">a=grl</a>
+                </div>
+                <button class="copy-btn" id="dyn-da-content-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══ Answer / QMS ═══ -->
+          <!-- ⚠️ Fixed: was incorrectly showing DA Classic content (copy-paste bug) -->
+          <div class="card">
+            <div class="card-head" onclick="toggle(this)">
+              <div class="icon-dot dot-purple"><i class="fas fa-brain"></i></div>
+              <div class="card-title">
+                <strong>Data Admin – Answer Server / QMS</strong>
+                <span>Answer Server, AgentStores, QMS, Stats</span>
+              </div>
+              <i class="fas fa-chevron-down chevron"></i>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <span class="row-label">Answer Server</span>
+                <div class="row-links">
+                  <a id="dyn-answerserver-link"    class="svc-link" href="#" target="_blank">:12000</a>
+                  <a data-grl="answerserver"       class="pill-tag" href="#" target="_blank">a=grl</a>
+                </div>
+                <button class="copy-btn" id="dyn-answerserver-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <div class="row">
+                <span class="row-label">Answer Bank AgentStore</span>
+                <div class="row-links">
+                  <a id="dyn-answerbank-link"      class="svc-link" href="#" target="_blank">:12200</a>
+                  <a data-grl="answerbank"         class="pill-tag" href="#" target="_blank">a=grl</a>
+                </div>
+                <button class="copy-btn" id="dyn-answerbank-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <div class="row">
+                <span class="row-label">Passage AgentStore</span>
+                <div class="row-links">
+                  <a id="dyn-passageagent-link"    class="svc-link" href="#" target="_blank">:12310</a>
+                  <a data-grl="passageagent"       class="pill-tag" href="#" target="_blank">a=grl</a>
+                </div>
+                <button class="copy-btn" id="dyn-passageagent-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <div class="row">
+                <span class="row-label">QMS</span>
+                <div class="row-links">
+                  <a id="dyn-qms-link"             class="svc-link" href="#" target="_blank">:16000</a>
+                  <a data-grl="qms"                class="pill-tag" href="#" target="_blank">a=grl</a>
+                </div>
+                <button class="copy-btn" id="dyn-qms-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <div class="row">
+                <span class="row-label">QMS AgentStore</span>
+                <div class="row-links">
+                  <a id="dyn-qmsagent-link"        class="svc-link" href="#" target="_blank">:20050</a>
+                  <a data-grl="qmsagent"           class="pill-tag" href="#" target="_blank">a=grl</a>
+                </div>
+                <button class="copy-btn" id="dyn-qmsagent-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <div class="row">
+                <span class="row-label">Stats Server</span>
+                <div class="row-links">
+                  <a id="dyn-stats-link"           class="svc-link" href="#" target="_blank">:19870</a>
+                  <a data-grl="stats"              class="pill-tag" href="#" target="_blank">a=grl</a>
+                </div>
+                <button class="copy-btn" id="dyn-stats-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══ Rich Media ═══ -->
+          <!-- ⚠️ Fixed: was incorrectly showing Answer/QMS content (copy-paste bug) -->
+          <div class="card">
+            <div class="card-head" onclick="toggle(this)">
+              <div class="icon-dot dot-coral"><i class="fas fa-photo-video"></i></div>
+              <div class="card-title">
+                <strong>Rich Media</strong>
+                <span>Media Server (ACI) and Playlist services</span>
+              </div>
+              <i class="fas fa-chevron-down chevron"></i>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <span class="row-label">Media Server (ACI)</span>
+                <div class="row-links">
+                  <a id="dyn-rm-media-admin-link"    class="svc-link" href="#" target="_blank">:14000</a>
+                  <a data-grl="media-rm"             class="pill-tag" href="#" target="_blank">a=grl</a>
+                </div>
+                <button class="copy-btn" id="dyn-rm-media-admin-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <div class="row">
+                <span class="row-label">Media Server Playlist</span>
+                <div class="row-links">
+                  <a id="dyn-rm-playlist-admin-link"  class="svc-link" href="#" target="_blank">:24000</a>
+                  <a data-grl="playlist-rm"            class="pill-tag" href="#" target="_blank">a=grl</a>
+                </div>
+                <button class="copy-btn" id="dyn-rm-playlist-admin-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══ IDOL UIs ═══ -->
+          <div class="card">
+            <div class="card-head" onclick="toggle(this)">
+              <div class="icon-dot dot-green"><i class="fas fa-th-large"></i></div>
+              <div class="card-title">
+                <strong>IDOL UIs</strong>
+                <span>Find, Data Admin, NiFi, Proxies, LLM, LDAP</span>
+              </div>
+              <i class="fas fa-chevron-down chevron"></i>
+            </div>
+            <div class="card-body">
+              <div class="sub-label">Main UIs</div>
+              <div class="row">
+                <span class="row-label">NiFi Secure UI</span>
+                <div class="row-links">
+                  <a id="dyn-nifi-link" class="svc-link" href="#" target="_blank">:8443</a>
+                </div>
+                <button class="copy-btn" id="dyn-nifi-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <div class="row">
+                <span class="row-label">Find</span>
+
+                <!-- === basic-idol === -->
+                <div class="row-links">
+                  <a id="dyn-find-ba-link" class="svc-link" href="#" target="_blank">basic-idol :8440</a>
+                  <span class="cred">basic-idol(admin / admin)</span>
+                  <button class="copy-btn" id="dyn-find-ba-copy" data-copy="" title="Copy basic-idol URL">
+                    <i class="far fa-copy"></i>
+                  </button>
+                </div>
+
+                <!-- === data-admin === -->
+                <div class="row-links">
+                  <a id="dyn-find-da-link" class="svc-link" href="#" target="_blank">data-admin :8441</a>
+                  <span class="cred">data-admin(admin / admin)</span>
+                  <button class="copy-btn" id="dyn-find-da-copy" data-copy="" title="Copy data-admin URL">
+                    <i class="far fa-copy"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="row">
+                <span class="row-label">Data Admin UI</span>
+                <div class="row-links">
+                  <a id="dyn-dataadmin-link" class="svc-link" href="#" target="_blank">:8444</a>
+                </div>
+                <button class="copy-btn" id="dyn-dataadmin-ui-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+
+              <div class="sub-label">Rich Media UIs</div>
+              <!-- Media Application UI → svc port 8003 -->
+              <div class="row">
+                <span class="row-label">Media Application UI</span>
+                <div class="row-links">
+                  <a id="dyn-rm-media-app-link" class="svc-link" href="#" target="_blank">:8003</a>
+                </div>
+                <button class="copy-btn" id="dyn-rm-media-app-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <!-- Media Server GUI → ACI GUI on port 14000 + /a=gui -->
+              <div class="row">
+                <span class="row-label">Media Server GUI</span>
+                <div class="row-links">
+                  <a id="dyn-rm-mediaserver-gui-link" class="svc-link" href="#" target="_blank">:14000</a>
+                </div>
+                <button class="copy-btn" id="dyn-rm-mediaserver-gui-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══ External Tools ═══ -->
+          <div class="card">
+            <div class="card-head" onclick="toggle(this)">
+              <div class="icon-dot dot-green"><i class="fas fa-th-large"></i></div>
+              <div class="card-title">
+                <strong>External Tools</strong>
+                <span>LLM, LDAP and Harbor Registry</span>
+              </div>
+              <i class="fas fa-chevron-down chevron"></i>
+            </div>
+            <div class="card-body">
+              <div class="sub-label">LLM UI</div>
+              <div class="row">
+                <span class="row-label">Ollama (Open Web-UI)</span>
+                <div class="row-links">
+                  <a id="dyn-ollama-link"            class="svc-link" href="#" target="_blank">:8888</a>
+                </div>
+                <button class="copy-btn" id="dyn-ollama-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <div class="row">
+                <span class="row-label">LLM Wiki (Obsidian)</span>
+                <div class="row-links">
+                  <a id="dyn-llmwiki-link"           class="svc-link" href="#" target="_blank">:3001</a>
+                </div>
+                <button class="copy-btn" id="dyn-llmwiki-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <div class="sub-label">LDAP</div>
+              <div class="row">
+                <span class="row-label">LDAP UI</span>
+                <div class="row-links">
+                  <a id="dyn-ldap-link"              class="svc-link" href="#" target="_blank">:7777</a>
+                </div>
+                <button class="copy-btn" id="dyn-ldap-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <div class="sub-label">Harbor Registry</div>
+              <div class="row">
+                <span class="row-label">
+                  Harbor UI deployed on Docker
+                  <br><small class="text-muted">Setup script: ./idol-docker-setup/utilities/harbor-setup/setup-harbor-docker.sh</small>
+                </span>
+                <div class="row-links">
+                  <a id="dyn-harbor-docker-link"     class="svc-link" href="#" target="_blank">:5443</a>
+                </div>
+                <button class="copy-btn" id="dyn-harbor-docker-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+              <div class="row">
+                <span class="row-label">
+                  Harbor UI deployed on minikube
+                  <br><small class="text-muted">Setup script: ./idol-docker-setup/utilities/harbor-setup/setup-harbor-minikube.sh</small>
+                </span>
+                <div class="row-links">
+                  <a id="dyn-harbor-minikube-link"   class="svc-link" href="#" target="_blank">:30003</a>
+                </div>
+                <button class="copy-btn" id="dyn-harbor-minikube-copy" data-copy=""><i class="far fa-copy"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══ Housekeeping REST — spans full width ═══ -->
+          <div class="card" style="grid-column: 1 / -1;">
+            <div class="card-head" onclick="toggle(this)">
+              <div class="icon-dot dot-teal"><i class="fas fa-plug"></i></div>
+              <div class="card-title">
+                <strong>Housekeeping REST calls</strong>
+                <span>GetStatus, GetVersion, a=admin, a=grl per component</span>
+              </div>
+              <i class="fas fa-chevron-down chevron"></i>
+            </div>
+            <div class="card-body" style="display: grid; grid-template-columns: 1fr 1fr;">
+
+              <!-- LEFT COLUMN -->
+              <div style="border-right: .5px solid var(--border);">
+                <div class="sub-label">Community (Basic IDOL)</div>
+                <div class="row">
+                  <span class="row-label">GetStatus</span>
+                  <div class="row-links">
+                    <a id="dyn-rest-bi-comm-status"       class="svc-link" href="#" target="_blank">:9030</a>
+                    <a data-grl="community-bi"             class="pill-tag" href="#" target="_blank">a=grl</a>
+                  </div>
+                  <button class="copy-btn" id="dyn-rest-bi-comm-status-copy" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+
+                <div class="sub-label">Community (Data Admin)</div>
+                <div class="row">
+                  <span class="row-label">GetStatus</span>
+                  <div class="row-links">
+                    <a id="dyn-rest-comm-status-hk"       class="svc-link" href="#" target="_blank">:9033</a>
+                    <a data-grl="community-da"             class="pill-tag" href="#" target="_blank">a=grl</a>
+                  </div>
+                  <button class="copy-btn" id="dyn-rest-comm-status-hk-copy" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+                <div class="row">
+                  <span class="row-label">Admin UI (curl)</span>
+                  <div class="row-links">
+                    <code id="dyn-rest-comm-admin-text" class="inline">curl …:9033/a=admin</code>
+                  </div>
+                  <button class="copy-btn" id="dyn-rest-comm-admin-copy" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+
+                <div class="sub-label">Content (Data Admin)</div>
+                <div class="row">
+                  <span class="row-label">GetStatus</span>
+                  <div class="row-links">
+                    <a id="dyn-rest-cont-status-hk"       class="svc-link" href="#" target="_blank">:9103</a>
+                    <a data-grl="passagecontent-da"        class="pill-tag" href="#" target="_blank">a=grl</a>
+                  </div>
+                  <button class="copy-btn" id="dyn-rest-cont-status-hk-copy" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+                <div class="row">
+                  <span class="row-label">Admin UI (curl)</span>
+                  <div class="row-links">
+                    <code id="dyn-rest-cont-admin-text" class="inline">curl …:9103/a=admin</code>
+                  </div>
+                  <button class="copy-btn" id="dyn-rest-cont-admin-copy" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+
+                <div class="sub-label">AgentStore (Basic IDOL)</div>
+                <div class="row">
+                  <span class="row-label">GetStatus</span>
+                  <div class="row-links">
+                    <a id="dyn-rest-agent-status"          class="svc-link" href="#" target="_blank">:9050</a>
+                    <a data-grl="agentstore-bi"            class="pill-tag" href="#" target="_blank">a=grl</a>
+                  </div>
+                  <button class="copy-btn" id="dyn-rest-agent-status-copy" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+                <div class="row">
+                  <span class="row-label">Admin UI (curl)</span>
+                  <div class="row-links">
+                    <code id="dyn-rest-agent-admin-text" class="inline">curl …:9050/a=admin</code>
+                  </div>
+                  <button class="copy-btn" id="dyn-rest-agent-admin-copy" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+
+                <div class="sub-label">Connector</div>
+                <div class="row">
+                  <span class="row-label">GetVersion</span>
+                  <div class="row-links">
+                    <a id="dyn-connector-version-link"     class="svc-link" href="#" target="_blank">:11000</a>
+                  </div>
+                  <button class="copy-btn" id="dyn-connector-version-copy" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+                <div class="row">
+                  <span class="row-label">GetStatus</span>
+                  <div class="row-links">
+                    <a id="dyn-connector-status-link"      class="svc-link" href="#" target="_blank">:11000</a>
+                  </div>
+                  <button class="copy-btn" id="dyn-connector-status-copy" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+              </div>
+
+              <!-- RIGHT COLUMN: a=grl per component -->
+              <div>
+                <div class="sub-label">Last command /a=grl — Basic IDOL</div>
+                <div class="row">
+                  <span class="row-label">Category</span>
+                  <div class="row-links">
+                    <a data-grl="category-bi"      class="svc-link" href="#" target="_blank">:9020/a=grl</a>
+                  </div>
+                  <button class="copy-btn" data-grl="category-bi" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+                <div class="row">
+                  <span class="row-label">Community (BI)</span>
+                  <div class="row-links">
+                    <a data-grl="community-bi"     class="svc-link" href="#" target="_blank">:9030/a=grl</a>
+                  </div>
+                  <button class="copy-btn" data-grl="community-bi" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+                <div class="row">
+                  <span class="row-label">Content (BI)</span>
+                  <div class="row-links">
+                    <a data-grl="content-bi"       class="svc-link" href="#" target="_blank">:9100/a=grl</a>
+                  </div>
+                  <button class="copy-btn" data-grl="content-bi" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+                <div class="row">
+                  <span class="row-label">AgentStore (BI)</span>
+                  <div class="row-links">
+                    <a data-grl="agentstore-bi"    class="svc-link" href="#" target="_blank">:9050/a=grl</a>
+                  </div>
+                  <button class="copy-btn" data-grl="agentstore-bi" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+                <div class="row">
+                  <span class="row-label">View (BI)</span>
+                  <div class="row-links">
+                    <a data-grl="view-bi"          class="svc-link" href="#" target="_blank">:9080/a=grl</a>
+                  </div>
+                  <button class="copy-btn" data-grl="view-bi" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+                <div class="row">
+                  <span class="row-label">Cat. AgentStore (BI)</span>
+                  <div class="row-links">
+                    <a data-grl="catagentstore-bi" class="svc-link" href="#" target="_blank">:9180/a=grl</a>
+                  </div>
+                  <button class="copy-btn" data-grl="catagentstore-bi" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+
+                <div class="sub-label">Last command /a=grl — Data Admin &amp; Answer</div>
+                <div class="row">
+                  <span class="row-label">Community (DA)</span>
+                  <div class="row-links">
+                    <a data-grl="community-da"      class="svc-link" href="#" target="_blank">:9033/a=grl</a>
+                  </div>
+                  <button class="copy-btn" data-grl="community-da" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+                <div class="row">
+                  <span class="row-label">View Server (DA)</span>
+                  <div class="row-links">
+                    <a data-grl="viewserver-da"     class="svc-link" href="#" target="_blank">:9083/a=grl</a>
+                  </div>
+                  <button class="copy-btn" data-grl="viewserver-da" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+                <div class="row">
+                  <span class="row-label">Passage Content (DA)</span>
+                  <div class="row-links">
+                    <a data-grl="passagecontent-da" class="svc-link" href="#" target="_blank">:9103/a=grl</a>
+                  </div>
+                  <button class="copy-btn" data-grl="passagecontent-da" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+                <div class="row">
+                  <span class="row-label">Answer Server</span>
+                  <div class="row-links">
+                    <a data-grl="answerserver"      class="svc-link" href="#" target="_blank">:12000/a=grl</a>
+                  </div>
+                  <button class="copy-btn" data-grl="answerserver" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+                <div class="row">
+                  <span class="row-label">Answer Bank Agent</span>
+                  <div class="row-links">
+                    <a data-grl="answerbank"        class="svc-link" href="#" target="_blank">:12200/a=grl</a>
+                  </div>
+                  <button class="copy-btn" data-grl="answerbank" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+                <div class="row">
+                  <span class="row-label">Passage AgentStore</span>
+                  <div class="row-links">
+                    <a data-grl="passageagent"      class="svc-link" href="#" target="_blank">:12310/a=grl</a>
+                  </div>
+                  <button class="copy-btn" data-grl="passageagent" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+                <div class="row">
+                  <span class="row-label">QMS</span>
+                  <div class="row-links">
+                    <a data-grl="qms"               class="svc-link" href="#" target="_blank">:16000/a=grl</a>
+                  </div>
+                  <button class="copy-btn" data-grl="qms" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+                <div class="row">
+                  <span class="row-label">QMS AgentStore</span>
+                  <div class="row-links">
+                    <a data-grl="qmsagent"          class="svc-link" href="#" target="_blank">:20050/a=grl</a>
+                  </div>
+                  <button class="copy-btn" data-grl="qmsagent" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+                <div class="row">
+                  <span class="row-label">Stats Server</span>
+                  <div class="row-links">
+                    <a data-grl="stats"             class="svc-link" href="#" target="_blank">:19870/a=grl</a>
+                  </div>
+                  <button class="copy-btn" data-grl="stats" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+
+                <div class="sub-label">Last command /a=grl — Rich Media</div>
+                <div class="row">
+                  <span class="row-label">Media Server (ACI)</span>
+                  <div class="row-links">
+                    <a data-grl="media-rm"          class="svc-link" href="#" target="_blank">:14000/a=grl</a>
+                  </div>
+                  <button class="copy-btn" data-grl="media-rm" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+                <div class="row">
+                  <span class="row-label">Media Playlist</span>
+                  <div class="row-links">
+                    <a data-grl="playlist-rm"       class="svc-link" href="#" target="_blank">:24000/a=grl</a>
+                  </div>
+                  <button class="copy-btn" data-grl="playlist-rm" data-copy=""><i class="far fa-copy"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="info-box">
+              <i class="fas fa-info-circle"></i>
+              <strong>/a=grl</strong> returns the last request processed by an IDOL component — headers, parameters, and execution log. Useful for debugging actions, indexing, or query failures.
+            </div>
+          </div>
+
+        </div>
+
+        <div id="quick-toast" style="display:none;">
+          <i class="fas fa-check" style="margin-right:5px;font-size:10px;"></i> Copied!
+        </div>
+    </div>
+
+    <!-- ══════════════ BASIC ══════════════ -->
+    <div id="basic" class="section">
+      <div class="section-header"><h2>Basic Configuration</h2><p>Set the foundational parameters for your IDOL deployment</p></div>
+      <div class="card">
+        <div class="card-title"><i class="fas fa-globe"></i> Host Identity</div>
+        
+        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+          
+          <!-- FQDN Field -->
+          <div class="form-group" style="flex: 1; min-width: 220px; margin-bottom: 0;">
+            <label for="fqdn">
+              IDOL Host FQDN 
+              <span class="info-icon" data-desc="Fully Qualified Domain Name for the IDOL host machine">
+                <i class="fas fa-info-circle"></i>
+              </span>
+            </label>
+            <input type="text" id="fqdn" placeholder="e.g., OTX-F1ZF574.opentext.net" style="width: 100%;">
+            <div class="warning" id="fqdnWarning">Please enter a valid FQDN</div>
+            <div class="help-text">The fully qualified domain name of your IDOL host machine</div>
+          </div>
+
+          <!-- Base Path Field -->
+          <div class="form-group" style="flex: 1; min-width: 200px; margin-bottom: 0;">
+            <label for="basePath">
+              Base Path 
+              <span class="info-icon" data-desc="Root directory — must start with /. All derived paths are auto-populated from this.">
+                <i class="fas fa-info-circle"></i>
+              </span>
+            </label>
+            <input type="text" id="basePath" placeholder="/opt/idol-deployment" style="width: 100%;">
+            <div class="warning" id="basePathWarning">Base path must start with /</div>
+            <div class="help-text">GitHub clone target &amp; root for all derived paths</div>
+          </div>
+
+          <!-- Version Field -->
+          <div class="form-group" style="flex: 1; min-width: 180px; margin-bottom: 0;">
+            <label for="basic-idol-version">IDOL Server Version</label>
+            <select id="basic-idol-version" class="professional-select" style="width: 100%;"></select>
+            <div id="idol-version-info" style="font-size:0.85em; color:#555; margin-top:6px;"></div>
+          </div>
+
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><i class="fas fa-sliders-h"></i> Deployment Configuration</div>
+        <div class="form-group">
+          <label style="margin-bottom:12px; display:block;">Deployment Types</label>
+          <div class="multi-deploy-hint" style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
+              <i class="fas fa-check-double"></i> Multi‑deployment type selection is supported – you can choose one or more options.
+          </div>
+          <div class="professional-deploy-type-group">
+            <div class="professional-deploy-type-card">
+              <input type="checkbox" id="deployTypeBasic" name="deploymentType" value="basic-idol" checked>
+              <label for="deployTypeBasic" class="professional-deploy-card-label">
+                <div class="professional-card-header">
+                  <div class="professional-card-icon">⭐</div>
+                  <div class="professional-card-title">Basic IDOL</div>
+                </div>
+                <div class="professional-card-description">Core IDOL deployment with essential services</div>
+              </label>
+            </div>
+            <div class="professional-deploy-type-card">
+              <input type="checkbox" id="deployTypeDataAdmin" name="deploymentType" value="data-admin">
+              <label for="deployTypeDataAdmin" class="professional-deploy-card-label">
+                <div class="professional-card-header">
+                  <div class="professional-card-icon">🗄️</div>
+                  <div class="professional-card-title">Data Admin IDOL</div>
+                </div>
+                <div class="professional-card-description">Advanced data management and administration features</div>
+              </label>
+            </div>
+            <div class="professional-deploy-type-card">
+              <input type="checkbox" id="deployTypeRichMedia" name="deploymentType" value="rich-media">
+              <label for="deployTypeRichMedia" class="professional-deploy-card-label">
+                <div class="professional-card-header">
+                  <div class="professional-card-icon">🔌</div>
+                  <div class="professional-card-title">Rich Media</div>
+                </div>
+                <div class="professional-card-description">Multimedia processing and management capabilities</div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <!-- Data Admin Configuration -->
+        <div id="dataAdminFeatureRow" class="professional-feature-row" style="display:none;">
+          <div class="professional-feature-row-header">
+            <div class="professional-feature-title">Data Admin Configuration</div>
+            <label class="professional-switch">
+              <input type="checkbox" id="dataAdminToggle" checked disabled>
+              <span class="professional-slider"></span>
+            </label>
+          </div>
+          <div class="professional-version-selector">
+            <label for="data-admin-version">Version</label>
+            <select id="data-admin-version" class="professional-select"></select>
+          </div>
+          <div id="idol-version-info" style="font-size:0.85em; color:#555; margin-top:6px;"></div>
+        </div>
+
+        <!-- === Rich Media Configuration === -->
+        <div id="richMediaFeatureRow" class="professional-feature-row" style="display:none;">
+          <div class="professional-feature-row-header">
+            <div class="professional-feature-title">Rich Media Configuration</div>
+          </div>
+          <div class="form-group" style="margin-bottom:18px;">
+            <label for="rich-media-version">IDOL Server Version</label>
+            <select id="rich-media-version" class="professional-select"></select>
+          </div>
+          <div id="idol-version-info" style="font-size:0.85em; color:#555; margin-top:6px;"></div>
+
+          <!-- === Media Model Paths for Rich Media === -->
+          <div id="richMediaModelsSection" style="margin-top:20px; padding-top:16px; border-top:1px solid var(--border);">
+            <div class="card-title" style="font-size:15px;margin-bottom:14px;">
+              <i class="fas fa-brain"></i> Media Server Required Packages
+            </div>
+            <span style="color: #f4b400; display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 18px;">⚠️</span>
+                <span>
+                    To enable Rich Media package loading, copy all required packages into the
+                    <code style="color: #f4b400;">./idol-docker-setup/shared-folder</code>.
+                </span>
+            </span>
+
+            <!-- ① Base Folder Path (kept hidden as you requested in the second script) -->
+            <div class="form-group" style="display: none;">
+              <label for="sharedFolderBasePath">
+                Rich Media Base Folder Path
+                <span class="info-icon" data-desc="Root directory that contains all rich-media packages. All paths below are resolved relative to this folder.">
+                  <i class="fas fa-info-circle"></i>
+                </span>
+              </label>
+              <input
+                type="text"
+                id="sharedFolderBasePath"
+                placeholder="./idol-docker-setup/shared-folder"
+                oninput="onBasePathChange(); checkBasicNextButton();"
+              >
+              <div class="warning" id="sharedFolderBasePathWarning" style="display:none;">
+                Base folder path is required for Rich Media deployment
+              </div>
+              <div class="help-text">All Rich Media required packages need to be located in this base folder.</div>
+            </div>
+
+            <!-- ② NiFi Media Server -->
+            <div class="form-group">
+              <label for="nifiMediaServerPath">
+                NiFi Media Server Unzip Package
+                <span class="info-icon" data-desc="Sub-path (relative to the base folder) to the NiFiMediaServer Linux x86_64 unzipped package.">
+                  <i class="fas fa-info-circle"></i>
+                </span>
+              </label>
+
+              <!-- Path composer -->
+              <div style="display:flex; align-items:center; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; background:var(--bg-input, #fff);">
+                <span
+                  id="nifiMediaServerBasePrefix"
+                  style="
+                    padding: 8px 10px;
+                    font-size: 13px;
+                    font-family: monospace;
+                    color: var(--text-muted, #888);
+                    background: var(--bg-secondary, rgba(0,0,0,0.04));
+                    border-right: 1px solid var(--border);
+                    white-space: nowrap;
+                  "
+                >/opt/rich-media/</span>
+                <input
+                  type="text"
+                  id="nifiMediaServerPath"
+                  placeholder="NiFiMediaServer_2x.x.0_LINUX_X86_64"
+                  oninput="checkBasicNextButton()"
+                  style="border:none; outline:none; flex:1; padding:8px 10px; font-size:13px; background:transparent;"
+                >
+              </div>
+
+              <button
+                type="button"
+                id="nifiAutoDetectBtn"
+                onclick="autoDetectNiFiMediaServer(this)"
+                class="btn btn-primary"
+                style="margin-top:10px; display:flex; align-items:center; gap:8px; font-size:14px; font-weight:600; padding:11px 22px; box-shadow:0 2px 8px rgba(0,123,255,0.3);">
+                <i class="fas fa-magic"></i>
+                <span>Auto-detect last NiFiPolicy folder</span>
+              </button>
+
+              <div class="warning" id="nifiMediaServerPathWarning" style="display:none; margin-top:6px;">
+                NiFi Media Server package path is required
+              </div>
+              <div class="help-text" style="margin-top:4px;">
+                Only the folder name (last directory containing <code>NiFiPolicy</code>)
+              </div>
+            </div>
+
+            <!-- ③ Pretrained Models (FIXED: moved outside NiFi form-group as a proper sibling) -->
+            <div class="form-group" style="margin-bottom:0;">
+              <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+                <label class="professional-switch">
+                  <input type="checkbox" id="pretrainedModelsToggle" onchange="togglePretrainedModels()">
+                  <span class="professional-slider"></span>
+                </label>
+                <span style="font-size:14px; font-weight:500; color:var(--text);">
+                  Enable Media Server Pretrained Models
+                </span>
+              </div>
+              <div class="help-text" style="margin-bottom:14px;">
+                Optionally provide a pretrained models bundle
+              </div>
+
+              <div id="pretrainedModelsPathGroup" style="display:none; padding:16px; background:var(--bg-secondary, rgba(0,0,0,0.04)); border-radius:8px; border:1px solid var(--border);">
+                <label for="pretrainedModelsPath" style="margin-bottom:8px; display:block;">
+                  Pretrained Models Sub-Path
+                </label>
+
+                <!-- Path composer -->
+                <div style="display:flex; align-items:center; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; background:var(--bg-input, #fff);">
+                  <span
+                    id="pretrainedModelsBasePrefix"
+                    style="
+                      padding: 8px 10px;
+                      font-size: 13px;
+                      font-family: monospace;
+                      color: var(--text-muted, #888);
+                      background: var(--bg-secondary, rgba(0,0,0,0.04));
+                      border-right: 1px solid var(--border);
+                      white-space: nowrap;
+                    "
+                  >/opt/rich-media/</span>
+                  <input
+                    type="text"
+                    id="pretrainedModelsPath"
+                    placeholder="MediaServerPretrainedModels_1.2.3"
+                    oninput="checkBasicNextButton()"
+                    style="border:none; outline:none; flex:1; padding:8px 10px; font-size:13px; background:transparent;"
+                  >
+                </div>
+
+                <button
+                  type="button"
+                  id="pretrainedAutoDetectBtn"
+                  onclick="autoDetectPretrainedModels(this)"
+                  class="btn btn-primary"
+                  style="margin-top:10px; display:flex; align-items:center; gap:8px; font-size:14px; font-weight:600; padding:11px 22px; box-shadow:0 2px 8px rgba(0,123,255,0.3);">
+                  <i class="fas fa-magic"></i>
+                  <span>Auto-detect last MediaServerPretrainedModels folder</span>
+                </button>
+
+                <div class="warning" id="pretrainedModelsPathWarning" style="display:none; margin-top:6px;">
+                  Pretrained models path is required when enabled
+                </div>
+                <div class="help-text" style="margin-top:4px;">
+                  Only the folder name (last directory containing <code>MediaServerPretrainedModels</code>)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LLM Toggles - All three side by side -->
+        <div id="llmTogglesContainer" style="display:flex; gap:16px; flex-wrap:wrap; align-items:stretch;">
+
+          <!-- 1. Enable LLM Integration -->
+          <div id="llmIntegrationRow" class="professional-toggle-row" style="flex: 1 1 260px; margin:0;">
+            <div class="professional-toggle-row-label">
+              <span>Enable LLM Integration</span>
+              <small>Enables Large Language Model integration for advanced features</small>
+            </div>
+            <label class="professional-switch">
+              <input type="checkbox" id="llmIntegrationToggle">
+              <span class="professional-slider"></span>
+            </label>
+          </div>
+
+          <!-- 2. Enable LLM-Wiki -->
+          <div id="llmWikiRow" class="professional-toggle-row" style="display:none; flex: 1 1 420px; margin:0;">
+            <div class="professional-toggle-row-label">
+              <span>Enable LLM-Wiki</span>
+              <small>Local wiki &amp; knowledge base powered by Obsidian and Ollama, browse, search, and query your personal notes using a local LLM</small>
+            </div>
+            <label class="professional-switch">
+              <input type="checkbox" id="llmWikiEnableToggle">
+              <span class="professional-slider"></span>
+            </label>
+          </div>
+
+          <!-- 3. Enable GPU Acceleration -->
+          <div id="gpuEnableRow" class="professional-toggle-row" style="flex: 1 1 140px; margin:0;">
+            <div class="professional-toggle-row-label">
+              <span>Enable GPU Acceleration</span>
+              <small id="gpuStatusText">Use NVIDIA GPU (CUDA) for much faster LLM inference</small>
+            </div>
+            <label class="professional-switch">
+              <input type="checkbox" id="gpuEnableToggle" checked>
+              <span class="professional-slider"></span>
+            </label>
+          </div>
+
+        </div>
+
+        <!-- Model recommendation hint -->
+        <p style="margin-top:14px; font-size:0.82em; color:#888; line-height:1.5;">
+          💡 Not sure which model fits your processor?
+          <a href="https://whatmodelscanirun.com/" target="_blank" rel="noopener noreferrer" style="color:#6c9ef8; text-decoration:none;">
+            whatmodelscanirun.com
+          </a>
+          can recommend the best models based on your specific hardware.
+        </p>
+
+        <!-- LLM Model Selection Card -->
+        <div id="llmModelSelectionRow" style="display:none; margin-top:20px;" class="card">
+          <div class="card-title" style="margin-bottom:14px;">
+            <i class="fas fa-robot"></i> LLM Model Selection
+            <span style="font-size:11px;font-weight:400;color:var(--text-muted);margin-left:6px;">
+              — select one or more models to download
+            </span>
+          </div>
+
+          <!-- LLM API Key Toggle (Yes/No like GitHub Integration) -->
+          <div class="form-group">
+            <label>Provide custom LLM API Key</label>
+            <div class="radio-pills">
+              <div class="radio-pill">
+                <input type="radio" id="llm-apikey-yes" name="llmApiKeyEnabled" value="TRUE">
+                <label for="llm-apikey-yes"><i class="fas fa-shield-alt"></i> Yes</label>
+              </div>
+              <div class="radio-pill">
+                <input type="radio" id="llm-apikey-no" name="llmApiKeyEnabled" value="FALSE" checked>
+                <label for="llm-apikey-no"><i class="fas fa-times"></i> No</label>
+              </div>
+            </div>
+            <div class="help-text" style="margin-top:4px; font-size:12px;">
+              Only enable if you need to authenticate with a commercial LLM provider (e.g. OpenAI, Grok/xAI). 
+              Leave as <strong>No</strong> for public models or when using HuggingFace token only.
+            </div>
+          </div>
+
+          <!-- LLM API Key input section (shown only when Yes is selected) -->
+          <div id="llmApiKeyGroup" style="display:none;">
+            <div class="form-group" style="flex:1;min-width:0;">
+              <label for="llmAPIKey" style="display:flex;align-items:center;gap:6px;">
+                <i class="fas fa-key" style="color:var(--primary);"></i>
+                LLM API Key
+                <span class="info-icon" data-desc="Used to authenticate with LLM API Key">
+                  <i class="fas fa-info-circle"></i>
+                </span>
+                <span style="font-size:11px;font-weight:400;color:var(--text-muted);margin-left:4px;">— optional if using a public LLM model</span>
+              </label>
+              <div style="position:relative;">
+                <input type="password" id="llmAPIKey"
+                      placeholder="llm_xxxxxxxxxxxxxxxxxxxxxxxx"
+                      style="font-family:var(--font-mono);font-size:13px;letter-spacing:0.03em;padding-right:38px;">
+                <button type="button"
+                        id="llmAPIKeyToggleBtn"
+                        title="Show / hide API key"
+                        onclick="toggleLlmAPIKeyVisibility()"
+                        style="position:absolute;right:10px;top:50%;transform:translateY(-50%);
+                              background:none;border:none;cursor:pointer;
+                              color:var(--text-muted);padding:4px;z-index:10;line-height:1;">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+
+              <div class="warning" id="llmAPIKeyWarning">
+                No LLM API key provided — downloads will be rate-limited and slower.
+              </div>
+
+              <button type="button"
+                      onclick="
+                        var panel = this.nextElementSibling;
+                        var icon = this.querySelector('i');
+                        var open = panel.style.display === 'block';
+                        panel.style.display = open ? 'none' : 'block';
+                        icon.style.transform = open ? 'rotate(0deg)' : 'rotate(90deg)';
+                      "
+                      style="background:none;border:none;cursor:pointer;color:var(--primary);
+                            font-size:12px;padding:4px 0;margin-top:4px;display:flex;align-items:center;gap:4px;">
+                <i class="fas fa-chevron-right" style="transition:transform 0.2s;font-size:10px;"></i>
+                How to get an API key
+              </button>
+              <div class="help-text api-key-guide" style="display:none;">
+                <p class="api-key-intro">
+                  <strong>Get your free API key</strong><br>
+                  <span style="color: #aaa;">
+                    Many public LLMs like Grok (xAI) and OpenAI require a personal API key 
+                    to use their models in code:
+                  </span>
+                </p>
+
+                <ul class="api-key-links">
+                  <li>
+                    <strong>Grok (xAI):</strong> Go to 
+                    <a href="https://console.x.ai" target="_blank"
+                      style="color:var(--primary);text-decoration:none;">
+                      → Sign in → Manage API keys → Create new API key
+                    </a>
+                  </li>                
+                  <li>
+                    <strong>OpenAI:</strong> Go to 
+                    <a href="https://platform.openai.com/api-keys" target="_blank"
+                      style="color:var(--primary);text-decoration:none;">
+                      → Sign in → Create new secret key
+                    </a>                  
+                  </li>
+                </ul>
+
+                <span style="color:var(--warning);font-size:11px;">
+                  <i class="fas fa-exclamation-triangle" style="margin-right:3px;"></i>
+                  Without your own API key, you cannot make any calls to these models 
+                  (no access at all for OpenAI/Grok APIs). Using a personal key gives 
+                  you full functionality, your own rate limits, and often starter 
+                  credits for new users.
+                </span>              
+              </div>            
+            </div>
+          </div>
+
+          <!-- ══ HuggingFace Token (kept in its own row) ══ -->
+          <div style="display:flex;gap:24px;align-items:flex-start;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+
+            <!-- HuggingFace Token -->
+            <div class="form-group" style="flex:1;min-width:0;">
+              <label for="hfToken" style="display:flex;align-items:center;gap:6px;">
+                <i class="fas fa-key" style="color:var(--primary);"></i>
+                HuggingFace Token
+                <span class="info-icon" data-desc="Used to authenticate with HuggingFace Hub for faster, rate-limit-free model downloads">
+                  <i class="fas fa-info-circle"></i>
+                </span>
+                <span style="font-size:11px;font-weight:400;color:var(--text-muted);margin-left:4px;">— optional but recommended</span>
+              </label>
+              <div style="position:relative;">
+                <input type="password" id="hfToken"
+                      placeholder="hf_xxxxxxxxxxxxxxxxxxxxxxxx"
+                      style="font-family:var(--font-mono);font-size:13px;letter-spacing:0.03em;padding-right:38px;">
+                <button type="button"
+                        id="hfTokenToggleBtn"
+                        title="Show / hide token"
+                        onclick="toggleHfTokenVisibility()"
+                        style="position:absolute;right:10px;top:50%;transform:translateY(-50%);
+                              background:none;border:none;cursor:pointer;
+                              color:var(--text-muted);padding:4px;z-index:10;line-height:1;">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+
+              <div class="warning" id="hfTokenWarning">
+                No HuggingFace token provided — downloads will be rate-limited and slower.
+              </div>
+              <div class="help-text" style="margin-top:6px;line-height:1.7;">
+                Get a free token: Go to
+                <a href="https://huggingface.co/settings/tokens" target="_blank"
+                  style="color:var(--primary);text-decoration:none;">
+                  huggingface.co/settings/tokens
+                </a>
+                → <strong>New token</strong> → <code style="font-size:11px;background:var(--bg-alt);padding:1px 5px;border-radius:3px;">read</code> role is enough.
+                <br>
+                <span style="color:var(--warning);font-size:11px;">
+                  <i class="fas fa-exclamation-triangle" style="margin-right:3px;"></i>
+                  Without a token, downloads are rate-limited and significantly slower.
+                </span>
+              </div>
+            </div>
+
+            <!-- ══ Answer Server Model (FULL version) ══ -->
+            <div class="form-group" style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border);">
+              <label for="defualtllmModelForIDOLAnswerServer" style="display:flex;align-items:center;gap:6px;">
+                <i class="fas fa-server" style="color:var(--primary);"></i>
+                Answer Server Model
+                <span class="info-icon" data-desc="The model that will be loaded and used at runtime to answer queries">
+                  <i class="fas fa-info-circle"></i>
+                </span>
+              </label>
+              <select id="defualtllmModelForIDOLAnswerServer" style="font-size:13px;">
+                <option value="" disabled selected>— select a model —</option>
+              </select>
+
+              <div class="help-text" style="margin-top:5px;">
+                This model will be active on the answer server. It must be included in your download selection below.
+              </div>
+              <div class="warning" id="llmAnswerServerModelWarning" style="display:none;">
+                Please select an answer server model
+              </div>
+            </div>            
+
+          </div> <!-- end HF Token row -->
+
+          <!-- ══ LLM Model Storage Path (GGUF) — NOW ON ITS OWN SEPARATE LINE ══ -->
+          <div class="form-group" id="llmModelPathGroup" style="margin-top:20px; padding-top:16px; border-top:1px solid var(--border);">
+            <label for="llmModelPath">
+              Target Folder Path for GGUF Models
+              <span class="info-icon" data-desc="Absolute path where GGUF model files (.gguf) will be downloaded and stored. Used by Answer Server + Data Admin LLM features. Created automatically during pre-setup.">
+                <i class="fas fa-info-circle"></i>
+              </span>
+            </label>
+            <input type="text" id="llmModelPath" placeholder="/opt/idol-deployment/llm-models">
+            <div class="warning" id="llmModelPathWarning">
+              Target folder path for GGUF models is required when LLM Integration + Data Admin is enabled
+            </div>
+            <div class="help-text">
+              Auto-populated from your <strong>Base Path</strong> + <code>/llm-models</code> suffix.<br>
+              Only change this if you need the models stored in a completely different location (e.g. a large shared NFS mount).
+            </div>
+          </div>
+
+          <!-- ★ Ollama info panel (required for JS) -->
+          <div id="llmAnswerServerInfo" style="display:none; margin-top:12px; background:var(--bg-alt, #1e1e2e); border:1px solid var(--border); border-radius:8px; padding:12px 14px; font-size:12px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <i class="fas fa-microchip" style="color:var(--primary);"></i>
+              <span style="font-weight:600;font-size:13px;" id="llmInfoModelName"></span>
+              <span style="margin-left:auto;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);" id="llmInfoTag"></span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:10px;">
+              <div class="llm-info-stat"><div class="llm-info-stat-label">Architecture</div><div class="llm-info-stat-value" id="llmInfoArch">—</div></div>
+              <div class="llm-info-stat"><div class="llm-info-stat-label">Parameters</div><div class="llm-info-stat-value" id="llmInfoParams">—</div></div>
+              <div class="llm-info-stat"><div class="llm-info-stat-label">Context Length</div><div class="llm-info-stat-value" id="llmInfoCtx">—</div></div>
+              <div class="llm-info-stat"><div class="llm-info-stat-label">Embedding Length</div><div class="llm-info-stat-value" id="llmInfoEmbed">—</div></div>
+              <div class="llm-info-stat"><div class="llm-info-stat-label">Quantization</div><div class="llm-info-stat-value" id="llmInfoQuant">—</div></div>
+              <div class="llm-info-stat"><div class="llm-info-stat-label">Size</div><div class="llm-info-stat-value" id="llmInfoSize">—</div></div>
+            </div>
+            <!-- Capabilities -->
+            <div style="margin-bottom:10px;">
+              <div style="font-size:11px;color:var(--text-muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;">Capabilities</div>
+              <div id="llmInfoCapabilities" style="display:flex;flex-wrap:wrap;gap:5px;"></div>
+            </div>
+            <!-- Default parameters -->
+            <div style="margin-bottom:10px;">
+              <div style="font-size:11px;color:var(--text-muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;">Default Parameters</div>
+              <div id="llmInfoDefaults" style="display:flex;flex-wrap:wrap;gap:5px;"></div>
+            </div>
+            <!-- Description -->
+            <div style="font-size:12px;color:var(--text-muted);border-top:1px solid var(--border);padding-top:8px;margin-top:4px;" id="llmInfoDescription"></div>
+          </div>
+
+          <!-- ====== Model Selection Grid and Download Summary ====== -->
+          <div id="llmModelPicker" style="margin-top:16px; padding-top:16px; border-top:1px solid var(--border);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span style="font-weight:600; font-size:14px;">Select Models to Download</span>
+                <span id="llmPickerCount" style="font-size:12px; color:var(--text-muted);">0 models available</span>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="llmSelectAllModels()">Select All</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="llmClearAllModels()">Clear All</button>
+              </div>
+            </div>
+            <div id="llmNoModelWarning" class="warning" style="display:none;">Please select at least one LLM model.</div>
+            <!-- Supported Models -->
+            <div id="llmGroupSupported">
+              <div class="llm-section-header" onclick="llmToggleGroup('Supported')">
+                <span style="font-weight:500; font-size:13px;">Supported Models</span>
+                <i id="llmChevronSupported" class="fas fa-chevron-down chevron" style="margin-left:8px; transition: transform 0.2s;"></i>
+              </div>
+              <div id="llmBodySupported">
+                <div id="llmGridSupported" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin-top:8px;"></div>
+              </div>
+            </div>
+
+            <!-- Custom Required Models -->
+            <div id="llmGroupCustom" style="margin-top:16px;">
+              <div class="llm-section-header" onclick="llmToggleGroup('Custom')">
+                <span style="font-weight:500; font-size:13px;">Custom Required Models</span>
+                <i id="llmChevronCustom" class="fas fa-chevron-down chevron" style="margin-left:8px; transition: transform 0.2s;"></i>
+              </div>
+              <div id="llmBodyCustom" class="collapsed">
+                <div id="llmGridCustom" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin-top:8px;"></div>
+              </div>
+            </div>
+            <!-- Download Selection Summary -->
+            <div id="llmDownloadSection" style="margin-top:20px; padding-top:16px; border-top:1px solid var(--border);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span style="font-weight:600; font-size:14px;">Selected GGUF Files</span>
+                <div style="display:flex; gap:8px;">
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="llmSetAllQuants('recommended')">Use Recommended Quants</button>
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="llmSetAllQuants('all')">Select All Quants</button>
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="llmSetAllQuants('none')">Deselect All Quants</button>
+                </div>
+              </div>
+              <div id="llmDownloadBody" style="min-height:60px;"></div>
+              <div id="llmGrandSummary" style="display:none; margin-top:12px; padding:12px; background:var(--bg-alt); border-radius:6px;">
+                <div><strong>Summary:</strong> <span id="llmSummaryModelCount">0</span> models, <span id="llmSummaryFileCount">0</span> files</div>
+                <div id="llmSummaryList" style="font-size:12px; color:var(--text-muted); margin-top:4px;"></div>
+              </div>
+            </div>
+          </div>
+          <!-- ====== END NEW SECTION ====== -->
+
+        </div>
+        <!-- END of LLM Model Selection Card -->
+
+      </div> <!-- closes the parent card for Deployment Configuration -->
+      <div class="nav-footer">
+        <div></div>
+        <button type="button" class="btn btn-success" id="basicNextBtn" onclick="setupIdolNavigateToSection('network')" disabled>Next: Network <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+    <!-- ══════════════ NETWORK ══════════════ -->
+    <div id="network" class="section">
+      <div class="section-header"><h2>Network Settings</h2><p>Configure the network addresses for host and guest environments</p></div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title"><i class="fas fa-server"></i> Host IP Address</div>
+          <div class="form-group">
+            <label for="hostIp">IP Address</label>
+            <input type="text" id="hostIp" placeholder="e.g., 172.25.125.123" oninput="updateInfoSectionUrls(); updateHomeBtnHref(); highlightExtraIpSansDiff();">
+            <div class="warning" id="hostIpWarning">Please enter a valid IPv4 address</div>
+            <div class="help-text">Primary network interface IP of the host machine</div>
+            <div style="margin-top:8px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;">
+              <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;display:flex;align-items:center;gap:6px;"><i class="fab fa-linux" style="color:var(--cyan);"></i><span>Run in Ubuntu WSL:</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><code style="font-family:var(--font-mono);font-size:11.5px;color:#86efac;">ip addr show | grep -A1 eth0 | grep inet | awk '{ print $2}'</code><button type="button" class="copy-btn" onclick="copyWslCommand(`ip addr show | grep -A1 eth0 | grep inet | awk '{ print $2}'`)"><i class="far fa-copy"></i></button></div>
+            </div>            
+            <div class="form-group" style="margin-top:12px;">
+              <label for="extraIpSans">Extra IP SANs <span style="font-weight:400;color:var(--text-muted);">(optional)</span></label>
+              <input type="text" id="extraIpSans" placeholder="e.g., 172.25.125.123, 10.0.0.5" oninput="updateExtraIpSans()">
+              <div class="warning" id="extraIpSansWarning">Enter a comma-separated list of valid IPv4 addresses</div>
+              <div style="margin-top:8px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;">
+                <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;display:flex;align-items:center;gap:6px;">
+                  <i class="fas fa-info-circle" style="color:var(--cyan);"></i>
+                  <span>Extra IP SANs</span>
+                </div>
+                <div style="font-size:12px;line-height:1.55;color:var(--text-secondary);">
+                  Sets the IP address(es) that will be added as IP Subject Alternative Names (IP SANs) in every generated SSL certificate.<br><br>
+                  Defaults to the Host IP shown above.<br>
+                  Change this value only when the certificate must also cover a different or extra IP (for example the public IP of an
+                  <span style="color:#f59e0b;font-weight:600;">Azure</span>,
+                  <span style="color:#f59e0b;font-weight:600;">AWS</span> or
+                  <span style="color:#f59e0b;font-weight:600;">GCP</span> instance).<br><br>
+                  The value is passed to <code>generate-ssl.sh</code> as <code>EXTRA_IP_SANS_ENV</code>.<br>
+                  If it differs from the Host IP, the “Use IP address” toggle above will automatically follow this field.
+                </div>
+              </div>              
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title"><i class="fas fa-project-diagram"></i> Guest IP Address</div>
+          <div class="form-group">
+            <label for="guestIp">IP Address</label>
+            <input type="text" id="guestIp" placeholder="e.g., 172.25.112.1">
+            <div class="warning" id="guestIpWarning">Please enter a valid IPv4 address</div>
+            <div class="help-text">Gateway / routing IP for the container</div>
+            <div style="margin-top:8px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;">
+              <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;display:flex;align-items:center;gap:6px;"><i class="fab fa-linux" style="color:var(--cyan);"></i><span>Run in Ubuntu WSL:</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;"><code style="font-family:var(--font-mono);font-size:11.5px;color:#86efac;">ip route show | grep -i default | awk '{ print $3}'</code><button type="button" class="copy-btn" onclick="copyWslCommand(`ip route show | grep -i default | awk '{ print $3}'`)"><i class="far fa-copy"></i></button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-footer">
+        <button type="button" class="btn btn-danger" onclick="setupIdolNavigateToSection('basic')"><i class="fas fa-arrow-left"></i> Previous</button>
+        <button type="button" class="btn btn-success" id="networkNextBtn" onclick="setupIdolNavigateToSection('nifi')" disabled>Next: NiFi <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+    <!-- ══════════════ NIFI ══════════════ -->
+    <div id="nifi" class="section">
+      <div class="section-header"><h2>NiFi Configuration</h2><p>Set up Apache NiFi deployment type, integration and data preservation</p></div>
+      <div class="card">
+        <div class="card-title"><i class="fas fa-cog"></i> Deployment Settings</div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="nifiDeployment">NiFi Deployment Type</label>
+          <select id="nifiDeployment" class="professional-select">
+            <option value="nifi-ver2-full" selected>Full NiFi Version 2 (default)</option>
+            <option value="nifi-ver2-minimal">Minimal NiFi Version 2</option>
+            <option value="nifi-ver1-full">Full NiFi Version 1</option>
+            <option value="nifi-ver1-minimal">Minimal NiFi Version 1</option>
+          </select>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><i class="fas fa-puzzle-piece"></i> Connector NAR Import</div>
+        <div class="alert alert-info" style="margin-bottom:14px;">
+          <i class="alert-icon fas fa-info-circle"></i>
+          <div><strong>Connector Folder:</strong> Point to a folder containing all <code>*.nar</code> files you want imported into NiFi.</div>
+        </div>
+        <div class="form-group">
+          <label>Import Connector NAR Files</label>
+          <div class="radio-pills">
+            <div class="radio-pill">
+              <input type="radio" id="connectorNar-yes" name="connectorNarImport" value="TRUE">
+              <label for="connectorNar-yes"><i class="fas fa-shield-alt"></i> Yes</label>
+            </div>
+            <div class="radio-pill">
+              <input type="radio" id="connectorNar-no" name="connectorNarImport" value="FALSE" checked>
+              <label for="connectorNar-no"><i class="fas fa-times"></i> No</label>
+            </div>
+          </div>
+        </div>
+        <div id="connectorNarPathGroup" style="display:none;">
+          <div class="form-group">
+            <label for="connectorNarPath">Connector Folder Path</label>
+            <input type="text" id="connectorNarPath" placeholder="./persistent-data/nifi-connectors" value="">
+            <div class="warning" id="connectorNarPathWarning">Connector folder path is required when NAR import is enabled</div>
+            <div class="help-text">All *.nar files in this folder will be imported into NiFi</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><i class="fab fa-github"></i> GitHub Integration</div>
+        <div class="alert alert-info" style="margin-bottom:14px;">
+          <i class="alert-icon fas fa-info-circle"></i>
+          <div><strong>GitHub requires Full NiFi Version 2.</strong> Disabling uses local file system version control instead.</div>
+        </div>
+        <div class="form-group">
+          <label>Enable GitHub Integration</label>
+          <div class="radio-pills">
+            <div class="radio-pill">
+              <input type="radio" id="github-yes" name="githubIntegration" value="TRUE">
+              <label for="github-yes"><i class="fas fa-shield-alt"></i> Yes</label>
+            </div>
+            <div class="radio-pill">
+              <input type="radio" id="github-no" name="githubIntegration" value="FALSE" checked>
+              <label for="github-no"><i class="fas fa-times"></i> No</label>
+            </div>
+          </div>
+        </div>
+        <div id="githubIntegrationGroup" style="display:none;">
+          <div class="grid-3">
+            <div class="form-group">
+              <label for="githubUsername">GitHub Username</label>
+              <input type="text" id="githubUsername" placeholder="e.g., username">
+              <div class="warning" id="githubUsernameWarning">GitHub username is required</div>
+            </div>
+            <div class="form-group">
+              <label for="githubToken">GitHub Access Token</label>
+              <input type="password" id="githubToken" placeholder="e.g., ghp_**********" autocomplete="new-password">
+              <div class="warning" id="githubTokenWarning">GitHub token is required</div>
+              <div class="help-text">
+                <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;margin-top:4px;">
+                  <input type="checkbox" id="showGithubToken"> Show token
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="githubRepo">Repository Name</label>
+              <input type="text" id="githubRepo" placeholder="e.g., nifi-flows">
+              <div class="warning" id="githubRepoWarning">Repository name is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><i class="fas fa-hdd"></i> Data Preservation</div>
+        <div class="alert alert-warning" style="margin-bottom:14px;"><i class="alert-icon fas fa-exclamation-triangle"></i><div><strong>Outside Container (Recommended):</strong> Data persists if container is removed or recreated.</div></div>
+        <div class="form-group">
+          <label>Preserve NiFi Data Outside Container</label>
+          <div class="radio-pills">
+            <div class="radio-pill"><input type="radio" id="nifi-preserve-yes" name="nifiPreserve" value="TRUE" checked><label for="nifi-preserve-yes"><i class="fas fa-shield-alt"></i> Yes</label></div>
+            <div class="radio-pill"><input type="radio" id="nifi-preserve-no" name="nifiPreserve" value="FALSE"><label for="nifi-preserve-no"><i class="fas fa-times"></i> No</label></div>
+          </div>
+        </div>
+        <div id="nifiDataPathGroup">
+          <div class="form-group">
+            <label for="nifiDataPath">Preserve NiFi Data Path</label>
+            <input type="text" id="nifiDataPath" placeholder="/opt/idol/persistent-data/nifi-data">
+            <div class="warning" id="nifiDataPathWarning">NiFi data path is required when preservation is enabled</div>
+            <div class="help-text">Auto-populated from Base Path when set</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="form-group">
+          <label>Preserve NiFi Registry Data Outside Container</label>
+          <div class="radio-pills">
+            <div class="radio-pill"><input type="radio" id="registry-preserve-yes" name="registryPreserve" value="TRUE"><label for="registry-preserve-yes"><i class="fas fa-shield-alt"></i> Yes</label></div>
+            <div class="radio-pill"><input type="radio" id="registry-preserve-no" name="registryPreserve" value="FALSE" checked><label for="registry-preserve-no"><i class="fas fa-times"></i> No</label></div>
+          </div>
+        </div>
+        <div id="registryPathGroup">
+          <div class="form-group">
+            <label for="registryPath">Preserve NiFi Registry Data Path</label>
+            <input type="text" id="registryPath" placeholder="/opt/idol/persistent-data/nifi-registry">
+            <div class="warning" id="registryPathWarning">Registry path is required when preservation is enabled</div>
+            <div class="help-text">Auto-populated from Base Path when set</div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-footer">
+        <button type="button" class="btn btn-danger" onclick="setupIdolNavigateToSection('network')"><i class="fas fa-arrow-left"></i> Previous</button>
+        <button type="button" class="btn btn-success" id="nifiNextBtn" onclick="setupIdolNavigateToSection('ports')" disabled>Next: Ports <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+    <!-- ══════════════ PORTS ══════════════ -->
+    <div id="ports" class="section">
+      <form autocomplete="off">
+        <div class="section-header"><h2>Ports Configuration</h2><p>All port values are cross-checked for conflicts. Run availability check before proceeding.</p></div>
+           
+        <div class="alert alert-info" style="margin-bottom:18px;">
+          <i class="alert-icon fas fa-info-circle"></i>
+          <div>UI ports are single. Each backend service reserves <strong>3 consecutive ports</strong> (ACI, Index, Service). <strong>You must run the port availability check</strong> before the Next button enables — conflicts or in-use ports will block progress.</div>
+        </div>
+        <div class="grid-4">
+          <div class="form-group">
+            <label for="nifiPort">NiFi Secure HTTPS Port</label>
+            <div class="port-field-row">
+              <input type="text" inputmode="numeric" autocomplete="off" name="port-nifi" id="nifiPort" value="8443" oninput="portsOnInput()">
+              <div id="nifiPortStatus" class="port-status-pill"></div>
+            </div>
+            <div class="warning" id="nifiPortWarning">Port must be 1–65535</div>
+            <div class="warning" id="nifiPortDupeWarning">Conflict — already used by another service</div>
+            <div class="help-text">Default: 8443</div>
+          </div>
+          <div class="form-group">
+            <label for="findUiPort">Find UI HTTPS Port</label>
+            <div class="port-field-row">
+              <input type="text" inputmode="numeric" autocomplete="off" name="port-find" id="findUiPort" value="8440" oninput="portsOnInput()">
+              <div id="findUiPortStatus" class="port-status-pill"></div>
+            </div>
+            <div class="warning" id="findUiPortWarning">Port must be 1–65534</div>
+            <div class="warning" id="findUiPortDupeWarning">Conflict — already used by another service</div>
+            <div class="port-range-row">
+              <div class="port-range-pill aci"><span class="pill-label">for basic-idol</span><span class="pill-val" id="findUiPortBaseIdol">8440</span></div>
+              <div class="port-range-pill svc"><span class="pill-label">for data-admin</span><span class="pill-val" id="findUiPortDataAdmin">8441</span></div>
+            </div>
+            <div class="help-text">Default: 8440</div>
+          </div>
+          <div class="form-group">
+            <label for="dataAdminHttpsUiPort">Data Admin HTTPS UI Port</label>
+            <div class="port-field-row">
+              <input type="text" inputmode="numeric" autocomplete="off" name="port-dataadmin-https" id="dataAdminHttpsUiPort" value="8444" oninput="portsOnInput()">
+              <div id="dataAdminHttpsUiPortStatus" class="port-status-pill"></div>
+            </div>
+            <div class="warning" id="dataAdminHttpsUiPortWarning">Port must be 1–65534</div>
+            <div class="warning" id="dataAdminHttpsUiPortDupeWarning">Conflict — already used by another service</div>
+            <div class="port-range-row">
+              <div class="port-range-pill aci"><span class="pill-label">User UI</span><span class="pill-val" id="dataAdminHttpsBase">8444</span></div>
+              <div class="port-range-pill svc"><span class="pill-label">Internal</span><span class="pill-val" id="dataAdminInternalUiPort">8445</span></div>
+            </div>
+            <div class="help-text">Default: 8444</div>
+          </div>
+          <div class="form-group">
+            <label for="mediaServerHttpUiPort">Media Application UI Port</label>
+            <div class="port-field-row">
+              <input type="text" inputmode="numeric" autocomplete="off" name="port-mediaserver-ui" id="mediaServerHttpUiPort" value="8003" oninput="portsOnInput()">
+              <div id="mediaServerHttpUiPortStatus" class="port-status-pill"></div>
+            </div>
+            <div class="warning" id="mediaServerHttpUiPortWarning">Port must be 1–65533</div>
+            <div class="warning" id="mediaServerHttpUiPortDupeWarning">Conflict — already used by another service</div>
+            <div class="port-range-row">
+              <div class="port-range-pill aci"><span class="pill-label">ACI</span><span class="pill-val" id="mediaServerHttpsUiAci">8002</span></div>
+              <div class="port-range-pill svc"><span class="pill-label">Svc</span><span class="pill-val" id="mediaServerHttpsUiSvc">8003</span></div>
+            </div>
+            <div class="help-text">Default: 8003</div>
+          </div>
+        </div>
+      <div class="alert alert-warning" style="margin-bottom:18px;">
+        <i class="alert-icon fas fa-exclamation-triangle"></i>
+        <div>No two service ranges may overlap. Changing any port resets the availability check — re-run before proceeding.</div>
+      </div>
+      <!-- Basic IDOL Ports -->
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div class="port-card-toggle" onclick="togglePortCard('biPortBody','biPortChevron')" style="padding:18px 22px;">
+          <div class="card-title" style="margin-bottom:0;">
+            <i class="fas fa-star"></i> Basic IDOL Service Ports
+            <span style="font-size:10px;font-weight:500;color:var(--success);background:var(--success-glow);border:1px solid rgba(16,185,129,.25);padding:2px 8px;border-radius:8px;text-transform:none;letter-spacing:0;margin-left:8px;">basic-idol</span>
+            <span id="biPortChevron" class="port-card-chevron"><i class="fas fa-chevron-down"></i></span>
+          </div>
+        </div>
+        <div id="biPortBody" class="port-card-body collapsed" style="padding:0 22px;">
+          <div class="alert alert-info" style="margin-bottom:16px;"><i class="alert-icon fas fa-info-circle"></i><div>Each service: <span style="color:var(--primary-light);font-weight:600;">ACI</span>, <span style="color:var(--cyan);font-weight:600;">+1 Index</span>, <span style="color:var(--success);font-weight:600;">+2 Service</span>. No overlap allowed across all sections.</div></div>
+          <div class="port-subsection-label" style="border-top:none;padding-top:0;margin-top:0;">Core Services <span class="psl-badge">3 × 3 ports</span></div>
+          <div class="grid-3" style="margin-bottom:8px;">
+            <div class="form-group">
+              <label for="biContentPort">Content — ACI Port</label>
+              <div class="port-field-row"><input type="number" autocomplete="off" id="biContentPort" value="9100" oninput="portsOnInput()"><div id="biContentPortStatus" class="port-status-pill"></div></div>
+              <div class="warning" id="biContentPortWarning">Port must be 1–65533</div>
+              <div class="warning" id="biContentPortDupeWarning">Conflict — range overlaps</div>
+              <div class="port-range-row"><div class="port-range-pill aci"><span class="pill-label">ACI</span><span class="pill-val" id="biContentAci">9100</span></div><div class="port-range-pill idx"><span class="pill-label">Idx</span><span class="pill-val" id="biContentIdx">9101</span></div><div class="port-range-pill svc"><span class="pill-label">Svc</span><span class="pill-val" id="biContentSvc">9102</span></div></div>
+            </div>
+            <div class="form-group">
+              <label for="biAgentStorePort">AgentStore — ACI Port</label>
+              <div class="port-field-row"><input type="number" autocomplete="off" id="biAgentStorePort" value="9050" oninput="portsOnInput()"><div id="biAgentStorePortStatus" class="port-status-pill"></div></div>
+              <div class="warning" id="biAgentStorePortWarning">Port must be 1–65533</div>
+              <div class="warning" id="biAgentStorePortDupeWarning">Conflict — range overlaps</div>
+              <div class="port-range-row"><div class="port-range-pill aci"><span class="pill-label">ACI</span><span class="pill-val" id="biAgentStoreAci">9050</span></div><div class="port-range-pill idx"><span class="pill-label">Idx</span><span class="pill-val" id="biAgentStoreIdx">9051</span></div><div class="port-range-pill svc"><span class="pill-label">Svc</span><span class="pill-val" id="biAgentStoreSvc">9052</span></div></div>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="biCategoryPort">Category — ACI Port</label>
+              <div class="port-field-row"><input type="number" autocomplete="off" id="biCategoryPort" value="9020" oninput="portsOnInput()"><div id="biCategoryPortStatus" class="port-status-pill"></div></div>
+              <div class="warning" id="biCategoryPortWarning">Port must be 1–65533</div>
+              <div class="warning" id="biCategoryPortDupeWarning">Conflict — range overlaps</div>
+              <div class="port-range-row"><div class="port-range-pill aci"><span class="pill-label">ACI</span><span class="pill-val" id="biCategoryAci">9020</span></div><div class="port-range-pill idx"><span class="pill-label">Idx</span><span class="pill-val" id="biCategoryIdx">9021</span></div><div class="port-range-pill svc"><span class="pill-label">Svc</span><span class="pill-val" id="biCategorySvc">9022</span></div></div>
+            </div>
+          </div>
+          <div class="port-subsection-label da-label" style="margin-top:10px;">Supporting Services <span class="psl-badge">3 × 3 ports</span></div>
+          <div class="grid-3" style="padding-bottom:22px;">
+            <div class="form-group">
+              <label for="biCatAgentStorePort">Cat. AgentStore — ACI</label>
+              <div class="port-field-row"><input type="number" autocomplete="off" id="biCatAgentStorePort" value="9180" oninput="portsOnInput()"><div id="biCatAgentStorePortStatus" class="port-status-pill"></div></div>
+              <div class="warning" id="biCatAgentStorePortWarning">Port must be 1–65533</div>
+              <div class="warning" id="biCatAgentStorePortDupeWarning">Conflict — range overlaps</div>
+              <div class="port-range-row"><div class="port-range-pill aci"><span class="pill-label">ACI</span><span class="pill-val" id="biCatAgentStoreAci">9180</span></div><div class="port-range-pill idx"><span class="pill-label">Idx</span><span class="pill-val" id="biCatAgentStoreIdx">9061</span></div><div class="port-range-pill svc"><span class="pill-label">Svc</span><span class="pill-val" id="biCatAgentStoreSvc">9062</span></div></div>
+            </div>
+            <div class="form-group">
+              <label for="biCommunityPort">Community — ACI Port</label>
+              <div class="port-field-row"><input type="number" autocomplete="off" id="biCommunityPort" value="9030" oninput="portsOnInput()"><div id="biCommunityPortStatus" class="port-status-pill"></div></div>
+              <div class="warning" id="biCommunityPortWarning">Port must be 1–65533</div>
+              <div class="warning" id="biCommunityPortDupeWarning">Conflict — range overlaps</div>
+              <div class="port-range-row"><div class="port-range-pill aci"><span class="pill-label">ACI</span><span class="pill-val" id="biCommunityAci">9030</span></div><div class="port-range-pill idx"><span class="pill-label">Idx</span><span class="pill-val" id="biCommunityIdx">9031</span></div><div class="port-range-pill svc"><span class="pill-label">Svc</span><span class="pill-val" id="biCommunitySvc">9032</span></div></div>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="biViewPort">View — ACI Port</label>
+              <div class="port-field-row"><input type="number" autocomplete="off" id="biViewPort" value="9080" oninput="portsOnInput()"><div id="biViewPortStatus" class="port-status-pill"></div></div>
+              <div class="warning" id="biViewPortWarning">Port must be 1–65533</div>
+              <div class="warning" id="biViewPortDupeWarning">Conflict — range overlaps</div>
+              <div class="port-range-row"><div class="port-range-pill aci"><span class="pill-label">ACI</span><span class="pill-val" id="biViewAci">9080</span></div><div class="port-range-pill idx"><span class="pill-label">Idx</span><span class="pill-val" id="biViewIdx">9081</span></div><div class="port-range-pill svc"><span class="pill-label">Svc</span><span class="pill-val" id="biViewSvc">9082</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Data Admin Ports -->
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div class="port-card-toggle" onclick="togglePortCard('daPortBody','daPortChevron')" style="padding:18px 22px;">
+          <div class="card-title" style="margin-bottom:0;">
+            <i class="fas fa-server"></i> Data Admin &amp; Services Ports
+            <span style="font-size:10px;font-weight:500;color:var(--cyan);background:var(--cyan-glow);border:1px solid rgba(6,182,212,.25);padding:2px 8px;border-radius:8px;text-transform:none;letter-spacing:0;margin-left:8px;">data-admin / rich-media</span>
+            <span id="daPortChevron" class="port-card-chevron"><i class="fas fa-chevron-down"></i></span>
+          </div>
+        </div>
+        <div id="daPortBody" class="port-card-body collapsed" style="padding:0 22px;">
+          <div class="alert alert-info" style="margin:16px 0;"><i class="alert-icon fas fa-info-circle"></i><div>ACI → +1 Index → +2 Service. Adjust base ACI only — others are auto-calculated.</div></div>
+          <div class="port-subsection-label" style="border-top:none;padding-top:0;margin-top:0;">Classic IDOL Services <span class="psl-badge">3 × 3 ports</span></div>
+          <div class="grid-3" style="margin-bottom:8px;">
+            <div class="form-group">
+              <label for="communityPort">Community — ACI Port</label>
+              <div class="port-field-row"><input type="number" autocomplete="off" id="communityPort" value="9033" oninput="portsOnInput()"><div id="communityPortStatus" class="port-status-pill"></div></div>
+              <div class="warning" id="communityPortWarning">Port must be 1–65533</div>
+              <div class="warning" id="communityPortDupeWarning">Conflict — range overlaps</div>
+              <div class="port-range-row"><div class="port-range-pill aci"><span class="pill-label">ACI</span><span class="pill-val" id="communityAci">9033</span></div><div class="port-range-pill idx"><span class="pill-label">Idx</span><span class="pill-val" id="communityIdx">9034</span></div><div class="port-range-pill svc"><span class="pill-label">Svc</span><span class="pill-val" id="communitySvc">9035</span></div></div>
+            </div>
+            <div class="form-group">
+              <label for="viewServerPort">View Server — ACI Port</label>
+              <div class="port-field-row"><input type="number" autocomplete="off" id="viewServerPort" value="9083" oninput="portsOnInput()"><div id="viewServerPortStatus" class="port-status-pill"></div></div>
+              <div class="warning" id="viewServerPortWarning">Port must be 1–65533</div>
+              <div class="warning" id="viewServerPortDupeWarning">Conflict — range overlaps</div>
+              <div class="port-range-row"><div class="port-range-pill aci"><span class="pill-label">ACI</span><span class="pill-val" id="viewAci">9083</span></div><div class="port-range-pill idx"><span class="pill-label">Idx</span><span class="pill-val" id="viewIdx">9084</span></div><div class="port-range-pill svc"><span class="pill-label">Svc</span><span class="pill-val" id="viewSvc">9085</span></div></div>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="passageContentPort">Passage Extractor Content — ACI</label>
+              <div class="port-field-row"><input type="number" autocomplete="off" id="passageContentPort" value="9103" oninput="portsOnInput()"><div id="passageContentPortStatus" class="port-status-pill"></div></div>
+              <div class="warning" id="passageContentPortWarning">Port must be 1–65533</div>
+              <div class="warning" id="passageContentPortDupeWarning">Conflict — range overlaps</div>
+              <div class="port-range-row"><div class="port-range-pill aci"><span class="pill-label">ACI</span><span class="pill-val" id="passageContentAci">9103</span></div><div class="port-range-pill idx"><span class="pill-label">Idx</span><span class="pill-val" id="passageContentIdx">9104</span></div><div class="port-range-pill svc"><span class="pill-label">Svc</span><span class="pill-val" id="passageContentSvc">9105</span></div></div>
+            </div>
+          </div>
+          <div class="port-subsection-label da-label" style="margin-top:20px;">Answer Server / QMS / AgentStores / Stats <span class="psl-badge">6 × 3 ports</span></div>
+          <div class="grid-3" style="margin-bottom:8px;">
+            <div class="form-group">
+              <label for="answerServerPort">Answer Server — ACI Port</label>
+              <div class="port-field-row"><input type="number" autocomplete="off" id="answerServerPort" value="12000" oninput="portsOnInput()"><div id="answerServerPortStatus" class="port-status-pill"></div></div>
+              <div class="warning" id="answerServerPortWarning">Port must be 1–65533</div>
+              <div class="warning" id="answerServerPortDupeWarning">Conflict — range overlaps</div>
+              <div class="port-range-row"><div class="port-range-pill aci"><span class="pill-label">ACI</span><span class="pill-val" id="answerServerAci">12000</span></div><div class="port-range-pill idx"><span class="pill-label">Idx</span><span class="pill-val" id="answerServerIdx">12001</span></div><div class="port-range-pill svc"><span class="pill-label">Svc</span><span class="pill-val" id="answerServerSvc">12002</span></div></div>
+            </div>
+            <div class="form-group">
+              <label for="answerBankAgentPort">Answer Bank AgentStore — ACI</label>
+              <div class="port-field-row"><input type="number" autocomplete="off" id="answerBankAgentPort" value="12200" oninput="portsOnInput()"><div id="answerBankAgentPortStatus" class="port-status-pill"></div></div>
+              <div class="warning" id="answerBankAgentPortWarning">Port must be 1–65533</div>
+              <div class="warning" id="answerBankAgentPortDupeWarning">Conflict — range overlaps</div>
+              <div class="port-range-row"><div class="port-range-pill aci"><span class="pill-label">ACI</span><span class="pill-val" id="answerBankAci">12200</span></div><div class="port-range-pill idx"><span class="pill-label">Idx</span><span class="pill-val" id="answerBankIdx">12201</span></div><div class="port-range-pill svc"><span class="pill-label">Svc</span><span class="pill-val" id="answerBankSvc">12202</span></div></div>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="passageAgentPort">Passage Extractor AgentStore — ACI</label>
+              <div class="port-field-row"><input type="number" autocomplete="off" id="passageAgentPort" value="12310" oninput="portsOnInput()"><div id="passageAgentPortStatus" class="port-status-pill"></div></div>
+              <div class="warning" id="passageAgentPortWarning">Port must be 1–65533</div>
+              <div class="warning" id="passageAgentPortDupeWarning">Conflict — range overlaps</div>
+              <div class="port-range-row"><div class="port-range-pill aci"><span class="pill-label">ACI</span><span class="pill-val" id="passageAgentAci">12310</span></div><div class="port-range-pill idx"><span class="pill-label">Idx</span><span class="pill-val" id="passageAgentIdx">12311</span></div><div class="port-range-pill svc"><span class="pill-label">Svc</span><span class="pill-val" id="passageAgentSvc">12312</span></div></div>
+            </div>
+          </div>
+          <div class="grid-3" style="padding-bottom:22px;">
+            <div class="form-group">
+              <label for="qmsPort">QMS — ACI Port</label>
+              <div class="port-field-row"><input type="number" autocomplete="off" id="qmsPort" value="16000" oninput="portsOnInput()"><div id="qmsPortStatus" class="port-status-pill"></div></div>
+              <div class="warning" id="qmsPortWarning">Port must be 1–65533</div>
+              <div class="warning" id="qmsPortDupeWarning">Conflict — range overlaps</div>
+              <div class="port-range-row"><div class="port-range-pill aci"><span class="pill-label">ACI</span><span class="pill-val" id="qmsAci">16000</span></div><div class="port-range-pill idx"><span class="pill-label">Idx</span><span class="pill-val" id="qmsIdx">16001</span></div><div class="port-range-pill svc"><span class="pill-label">Svc</span><span class="pill-val" id="qmsSvc">16002</span></div></div>
+            </div>
+            <div class="form-group">
+              <label for="qmsAgentPort">QMS AgentStore — ACI Port</label>
+              <div class="port-field-row"><input type="number" autocomplete="off" id="qmsAgentPort" value="20050" oninput="portsOnInput()"><div id="qmsAgentPortStatus" class="port-status-pill"></div></div>
+              <div class="warning" id="qmsAgentPortWarning">Port must be 1–65533</div>
+              <div class="warning" id="qmsAgentPortDupeWarning">Conflict — range overlaps</div>
+              <div class="port-range-row"><div class="port-range-pill aci"><span class="pill-label">ACI</span><span class="pill-val" id="qmsAgentAci">20050</span></div><div class="port-range-pill idx"><span class="pill-label">Idx</span><span class="pill-val" id="qmsAgentIdx">20051</span></div><div class="port-range-pill svc"><span class="pill-label">Svc</span><span class="pill-val" id="qmsAgentSvc">20052</span></div></div>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="statsServerPort">Stats Server — ACI Port</label>
+              <div class="port-field-row"><input type="number" autocomplete="off" id="statsServerPort" value="19870" oninput="portsOnInput()"><div id="statsServerPortStatus" class="port-status-pill"></div></div>
+              <div class="warning" id="statsServerPortWarning">Port must be 1–65533</div>
+              <div class="warning" id="statsServerPortDupeWarning">Conflict — range overlaps</div>
+              <div class="port-range-row"><div class="port-range-pill aci"><span class="pill-label">ACI</span><span class="pill-val" id="statsAci">19870</span></div><div class="port-range-pill idx"><span class="pill-label">Idx</span><span class="pill-val" id="statsIdx">19871</span></div><div class="port-range-pill svc"><span class="pill-label">Svc</span><span class="pill-val" id="statsSvc">19872</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Rich Media Ports -->
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div class="port-card-toggle" onclick="togglePortCard('rmPortBody','rmPortChevron')" style="padding:18px 22px;">
+          <div class="card-title" style="margin-bottom:0;">
+            <i class="fas fa-photo-video"></i> Rich Media Services Ports
+            <span style="font-size:10px;font-weight:500;color:var(--warning);background:var(--warning-glow);border:1px solid rgba(245,158,11,.25);padding:2px 8px;border-radius:8px;text-transform:none;letter-spacing:0;margin-left:8px;">rich-media</span>
+            <span id="rmPortChevron" class="port-card-chevron"><i class="fas fa-chevron-down"></i></span>
+          </div>
+        </div>
+        <div id="rmPortBody" class="port-card-body collapsed" style="padding:0 22px;">
+          <div class="alert alert-info" style="margin:16px 0;">
+            <i class="alert-icon fas fa-info-circle"></i>
+            <div>Each service reserves <span style="color:var(--primary-light);font-weight:600;">ACI</span>, <span style="color:var(--cyan);font-weight:600;">+1 Index</span>, <span style="color:var(--success);font-weight:600;">+2 Service</span> ports. No overlap allowed.</div>
+          </div>
+          <div class="port-subsection-label" style="border-top:none;padding-top:0;margin-top:0;">Media Processing <span class="psl-badge">1 × 3 ports</span></div>
+          <div class="grid-3" style="padding-bottom:22px;">
+            <div class="form-group">
+              <label for="rmMediaServerPort">Media Server — ACI Port</label>
+              <div class="port-field-row">
+                <input type="number" autocomplete="off" id="rmMediaServerPort" value="14000" oninput="portsOnInput()">
+                <div id="rmMediaServerPortStatus" class="port-status-pill"></div>
+              </div>
+              <div class="warning" id="rmMediaServerPortWarning">Port must be 1–65533</div>
+              <div class="warning" id="rmMediaServerPortDupeWarning">Conflict — range overlaps</div>
+              <div class="port-range-row">
+                <div class="port-range-pill aci"><span class="pill-label">ACI</span><span class="pill-val" id="rmMediaServerAci">14000</span></div>
+                <div class="port-range-pill svc"><span class="pill-label">Svc</span><span class="pill-val" id="rmMediaServerSvc">14001</span></div>
+                <div class="port-range-pill srv-ssl"><span class="pill-label">Srv SSL</span><span class="pill-val" id="rmMediaServerSrvSSL">14002</span></div>
+                <div class="port-range-pill svc-ssl"><span class="pill-label">Svc SSL</span><span class="pill-val" id="rmMediaServerSvcSSL">14003</span></div>
+              </div>
+              <div class="help-text">Default: 14000</div>
+            </div>
+            <div class="form-group">
+              <label for="rmMediaServerPlaylistPort">Media Server Playlist — ACI Port</label>
+              <div class="port-field-row">
+                <input type="number" autocomplete="off" id="rmMediaServerPlaylistPort" value="24000" oninput="portsOnInput()">
+                <div id="rmMediaServerPlaylistPortStatus" class="port-status-pill"></div>
+              </div>
+              <div class="warning" id="rmMediaServerPlaylistPortWarning">Port must be 1–65533</div>
+              <div class="warning" id="rmMediaServerPlaylistPortDupeWarning">Conflict — range overlaps</div>
+              <div class="port-range-row">
+                <div class="port-range-pill aci"><span class="pill-label">ACI</span><span class="pill-val" id="rmMediaServerPlaylistAci">24000</span></div>
+                <div class="port-range-pill svc"><span class="pill-label">Svc</span><span class="pill-val" id="rmMediaServerPlaylistSvc">24001</span></div>
+              </div>
+              <div class="help-text">Default: 24000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="portsDupeAlert" class="hidden">
+        <div class="alert alert-warning" style="margin-bottom:0;"><i class="alert-icon fas fa-exclamation-triangle"></i><div><strong>Port conflict detected.</strong> Resolve all overlapping ranges before running the availability check.</div></div>
+      </div>
+      <div class="card" style="margin-top:18px;">
+        <div class="card-title"><i class="fas fa-satellite-dish"></i> Port Availability Check</div>
+        <p style="font-size:12.5px;color:var(--text-muted);margin-bottom:14px;">
+          Verify all configured ports are free on the host. <strong>The Next button only enables after a successful check.</strong> Changing any port value resets the check.
+        </p>
+        <div class="professional-toggle-row" style="margin-bottom:16px;">
+          <div class="professional-toggle-row-label">
+            <span>Bypass Port Availability Check</span>
+            <small>For testing/dev environments — disables mandatory “Check All Ports”</small>
+          </div>
+          <label class="professional-switch">
+            <input type="checkbox" id="bypassPortCheckToggle" onchange="portsToggleBypass()">
+            <span class="professional-slider"></span>
+          </label>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 16px; justify-content: flex-end;">
+          <!-- Reset to Default Ports Button -->
+          <button
+            type="button"
+            class="btn btn-danger"
+            onclick="resetPortsToDefaults()"
+            style="display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 9px 18px;">
+            <i class="fas fa-undo-alt"></i>
+            <span>Reset to Default Ports</span>
+          </button>
+          <!-- Check All Ports Button and Hint (stacked vertically) -->
+          <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px;">
+            <button
+              type="button"
+              class="btn btn-warning"
+              id="checkPortsBtn"
+              onclick="portsCheckAvailability()"
+              style="font-size: 12px; padding: 8px 16px;">
+              <i class="fas fa-satellite-dish"></i>
+              Check All Ports
+            </button>
+            <div
+              id="portsCheckHint"
+              style="font-size: 11.5px; color: var(--warning); display: flex; align-items: center; gap: 6px;">
+              <i class="fas fa-exclamation-circle"></i>
+              Run check to enable Next button
+            </div>
+          </div>
+        </div>
+        <div id="portsAvailabilityResult" style="display:none;margin-top:14px;"></div>
+      </div>
+      <div class="nav-footer">
+        <button type="button" class="btn btn-danger" onclick="setupIdolNavigateToSection('nifi')"><i class="fas fa-arrow-left"></i> Previous</button>
+        <button type="button" class="btn btn-success" id="portsNextBtn" onclick="setupIdolNavigateToSection('license')" disabled>Next: License <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+    <!-- ══════════════ LICENSE ══════════════ -->
+    <div id="license" class="section">
+      <div class="section-header"><h2>License Server Configuration</h2><p>Provide your IDOL license credentials and server details</p></div>
+      <div class="alert alert-warning"><i class="alert-icon fas fa-exclamation-triangle"></i><div><strong>Required before proceeding:</strong><ul><li>Docker images access token for IDOL images</li><li>License key details: hostname, MAC address, email, key file path</li></ul></div></div>
+      <div class="card">
+        <div class="card-title"><i class="fas fa-id-card"></i> License Identity</div>
+        <div class="grid-2">
+          <div class="form-group"><label for="licenseHostname">License Hostname</label><input type="text" id="licenseHostname" placeholder="e.g., OTX-F1ZF574.opentext.net"><div class="warning" id="licenseHostnameWarning">License hostname is required</div></div>
+          <div class="form-group"><label for="licenseEmail">Email Address</label><input type="email" id="licenseEmail" placeholder="your_email@address.com"><div class="warning" id="emailWarning">Valid email address is required</div></div>
+          <div class="form-group"><label for="licenseMac">MAC Address</label><input type="text" id="licenseMac" placeholder="e.g., 00:15:5d:73:9d:03"><div class="warning" id="macWarning">Valid MAC address required (format: xx:xx:xx:xx:xx:xx)</div></div>
+          <div class="form-group"><label for="dockerLicenseToken">Docker Access Token</label><input type="password" id="dockerLicenseToken" placeholder="e.g., dckr_**********" autocomplete="new-password">
+            <div class="warning" id="tokenWarning">Docker access token is required (min 10 chars)</div>
+            <div class="help-text"><label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;margin-top:4px;"><input type="checkbox" id="showLicenseToken"> Show token</label></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><i class="fas fa-folder-open"></i> License Files</div>
+        <div class="form-group"><label for="licenseServerPath">License Server Source Path</label><input type="text" id="licenseServerPath" placeholder="e.g., /opt/backup/LicenseServer_25.3.0_LINUX_X86_64"><div class="warning" id="licenseServerPathWarning">License server source path is required</div></div>
+        <div class="form-group" style="margin-bottom:0;"><label for="licenseKeyPath">License Key File Path</label><input type="text" id="licenseKeyPath" placeholder="e.g., /opt/backup/licensekey.dat"><div class="warning" id="licenseKeyPathWarning">License key file path is required</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><i class="fas fa-toggle-on"></i> License Server Mode</div>
+        <div class="form-group">
+          <label>Deployment Mode</label>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
+            <div class="radio-pills">
+              <div class="radio-pill"><input type="radio" id="license-new" name="licenseMode" value="NEW" checked><label for="license-new"><i class="fas fa-plus"></i> Deploy new instance</label></div>
+              <div class="radio-pill"><input type="radio" id="license-existing" name="licenseMode" value="EXISTING"><label for="license-existing"><i class="fas fa-link"></i> Use existing server URL</label></div>
+            </div>
+            <div id="licenseActiveStatus" class="toggle-row" style="background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-sm); padding:8px 14px; display:flex; align-items:center; gap:10px; white-space:nowrap;">
+              <div class="toggle-row-label" style="display:flex; flex-direction:column;">
+                <span style="font-size:13.5px; font-weight:600;">License Server</span>
+                <small style="font-size:11px; color:var(--text-muted);">Status is <code id="licenseUrlDisplay"></code></small>
+              </div>
+              <div id="licenseStatusBadge" style="font-size:12px; font-weight:600; padding:6px 14px; border-radius:9999px; display:flex; align-items:center; gap:6px;"></div>
+            </div>
+          </div>
+        </div>
+        <div id="licenseExistingGroup" style="display:none;">
+          <div class="form-group" style="margin-bottom:0;"><label for="licenseUrl">License Server URL</label><input type="text" id="licenseUrl" placeholder="http://localhost:20000/a=getlicenseinfo"><div class="warning" id="licenseUrlWarning">License server URL is required when using existing server</div></div>
+        </div>
+      </div>
+      <div class="nav-footer">
+        <button type="button" class="btn btn-danger" onclick="setupIdolNavigateToSection('ports')"><i class="fas fa-arrow-left"></i> Previous</button>
+        <button type="button"class="btn btn-success" id="licenseNextBtn" onclick="setupIdolNavigateToSection('storage')" disabled>Next: Storage <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+    <!-- ══════════════ STORAGE ══════════════ -->
+    <div id="storage" class="section">
+      <div class="section-header"><h2>Storage &amp; Paths</h2><p>Configure persistence paths and storage mapping</p></div>
+      <div class="alert alert-info"><i class="alert-icon fas fa-info-circle"></i><div>Use absolute paths starting with /. Ensure directories are accessible with appropriate permissions.</div></div>
+      <div class="card">
+        <div class="card-title"><i class="fas fa-hdd"></i> IDOL Data Persistence</div>
+        <div class="form-group">
+          <label>Preserve IDOL Data Outside Container</label>
+          <div class="radio-pills">
+            <div class="radio-pill"><input type="radio" id="preserve-yes" name="preserve" value="TRUE" checked><label for="preserve-yes"><i class="fas fa-shield-alt"></i> Yes</label></div>
+            <div class="radio-pill"><input type="radio" id="preserve-no" name="preserve" value="FALSE"><label for="preserve-no"><i class="fas fa-times"></i> No</label></div>
+          </div>
+        </div>
+        <div id="preservePathGroup">
+          <div class="form-group">
+            <label for="preservePath">IDOL Preserve Data Path</label>
+            <input type="text" id="preservePath" placeholder="/opt/idol/persistent-data">
+            <div class="warning" id="preservePathWarning">Preserve path is required when preservation is enabled</div>
+            <div class="help-text">Auto-populated from Base Path. Subdirectories are created automatically.</div>
+          </div>
+          <div id="storageSubfolders" style="display:none;">
+            <button type="button" onclick="toggleSubfolders()" style="display:flex;align-items:center;gap:8px;background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:12px;font-family:var(--font-body);padding:0;margin-bottom:6px;">
+              <i class="fas fa-folder-tree" style="color:var(--cyan);"></i><span>Auto-created subfolders</span>
+              <i id="subfolderChevron" class="fas fa-chevron-right" style="font-size:10px;transition:transform .2s;"></i>
+            </button>
+            <div id="subfolderCollapse" style="display:none;">
+              <div class="alert alert-info" style="margin:0;"><ul id="subfolderList" style="margin:0;padding-left:16px;"></ul></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><i class="fas fa-folder-open"></i> Storage Mapping</div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label for="storagePath">Host Storage Mapping Path</label>
+          <input type="text" id="storagePath" placeholder="/opt/idol/hotfolder" oninput="updateStoragePathHint(this.value)">
+          <div class="warning" id="storagePathWarning">Host storage mapping path is required</div>
+          <div class="help-text">
+            <span id="storagePathHint">&lt;IDOL_HOST_STORAGE_PATH&gt;/hotfolder</span>
+            <div style="margin-top:6px;display:flex;flex-direction:column;gap:4px;">
+              <span style="font-size:11px;color:var(--text-muted);">Auto-created subfolders:</span>
+              <span style="font-family:var(--font-mono);font-size:11px;color:var(--cyan);"><i class="fas fa-folder" style="color:var(--warning);margin-right:5px;"></i><span id="storageIngestHint"></span>/ingest</span>
+              <span style="font-family:var(--font-mono);font-size:11px;color:var(--cyan);"><i class="fas fa-folder" style="color:var(--warning);margin-right:5px;"></i><span id="storageStagingHint"></span>/staging</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-footer">
+        <button type="button" class="btn btn-danger" onclick="setupIdolNavigateToSection('license')"><i class="fas fa-arrow-left"></i> Previous</button>
+        <button type="button" class="btn btn-success" id="storageNextBtn" onclick="setupIdolNavigateToSection('summary')" disabled>Next: Summary <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+    <!-- ══════════════ SUMMARY ══════════════ -->
+    <div id="summary" class="section">
+      <div class="section-header"><h2>Summary &amp; Export</h2><p>Generate your deployment scripts and execute the installation</p></div>
+      <div class="validation-panel" id="validationWarning"><strong><i class="fas fa-exclamation-triangle"></i> Validation Issues Found</strong><ul id="validationErrors"></ul></div>
+      <div class="card">
+        <div class="card-title"><i class="fas fa-terminal"></i> Build Pre-Setup Script</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:14px;">Generate the pre-setup bash script that exports all environment variables.</p>
+        <button type="button" class="btn btn-primary" id="buildScriptBtn" onclick="setupIdolGeneratePreSetupScript()"><i class="fas fa-cogs"></i> Build Pre-Setup Script</button>
+        <div id="bashPreSetup" class="hidden" style="margin-top:16px;">
+          <div class="code-box">
+            <div class="code-box-header">
+              <span><i class="fas fa-file-code" style="margin-right:6px;"></i>idol-pre-setup.sh</span>
+              <div style="display:flex;gap:8px;">
+                <button type="button" class="btn btn-secondary" id="copyScriptBtn" onclick="setupIdolCopyPreSetupScript()" style="padding:5px 12px;font-size:11px;"><i class="far fa-copy"></i> Copy</button>
+                <button type="button" class="btn btn-secondary" id="downloadScriptBtn" onclick="setupIdolDownloadPreSetupScript()" style="padding:5px 12px;font-size:11px;"><i class="fas fa-download"></i> Download</button>
+              </div>
+            </div>
+            <pre id="scriptContent">Script will appear here...</pre>
+          </div>
+        </div>
+        <div class="btn-group" style="margin-top:14px;">
+          <button type="button" class="btn btn-primary hidden" id="generateSetupScriptBtn" onclick="setupIdolGenerateSetupScript()"><i class="fas fa-arrow-right"></i> Continue to Step 2</button>
+        </div>
+      </div>
+      <div class="execute-card hidden" id="executeSection">
+        <div class="exec-label"><i class="fas fa-terminal"></i> Generate Deployment Command</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Generate the final command to launch your IDOL deployment.</p>
+        <div class="form-group"><label>Custom Command Append (optional)</label><input type="text" id="commandContent" value="" style="font-family:var(--font-mono);font-size:12px;" placeholder="appended after the generated command"></div>
+        <div class="code-box" style="margin-bottom:16px;">
+          <div class="code-box-header"><span><i class="fas fa-terminal" style="margin-right:6px;"></i>Generated Command</span></div>
+          <pre id="commandOutput" style="color:#fbbf24;">Click "Generate Command" to build the deployment command</pre>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary" id="generateCommandBtn" onclick="setupIdolGenerateBashCommand()"><i class="fas fa-arrow-right"></i> Continue to Step 3 - Generate Command</button>
+          <button type="button" class="btn btn-warning" id="copyCommandBtn" onclick="setupIdolCopyCommand()"><i class="far fa-copy"></i> Final Step - Copy Command to Terminal and Execute it</button>
+        </div>
+        <p style="font-size:12.5px;color:var(--text-muted);margin-top:12px;">Save the generated script to <span class="text-mono" style="color:var(--cyan);">/setup-scripts/pre-setup.sh</span> on the server.</p>
+        <div id="saveScriptResult" style="margin-top:12px;display:none;"></div>
+      </div>
+      <div class="nav-footer">
+        <button type="button" class="btn btn-danger" onclick="setupIdolNavigateToSection('storage')"><i class="fas fa-arrow-left"></i> Previous</button>
+        <button type="button" class="btn btn-ghost" onclick="setupIdolNavigateToSection('basic')"><i class="fas fa-redo"></i> Start Over</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastMsg">Done!</span></div>
+<div class="tooltip-popup" id="tooltipPopup"></div>
+<script src="../static/config-idol/js/idol-setup-manager.js?v=20260728"></script>
+<script src="../static/config-idol/js/idol-versions.js"></script>
+
+</body>
+</html>

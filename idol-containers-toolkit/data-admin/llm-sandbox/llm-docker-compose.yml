@@ -1,0 +1,42 @@
+version: "3.8"
+name: idol-demo
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - .:/app          # mounts your whole project folder as /app
+    restart: unless-stopped
+    #deploy:
+    #  resources:
+    #    reservations:
+    #      devices:
+    #        - driver: nvidia
+    #          count: all                                          # use 'count: 1' to limit to one GPU
+    #          capabilities: [gpu]
+
+    networks:
+      - idol-demo-network  
+
+      
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:latest
+    container_name: open-webui
+    ports:
+      - "8888:8080"
+    volumes:
+      - ./open-webui:/app/backend/data
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    depends_on:
+      - ollama
+    restart: unless-stopped    
+    networks:
+      - idol-demo-network  
+
+networks:
+  idol-demo-network:
+    external: true     

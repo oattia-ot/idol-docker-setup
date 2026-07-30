@@ -1,0 +1,304 @@
+version: "3.8"
+name: idol-monitoring
+
+services:
+  # Container Management - Yacht (Portainer Alternative)
+  yacht:
+    image: selfhostedpro/yacht:latest
+    container_name: idol-yacht
+    restart: unless-stopped
+    ports:
+      - "5001:8000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - yacht-data:/config
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Asia/Jerusalem
+      - ADMIN_EMAIL=admin@idol.local
+      - ADMIN_PASSWORD=opentext1!
+    networks:
+      - idol-network
+
+  # Docker Compose Stack Management - Dockge
+  dockge:
+    image: louislam/dockge:latest
+    container_name: idol-dockge
+    restart: unless-stopped
+    ports:
+      - "5002:5001"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - dockge-data:/app/data
+      - /opt/stacks:/opt/stacks
+    environment:
+      - DOCKGE_STACKS_DIR=/opt/stacks
+    networks:
+      - idol-network
+
+  # Log Viewer - Dozzle
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: idol-dozzle
+    restart: unless-stopped
+    ports:
+      - "5003:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - DOZZLE_LEVEL=info
+      - DOZZLE_TAILSIZE=500
+      - DOZZLE_FILTER=status=running
+      - DOZZLE_ENABLE_ACTIONS=true
+    networks:
+      - idol-network
+
+  # Container Metrics - cAdvisor
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: idol-cadvisor
+    restart: unless-stopped
+    ports:
+      - "5004:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    privileged: true
+    networks:
+      - idol-network
+
+  # Metrics Collection - Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: idol-prometheus
+    restart: unless-stopped
+    ports:
+      - "5005:9090"
+    volumes:
+      - prometheus-data:/prometheus
+      - prometheus-config:/etc/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=15d'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-admin-api'
+    networks:
+      - idol-network
+    depends_on:
+      prometheus-config-setup:
+        condition: service_completed_successfully
+
+  # Prometheus Config Setup (runs once to create config)
+  prometheus-config-setup:
+    image: alpine:latest
+    container_name: prometheus-config-setup
+    restart: "no"
+    volumes:
+      - prometheus-config:/config
+    command: |
+      sh -c '
+      if [ ! -f /config/prometheus.yml ]; then
+        cat > /config/prometheus.yml <<EOF
+      global:
+        scrape_interval: 15s
+        evaluation_interval: 15s
+
+      scrape_configs:
+        - job_name: "prometheus"
+          static_configs:
+            - targets: ["localhost:9090"]
+
+        - job_name: "cadvisor"
+          static_configs:
+            - targets: ["cadvisor:8080"]
+
+        - job_name: "node-exporter"
+          static_configs:
+            - targets: ["node-exporter:9100"]
+      EOF
+      fi
+      echo "Prometheus config created"
+      '
+    networks:
+      - idol-network
+
+  # Visualization - Grafana
+  grafana:
+    image: grafana/grafana:latest
+    container_name: idol-grafana
+    restart: unless-stopped
+    ports:
+      - "5006:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=opentext1!
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_ROOT_URL=http://localhost:5006
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-piechart-panel
+    networks:
+      - idol-network
+    depends_on:
+      - prometheus
+
+  # Advanced Log Management - Loki (with default config)
+  loki:
+    image: grafana/loki:latest
+    container_name: idol-loki
+    restart: unless-stopped
+    ports:
+      - "5007:3100"
+    volumes:
+      - loki-data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - idol-network
+
+  # Log Shipper - Promtail (with inline config)
+  promtail:
+    image: grafana/promtail:latest
+    container_name: idol-promtail
+    restart: unless-stopped
+    ports:
+      - "5008:9080"
+    volumes:
+      - /var/log:/var/log:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - promtail-config:/etc/promtail
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - idol-network
+    depends_on:
+      promtail-config-setup:
+        condition: service_completed_successfully
+
+  # Promtail Config Setup
+  promtail-config-setup:
+    image: alpine:latest
+    container_name: promtail-config-setup
+    restart: "no"
+    volumes:
+      - promtail-config:/config
+    command: |
+      sh -c '
+      if [ ! -f /config/config.yml ]; then
+        cat > /config/config.yml <<EOF
+      server:
+        http_listen_port: 9080
+        grpc_listen_port: 0
+
+      positions:
+        filename: /tmp/positions.yaml
+
+      clients:
+        - url: http://loki:3100/loki/api/v1/push
+
+      scrape_configs:
+        - job_name: docker
+          static_configs:
+            - targets:
+                - localhost
+              labels:
+                job: docker
+                __path__: /var/lib/docker/containers/*/*-json.log
+          pipeline_stages:
+            - json:
+                expressions:
+                  output: log
+                  stream: stream
+                  attrs: attrs
+            - json:
+                expressions:
+                  tag: attrs.tag
+                source: attrs
+            - regex:
+                expression: (?P<container_name>(?:[^|]*[^|]))
+                source: tag
+            - labels:
+                container_name:
+                stream:
+            - output:
+                source: output
+      EOF
+      fi
+      echo "Promtail config created"
+      '
+    networks:
+      - idol-network
+
+  # Simple Monitoring - Dokemon
+  dokemon:
+    image: productiveops/dokemon:latest
+    container_name: idol-dokemon
+    restart: unless-stopped
+    ports:
+      - "5009:9090"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - idol-network
+
+  # Node Exporter - System Metrics
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: idol-node-exporter
+    restart: unless-stopped
+    ports:
+      - "5010:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    networks:
+      - idol-network
+
+  # Config Monitor UI - Custom Flask Dashboard for service health (unchanged)
+  monitor-ui:
+    build:
+      context: ./monitor-ui
+      dockerfile: Dockerfile
+    container_name: idol-monitor-ui
+    restart: unless-stopped
+    ports:
+      - "5011:5000"
+    environment:
+      - TZ=Asia/Jerusalem
+    volumes:
+      # Critical: Allows the container to see real Docker containers (idol-*)
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # Recommended: Get the real hostname of your host machine
+      - /etc/hostname:/host/hostname:ro
+    networks:
+      - idol-network
+
+volumes:
+  yacht-data:
+    driver: local
+  dockge-data:
+    driver: local
+  prometheus-data:
+    driver: local
+  prometheus-config:
+    driver: local
+  grafana-data:
+    driver: local
+  loki-data:
+    driver: local
+  promtail-config:
+    driver: local
+
+networks:
+  idol-network:
+    driver: bridge

@@ -1,0 +1,122 @@
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666666"/>
+    </marker>
+    <style>
+      .flow { stroke-dasharray: 8 6; animation: dash 1s linear infinite; }
+      @keyframes dash { to { stroke-dashoffset: -56; } }
+      .lbl { font-size: 13px; fill: #222222; }
+      .lbl-sm { font-size: 11.5px; fill: #333333; }
+      .title { font-size: 15px; font-weight: 700; fill: #222222; }
+      .num { font-size: 14px; font-weight: 700; fill: #ffffff; }
+    </style>
+  </defs>
+
+  <!-- Step 1: Standalone LLM -->
+  <rect x="40" y="30" width="320" height="130" rx="10" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+  <text x="200" y="58" text-anchor="middle" class="title">Standalone LLM</text>
+  <text x="60" y="82" class="lbl-sm">• Generalist, trained on broad data</text>
+  <text x="60" y="100" class="lbl-sm">• No access to private/internal docs</text>
+  <text x="60" y="118" class="lbl-sm">• Can hallucinate or be outdated</text>
+  <circle cx="40" cy="30" r="16" fill="#1a73e8"/>
+  <text x="40" y="35" text-anchor="middle" class="num">1</text>
+
+  <!-- Step 2: OpenText KD -->
+  <rect x="840" y="30" width="320" height="130" rx="10" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+  <text x="1000" y="58" text-anchor="middle" class="title">OpenText Knowledge Discovery</text>
+  <text x="860" y="82" class="lbl-sm">• Ingests unstructured data in place</text>
+  <text x="860" y="100" class="lbl-sm">• 160+ repositories</text>
+  <text x="860" y="118" class="lbl-sm">• 2300+ file types (text, video, audio, image)</text>
+  <circle cx="840" cy="30" r="16" fill="#2e7d32"/>
+  <text x="840" y="35" text-anchor="middle" class="num">2</text>
+
+  <!-- Step 3: Combined RAG -->
+  <rect x="440" y="200" width="320" height="130" rx="10" fill="#ffe6cc" stroke="#d79b00" stroke-width="1.5"/>
+  <text x="600" y="228" text-anchor="middle" class="title">Combined: LLM + KD (RAG)</text>
+  <text x="460" y="252" class="lbl-sm">KD feeds fresh, sourced, relevant data</text>
+  <text x="460" y="270" class="lbl-sm">LLM adds fluent language &amp; reasoning</text>
+  <text x="460" y="292" class="lbl-sm" font-weight="700">→ Accurate, grounded, enterprise-specific answers</text>
+  <circle cx="440" cy="200" r="16" fill="#e67700"/>
+  <text x="440" y="205" text-anchor="middle" class="num">3</text>
+
+  <!-- Step 4: Capabilities header -->
+  <rect x="440" y="370" width="320" height="60" rx="6" fill="#f5f5f5" stroke="#666666" stroke-width="1.5"/>
+  <text x="600" y="405" text-anchor="middle" class="title">OpenText KD — Out-of-the-Box Capabilities</text>
+  <circle cx="440" cy="370" r="16" fill="#666666"/>
+  <text x="440" y="375" text-anchor="middle" class="num">4</text>
+
+  <!-- Steps 5-9: capability boxes -->
+  <g>
+    <rect x="60" y="480" width="200" height="110" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+    <text x="160" y="505" text-anchor="middle" class="title" font-size="13">Entity Extraction</text>
+    <text x="160" y="528" text-anchor="middle" class="lbl-sm">Names, places, orgs,</text>
+    <text x="160" y="544" text-anchor="middle" class="lbl-sm">PII / PHI / PCI,</text>
+    <text x="160" y="560" text-anchor="middle" class="lbl-sm">multilingual</text>
+    <circle cx="60" cy="480" r="14" fill="#bf9000"/>
+    <text x="60" y="484" text-anchor="middle" class="num" font-size="12">5</text>
+  </g>
+
+  <g>
+    <rect x="280" y="480" width="200" height="110" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+    <text x="380" y="505" text-anchor="middle" class="title" font-size="13">Categorization &amp; Clustering</text>
+    <text x="380" y="528" text-anchor="middle" class="lbl-sm">Auto-groups content,</text>
+    <text x="380" y="544" text-anchor="middle" class="lbl-sm">zero-shot, no training</text>
+    <text x="380" y="560" text-anchor="middle" class="lbl-sm">data required</text>
+    <circle cx="280" cy="480" r="14" fill="#bf9000"/>
+    <text x="280" y="484" text-anchor="middle" class="num" font-size="12">6</text>
+  </g>
+
+  <g>
+    <rect x="500" y="480" width="200" height="110" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+    <text x="600" y="505" text-anchor="middle" class="title" font-size="13">Rich Media Analytics</text>
+    <text x="600" y="528" text-anchor="middle" class="lbl-sm">Speech-to-text,</text>
+    <text x="600" y="544" text-anchor="middle" class="lbl-sm">object / face detection,</text>
+    <text x="600" y="560" text-anchor="middle" class="lbl-sm">sentiment analysis</text>
+    <circle cx="500" cy="480" r="14" fill="#bf9000"/>
+    <text x="500" y="484" text-anchor="middle" class="num" font-size="12">7</text>
+  </g>
+
+  <g>
+    <rect x="720" y="480" width="200" height="110" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+    <text x="820" y="505" text-anchor="middle" class="title" font-size="13">Sensitive Data Detection</text>
+    <text x="820" y="528" text-anchor="middle" class="lbl-sm">Flags regulated info:</text>
+    <text x="820" y="544" text-anchor="middle" class="lbl-sm">GDPR, HIPAA,</text>
+    <text x="820" y="560" text-anchor="middle" class="lbl-sm">compliance &amp; risk</text>
+    <circle cx="720" cy="480" r="14" fill="#bf9000"/>
+    <text x="720" y="484" text-anchor="middle" class="num" font-size="12">8</text>
+  </g>
+
+  <g>
+    <rect x="940" y="480" width="200" height="110" rx="8" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+    <text x="1040" y="505" text-anchor="middle" class="title" font-size="13">Relationship Mapping</text>
+    <text x="1040" y="528" text-anchor="middle" class="lbl-sm">Graphs, timelines,</text>
+    <text x="1040" y="544" text-anchor="middle" class="lbl-sm">connections,</text>
+    <text x="1040" y="560" text-anchor="middle" class="lbl-sm">visualization</text>
+    <circle cx="940" cy="480" r="14" fill="#bf9000"/>
+    <text x="940" y="484" text-anchor="middle" class="num" font-size="12">9</text>
+  </g>
+
+  <!-- Step 10: Benefit -->
+  <rect x="440" y="640" width="320" height="120" rx="10" fill="#f8cecc" stroke="#b85450" stroke-width="1.5"/>
+  <text x="600" y="668" text-anchor="middle" class="title">Net Benefit</text>
+  <text x="460" y="692" class="lbl-sm">Chaotic, siloed enterprise data becomes</text>
+  <text x="460" y="708" class="lbl-sm">governed, AI-ready knowledge — accurate,</text>
+  <text x="460" y="724" class="lbl-sm">sourced, compliance-aware answers, without</text>
+  <text x="460" y="740" class="lbl-sm">ever moving the files.</text>
+  <circle cx="440" cy="640" r="16" fill="#c0392b"/>
+  <text x="440" y="645" text-anchor="middle" class="num">10</text>
+
+  <!-- Edges -->
+  <path class="flow" d="M200,160 C200,185 520,180 520,200" fill="none" stroke="#6c8ebf" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path class="flow" d="M1000,160 C1000,185 680,180 680,200" fill="none" stroke="#82b366" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path class="flow" d="M600,330 L600,370" fill="none" stroke="#d79b00" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <path class="flow" d="M600,430 C600,450 160,455 160,480" fill="none" stroke="#999999" stroke-width="2" marker-end="url(#arrow)"/>
+  <path class="flow" d="M600,430 C600,448 380,452 380,480" fill="none" stroke="#999999" stroke-width="2" marker-end="url(#arrow)"/>
+  <path class="flow" d="M600,430 L600,480" fill="none" stroke="#999999" stroke-width="2" marker-end="url(#arrow)"/>
+  <path class="flow" d="M600,430 C600,448 820,452 820,480" fill="none" stroke="#999999" stroke-width="2" marker-end="url(#arrow)"/>
+  <path class="flow" d="M600,430 C600,450 1040,455 1040,480" fill="none" stroke="#999999" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <path class="flow" d="M600,590 L600,640" fill="none" stroke="#b85450" stroke-width="2.5" marker-end="url(#arrow)"/>
+</svg>

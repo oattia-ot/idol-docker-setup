@@ -1,0 +1,216 @@
+27/07/2026 08:48:54 [0] 30-Normal: ACI Server validated operations key.
+27/07/2026 08:48:54 [0] 30-Normal: ACI Server has no QPS limit.
+27/07/2026 08:48:54 [0] 30-Normal: ACI Server is licensed for SSL encryption.
+27/07/2026 08:48:54 [0] 30-Normal: Performed hostname lookup and converted ADMINCLIENTS from [*.*.*.*] -> [*].
+27/07/2026 08:48:54 [0] 30-Normal: Performed hostname lookup and converted USERCLIENTS from [*.*.*.*,*.*.*.*] -> [*,*].
+27/07/2026 08:48:54 [0] 30-Normal: Running with FIPS mode inactive
+27/07/2026 08:48:54 [0] 30-Normal: ACI Servers runs in SSL mode.
+27/07/2026 08:48:54 [0] 30-Normal: ACI Server setting MaxInputString to 64000.
+27/07/2026 08:48:54 [0] 30-Normal: ACI Server is configured for XSLT templating.
+27/07/2026 08:48:54 [0] 50-Warning: XSLT template directory not found (/community/acitemplates).
+27/07/2026 08:48:54 [0] 30-Normal: ACI Server successfully loaded online help.
+27/07/2026 08:48:54 [0] 30-Normal: ACI Server successfully loaded admin UI.
+27/07/2026 08:49:02 [6] 00-Always: Request from 172.18.0.16
+27/07/2026 08:49:02 [6] 00-Always: Action=RoleGetRoleList (172.18.0.16)
+27/07/2026 08:49:02 [6] 00-Always: Generated ActionId 46f16e4ae38228b868657cb1947dd1df26250815
+27/07/2026 08:49:02 [6] 30-Normal: Success
+27/07/2026 08:49:02 [6] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:02 [8] 00-Always: Request from 172.18.0.16
+27/07/2026 08:49:02 [8] 00-Always: Action=RoleAdd&RoleName=ISOUser (172.18.0.16)
+27/07/2026 08:49:02 [8] 00-Always: Generated ActionId 8061710d65e5d592430ffff3cbd5fc4bd42b8bd2
+27/07/2026 08:49:02 [8] 30-Normal: Success
+27/07/2026 08:49:02 [8] 30-Normal: Request completed in 1 ms.
+27/07/2026 08:49:02 [7] 00-Always: Request from 172.18.0.16
+27/07/2026 08:49:02 [7] 00-Always: Action=RoleAdd&RoleName=AnswerBankUser (172.18.0.16)
+27/07/2026 08:49:02 [7] 00-Always: Generated ActionId d278a3eb10dcebead61dfbd7db6372774bd835a1
+27/07/2026 08:49:02 [7] 30-Normal: Success
+27/07/2026 08:49:02 [7] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:02 [5] 00-Always: Request from 172.18.0.16
+27/07/2026 08:49:02 [5] 00-Always: Action=RoleAdd&RoleName=ISOAdmin (172.18.0.16)
+27/07/2026 08:49:02 [5] 00-Always: Generated ActionId 1a836de4b1f77c0bbfcc408aa09eb14b3cc841b0
+27/07/2026 08:49:02 [5] 30-Normal: Success
+27/07/2026 08:49:02 [5] 30-Normal: Request completed in 1 ms.
+27/07/2026 08:49:02 [6] 00-Always: Request from 172.18.0.16
+27/07/2026 08:49:02 [6] 00-Always: Action=RoleAdd&RoleName=IDAUser (172.18.0.16)
+27/07/2026 08:49:02 [6] 00-Always: Generated ActionId 3afd5fff0aceb1c89b3f61245e4e5f9c8124b71e
+27/07/2026 08:49:02 [6] 30-Normal: Success
+27/07/2026 08:49:02 [6] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:03 [5] 00-Always: Request from 172.18.0.16
+27/07/2026 08:49:03 [5] 00-Always: Action=RoleGetRoleList (172.18.0.16)
+27/07/2026 08:49:03 [5] 00-Always: Generated ActionId de51fece775a848bbbeb73e011c48789a4dfcead
+27/07/2026 08:49:03 [5] 30-Normal: Success
+27/07/2026 08:49:03 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:03 [6] 00-Always: Request from 172.18.0.16
+27/07/2026 08:49:03 [6] 00-Always: Action=UserReadUserListDetails (172.18.0.16)
+27/07/2026 08:49:03 [6] 00-Always: Generated ActionId af4668022f089903c5db5f2d0c93aa636da411b5
+27/07/2026 08:49:03 [6] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:03 [8] 00-Always: Request from 172.18.0.16
+27/07/2026 08:49:03 [8] 00-Always: Action=RoleGetUserList&RoleName=ISOUser (172.18.0.16)
+27/07/2026 08:49:03 [8] 00-Always: Generated ActionId 2e8277633d65728734ac27505cbf9e6b90bb24f6
+27/07/2026 08:49:03 [8] 30-Normal: Success
+27/07/2026 08:49:03 [8] 30-Normal: Request completed in 1 ms.
+27/07/2026 08:49:03 [7] 00-Always: Request from 172.18.0.16
+27/07/2026 08:49:03 [7] 00-Always: Action=RoleGetUserList&RoleName=ISOAdmin (172.18.0.16)
+27/07/2026 08:49:03 [7] 00-Always: Generated ActionId bcd1f0860ffa0f825ebf5419e2d01b3935951648
+27/07/2026 08:49:03 [7] 30-Normal: Success
+27/07/2026 08:49:03 [7] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:16 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:16 [5] 00-Always: action=RoleAdd&RoleName=FindBI (172.18.0.1)
+27/07/2026 08:49:16 [5] 00-Always: Generated ActionId 7ee5d15f329a7ff2cf67fd7c75efbb6b86ef9584
+27/07/2026 08:49:16 [5] 30-Normal: Success
+27/07/2026 08:49:16 [5] 30-Normal: Request completed in 1 ms.
+27/07/2026 08:49:16 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:16 [8] 00-Always: action=RoleAdd&RoleName=FindUser (172.18.0.1)
+27/07/2026 08:49:16 [8] 00-Always: Generated ActionId d9deb79e8474320d8bece709a6167e30cf7fa337
+27/07/2026 08:49:16 [8] 30-Normal: Success
+27/07/2026 08:49:16 [8] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:16 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:16 [5] 00-Always: action=RoleAdd&RoleName=FindAdmin (172.18.0.1)
+27/07/2026 08:49:16 [5] 00-Always: Generated ActionId 797eba0fa63bd412509c0097952d765b4c2cb930
+27/07/2026 08:49:16 [5] 30-Normal: Success
+27/07/2026 08:49:16 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:16 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:16 [8] 00-Always: action=RoleAdd&RoleName=AnswerBankUser (172.18.0.1)
+27/07/2026 08:49:16 [8] 00-Always: Generated ActionId 223e3f7a402773f68a4437a5ba6a1b378264d9f1
+27/07/2026 08:49:16 [8] 30-Normal: Error: Role Exists
+27/07/2026 08:49:16 [8] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:16 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:16 [5] 00-Always: action=RoleAdd&RoleName=IDAUser (172.18.0.1)
+27/07/2026 08:49:16 [5] 00-Always: Generated ActionId af6324146ba190a1c694eee3835bd15890b137cc
+27/07/2026 08:49:16 [5] 30-Normal: Error: Role Exists
+27/07/2026 08:49:16 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:16 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:16 [8] 00-Always: action=RoleAdd&RoleName=ISOAdmin (172.18.0.1)
+27/07/2026 08:49:16 [8] 00-Always: Generated ActionId 2f679cbadf597341f7c5e754ed21800b0bc02ad3
+27/07/2026 08:49:16 [8] 30-Normal: Error: Role Exists
+27/07/2026 08:49:16 [8] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:17 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:17 [5] 00-Always: action=RoleAdd&RoleName=ISOUser (172.18.0.1)
+27/07/2026 08:49:17 [5] 00-Always: Generated ActionId 5a38e0b3ca9b472c98848e6989c98adc0caf5b25
+27/07/2026 08:49:17 [5] 30-Normal: Error: Role Exists
+27/07/2026 08:49:17 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:17 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:17 [8] 00-Always: action=RoleAdd&RoleName=everyone (172.18.0.1)
+27/07/2026 08:49:17 [8] 00-Always: Generated ActionId 7087648470cedc13a462d9010d35558ed8cde5e2
+27/07/2026 08:49:17 [8] 30-Normal: Error: Role Exists
+27/07/2026 08:49:17 [8] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:17 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:17 [5] 00-Always: action=RoleAddUserToRole&RoleName=FindBI&UserName=admin (172.18.0.1)
+27/07/2026 08:49:17 [5] 00-Always: Generated ActionId 91211ef9dea20831d109082a36341d384b1864c4
+27/07/2026 08:49:17 [5] 30-Normal: Success
+27/07/2026 08:49:17 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:17 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:17 [8] 00-Always: action=RoleAddUserToRole&RoleName=FindAdmin&UserName=admin (172.18.0.1)
+27/07/2026 08:49:17 [8] 00-Always: Generated ActionId 32ce1627020e576b4627810fe4ead7805c496931
+27/07/2026 08:49:17 [8] 30-Normal: Success
+27/07/2026 08:49:17 [8] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:17 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:17 [5] 00-Always: action=RoleAddUserToRole&RoleName=FindUser&UserName=admin (172.18.0.1)
+27/07/2026 08:49:17 [5] 00-Always: Generated ActionId 9bed3d509a973343a39277aef806f73d6bc7dfce
+27/07/2026 08:49:17 [5] 30-Normal: Success
+27/07/2026 08:49:17 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:17 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:17 [8] 00-Always: action=RoleAddUserToRole&RoleName=IDAUser&UserName=admin (172.18.0.1)
+27/07/2026 08:49:17 [8] 00-Always: Generated ActionId b8e7ca3b34579d8ad067e539ddd065046845eb1c
+27/07/2026 08:49:17 [8] 30-Normal: Success
+27/07/2026 08:49:17 [8] 30-Normal: Request completed in 1 ms.
+27/07/2026 08:49:17 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:17 [5] 00-Always: action=RoleAddUserToRole&RoleName=AnswerBankUser&UserName=admin (172.18.0.1)
+27/07/2026 08:49:17 [5] 00-Always: Generated ActionId 6e1070a124e01e03a1731c01185ac42761bd02d9
+27/07/2026 08:49:17 [5] 30-Normal: Success
+27/07/2026 08:49:17 [5] 30-Normal: Request completed in 1 ms.
+27/07/2026 08:49:18 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:18 [8] 00-Always: action=RoleAddUserToRole&RoleName=FindUser&UserName=bank (172.18.0.1)
+27/07/2026 08:49:18 [8] 00-Always: Generated ActionId 379c43641296a8915a84219a086aa5efb7c0bd44
+27/07/2026 08:49:18 [8] 30-Normal: Success
+27/07/2026 08:49:18 [8] 30-Normal: Request completed in 1 ms.
+27/07/2026 08:49:18 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:18 [5] 00-Always: action=RoleAddUserToRole&RoleName=IDAUser&UserName=bank (172.18.0.1)
+27/07/2026 08:49:18 [5] 00-Always: Generated ActionId 0dfbc2ae3888956821bf66b87879a7c9c15a3383
+27/07/2026 08:49:18 [5] 30-Normal: Success
+27/07/2026 08:49:18 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:18 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:18 [8] 00-Always: action=RoleAddUserToRole&RoleName=AnswerBankUser&UserName=bank (172.18.0.1)
+27/07/2026 08:49:18 [8] 00-Always: Generated ActionId 5a34804c7f532e46cb411d5c9716da30f27ad05a
+27/07/2026 08:49:18 [8] 30-Normal: Success
+27/07/2026 08:49:18 [8] 30-Normal: Request completed in 0 ms.
+27/07/2026 09:04:49 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:49 [8] 00-Always: action=RoleAdd&RoleName=FindBI (172.18.0.1)
+27/07/2026 09:04:49 [8] 00-Always: Generated ActionId fe4f101dd1bd9636c28d9710878abf8b8cc8e820
+27/07/2026 09:04:49 [8] 30-Normal: Error: Role Exists
+27/07/2026 09:04:49 [8] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:49 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:49 [5] 00-Always: action=RoleAdd&RoleName=FindUser (172.18.0.1)
+27/07/2026 09:04:49 [5] 00-Always: Generated ActionId ad049345ab46068bfedfca5a98516ac5f5c5cf15
+27/07/2026 09:04:49 [5] 30-Normal: Error: Role Exists
+27/07/2026 09:04:49 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 09:04:49 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:49 [8] 00-Always: action=RoleAdd&RoleName=FindAdmin (172.18.0.1)
+27/07/2026 09:04:49 [8] 00-Always: Generated ActionId 6effa341c9157fae402ccc27100c95200695ac3f
+27/07/2026 09:04:49 [8] 30-Normal: Error: Role Exists
+27/07/2026 09:04:49 [8] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:49 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:49 [5] 00-Always: action=RoleAdd&RoleName=AnswerBankUser (172.18.0.1)
+27/07/2026 09:04:49 [5] 00-Always: Generated ActionId 5eccd114f2e65c8f8ad74fa184ca7037f57f4fb8
+27/07/2026 09:04:49 [5] 30-Normal: Error: Role Exists
+27/07/2026 09:04:49 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 09:04:49 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:49 [8] 00-Always: action=RoleAdd&RoleName=IDAUser (172.18.0.1)
+27/07/2026 09:04:49 [8] 00-Always: Generated ActionId 060fdcf620b31d858e96f779c608f840723538be
+27/07/2026 09:04:49 [8] 30-Normal: Error: Role Exists
+27/07/2026 09:04:49 [8] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:49 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:49 [5] 00-Always: action=RoleAdd&RoleName=ISOAdmin (172.18.0.1)
+27/07/2026 09:04:49 [5] 00-Always: Generated ActionId 08fe741abfbed0e3d16b7b23ddf9467e950d03c3
+27/07/2026 09:04:49 [5] 30-Normal: Error: Role Exists
+27/07/2026 09:04:49 [5] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:49 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:49 [8] 00-Always: action=RoleAdd&RoleName=ISOUser (172.18.0.1)
+27/07/2026 09:04:49 [8] 00-Always: Generated ActionId e1609d06fc282b1d21fa6221e954312ada6f1fd5
+27/07/2026 09:04:49 [8] 30-Normal: Error: Role Exists
+27/07/2026 09:04:49 [8] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:49 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:49 [5] 00-Always: action=RoleAdd&RoleName=everyone (172.18.0.1)
+27/07/2026 09:04:49 [5] 00-Always: Generated ActionId b5cd3e3f8b28ca91b0b485a603ce4b669187cb20
+27/07/2026 09:04:49 [5] 30-Normal: Error: Role Exists
+27/07/2026 09:04:49 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 09:04:50 [7] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:50 [7] 00-Always: action=RoleAddUserToRole&RoleName=FindBI&UserName=admin (172.18.0.1)
+27/07/2026 09:04:50 [7] 00-Always: Generated ActionId d006c6d522c526b6141b193b4e0422bb79370390
+27/07/2026 09:04:50 [7] 30-Normal: Success
+27/07/2026 09:04:50 [7] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:50 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:50 [5] 00-Always: action=RoleAddUserToRole&RoleName=FindAdmin&UserName=admin (172.18.0.1)
+27/07/2026 09:04:50 [5] 00-Always: Generated ActionId 577c67e982e81cb57ff426ef1841d1e225390d03
+27/07/2026 09:04:50 [5] 30-Normal: Success
+27/07/2026 09:04:50 [5] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:50 [7] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:50 [7] 00-Always: action=RoleAddUserToRole&RoleName=FindUser&UserName=admin (172.18.0.1)
+27/07/2026 09:04:50 [7] 00-Always: Generated ActionId 8c4273fae0ed8ffe29e249d63fb78a4624c53ad4
+27/07/2026 09:04:50 [7] 30-Normal: Success
+27/07/2026 09:04:50 [7] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:50 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:50 [5] 00-Always: action=RoleAddUserToRole&RoleName=IDAUser&UserName=admin (172.18.0.1)
+27/07/2026 09:04:50 [5] 00-Always: Generated ActionId 9ab2dbf336f5c30c454e76117b744c7f98495f83
+27/07/2026 09:04:50 [5] 30-Normal: Success
+27/07/2026 09:04:50 [5] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:50 [7] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:50 [7] 00-Always: action=RoleAddUserToRole&RoleName=AnswerBankUser&UserName=admin (172.18.0.1)
+27/07/2026 09:04:50 [7] 00-Always: Generated ActionId 52b17d28837d893b31a67d9e789320c37b97706f
+27/07/2026 09:04:50 [7] 30-Normal: Success
+27/07/2026 09:04:50 [7] 30-Normal: Request completed in 0 ms.
+27/07/2026 09:04:50 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:50 [5] 00-Always: action=RoleAddUserToRole&RoleName=FindUser&UserName=bank (172.18.0.1)
+27/07/2026 09:04:50 [5] 00-Always: Generated ActionId 98c6589354b264032befbb1e8b099c0ba3d5ce8d
+27/07/2026 09:04:50 [5] 30-Normal: Success
+27/07/2026 09:04:50 [5] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:50 [7] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:50 [7] 00-Always: action=RoleAddUserToRole&RoleName=IDAUser&UserName=bank (172.18.0.1)
+27/07/2026 09:04:50 [7] 00-Always: Generated ActionId 73dcb87231da243e42bcfa1758ed67c8c038f345
+27/07/2026 09:04:50 [7] 30-Normal: Success
+27/07/2026 09:04:50 [7] 30-Normal: Request completed in 0 ms.
+27/07/2026 09:04:50 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:50 [5] 00-Always: action=RoleAddUserToRole&RoleName=AnswerBankUser&UserName=bank (172.18.0.1)
+27/07/2026 09:04:50 [5] 00-Always: Generated ActionId f6f4c329bf00d340f57c460575481e6421416985
+27/07/2026 09:04:50 [5] 30-Normal: Success
+27/07/2026 09:04:50 [5] 30-Normal: Request completed in 0 ms.

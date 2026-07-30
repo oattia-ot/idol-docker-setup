@@ -1,0 +1,42 @@
+###
+# Copyright (c) 2021 Micro Focus or one of its affiliates.
+#
+# Licensed under the MIT License (the "License"); you may not use this file
+# except in compliance with the License.
+#
+# The only warranties for products and services of Micro Focus and its affiliates
+# and licensors ("Micro Focus") are as may be set forth in the express warranty
+# statements accompanying such products and services. Nothing herein should be
+# construed as constituting an additional warranty. Micro Focus shall not be
+# liable for technical or editorial errors or omissions contained herein. The
+# information contained herein is subject to change without notice.
+###
+
+# Dockerfile to generate a controller + content bundle
+ARG IDOL_REGISTRY
+ARG IDOL_VERSION
+FROM ${IDOL_REGISTRY}/content:${IDOL_VERSION} as content
+
+ARG IDOL_REGISTRY
+ARG IDOL_VERSION
+FROM ${IDOL_REGISTRY}/controller:${IDOL_VERSION} as controller
+
+ARG IDOL_USER
+# Copy executables and configs to controller image
+COPY --from=content --chown=${IDOL_USER}:${IDOL_USER} /content/ /content/
+
+# Add control script template which can accept start and stop as arguments,
+COPY --chown=${IDOL_USER}:${IDOL_USER} control_scripts/control-template.sh /controller/control-template.sh
+# Add post startup tasks for controller to send requests adding the services bundled within its container
+COPY --chown=${IDOL_USER}:${IDOL_USER} control_scripts/add_services.sh /controller/
+COPY --chown=${IDOL_USER}:${IDOL_USER} control_scripts/register_services.sh /controller/poststart_scripts/002_add_services.sh
+
+# Setup control script, update logs for each component
+# Finalize controller startup
+RUN for C in content ; do \
+    cp /controller/control-template.sh /${C}/control-${C}.sh ; \
+    chmod +x /${C}/control-${C}.sh ; \
+    sed -i "s#<COMPONENT>#${C}#g" /${C}/control-${C}.sh ; \
+    sed -i "s#^\(LogDirectory *= *\).*#\1/idol-logs/${C}/#" /${C}/cfg/${C}.cfg ; \
+    sed -i "s#^\(LogArchiveDirectory *= *\).*#\1/idol-logs/${C}/archive#" /${C}/cfg/${C}.cfg ; \
+    done

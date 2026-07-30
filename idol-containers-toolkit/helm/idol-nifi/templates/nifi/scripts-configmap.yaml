@@ -1,0 +1,39 @@
+# BEGIN COPYRIGHT NOTICE
+# Copyright 2023 Open Text.
+# 
+# The only warranties for products and services of Open Text and its affiliates and licensors
+# ("Open Text") are as may be set forth in the express warranty statements accompanying such
+# products and services. Nothing herein should be construed as constituting an additional warranty.
+# Open Text shall not be liable for technical or editorial errors or omissions contained herein.
+# The information contained herein is subject to change without notice.
+#
+# END COPYRIGHT NOTICE
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $.Values.name }}-scripts
+  labels: {{- include "idol-library.labels" (dict "root" . "component" .Values.nifi) | nindent 4 }}
+    app: {{ $.Values.name }}
+data:
+  nifi-toolkit-utils.sh: |
+{{ tpl (.Files.Get "resources/nifi-toolkit-utils.sh") . | indent 4 }}
+  security.sh: |
+{{ tpl (.Files.Get "resources/nifi-security.sh") . | indent 4 }}
+  nifiProperties.sh: |
+{{ tpl (.Files.Get "resources/nifi-properties.sh") . | indent 4 }}
+  connect-registry.sh: |
+{{ tpl (.Files.Get "resources/nifi-connect-registry.sh") . | indent 4 }}
+{{- if .Values.prometheus.enabled }}
+  prometheous-reporting.sh: |
+{{ tpl (.Files.Get "resources/nifi-prometheous-reporting.sh") . | indent 4 }}
+  prometheous-reporting-task.json: |
+{{ tpl (.Files.Get "resources/prometheous-reporting-task.json") . | indent 4 }}
+{{- end }}
+  preStop.sh: |
+{{ tpl (.Files.Get "resources/nifi-preStop.sh") . | indent 4 }}
+  postStart.sh: |
+{{ tpl (.Files.Get "resources/nifi-postStart.sh") . | indent 4 }}
+  import-flow.sh: | 
+{{ tpl (.Files.Get "resources/nifi-import-flow.sh") . | indent 4 }}
+  flow-basic-idol.json: |
+{{ tpl (.Files.Get "resources/flow-basic-idol.json") . | indent 4 }}

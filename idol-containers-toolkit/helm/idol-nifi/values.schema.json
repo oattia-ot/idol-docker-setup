@@ -1,0 +1,713 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$ref": "#/$defs/Values",
+    "$defs": {
+        "Values": {
+            "type": "object",
+            "properties": {
+                "annotations": {
+                    "type": "object"
+                },
+                "labels": {
+                    "type": "object"
+                },
+                "ingressClassName": {
+                    "type": "string"
+                },
+                "ingressBasicAuthData": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "ingressProxyBodySize": {
+                    "type": "string",
+                    "pattern": "^\\d+(?:\\.\\d+)?(?:Ki|Mi|Gi|Ti|Pi|Ei|m|k|M|G|T|P|E)?$"
+                },
+                "ingressType": {
+                    "type": "string",
+                    "enum": ["nginx","haproxy","custom","gateway"]
+                },
+                "usingTLS":{
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "global": {
+                    "#ref": "#/$defs/Global"
+                },
+                "idolImage":{
+                    "allOf": [
+                        {
+                            "$ref": "#/$defs/idolImage"
+                        }
+                    ],
+                    "required":[
+                        "registry",
+                        "version",
+                        "repo"
+                    ]
+                },
+                "indexserviceName": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "indexserviceACIPort": {
+                    "#ref": "#/$defs/port_number"
+                },
+                "podSecurityContext":{
+                    "type": "object",
+                    "properties": {
+                        "enabled": { 
+                            "type": "boolean"
+                        }
+                    },
+                    "required": ["enabled"]
+                },
+                "containerSecurityContext":{
+                    "type": "object",
+                    "properties": {
+                        "enabled": { 
+                            "type": "boolean"
+                        }
+                    },
+                    "required": ["enabled"]
+                },
+                "additionalVolumes":{
+                    "type": ["array","object","null"]
+                },
+                "additionalVolumeMounts":{
+                    "type": ["array","object","null"]
+                },
+                "serviceAccountName":{
+                    "type": "string",
+                    "description": "Optional serviceAccountName for the pods (https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account)"
+                },
+                "nifi": {
+                    "$ref": "#/$defs/Nifi"
+                },
+                "nifiClusters": {
+                    "$ref": "#/$defs/NifiClusters"
+                },
+                "nifiRegistry": {
+                    "$ref": "#/$defs/NifiRegistry"
+                },
+                "zookeeper": {
+                    "$ref": "#/$defs/Zookeeper"
+                },
+                "idol-licenseserver": {
+                    "$ref": "#/$defs/IdolLicenseserver"
+                }
+            },
+            "required": [
+                "idol-licenseserver",
+                "ingressBasicAuthData",
+                "ingressProxyBodySize",
+                "ingressType",
+                "indexserviceName",
+                "indexserviceACIPort",
+                "podSecurityContext",
+                "containerSecurityContext",
+                "nifi",
+                "nifiRegistry",
+                "usingTLS",
+                "name",
+                "global"
+            ],
+            "title": "Values"
+        },
+        "idolImage":{
+            "type": "object",
+            "properties":{
+                "registry": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "version": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "repo": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "imagePullPolicy": {
+                    "type": "string",
+                    "enum": ["Always", "IfNotPresent", "Never"]
+                }
+            },
+            "unevaluatedProperties": false
+        },
+        "IdolLicenseserver": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "enabled"
+            ],
+            "title": "IdolLicenseserver"
+        },
+        "Flow": {
+            "type": "object",
+            "properties": {
+                "file": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "name": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "version": {
+                    "type": "string"
+                },
+                "bucket": {
+                    "type": "string"
+                },
+                "import": {
+                    "type": "boolean"
+                }
+            },
+            "dependencies": {
+                "name": ["bucket"],
+                "file": ["bucket"]
+            },
+            "oneOf": [
+                {
+                    "required": [
+                        "file"
+                    ]
+                },
+                {
+                    "required": [
+                        "name"
+                    ]
+                }
+            ],
+            "not":{
+                "$ref": "#/$defs/Deletable"
+            },
+            "title": "Flow"
+        },
+        "Bucket": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "flowfiles": {
+                    "type": "array",
+                    "items": {
+                        "type":"string"
+                    }
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "Bucket"
+        },
+        "NifiProperties": {
+            "type": "object",
+            "properties": {
+                "autoScaling": {
+                    "$ref": "#/$defs/AutoScaling"
+                },
+                "resources": {
+                    "$ref": "#/$defs/Resources"
+                },
+                "dataVolume": {
+                    "$ref": "#/$defs/DataVolume"
+                },
+                "jvmMemoryRatio": {
+                    "type": "number",
+                    "minimum": 0.01,
+                    "maximum": 0.99
+                },
+                "mallocArenaMax": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "flowfile": {
+                    "type":"string",
+                    "minLength": 1,
+                    "description": "Deprecated, prefer 'flows'"
+                },
+                "flows": {
+                    "oneOf":[
+                        {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/$defs/Flow"
+                            }
+                        },
+                        {
+                            "type": "object",
+                            "patternProperties":{
+                                "^[-a-zA-Z0-9]{0,63}$":{
+                                    "type": "object",
+                                    "oneOf": [
+                                        {"$ref": "#/$defs/Flow"},
+                                        {"$ref": "#/$defs/Deletable"}
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                    
+                },
+                "ingress": {
+                    "$ref": "#/$defs/NifiIngress"
+                },
+                "labels": {
+                    "type": "object"
+                },
+                "keystorePassword": {
+                    "type":"string"
+                },
+                "truststorePassword": {
+                    "type":"string"
+                },
+                "sensitivePropsKey": {
+                    "type":"string"
+                },
+                "replicas": {
+                    "type":"integer",
+                    "minimum": 0
+                },
+                "registryHost": {
+                    "type":"string"
+                },
+                "allowedStartupSeconds": {
+                    "type": "integer",
+                    "minimum": 10
+                },
+                "service":{
+                    "type": "object",
+                    "properties":{
+                        "additionalPorts":{
+                            "type": "object",
+                            "patternProperties":{
+                                "^[-a-zA-Z0-0]{0,63}$":{
+                                    "type": "object",
+                                    "description": "See ServicePort under https://kubernetes.io/docs/reference/kubernetes-api/service-resources/service-v1/#ServiceSpec",
+                                    "properties": {
+                                        "port":{
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "threadCount": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "serviceStartRetries": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "workingDir": {
+                    "type": "string"
+                }
+            }
+        },
+        "Nifi":{
+            "allOf": [
+                {"$ref": "#/$defs/NifiProperties"}
+            ],
+            "unevaluatedProperties": false,
+            "required": [
+                "autoScaling",
+                "flows",
+                "ingress",
+                "jvmMemoryRatio",
+                "mallocArenaMax",
+                "resources",
+                "dataVolume",
+                "service",
+                "threadCount",
+                "serviceStartRetries"
+            ],
+            "title": "Nifi"
+        },
+        "NifiClusters": {
+            "oneOf": [
+             {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "type": "object",
+                    "unevaluatedProperties": false,
+                    "allOf": [
+                        {"$ref":"#/$defs/NifiProperties"},
+                        {
+                            "properties": {
+                            "clusterId":{
+                                "type": "string"
+                                }
+                            },
+                            "image": {
+                                "$ref": "#/$defs/idolImage"
+                            }
+                        }
+                    ],
+                    "title": "NifiCluster"
+                }
+            },
+            {
+                "type": "object",
+                "patternProperties":{
+                    "^[-a-zA-Z0-9]{0,63}$":{
+                        "type": "object",
+                        "unevaluatedProperties": false,
+                        "oneOf":[
+                            {
+                                "$ref":"#/$defs/Deletable"
+                            },
+                            {
+                                "allOf": [
+                                    {"$ref":"#/$defs/NifiProperties"},
+                                    {
+                                        "properties": {
+                                            "clusterId":{
+                                                "type": "string"
+                                                },
+                                            "image": {
+                                                "$ref": "#/$defs/idolImage"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "not":{ "$ref":"#/$defs/Deletable" }
+                                    }
+                                ]
+                            }
+                        ],
+                        "title": "NifiCluster"
+                    }
+                }
+            },
+            {
+                "type": "null"
+            }
+            ]
+        },
+        "Global":{
+            "type": "object",
+            "properties":{
+                "idolImageRegistry": {
+                    "type": "string"
+                },
+                "idolVersion": {
+                    "type": "string"
+                },
+                "imagePullSecrets": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "type":"string",
+                        "minLength": 1
+                    }
+                },
+                "imagePullPolicy": {
+                    "type": "string",
+                    "enum": ["", "Always", "IfNotPresent", "Never"]
+                },
+                "idolOemLicenseSecret": {
+                    "type": "string",
+                    "description": "Optional Secret containing OEM licensekey.dat and versionkey.dat files for licensing."
+                }
+            },
+            "required":[
+                "imagePullSecrets"
+            ]
+        },
+        "AutoScaling": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "minReplicas": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "maxReplicas": {
+                    "type": "integer"
+                },
+                "stabilizationWindowSeconds": {
+                    "type": "integer"
+                },
+                "metrics": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    }
+                }
+            },
+            "required": [
+                "enabled",
+                "maxReplicas",
+                "metrics",
+                "minReplicas"
+            ],
+            "title": "AutoScaling"
+        },
+        "NifiIngress": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "annotations": {
+                    "type": "object"
+                },
+                "gateway":{
+                    "$ref": "#/$defs/gateway"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "port": {
+                    "$ref": "#/$defs/port_number"
+                },
+                "proxyPath": {
+                    "type": "string"
+                },
+                "proxyHost": {
+                    "type": "string"
+                },
+                "aciHost": {
+                    "type": "string"
+                },
+                "metricsHost": {
+                    "type": "string"
+                },
+                "tls": {
+                    "$ref": "#/$defs/NifiIngressTLS"
+                },
+                "aciTLS": {
+                    "$ref": "#/$defs/NifiIngressTLS"
+                },
+                "metricsTLS": {
+                    "$ref": "#/$defs/NifiIngressTLS"
+                }
+            },
+            "required": [
+                "enabled",
+                "tls",
+                "aciTLS",
+                "metricsTLS"
+            ],
+            "title": "NifiIngress"
+        },
+        "NifiIngressTLS": {
+            "properties": {
+                "secretName": {
+                    "type": "string"
+                },
+                "crt": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "secretName"
+            ],
+            "title": "NifiIngressTLS"
+        },
+        "Resources": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "requests": {
+                    "$ref": "#/$defs/Limits"
+                },
+                "limits": {
+                    "$ref": "#/$defs/Limits"
+                },
+                "sharedMemory": {
+                    "type": "string",
+                    "pattern": "^\\d+(?:\\.\\d+)?(?:Ki|Mi|Gi|Ti|Pi|Ei|m|k|M|G|T|P|E)?$"
+                }
+            },
+            "required": [
+                "limits",
+                "requests"
+            ],
+            "title": "Resources"
+        },
+        "DataVolume": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "storageClass": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "volumeSize": {
+                    "type": "string",
+                    "pattern": "^\\d+(?:\\.\\d+)?(?:Ki|Mi|Gi|Ti|Pi|Ei|m|k|M|G|T|P|E)?$"
+                }
+            }
+        },
+        "Limits": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "cpu": {
+                    "type": "string"
+                },
+                "memoryMi": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "cpu",
+                "memoryMi"
+            ],
+            "title": "Limits"
+        },
+        "NifiRegistry": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "ingress": {
+                    "$ref": "#/$defs/NifiRegistryIngress"
+                },
+                "dataVolume": {
+                    "$ref": "#/$defs/DataVolume"
+                },
+                "resources": {
+                    "type": "object"
+                },
+                "buckets": {
+                    "type": ["object"],
+                    "items": {
+                        "$ref": "#/$defs/Bucket"
+                    }
+                },
+                "env": {
+                    "type": "object"
+                },
+                "envFrom": {
+                    "type": "object"
+                }
+            },
+            "required": [
+                "enabled",
+                "image",
+                "ingress",
+                "resources",
+                "buckets",
+                "dataVolume",
+                "env"
+            ],
+            "title": "NifiRegistry"
+        },
+        "NifiRegistryIngress": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "annotations": {
+                    "type": "object"
+                },
+                "gateway":{
+                    "$ref": "#/$defs/gateway"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "port": {
+                    "$ref": "#/$defs/port_number"
+                },
+                "contextPath": {
+                    "type": "string"
+                },
+                "tls": {
+                    "$ref": "#/$defs/NifiIngressTLS"   
+                }
+            },
+            "required": [
+                "enabled",
+                "host",
+                "contextPath",
+                "tls"
+            ],
+            "title": "NifiRegistryIngress"
+        },
+        "Zookeeper": {
+            "type": "object",
+            "properties": {
+                "image":{
+                    "type":"string"
+                },
+                "resources":{
+                    "type": "object"
+                }
+            },
+            "required": ["image","resources"],
+            "title": "Zookeeper"
+        },
+        "port_number": {
+            "type": "string",
+            "pattern": "^((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0-9]{1,4}))$"
+        },
+        "optional_duration":{
+            "type": "string",
+            "pattern": "^(([0-9]{1,5}(h|m|s|ms)){1,4})?$"
+        },
+        "gateway": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "namespace": {
+                    "type": "string"
+                },
+                "requestTimeout": {
+                    "$ref": "#/$defs/optional_duration"
+                },
+                "backendTimeout": {
+                    "$ref": "#/$defs/optional_duration"
+                },
+                "protocol": {
+                    "type": "string",
+                    "enum": ["http","https"]
+                }
+            }
+        },
+        "Deletable":{
+            "type": "object",
+            "unevaluatedProperties": true,
+            "properties": {
+                "DELETE":{
+                    "type":"boolean"
+                }
+            },
+            "required": [
+                "DELETE"
+            ]
+        }
+    }
+}

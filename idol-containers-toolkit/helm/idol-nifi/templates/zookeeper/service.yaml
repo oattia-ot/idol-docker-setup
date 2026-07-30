@@ -1,0 +1,43 @@
+# BEGIN COPYRIGHT NOTICE
+# Copyright 2023 Open Text.
+# 
+# The only warranties for products and services of Open Text and its affiliates and licensors
+# ("Open Text") are as may be set forth in the express warranty statements accompanying such
+# products and services. Nothing herein should be construed as constituting an additional warranty.
+# Open Text shall not be liable for technical or editorial errors or omissions contained herein.
+# The information contained herein is subject to change without notice.
+#
+# END COPYRIGHT NOTICE
+{{- define "idolnifi.zookeeper.service" }}
+{{ $root := get . "root" | required "idolnifi.zookeeper.service: missing root" }}
+{{ $nifiCluster := get . "nifiCluster" | required "idolnifi.zookeeper.service: missing nifiCluster" }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $nifiCluster.clusterId }}-zk
+  labels: {{- include "idol-library.labels" (dict "root" $root "component" $root.Values.zookeeper) | nindent 4 }}
+    app: {{ $nifiCluster.clusterId }}-zk
+  annotations:
+    app.kubernetes.io/name: {{ $nifiCluster.clusterId }}-zk
+    app.kubernetes.io/part-of: {{ $nifiCluster.clusterId }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ $nifiCluster.clusterId }}-zk
+  ports:
+  - protocol: TCP
+    port: 2181
+    targetPort: 2181
+    name: zk
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+    name: web
+  - protocol: TCP
+    port: 7070
+    targetPort: 7070
+    name: metrics
+{{- end -}}
+
+{{- include "idolnifi.forEachCluster" (dict "root" . "tpl" "idolnifi.zookeeper.service")}}

@@ -1,0 +1,92 @@
+# ==============================
+# === Updated by: Oren Attia
+# ==============================
+
+###
+# Copyright (c) 2019-2020 Micro Focus or one of its affiliates.
+#
+# Licensed under the MIT License (the "License"); you may not use this file
+# except in compliance with the License.
+#
+# The only warranties for products and services of Micro Focus and its affiliates
+# and licensors ("Micro Focus") are as may be set forth in the express warranty
+# statements accompanying such products and services. Nothing herein should be
+# construed as constituting an additional warranty. Micro Focus shall not be
+# liable for technical or editorial errors or omissions contained herein. The
+# information contained herein is subject to change without notice.
+###
+
+# Basic IDOL container setup
+# Uses nifi to ingest and index data into content
+# Uses find to make search results available
+# Default admin user is created for find in the community service
+#  - see community/run_community.sh for details
+
+version: "3.8"
+name: ${IDOL_DEPLOYMENT_TYPE:-idol-demo}
+
+x-common-labels: &common-labels
+  docker-compose/instance: ${INSTANCE:-rich-media}
+
+x-common-server: &common-server
+# Change the IP to the address of an external IDOL LicenseServer instance
+  extra_hosts:
+  - idol-licenseserver:${LICENSESERVER_IP}
+  labels:
+    <<: *common-labels
+
+services:
+  idol-content: 
+    <<: *common-server
+    image: ${IDOL_REGISTRY}/content:${IDOL_RICH_MEDIA_VERSION}
+    volumes:
+      - PRESERVE-CONTENT-PATH-PLACEHOLDER/cfg:/content/cfg:rw     # this mounts an external cfg folder
+      - PRESERVE-CONTENT-PATH-PLACEHOLDER/index:/content/index  # this mounts an external index  
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER       
+  idol-agentstore:
+    <<: *common-server
+    image: ${IDOL_REGISTRY}/agentstore:${IDOL_RICH_MEDIA_VERSION}  
+    volumes:
+      - PRESERVE-AGENTSTORE-PATH-PLACEHOLDER/cfg:/agentstore/cfg:rw     # this mounts an external cfg folder 
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER       
+  idol-category:
+    <<: *common-server
+    image: ${IDOL_REGISTRY}/category:${IDOL_RICH_MEDIA_VERSION}  
+    volumes:
+      - PRESERVE-CATEGORY-PATH-PLACEHOLDER/cfg:/category/cfg:rw           # this mounts an external cfg folder  
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER           
+  idol-categorisation-agentstore:
+    <<: *common-server
+    image: ${IDOL_REGISTRY}/categorisation-agentstore:${IDOL_RICH_MEDIA_VERSION}
+    volumes:
+      - PRESERVE-CATEGORISATION-AGENTSTORE-PATH-PLACEHOLDER/cfg:/categorisation-agentstore/cfg:rw     # this mounts an external cfg folder 
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER       
+  idol-community:
+    <<: *common-server
+    image: ${IDOL_REGISTRY}/community:${IDOL_RICH_MEDIA_VERSION}
+    volumes:
+      - PRESERVE-COMMUNITY-PATH-PLACEHOLDER/cfg:/community/cfg:rw     # this mounts an external cfg folder 
+    depends_on:
+      - idol-content
+      - idol-agentstore    
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER       
+  idol-view:
+    <<: *common-server
+    image: ${IDOL_REGISTRY}/view:${IDOL_RICH_MEDIA_VERSION}
+    volumes:
+      - VIEW-PATH-PLACEHOLDER/cfg/view.cfg:/view/cfg/view.cfg  
+      - VIEW-PATH-PLACEHOLDER/filters/formats_e.ini:/view/filters/formats_e.ini  
+      - ${IDOL_HOST_STORAGE_PATH}/ingest:/idol-ingest     
+    depends_on:
+      - idol-agentstore
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER       
+      
+networks:
+  DEPLOYMENT-TYPE-PLACEHOLDER:
+    external: true  
