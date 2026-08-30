@@ -1,0 +1,35 @@
+Welcome to Knowledge Discovery chat.
+Ask me a question and I will search your KD databases, then I am ready for the next thing — another question, or a task.
+
+Try help, what databases, or just ask.
+> help
+I answer questions from KD, finish the task, and wait for the next one.
+- Ask anything — I retrieve from all databases via Grok RAG.
+- what databases — list searchable KD databases.
+- use database xECM — persist a filter.
+- search in FTA_Website: what is a tax assessment? — one-shot filter.
+- search all — clear the filter.
+- sources — citations from the last answer.
+- start again / cancel — reset or abandon a task.
+> what databases
+Searchable Knowledge Discovery databases:
+- xECM (4707 documents)
+- FTA_Website (264 documents)
+- SharePoint (53 documents)
+- WRC (13 documents)
+- CAD (3 documents)
+Currently searching: all databases
+> use database FTA_Website
+I'll search FTA_Website from now on. Ask a question whenever you're ready.
+> What is a tax assessment?
+<answer from Grok RAG over FTA_Website>
+Searched: FTA_Website
+> sources
+Sources from the last answer:
+- <document reference>
+> What is the penalty for late filing?
+<answer from Grok RAG over FTA_Website — no "ask another?" gate>
+> search all
+Searching all databases again. Ask a question whenever you're ready.
+> cancel
+OK, cancelled. Ask a question, or say help.

@@ -1,0 +1,6 @@
+Welcome to Find chat!
+Ask me a question. I can access all your enterprise data to help you find an answer.
+> Question
+Answer Server response.
+> Follow-up question
+Answer Server response.

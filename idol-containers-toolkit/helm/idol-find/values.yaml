@@ -1,0 +1,177 @@
+# BEGIN COPYRIGHT NOTICE
+# Copyright 2023 Open Text.
+# 
+# The only warranties for products and services of Open Text and its affiliates and licensors
+# ("Open Text") are as may be set forth in the express warranty statements accompanying such
+# products and services. Nothing herein should be construed as constituting an additional warranty.
+# Open Text shall not be liable for technical or editorial errors or omissions contained herein.
+# The information contained herein is subject to change without notice.
+#
+# END COPYRIGHT NOTICE
+
+# As per https://helm.sh/docs/topics/charts/#the-chart-file-structure
+# this values.yaml file contains the default configuration values for this chart.
+# These default values can be overridden by using the --values or --set flags on the `helm install`
+# command: see https://helm.sh/docs/helm/helm_install/
+
+##### HIGH LEVEL CHART CONFIGURATION #####
+# This section contains parameters that are most likely to be overridden for
+# the basic choices and constraints around how this chart will be used.
+
+# LEFT INTENTIONALLY BLANK
+
+#############################################
+
+
+##### IMAGE CONFIGURATION #####
+# Parameters to specify the IDOL images pulled for this chart are
+# configured here
+
+# idolImageRegistry is the registry from which the IDOL images being run
+# in this chart are pulled from. Override this if IDOL images are to be
+# pulled from a different private registry.
+idolImageRegistry: "microfocusidolserver"
+
+# idolVersion is the image tag that will be used when pulling images, and
+# corresponds to the IDOL version of the components being used.
+idolVersion: "25.4"
+
+# imagePullSecrets is a list of names of Kubernetes secrets containing the
+# credentials for pulling images from repositories. Most likely requires
+# a secret for Dockerhub credentials and a secret per private repository used.
+imagePullSecrets:
+  - "dockerhub-secret"
+
+################################
+
+
+##### NETWORKING CONFIGURATION #####
+# This section contains parameters to configure various network-related
+# properties in this chart.
+
+ingress:
+  # Create ingress resource
+  enabled: true
+
+  # Ingress controller type to setup for.
+  # Valid values are nginx or haproxy (used by OpenShift)
+  type: nginx
+
+  # Optional parameter to override the default ingress class
+  className: ""
+
+  # Optional host (see https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-rules).
+  # For an OpenShift environment this is required (see https://docs.openshift.com/container-platform/4.11/networking/routes/route-configuration.html#nw-ingress-creating-a-route-via-an-ingress_route-configuration)
+  host: ""
+
+  # The external port the ingress is exposed on.
+  # For Kubernetes-in-Docker, this may be different to the container ingress port.
+  port: ""
+
+  # Maximum allowed size of the client request body, defining
+  # the maximum size of requests that can be made to IDOL components within the installation, e.g.
+  # the amount of data sent in DREADDDATA index commands.
+  # The value should be an nginx "size" value.
+  # See http://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size for the documentation of the
+  # corresponding nginx configuration parameter.
+  proxyBodySize: 2048m
+
+  # Gateway settings (only applies if type is 'gateway')
+  gateway:
+    # -- Optional, name of the gateway to use for ingress
+    name: ""
+
+    # -- Optional, namespace of the gateway to use for ingress
+    namespace: ""
+
+    # -- Optional, request timeout for ingress route
+    requestTimeout: ""
+
+    # -- Optional, backend timeout for ingress route
+    backendTimeout: ""
+
+    # -- Forwarded protocol for ingress
+    protocol: "http"
+
+  # -- Whether ingress uses TLS. You must set an ingress host to use this. 
+  # See https://kubernetes.io/docs/concepts/services-networking/ingress/#tls 
+  tls:
+    # -- The name of the secret for ingress TLS. Leave empty if not using TLS. 
+    # If specified then either this secret must already exist, or crt and key values must be provided and secret will be created.. 
+    secretName: ""
+
+    # -- Certificate data value to generate tls Secret (should be base64 encoded)
+    crt: ""
+
+    # -- Private key data value to generate tls Secret (should be base64 encoded)
+    key: ""
+
+#####################################
+
+
+##### INTERNAL VARIABLES #####
+# Values specified below this point in the file should not need to be overriden.
+# They are generally here in values.yaml so that DRY principles and a consistent
+# scheme for specifying these values in the templates can be followed.
+
+# queryserviceName is an internal parameter to specify the query service name.
+queryserviceName: "idol-query-service"
+# the queryservice port
+queryserviceACIPort: "9060"
+# nifiserviceName is an internal parameter to specify the NiFi service name.
+nifiserviceName: "idol-nifi"
+# list of ports for the NiFi service
+nifiserviceACIPort: "11000"
+
+# name of port to use for Web Application servers
+webappPortName: "web-app"
+
+# findIngressName is an internal parameter to specify the IDOL ingress name.
+findIngressName: "idol-find-ingress"
+# findEndpointName is an internal parameter to specify the URL path to proxy Find.
+findEndpointName: "find"
+
+# communityName is an internal parameter to specify the name of the Community service.
+communityName: "idol-community"
+# the Community service port.
+communityACIPort: "9030"
+
+# viewServerName is an internal parameter to specify the name of the View service.
+viewServerName: "idol-view"
+# the View service port.
+viewServerACIPort: "9080"
+
+# Find UI internal name parameter
+findUIName: "idol-find"
+# Find UI container image name
+findUIImage: "find"
+# Find UI port number
+findUIPort: "8000"
+# URL scheme Find should use
+findHTTPScheme: "HTTP"
+# Login method Find should use
+findLoginMethod: "autonomy"
+# overrides for liveness probe settings
+findUILivenessProbe:
+  path: "/"
+  initialDelaySeconds: 300
+  timeoutSeconds: 10
+  periodSeconds: 30
+  failureThreshold: 5
+
+################################
+
+##### SUBCHART VALUES #####
+idol-licenseserver:
+# create a cluster service proxying to a LicenseServer instance
+  enabled: true
+  licenseServerExternalName: "example.licenseserver.host"
+
+idol-community:
+  enabled: true
+
+idol-view:
+  enabled: true
+
+single-content:
+  enabled: true

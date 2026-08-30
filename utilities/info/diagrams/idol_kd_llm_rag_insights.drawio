@@ -1,0 +1,118 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="LLM + KD Insights (Polished)" id="kd-llm-2">
+    <mxGraphModel dx="1600" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ============ STEP 1: Standalone LLM ============ -->
+        <mxCell id="llm" value="Standalone LLM&#10;&#10;• Generalist, trained on broad data&#10;• No access to private/internal docs&#10;• Can hallucinate or be outdated" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=center;verticalAlign=middle;fontSize=14;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="80" width="320" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="b1" value="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1a73e8;strokeColor=none;fontColor=#ffffff;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="65" y="65" width="34" height="34" as="geometry" />
+        </mxCell>
+
+        <!-- ============ STEP 2: OpenText KD ============ -->
+        <mxCell id="kd" value="OpenText Knowledge Discovery&#10;&#10;• Ingests unstructured data in place&#10;• 160+ repositories&#10;• 2300+ file types (text, video, audio, image)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=center;verticalAlign=middle;fontSize=14;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="80" width="320" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="b2" value="2" style="ellipse;whiteSpace=wrap;html=1;fillColor=#2e7d32;strokeColor=none;fontColor=#ffffff;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1265" y="65" width="34" height="34" as="geometry" />
+        </mxCell>
+
+        <!-- ============ STEP 3: Combined RAG ============ -->
+        <mxCell id="combined" value="Combined: LLM + KD (RAG)&#10;&#10;KD feeds fresh, sourced, relevant data&#10;LLM adds fluent language &amp; reasoning&#10;→ Accurate, grounded, enterprise-specific answers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="630" y="320" width="440" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="b3" value="3" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e67700;strokeColor=none;fontColor=#ffffff;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="615" y="305" width="34" height="34" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#6c8ebf;strokeWidth=2;dashed=1;flowAnimation=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="llm" target="combined">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#82b366;strokeWidth=2;dashed=1;flowAnimation=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="kd" target="combined">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ============ STEP 4: KD Capabilities header ============ -->
+        <mxCell id="kdcore" value="OpenText KD — Out-of-the-Box Capabilities" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="630" y="560" width="440" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="b4" value="4" style="ellipse;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=none;fontColor=#ffffff;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="615" y="545" width="34" height="34" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#d79b00;strokeWidth=2;dashed=1;flowAnimation=1;" edge="1" parent="1" source="combined" target="kdcore">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ============ STEPS 5-9: capability boxes ============ -->
+        <mxCell id="cap1" value="Entity Extraction&#10;&#10;Names, places, orgs,&#10;PII / PHI / PCI,&#10;multilingual" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;align=center;verticalAlign=middle;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="80" y="800" width="240" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="b5" value="5" style="ellipse;whiteSpace=wrap;html=1;fillColor=#bf9000;strokeColor=none;fontColor=#ffffff;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="65" y="785" width="30" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cap2" value="Categorization &amp; Clustering&#10;&#10;Auto-groups content,&#10;zero-shot, no training&#10;data required" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;align=center;verticalAlign=middle;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="370" y="800" width="240" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="b6" value="6" style="ellipse;whiteSpace=wrap;html=1;fillColor=#bf9000;strokeColor=none;fontColor=#ffffff;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="355" y="785" width="30" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cap3" value="Rich Media Analytics&#10;&#10;Speech-to-text,&#10;object / face detection,&#10;sentiment analysis" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;align=center;verticalAlign=middle;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="660" y="800" width="240" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="b7" value="7" style="ellipse;whiteSpace=wrap;html=1;fillColor=#bf9000;strokeColor=none;fontColor=#ffffff;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="645" y="785" width="30" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cap4" value="Sensitive Data Detection&#10;&#10;Flags regulated info:&#10;GDPR, HIPAA,&#10;compliance &amp; risk" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;align=center;verticalAlign=middle;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="950" y="800" width="240" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="b8" value="8" style="ellipse;whiteSpace=wrap;html=1;fillColor=#bf9000;strokeColor=none;fontColor=#ffffff;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="935" y="785" width="30" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cap5" value="Relationship Mapping&#10;&#10;Graphs, timelines,&#10;connections,&#10;visualization" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;align=center;verticalAlign=middle;spacing=6;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="800" width="240" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="b9" value="9" style="ellipse;whiteSpace=wrap;html=1;fillColor=#bf9000;strokeColor=none;fontColor=#ffffff;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1225" y="785" width="30" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#999999;strokeWidth=2;dashed=1;flowAnimation=1;exitX=0.15;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="kdcore" target="cap1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#999999;strokeWidth=2;dashed=1;flowAnimation=1;exitX=0.35;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="kdcore" target="cap2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#999999;strokeWidth=2;dashed=1;flowAnimation=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="kdcore" target="cap3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#999999;strokeWidth=2;dashed=1;flowAnimation=1;exitX=0.65;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="kdcore" target="cap4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#999999;strokeWidth=2;dashed=1;flowAnimation=1;exitX=0.85;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="kdcore" target="cap5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ============ STEP 10: Benefit ============ -->
+        <mxCell id="note" value="Net Benefit&#10;&#10;Chaotic, siloed enterprise data becomes governed, AI-ready knowledge — accurate, sourced, compliance-aware answers, without ever moving the files." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;fontStyle=1;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="630" y="1020" width="440" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="b10" value="10" style="ellipse;whiteSpace=wrap;html=1;fillColor=#c0392b;strokeColor=none;fontColor=#ffffff;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="615" y="1005" width="34" height="34" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#b85450;strokeWidth=2;dashed=1;flowAnimation=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="cap3" target="note">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

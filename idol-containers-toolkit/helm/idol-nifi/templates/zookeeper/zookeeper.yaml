@@ -1,0 +1,111 @@
+# BEGIN COPYRIGHT NOTICE
+# Copyright 2023 Open Text.
+# 
+# The only warranties for products and services of Open Text and its affiliates and licensors
+# ("Open Text") are as may be set forth in the express warranty statements accompanying such
+# products and services. Nothing herein should be construed as constituting an additional warranty.
+# Open Text shall not be liable for technical or editorial errors or omissions contained herein.
+# The information contained herein is subject to change without notice.
+#
+# END COPYRIGHT NOTICE
+{{- define "idolnifi.zookeeper.statefulset" }}
+{{ $root := get . "root" | required "idolnifi.zookeeper.statefulset: missing root" }}
+{{ $nifiCluster := get . "nifiCluster" | required "idolnifi.zookeeper.statefulset: missing nifiCluster" }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ $nifiCluster.clusterId }}-zk
+  labels: {{- include "idol-library.labels" (dict "root" $root "component" $root.Values.zookeeper) | nindent 4 }}
+    name: {{ $nifiCluster.clusterId }}-zk
+    app: {{ $nifiCluster.clusterId }}-zk
+  annotations:
+    app.kubernetes.io/name: {{ $nifiCluster.clusterId }}-zk
+    app.kubernetes.io/part-of: {{ $nifiCluster.clusterId }}
+spec:
+  revisionHistoryLimit: 1
+  serviceName: {{ $nifiCluster.clusterId }}-zk
+  podManagementPolicy: OrderedReady
+  selector:
+    matchLabels:
+      app: {{ $nifiCluster.clusterId }}-zk
+  template:
+    metadata:
+      labels: {{- include "idol-library.labels" (dict "root" $root "component" $root.Values.zookeeper) | nindent 8 }}
+        app: {{ $nifiCluster.clusterId }}-zk
+    spec:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      dnsPolicy: ClusterFirstWithHostNet
+      restartPolicy: Always
+{{- if $root.Values.podSecurityContext.enabled }}
+      securityContext: {{- omit $root.Values.podSecurityContext "enabled" | toYaml | nindent 8 }}
+{{- end }}
+      imagePullSecrets:
+{{- range $root.Values.global.imagePullSecrets }}
+      - name: {{ . }}
+{{- end }}
+      containers:
+      - name: zookeeper
+        image: {{ $root.Values.zookeeper.image }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 2181
+          name: zk
+        - containerPort: 8080
+          name: http
+        - containerPort: 7070
+          name: metrics
+        env:
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          - name: ZOO_SERVERS
+            value: "server.1=$(POD_IP):2888:3888;2181"
+        envFrom:
+          - configMapRef:
+              name: {{ $root.Values.name }}-zk-cm
+              optional: false
+        livenessProbe:
+          exec:
+            command:
+              - which
+              - java
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+        readinessProbe:
+          tcpSocket:
+              port: zk
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+        {{- if $root.Values.zookeeper.resources }}
+        resources: {{ toYaml $root.Values.zookeeper.resources | nindent 10 }}
+        {{- end }}
+        {{- if $root.Values.containerSecurityContext.enabled }}
+        securityContext: {{- omit $root.Values.containerSecurityContext "enabled" | toYaml | nindent 10 }}
+          readOnlyRootFilesystem: true
+        {{- end }}
+        volumeMounts:
+          - mountPath: /data
+            name: data
+            subPath: data
+          - mountPath: /datalog
+            name: data
+            subPath: datalog
+          - mountPath: /conf
+            name: data
+            subPath: conf
+      volumes:
+        - name: data
+          emptyDir:
+            sizeLimit: 2Gi
+{{- end -}}
+
+{{- include "idolnifi.forEachCluster" (dict "root" . "tpl" "idolnifi.zookeeper.statefulset")}}
