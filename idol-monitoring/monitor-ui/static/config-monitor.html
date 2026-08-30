@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Health Dashboard</title>
+  <link rel="stylesheet" href="/css/features/monitor/monitor.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <h1>⚙️ Service Health Dashboard</h1>
+        <span class="subtitle">Real-time service health</span>
+      </div>
+      <div class="header-right">
+        <button id="btn-refresh" class="btn btn-primary">⟳ Refresh Now</button>
+        <div class="last-updated">
+          Last updated: <span id="last-updated">—</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Tabs -->
+    <div class="tabs" id="tabs">
+      <button class="tab-btn" data-tab="idol-demo">
+        🧩 IDOL Demo Services
+        <span class="tab-count" id="tab-count-demo">—</span>
+      </button>
+      <button class="tab-btn" data-tab="monitoring">
+        📊 Monitoring Stack
+        <span class="tab-count" id="tab-count-monitoring">—</span>
+      </button>
+    </div>
+
+    <!-- Filters + Summary -->
+    <div class="filters-row">
+      <div class="filters" id="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="healthy">✅ Healthy</button>
+        <button class="filter-btn" data-filter="degraded">⚠️ Degraded</button>
+      </div>
+
+      <!-- Live Summary Stats -->
+      <div id="summary-stats" class="summary-stats">
+        <div class="stat">
+          <span class="stat-value" id="stat-total">—</span>
+          <span class="stat-label">Total</span>
+        </div>
+        <div class="stat healthy">
+          <span class="stat-value" id="stat-healthy">—</span>
+          <span class="stat-label">Healthy</span>
+        </div>
+        <div class="stat degraded">
+          <span class="stat-value" id="stat-degraded">—</span>
+          <span class="stat-label">Degraded</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Grid -->
+      <section class="grid-section">
+        <div class="section-header">
+          <h2>Services</h2>
+          <span class="section-subtitle">Real-time health from backend</span>
+        </div>
+        <div id="monitor-grid" class="monitor-grid"></div>
+      </section>
+
+      <!-- Detail Panel -->
+      <aside class="detail-panel">
+        <h2>Service Details</h2>
+        <div id="detail-panel">
+          <p class="empty-state">Select a service from the grid to see details.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Toast container (created by JS) -->
+  <div id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script type="module" src="/js/features/monitor/monitor.page.js"></script>
+
+  <!-- Professional fallback / diagnostics (shows helpful message if JS modules fail to load services) -->
+  <script>
+    setTimeout(() => {
+      const grid = document.getElementById('monitor-grid');
+      if (grid && grid.children.length === 0) {
+        grid.innerHTML = `
+          <div style="padding:2.5rem; background:#1e293b; border:1px solid #334155; border-radius:12px; text-align:center;">
+            <div style="color:#f87171; font-weight:600; margin-bottom:0.75rem; font-size:1.05rem;">
+              ⚠️ JavaScript did not populate the service list
+            </div>
+            <div style="color:#94a3b8; font-size:0.9rem; line-height:1.5; max-width:440px; margin:0 auto 1rem;">
+              The page HTML loaded, but the dynamic JavaScript (which fetches <code>/api/status</code> and renders the cards) did not run or failed.<br><br>
+              <strong>Most common causes:</strong><br>
+              • ES Module loading blocked (check browser console)<br>
+              • One of the imported JS files returned 404<br>
+              • Backend API is slow or returning error<br><br>
+              <strong>Fix:</strong> Press <strong>F12</strong> → go to <strong>Console</strong> tab → look for red errors.<br>
+              Then do a hard refresh: <strong>Ctrl + Shift + R</strong>
+            </div>
+            <button onclick="location.reload()" 
+                    style="padding:0.55rem 1.4rem; background:#334155; color:#e2e8f0; border:none; border-radius:8px; cursor:pointer; font-weight:600;">
+              Reload Page
+            </button>
+          </div>
+        `;
+      }
+    }, 4800);
+  </script>
+</body>
+</html>

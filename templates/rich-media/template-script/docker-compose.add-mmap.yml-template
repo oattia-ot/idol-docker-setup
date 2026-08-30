@@ -1,0 +1,110 @@
+###
+# Copyright (c) 2019-2020 Micro Focus or one of its affiliates.
+#
+# Licensed under the MIT License (the "License"); you may not use this file
+# except in compliance with the License.
+#
+# The only warranties for products and services of Micro Focus and its affiliates
+# and licensors ("Micro Focus") are as may be set forth in the express warranty
+# statements accompanying such products and services. Nothing herein should be
+# construed as constituting an additional warranty. Micro Focus shall not be
+# liable for technical or editorial errors or omissions contained herein. The
+# information contained herein is subject to change without notice.
+###
+
+# The incantation to use this is
+# docker-compose -f docker-compose.yml -f docker-compose.add-mmap.yml up
+
+version: "3.8"
+name: ${IDOL_DEPLOYMENT_TYPE:-idol-demo}
+
+x-common-labels: &common-labels
+  docker-compose/instance: ${INSTANCE:-rich-media}
+
+x-common-server: &common-server
+# Change the IP to the address of an external IDOL LicenseServer instance
+  extra_hosts:
+  - idol-licenseserver:${LICENSESERVER_IP}
+  labels:
+    <<: *common-labels
+
+x-args-shared: 
+  - &mmap-postgres-password ieBPwmujrKEY9sh6oaybA8wyf
+
+volumes:
+  items: &common-volume
+    labels:
+      <<: *common-labels
+  static_video:
+    <<: *common-volume
+  mediaserver-processed-video:
+    <<: *common-volume
+  mmap-postgres-events: # Persistent storage for db
+    <<: *common-volume
+
+services:
+  # additional services
+  idol-mediaserver:
+    <<: *common-server
+    image: ${IDOL_REGISTRY}/mediaserver-english:${IDOL_RICH_MEDIA_VERSION}
+    ports:
+      - RM_MEDIASERVER_ACI_PLACEHOLDER-RM_MEDIASERVER_SRV_PLACEHOLDER:RM_MEDIASERVER_ACI_PLACEHOLDER-RM_MEDIASERVER_SRV_PLACEHOLDER
+    volumes:
+      - mediaserver-processed-video:/processed-video
+      - PRESERVE-MEDIASERVER-PATH-PLACEHOLDER/cfg:/mediaserver/cfg:ro                # expose the mediaserver config for editing
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER   
+  idol-mmap-postgres:
+    image: postgres:11-alpine
+    labels:
+      <<: *common-labels
+    environment: 
+      POSTGRES_DB: mmap-events
+      POSTGRES_USER: mmap
+      POSTGRES_PASSWORD: *mmap-postgres-password
+    volumes:
+      - mmap-postgres-events:/var/lib/postgresql/data
+      - ../common-files/mmap-postgres/schema:/docker-entrypoint-initdb.d
+  idol-mmap-playlistserver:
+    <<: *common-server
+    image: ${IDOL_REGISTRY}/mediaserver-playlistserver:${IDOL_RICH_MEDIA_VERSION}
+    ports:
+      - RM_MEDIASERVER_PLAYLISTSERVER_ACI_PLACEHOLDER-RM_MEDIASERVER_PLAYLISTSERVER_SRV_PLACEHOLDER:RM_MEDIASERVER_PLAYLISTSERVER_ACI_PLACEHOLDER-RM_MEDIASERVER_PLAYLISTSERVER_SRV_PLACEHOLDER
+    volumes:
+      - static_video:/mmap/data/static-video/final
+      - PRESERVE-MEDIASERVER-PATH-PLACEHOLDER/cfg:/mediaserver/cfg:rw 
+      - SHARED-FOLDER-PATH-PLACEHOLDER/MEDIASERVER-PRETRAINE-MODELS-FOLDER-NAME-PLACEHOLDER:/mediaserver/staticdata:ro  # mount a local directory containing static model/data files under /mediaserver/staticdata/
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER 
+  idol-mmap-app:
+    <<: *common-server
+    depends_on: [idol-mmap-postgres, idol-mmap-playlistserver]
+    image: ${IDOL_REGISTRY}/mmap_app:24.4
+    environment:
+      MMAP_POSTGRES_PASSWORD: *mmap-postgres-password
+      IDOL_SSL: "true"                                            
+      IDOL_UI_SSL_PKCS_FILE: /ssl/certs/idol-mmap-app.pkcs12
+      IDOL_UI_SSL_PKCS_PASS: ${IDOL_CERT_KEYSTORE_PASS}
+      IDOL_UI_SSL_CA_PKCS12: /ssl/certs/intermediate.pkcs12       
+      IDOL_UI_SSL_CA_PASS: ${IDOL_CERT_KEYSTORE_PASS}           
+      IDOL_UI_ROOT_CERTIFICATE: /ssl/certs/ca.cert.pem 
+    ports:
+      - RM_MEDIASERVER_APPLICATION_HTTP_PLACEHOLDER:8080
+      - RM_MEDIASERVER_APPLICATION_HTTPS_PLACEHOLDER:8443
+    volumes:
+      # expose the MMAP config for editing
+      #- "${MMAP_CONFIG_DIR?MMAP_CONFIG_DIR}/application:${MMAP_DIR?MMAP_DIR}/config"
+      # access recorder video data, eg. rolling buffer
+      #- "${MMAP_DATA_DIR?MMAP_DATA_DIR}/streaming-video:${MMAP_DIR?MMAP_DIR}/input-data/streaming-video"
+      # provide somewhere to put video files so MMAP can read them when creating a video
+      #- "${MMAP_DATA_DIR?MMAP_DATA_DIR}/static-video:${MMAP_DIR?MMAP_DIR}/input-data/static-video"
+      - mediaserver-processed-video:/mmap/input-data/static-video
+      # persist repository data
+      - "items:${MMAP_DIR?MMAP_DIR}/data/items"
+      - static_video:/mmap/data/static-video/final
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER 
+  
+networks:
+  DEPLOYMENT-TYPE-PLACEHOLDER:
+    external: true    

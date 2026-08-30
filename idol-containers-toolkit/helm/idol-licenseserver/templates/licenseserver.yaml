@@ -1,0 +1,58 @@
+# BEGIN COPYRIGHT NOTICE
+# Copyright 2022-2025 Open Text.
+# 
+# The only warranties for products and services of Open Text and its affiliates and licensors
+# ("Open Text") are as may be set forth in the express warranty statements accompanying such
+# products and services. Nothing herein should be construed as constituting an additional warranty.
+# Open Text shall not be liable for technical or editorial errors or omissions contained herein.
+# The information contained herein is subject to change without notice.
+#
+# END COPYRIGHT NOTICE
+{{/* 
+Only one of licenseServerExternalName or licenseServerIp should be used 
+*/}}
+{{- if and .Values.licenseServerExternalName .Values.licenseServerIp -}}
+{{- fail "Only one of licenseServerExternalName or licenseServerIp should be set" -}}
+{{- end -}}
+{{- if and (not .Values.licenseServerExternalName) (not .Values.licenseServerIp) -}}
+{{- fail "One of licenseServerExternalName or licenseServerIp must be set" -}}
+{{- end }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.licenseServerService }}
+  labels:
+    app.kubernetes.io/name: {{ default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+spec:
+  ports:
+    - port: {{ .Values.licenseServerPort | int }}
+      targetPort: {{ .Values.licenseServerPort | int }}
+      name: aci-port
+  {{- if .Values.licenseServerExternalName }}
+  type: ExternalName
+  externalName: {{ .Values.licenseServerExternalName | quote }}
+  {{- else }}
+  clusterIP: None
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: {{ .Values.licenseServerService }}
+  labels:
+    app.kubernetes.io/name: {{ default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+    kubernetes.io/service-name: {{ .Values.licenseServerService }}
+addressType: IPv4
+endpoints:
+  - addresses:
+      - {{ .Values.licenseServerIp | quote }}
+ports:
+  - name: aci-port
+    port: {{ .Values.licenseServerPort | int }}
+    protocol: TCP
+  {{- end }}

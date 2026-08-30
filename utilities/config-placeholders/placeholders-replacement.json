@@ -1,0 +1,2425 @@
+{
+  "${persistent_data_path}/licenseserver/idol.common.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-Clients": {
+        "name": "Configuration - Allowed Clients",
+        "description": "Sets the Clients value from localhost to a wildcard (*.*.*.*), allowing connections from any IP address within the Docker network.",
+        "find_string": "Clients=localhost",
+        "replacement_with": "Clients=*.*.*.*"
+      }
+    },
+    "output-path": "${persistent_data_path}/licenseserver/idol.common.cfg",
+    "template-path": "${persistent_data_templates_path}/licenseserver/idol.common.cfg"
+  },
+  "${licenseserver_templates_path}/${IDOL_LICENSESERVER_NAME}/idol.common.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-Clients": {
+        "name": "Configuration - Allowed Clients",
+        "description": "Sets the Clients value from localhost to a wildcard (*.*.*.*), allowing connections from any IP address within the Docker network.",
+        "find_string": "Clients=localhost",
+        "replacement_with": "Clients=*.*.*.*"
+      }
+    },
+    "output-path": "${licenseserver_templates_path}/${IDOL_LICENSESERVER_NAME}/idol.common.cfg",
+    "template-path": "${licenseserver_templates_path}/${IDOL_LICENSESERVER_NAME}/idol.common.cfg"
+  },
+  "${persistent_data_path}/agentstore/cfg/agentstore.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-AgentstoreAciPort": {
+        "name": "Configuration - Agentstore ACI Port",
+        "find_string": "BI_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_AGENTSTORE}"
+      },
+      "set-AgentstoreIndexPort": {
+        "name": "Configuration - Agentstore Index Port",
+        "find_string": "BI_AGENTSTORE_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_AGENTSTORE_INDEX}"
+      },
+      "set-AgentstoreServicePort": {
+        "name": "Configuration - Agentstore Service Port",
+        "find_string": "BI_AGENTSTORE_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_AGENTSTORE_SERVICE}"
+      }
+    },
+    "output-path": "${persistent_data_path}/agentstore/cfg/agentstore.cfg",
+    "template-path": "${persistent_data_templates_path}/agentstore/cfg/agentstore.cfg"
+  },
+  "${persistent_data_path}/agentstore/cfg/idol.common.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      }
+    },
+    "output-path": "${persistent_data_path}/agentstore/cfg/idol.common.cfg",
+    "template-path": "${persistent_data_templates_path}/agentstore/cfg/idol.common.cfg"
+  },
+  "${persistent_data_path}/agentstore/cfg/original.agentstore.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-AgentstoreAciPort": {
+        "name": "Configuration - Agentstore ACI Port",
+        "find_string": "BI_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_AGENTSTORE}"
+      },
+      "set-AgentstoreIndexPort": {
+        "name": "Configuration - Agentstore Index Port",
+        "find_string": "BI_AGENTSTORE_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_AGENTSTORE_INDEX}"
+      },
+      "set-AgentstoreServicePort": {
+        "name": "Configuration - Agentstore Service Port",
+        "find_string": "BI_AGENTSTORE_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_AGENTSTORE_SERVICE}"
+      }
+    },
+    "output-path": "${persistent_data_path}/agentstore/cfg/original.agentstore.cfg",
+    "template-path": "${persistent_data_templates_path}/agentstore/cfg/original.agentstore.cfg"
+  },
+  "${persistent_data_path}/categorisation_agentstore/cfg/agentstore.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      }
+    },
+    "output-path": "${persistent_data_path}/categorisation_agentstore/cfg/agentstore.cfg",
+    "template-path": "${persistent_data_templates_path}/categorisation_agentstore/cfg/agentstore.cfg"
+  },
+  "${persistent_data_path}/categorisation_agentstore/cfg/idol.common.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      }
+    },
+    "output-path": "${persistent_data_path}/categorisation_agentstore/cfg/idol.common.cfg",
+    "template-path": "${persistent_data_templates_path}/categorisation_agentstore/cfg/idol.common.cfg"
+  },
+  "${persistent_data_path}/categorisation_agentstore/cfg/original.agentstore.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-CategorisationAciPort": {
+        "name": "Configuration - Categorisation Agentstore ACI Port",
+        "find_string": "BI_CATEGORISATION_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CATEGORISATION_AGENTSTORE}"
+      },
+      "set-CategorisationIndexPort": {
+        "name": "Configuration - Categorisation Agentstore Index Port",
+        "find_string": "BI_CATEGORISATION_AGENTSTORE_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CATEGORISATION_AGENTSTORE_INDEX}"
+      },
+      "set-CategorisationServicePort": {
+        "name": "Configuration - Categorisation Agentstore Service Port",
+        "find_string": "BI_CATEGORISATION_AGENTSTORE_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CATEGORISATION_AGENTSTORE_SERVICE}"
+      },
+      "set-CategorisationQueryPort": {
+        "name": "Configuration - Categorisation Agentstore Query Port",
+        "find_string": "BI_CATEGORISATION_AGENTSTORE_QRY_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CATEGORISATION_AGENTSTORE_QUERY}"
+      }
+    },
+    "output-path": "${persistent_data_path}/categorisation_agentstore/cfg/original.agentstore.cfg",
+    "template-path": "${persistent_data_templates_path}/categorisation_agentstore/cfg/original.agentstore.cfg"
+  },
+  "${persistent_data_path}/category/cfg/category.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-CategoryAciPort": {
+        "name": "Configuration - Category ACI Port",
+        "find_string": "BI_CATEGORY_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CATEGORY}"
+      },
+      "set-CategoryServicePort": {
+        "name": "Configuration - Category Service Port",
+        "find_string": "BI_CATEGORY_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CATEGORY_SERVICE}"
+      },
+      "set-ContentAciPort": {
+        "name": "Configuration - Content ACI Port",
+        "find_string": "BI_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CONTENT}"
+      },
+      "set-AgentstoreAciPort": {
+        "name": "Configuration - Agentstore ACI Port",
+        "find_string": "BI_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_AGENTSTORE}"
+      },
+      "set-CommunityAciPort": {
+        "name": "Configuration - Community ACI Port",
+        "find_string": "BI_COMMUNITY_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_COMMUNITY}"
+      }
+    },
+    "output-path": "${persistent_data_path}/category/cfg/category.cfg",
+    "template-path": "${persistent_data_templates_path}/category/cfg/category.cfg"
+  },
+  "${persistent_data_path}/category/cfg/idol.common.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      }
+    },
+    "output-path": "${persistent_data_path}/category/cfg/idol.common.cfg",
+    "template-path": "${persistent_data_templates_path}/category/cfg/idol.common.cfg"
+  },
+  "${persistent_data_path}/category/cfg/original.category.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-CategoryAciPort": {
+        "name": "Configuration - Category ACI Port",
+        "find_string": "BI_CATEGORY_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CATEGORY}"
+      },
+      "set-CategoryServicePort": {
+        "name": "Configuration - Category Service Port",
+        "find_string": "BI_CATEGORY_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CATEGORY_SERVICE}"
+      },
+      "set-ContentAciPort": {
+        "name": "Configuration - Content ACI Port",
+        "find_string": "BI_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CONTENT}"
+      },
+      "set-AgentstoreAciPort": {
+        "name": "Configuration - Agentstore ACI Port",
+        "find_string": "BI_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_AGENTSTORE}"
+      },
+      "set-CommunityAciPort": {
+        "name": "Configuration - Community ACI Port",
+        "find_string": "BI_COMMUNITY_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_COMMUNITY}"
+      }
+    },
+    "output-path": "${persistent_data_path}/category/cfg/original.category.cfg",
+    "template-path": "${persistent_data_templates_path}/category/cfg/original.category.cfg"
+  },
+  "${persistent_data_path}/content/cfg/content.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-ContentAciPort": {
+        "name": "Configuration - Content ACI Port",
+        "find_string": "BI_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CONTENT}"
+      },
+      "set-ContentIndexPort": {
+        "name": "Configuration - Content Index Port",
+        "find_string": "BI_CONTENT_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CONTENT_INDEX}"
+      },
+      "set-ContentServicePort": {
+        "name": "Configuration - Content Service Port",
+        "find_string": "BI_CONTENT_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CONTENT_SERVICE}"
+      }
+    },
+    "output-path": "${persistent_data_path}/content/cfg/content.cfg",
+    "template-path": "${persistent_data_templates_path}/content/cfg/content.cfg"
+  },
+  "${persistent_data_path}/content/cfg/idol.common.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      }
+    },
+    "output-path": "${persistent_data_path}/content/cfg/idol.common.cfg",
+    "template-path": "${persistent_data_templates_path}/content/cfg/idol.common.cfg"
+  },
+  "${persistent_data_path}/content/cfg/original.content.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-ContentAciPort": {
+        "name": "Configuration - Content ACI Port",
+        "find_string": "BI_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CONTENT}"
+      },
+      "set-ContentIndexPort": {
+        "name": "Configuration - Content Index Port",
+        "find_string": "BI_CONTENT_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CONTENT_INDEX}"
+      },
+      "set-ContentServicePort": {
+        "name": "Configuration - Content Service Port",
+        "find_string": "BI_CONTENT_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CONTENT_SERVICE}"
+      }
+    },
+    "output-path": "${persistent_data_path}/content/cfg/original.content.cfg",
+    "template-path": "${persistent_data_templates_path}/content/cfg/original.content.cfg"
+  },
+  "${persistent_data_path}/community/cfg/community.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "basic-idol",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-CommunityAciPort": {
+        "name": "Configuration - Community ACI Port",
+        "find_string": "BI_COMMUNITY_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_COMMUNITY}"
+      },
+      "set-CommunityServicePort": {
+        "name": "Configuration - Community Service Port",
+        "find_string": "BI_COMMUNITY_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_COMMUNITY_SERVICE}"
+      },
+      "set-CommunityAciPortAgentstore": {
+        "name": "Configuration - Community ACI Port (Agentstore)",
+        "find_string": "BI_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_AGENTSTORE}"
+      },
+      "set-CommunityAciPortContent": {
+        "name": "Configuration - Community ACI Port (Content)",
+        "find_string": "BI_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CONTENT}"
+      }
+    },
+    "output-path": "${persistent_data_path}/community/cfg/community.cfg",
+    "template-path": "${persistent_data_templates_path}/community/cfg/community.cfg"
+  },
+  "${persistent_data_path}/community/cfg/idol.common.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      }
+    },
+    "output-path": "${persistent_data_path}/community/cfg/idol.common.cfg",
+    "template-path": "${persistent_data_templates_path}/community/cfg/idol.common.cfg"
+  },
+  "${persistent_data_path}/community/cfg/original.community.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "basic-idol",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-CommunityAciPort": {
+        "name": "Configuration - Community ACI Port",
+        "find_string": "BI_COMMUNITY_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_COMMUNITY}"
+      },
+      "set-CommunityServicePort": {
+        "name": "Configuration - Community Service Port",
+        "find_string": "BI_COMMUNITY_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_COMMUNITY_SERVICE}"
+      },
+      "set-CommunityAciPortAgentstore": {
+        "name": "Configuration - Community ACI Port (Agentstore)",
+        "find_string": "BI_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_AGENTSTORE}"
+      },
+      "set-CommunityAciPortContent": {
+        "name": "Configuration - Community ACI Port (Content)",
+        "find_string": "BI_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CONTENT}"
+      }
+    },
+    "output-path": "${persistent_data_path}/community/cfg/original.community.cfg",
+    "template-path": "${persistent_data_templates_path}/community/cfg/original.community.cfg"
+  },
+  "${persistent_data_path}/view/cfg/view.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "basic-idol",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-ViewAciPort": {
+        "name": "Configuration - View ACI Port",
+        "find_string": "BI_VIEW_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_VIEW}"
+      },
+      "set-ViewServicePort": {
+        "name": "Configuration - View Service Port",
+        "find_string": "BI_VIEW_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_VIEW_SERVICE}"
+      },
+      "set-ViewIdolPortAgentstore": {
+        "name": "Configuration - View IDOL Port (Agentstore)",
+        "find_string": "BI_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_AGENTSTORE}"
+      },
+      "set-ViewDocumentStorePort": {
+        "name": "Configuration - View Document Store Port (Content)",
+        "find_string": "BI_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CONTENT}"
+      }
+    },
+    "output-path": "${persistent_data_path}/view/cfg/view.cfg",
+    "template-path": "${persistent_data_templates_path}/view/cfg/view.cfg"
+  },
+  "${persistent_data_path}/mediaserver/cfg/mediaserver.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "rich-media",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-MediaserverAciPort": {
+        "name": "Configuration - Media Server ACI Port",
+        "find_string": "RM_MEDIASERVER_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_RICH_MEDIA_MEDIASERVER}"
+      },
+      "set-MediaserverServicePort": {
+        "name": "Configuration - Media Server Service Port",
+        "find_string": "RM_MEDIASERVER_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_RICH_MEDIA_MEDIASERVER_SERVICE}"
+      },
+      "set-MediaserverIdolContentPort": {
+        "name": "Configuration - Media Server IDOL Content Connection",
+        "find_string": "BI_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CONTENT}"
+      }
+    },
+    "output-path": "${persistent_data_path}/mediaserver/cfg/mediaserver.cfg",
+    "template-path": "${persistent_data_templates_path}/mediaserver/cfg/mediaserver.cfg"
+  },
+  "${persistent_data_path}/mediaserver/cfg/original.mediaserver.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "rich-media",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-MediaserverAciPort": {
+        "name": "Configuration - Media Server ACI Port",
+        "find_string": "RM_MEDIASERVER_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_RICH_MEDIA_MEDIASERVER}"
+      },
+      "set-MediaserverServicePort": {
+        "name": "Configuration - Media Server Service Port",
+        "find_string": "RM_MEDIASERVER_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_RICH_MEDIA_MEDIASERVER_SERVICE}"
+      },
+      "set-MediaserverAciSslPort": {
+        "name": "Configuration - Media Server ACI SSL Port",
+        "find_string": "RM_MEDIASERVER_ACI_SSL_PLACEHOLDER",
+        "replacement_with": "${PORT_RICH_MEDIA_MEDIASERVER_SSL}"
+      },
+      "set-MediaserverServiceSslPort": {
+        "name": "Configuration - Media Server Service SSL Port",
+        "find_string": "RM_MEDIASERVER_SRV_SSL_PLACEHOLDER",
+        "replacement_with": "${PORT_RICH_MEDIA_MEDIASERVER_SERVICE_SSL}"
+      }
+    },
+    "output-path": "${persistent_data_path}/mediaserver/cfg/original.mediaserver.cfg",
+    "template-path": "${persistent_data_templates_path}/mediaserver/cfg/original.mediaserver.cfg"
+  },
+  "${persistent_data_path}/qms/cfg/idol.common.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      }
+    },
+    "output-path": "${persistent_data_path}/qms/cfg/idol.common.cfg",
+    "template-path": "${persistent_data_templates_path}/qms/cfg/idol.common.cfg"
+  },
+  "${persistent_data_path}/qms/cfg/qms.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-QmsAciPort": {
+        "name": "Configuration - QMS ACI Port",
+        "find_string": "DA_QMS_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS}"
+      },
+      "set-QmsServicePort": {
+        "name": "Configuration - QMS Service Port",
+        "find_string": "DA_QMS_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_SERVICE}"
+      },
+      "set-QmsIndexPort": {
+        "name": "Configuration - QMS Index Port",
+        "find_string": "DA_QMS_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_INDEX}"
+      },
+      "set-QmsPassageContentPort": {
+        "name": "Configuration - QMS Passage Extractor Content Port",
+        "find_string": "DA_PASSAGEEXTRATOR_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_CONTENT}"
+      },
+      "set-QmsQmsAgentstorePort": {
+        "name": "Configuration - QMS Agentstore Port",
+        "find_string": "DA_QMS_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_AGENTSTORE}"
+      },
+      "set-QmsCommunityPort": {
+        "name": "Configuration - QMS Community Port",
+        "find_string": "DA_COMMUNITY_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_COMMUNITY}"
+      },
+      "set-QmsPassageAgentstorePort": {
+        "name": "Configuration - QMS Passage Extractor Agentstore Port",
+        "find_string": "DA_PASSAGEEXTRATOR_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_AGENTSTORE}"
+      }
+    },
+    "output-path": "${persistent_data_path}/qms/cfg/qms.cfg",
+    "template-path": "${persistent_data_templates_path}/qms/cfg/qms.cfg"
+  },
+  "${persistent_data_path}/qms/cfg/original.qms.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-QmsAciPort": {
+        "name": "Configuration - QMS ACI Port",
+        "find_string": "DA_QMS_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS}"
+      },
+      "set-QmsServicePort": {
+        "name": "Configuration - QMS Service Port",
+        "find_string": "DA_QMS_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_SERVICE}"
+      },
+      "set-QmsIndexPort": {
+        "name": "Configuration - QMS Index Port",
+        "find_string": "DA_QMS_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_INDEX}"
+      },
+      "set-QmsPassageContentPort": {
+        "name": "Configuration - QMS Passage Extractor Content Port",
+        "find_string": "DA_PASSAGEEXTRATOR_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_CONTENT}"
+      },
+      "set-QmsQmsAgentstorePort": {
+        "name": "Configuration - QMS Agentstore Port",
+        "find_string": "DA_QMS_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_AGENTSTORE}"
+      },
+      "set-QmsCommunityPort": {
+        "name": "Configuration - QMS Community Port",
+        "find_string": "DA_COMMUNITY_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_COMMUNITY}"
+      },
+      "set-QmsPassageAgentstorePort": {
+        "name": "Configuration - QMS Passage Extractor Agentstore Port",
+        "find_string": "DA_PASSAGEEXTRATOR_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_AGENTSTORE}"
+      }
+    },
+    "output-path": "${persistent_data_path}/qms/cfg/original.qms.cfg",
+    "template-path": "${persistent_data_templates_path}/qms/cfg/original.qms.cfg"
+  },
+  "${persistent_data_path}/qms_agentstore/content/cfg/content.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      }
+    },
+    "output-path": "${persistent_data_path}/qms_agentstore/content/cfg/content.cfg",
+    "template-path": "${persistent_data_templates_path}/qms_agentstore/content/cfg/content.cfg"
+  },
+  "${persistent_data_path}/qms_agentstore/content/cfg/agentstore.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-QmsAgentstoreAciPort": {
+        "name": "Configuration - QMS Agentstore ACI Port",
+        "find_string": "DA_QMS_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_AGENTSTORE}"
+      },
+      "set-QmsAgentstoreIndexPort": {
+        "name": "Configuration - QMS Agentstore Index Port",
+        "find_string": "DA_QMS_AGENTSTORE_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_AGENTSTORE_INDEX}"
+      },
+      "set-QmsAgentstoreServicePort": {
+        "name": "Configuration - QMS Agentstore Service Port",
+        "find_string": "DA_QMS_AGENTSTORE_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_AGENTSTORE_SERVICE}"
+      }
+    },
+    "output-path": "${persistent_data_path}/qms_agentstore/content/cfg/agentstore.cfg",
+    "template-path": "${persistent_data_templates_path}/qms_agentstore/content/cfg/agentstore.cfg"
+  },
+  "${persistent_data_path}/qms_agentstore/content/cfg/original.agentstore.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-QmsAgentstoreAciPort": {
+        "name": "Configuration - QMS Agentstore ACI Port",
+        "find_string": "DA_QMS_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_AGENTSTORE}"
+      },
+      "set-QmsAgentstoreIndexPort": {
+        "name": "Configuration - QMS Agentstore Index Port",
+        "find_string": "DA_QMS_AGENTSTORE_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_AGENTSTORE_INDEX}"
+      },
+      "set-QmsAgentstoreServicePort": {
+        "name": "Configuration - QMS Agentstore Service Port",
+        "find_string": "DA_QMS_AGENTSTORE_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_AGENTSTORE_SERVICE}"
+      }
+    },
+    "output-path": "${persistent_data_path}/qms_agentstore/content/cfg/original.agentstore.cfg",
+    "template-path": "${persistent_data_templates_path}/qms_agentstore/content/cfg/original.agentstore.cfg"
+  },
+  "${persistent_data_path}/qms_agentstore/content/cfg/idol.common.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      }
+    },
+    "output-path": "${persistent_data_path}/qms_agentstore/content/cfg/idol.common.cfg",
+    "template-path": "${persistent_data_templates_path}/qms_agentstore/content/cfg/idol.common.cfg"
+  },
+  "${persistent_data_path}/dataadmin_statsserver/statsserver/cfg/statsserver.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-StatsServerAciPort": {
+        "name": "Configuration - Stats Server ACI Port",
+        "find_string": "DA_STATS_SERVER_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_STATS_SERVER}"
+      }
+    },
+    "output-path": "${persistent_data_path}/dataadmin_statsserver/statsserver/cfg/statsserver.cfg",
+    "template-path": "${persistent_data_templates_path}/dataadmin_statsserver/statsserver/cfg/statsserver.cfg"
+  },
+  "${persistent_data_path}/dataadmin_statsserver/statsserver/cfg/idol.common.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      }
+    },
+    "output-path": "${persistent_data_path}/dataadmin_statsserver/statsserver/cfg/idol.common.cfg",
+    "template-path": "${persistent_data_templates_path}/dataadmin_statsserver/statsserver/cfg/idol.common.cfg"
+  },
+  "${persistent_data_path}/answerserver/cfg/original.answerserver.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-AnswerServerAciPort": {
+        "name": "Configuration - Answer Server ACI Port",
+        "find_string": "DA_ANSWER_SERVER_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_SERVER}"
+      },
+      "set-AnswerServerServicePort": {
+        "name": "Configuration - Answer Server Service Port",
+        "find_string": "DA_ANSWER_SERVER_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_SERVER_SERVICE}"
+      },
+      "set-AnswerBankAgentstoreAciPort": {
+        "name": "Configuration - Answerbank Agentstore ACI Port",
+        "find_string": "DA_ANSWER_BANK_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_BANK_AGENTSTORE}"
+      },
+      "set-AnswerBankAgentstoreIndexPort": {
+        "name": "Configuration - Answerbank Agentstore Index Port",
+        "find_string": "DA_ANSWER_BANK_AGENTSTORE_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_BANK_AGENTSTORE_INDEX}"
+      },
+      "set-PassageExtractorContentAciPort": {
+        "name": "Configuration - Passage Extractor Content ACI Port",
+        "find_string": "DA_PASSAGEEXTRATOR_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_CONTENT}"
+      },
+      "set-PassageExtractorAgentstoreAciPort": {
+        "name": "Configuration - Passage Extractor Agentstore ACI Port",
+        "find_string": "DA_PASSAGEEXTRATOR_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_AGENTSTORE}"
+      }
+    },
+    "output-path": "${persistent_data_path}/answerserver/cfg/original.answerserver.cfg",
+    "template-path": "${persistent_data_templates_path}/answerserver/cfg/original.answerserver.cfg"
+  },
+  "${persistent_data_path}/answerserver/rag/ollama_server.py": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-RAG-Ollama-LLM-Model": {
+        "name": "Configuration - Answer Server LLM Model",
+        "find_string": "DA_ANSWER_SERVER_LLM_MODEL_PLACEHOLDER",
+        "replacement_with": "${IDOL_LLM_MODEL_NAME}"
+      }
+    },
+    "output-path": "${persistent_data_path}/answerserver/rag/ollama_server.py",
+    "template-path": "${persistent_data_templates_path}/answerserver/rag/ollama_server.py"
+  },
+  "${persistent_data_path}/answerserver/cfg/answerserver.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-AnswerServer-LLM-Model": {
+        "name": "Configuration - Answer Server LLM Model",
+        "find_string": "DA_ANSWER_SERVER_LLM_MODEL_PLACEHOLDER",
+        "replacement_with": "${IDOL_LLM_MODEL_NAME}"
+      },
+      "set-AnswerServerAciPort": {
+        "name": "Configuration - Answer Server ACI Port",
+        "find_string": "DA_ANSWER_SERVER_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_SERVER}"
+      },
+      "set-AnswerServerServicePort": {
+        "name": "Configuration - Answer Server Service Port",
+        "find_string": "DA_ANSWER_SERVER_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_SERVER_SERVICE}"
+      },
+      "set-AnswerBankAgentstoreAciPort": {
+        "name": "Configuration - Answerbank Agentstore ACI Port",
+        "find_string": "DA_ANSWER_BANK_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_BANK_AGENTSTORE}"
+      },
+      "set-AnswerBankAgentstoreIndexPort": {
+        "name": "Configuration - Answerbank Agentstore Index Port",
+        "find_string": "DA_ANSWER_BANK_AGENTSTORE_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_BANK_AGENTSTORE_INDEX}"
+      },
+      "set-PassageExtractorContentAciPort": {
+        "name": "Configuration - Passage Extractor Content ACI Port",
+        "find_string": "DA_PASSAGEEXTRATOR_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_CONTENT}"
+      },
+      "set-PassageExtractorAgentstoreAciPort": {
+        "name": "Configuration - Passage Extractor Agentstore ACI Port",
+        "find_string": "DA_PASSAGEEXTRATOR_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_AGENTSTORE}"
+      }
+    },
+    "output-path": "${persistent_data_path}/answerserver/cfg/answerserver.cfg",
+    "template-path": "${persistent_data_templates_path}/answerserver/cfg/answerserver.cfg"
+  },
+  "${persistent_data_path}/passageextractor_content/cfg/content.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-PassageContentAciPort": {
+        "name": "Configuration - Passage Extractor Content ACI Port",
+        "find_string": "DA_PASSAGEEXTRATOR_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_CONTENT}"
+      },
+      "set-PassageContentIndexPort": {
+        "name": "Configuration - Passage Extractor Content Index Port",
+        "find_string": "DA_PASSAGEEXTRATOR_CONTENT_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_CONTENT_INDEX}"
+      },
+      "set-PassageContentServicePort": {
+        "name": "Configuration - Passage Extractor Content Service Port",
+        "find_string": "DA_PASSAGEEXTRATOR_CONTENT_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_CONTENT_SERVICE}"
+      }
+    },
+    "output-path": "${persistent_data_path}/passageextractor_content/cfg/content.cfg",
+    "template-path": "${persistent_data_templates_path}/passageextractor_content/cfg/content.cfg"
+  },
+  "${persistent_data_path}/passageextractor_content/cfg/original.content.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-PassageContentAciPort": {
+        "name": "Configuration - Passage Extractor Content ACI Port",
+        "find_string": "DA_PASSAGEEXTRATOR_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_CONTENT}"
+      },
+      "set-PassageContentIndexPort": {
+        "name": "Configuration - Passage Extractor Content Index Port",
+        "find_string": "DA_PASSAGEEXTRATOR_CONTENT_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_CONTENT_INDEX}"
+      },
+      "set-PassageContentServicePort": {
+        "name": "Configuration - Passage Extractor Content Service Port",
+        "find_string": "DA_PASSAGEEXTRATOR_CONTENT_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_CONTENT_SERVICE}"
+      }
+    },
+    "output-path": "${persistent_data_path}/passageextractor_content/cfg/original.content.cfg",
+    "template-path": "${persistent_data_templates_path}/passageextractor_content/cfg/original.content.cfg"
+  },
+  "${persistent_data_path}/passageextractor_content/cfg/idol.common.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      }
+    },
+    "output-path": "${persistent_data_path}/passageextractor_content/cfg/idol.common.cfg",
+    "template-path": "${persistent_data_templates_path}/passageextractor_content/cfg/idol.common.cfg"
+  },
+  "${persistent_data_path}/passageextractor_agentstore/content/cfg/content.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      }
+    },
+    "output-path": "${persistent_data_path}/passageextractor_agentstore/content/cfg/content.cfg",
+    "template-path": "${persistent_data_templates_path}/passageextractor_agentstore/content/cfg/content.cfg"
+  },
+  "${persistent_data_path}/passageextractor_agentstore/content/cfg/agentstore.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      }
+    },
+    "output-path": "${persistent_data_path}/passageextractor_agentstore/content/cfg/agentstore.cfg",
+    "template-path": "${persistent_data_templates_path}/passageextractor_agentstore/content/cfg/agentstore.cfg"
+  },
+  "${persistent_data_path}/passageextractor_agentstore/content/cfg/original.agentstore.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-PassageAgentstoreAciPort": {
+        "name": "Configuration - Passage Extractor Agentstore ACI Port",
+        "find_string": "DA_PASSAGEEXTRATOR_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_AGENTSTORE}"
+      },
+      "set-PassageAgentstoreIndexPort": {
+        "name": "Configuration - Passage Extractor Agentstore Index Port",
+        "find_string": "DA_PASSAGEEXTRATOR_AGENTSTORE_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_AGENTSTORE_INDEX}"
+      },
+      "set-PassageAgentstoreServicePort": {
+        "name": "Configuration - Passage Extractor Agentstore Service Port",
+        "find_string": "DA_PASSAGEEXTRATOR_AGENTSTORE_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_AGENTSTORE_SERVICE}"
+      }
+    },
+    "output-path": "${persistent_data_path}/passageextractor_agentstore/content/cfg/original.agentstore.cfg",
+    "template-path": "${persistent_data_templates_path}/passageextractor_agentstore/content/cfg/original.agentstore.cfg"
+  },
+  "${persistent_data_path}/passageextractor_agentstore/content/cfg/original.content.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-PassageAgentstoreContentAciPort": {
+        "name": "Configuration - Passage Extractor Agentstore Content ACI Port",
+        "find_string": "DA_PASSAGEEXTRATOR_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_AGENTSTORE}"
+      },
+      "set-PassageAgentstoreContentIndexPort": {
+        "name": "Configuration - Passage Extractor Agentstore Content Index Port",
+        "find_string": "DA_PASSAGEEXTRATOR_AGENTSTORE_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_AGENTSTORE_INDEX}"
+      },
+      "set-PassageAgentstoreContentServicePort": {
+        "name": "Configuration - Passage Extractor Agentstore Content Service Port",
+        "find_string": "DA_PASSAGEEXTRATOR_AGENTSTORE_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_AGENTSTORE_SERVICE}"
+      }
+    },
+    "output-path": "${persistent_data_path}/passageextractor_agentstore/content/cfg/original.content.cfg",
+    "template-path": "${persistent_data_templates_path}/passageextractor_agentstore/content/cfg/original.content.cfg"
+  },
+  "${persistent_data_path}/passageextractor_agentstore/content/cfg/idol.common.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      }
+    },
+    "output-path": "${persistent_data_path}/passageextractor_agentstore/content/cfg/idol.common.cfg",
+    "template-path": "${persistent_data_templates_path}/passageextractor_agentstore/content/cfg/idol.common.cfg"
+  },
+  "${persistent_data_path}/dataadmin_community/community/cfg/community.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-CommunityAciPort": {
+        "name": "Configuration - Community ACI Port",
+        "find_string": "DA_COMMUNITY_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_COMMUNITY}"
+      },
+      "set-CommunityServicePort": {
+        "name": "Configuration - Community Service Port",
+        "find_string": "DA_COMMUNITY_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_COMMUNITY_SERVICE}"
+      },
+      "set-CommunityIndexPort": {
+        "name": "Configuration - Community Index Port",
+        "find_string": "DA_COMMUNITY_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_COMMUNITY_INDEX}"
+      },
+      "set-PassageExtractorContentAciPort": {
+        "name": "Configuration - Passage Extractor Content ACI Port (in Community)",
+        "find_string": "DA_PASSAGEEXTRATOR_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_CONTENT}"
+      },
+      "set-QmsAgentstoreAciPort": {
+        "name": "Configuration - QMS Agentstore ACI Port (in Community)",
+        "find_string": "DA_QMS_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_AGENTSTORE}"
+      },
+      "set-PassageExtractorAgentstoreAciPort": {
+        "name": "Configuration - Passage Extractor Agentstore ACI Port (in Community)",
+        "find_string": "DA_PASSAGEEXTRATOR_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_AGENTSTORE}"
+      }
+    },
+    "output-path": "${persistent_data_path}/dataadmin_community/community/cfg/community.cfg",
+    "template-path": "${persistent_data_templates_path}/dataadmin_community/community/cfg/community.cfg"
+  },
+  "${persistent_data_path}/dataadmin_community/community/cfg/idol.common.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      }
+    },
+    "output-path": "${persistent_data_path}/dataadmin_community/community/cfg/idol.common.cfg",
+    "template-path": "${persistent_data_templates_path}/dataadmin_community/community/cfg/idol.common.cfg"
+  },
+  "${persistent_data_path}/dataadmin_community/community/cfg/original.community.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-CommunityAciPort": {
+        "name": "Configuration - Community ACI Port",
+        "find_string": "DA_COMMUNITY_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_COMMUNITY}"
+      },
+      "set-CommunityServicePort": {
+        "name": "Configuration - Community Service Port",
+        "find_string": "DA_COMMUNITY_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_COMMUNITY_SERVICE}"
+      },
+      "set-CommunityIndexPort": {
+        "name": "Configuration - Community Index Port",
+        "find_string": "DA_COMMUNITY_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_COMMUNITY_INDEX}"
+      },
+      "set-PassageExtractorContentAciPort": {
+        "name": "Configuration - Passage Extractor Content ACI Port (in Community)",
+        "find_string": "DA_PASSAGEEXTRATOR_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_CONTENT}"
+      },
+      "set-QmsAgentstoreAciPort": {
+        "name": "Configuration - QMS Agentstore ACI Port (in Community)",
+        "find_string": "DA_QMS_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_AGENTSTORE}"
+      },
+      "set-PassageExtractorAgentstoreAciPort": {
+        "name": "Configuration - Passage Extractor Agentstore ACI Port (in Community)",
+        "find_string": "DA_PASSAGEEXTRATOR_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_AGENTSTORE}"
+      }
+    },
+    "output-path": "${persistent_data_path}/dataadmin_community/community/cfg/original.community.cfg",
+    "template-path": "${persistent_data_templates_path}/dataadmin_community/community/cfg/original.community.cfg"
+  },
+  "${persistent_data_path}/dataadmin_viewserver/view/cfg/view.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-ViewAciPort": {
+        "name": "Configuration - View ACI Port",
+        "find_string": "DA_VIEW_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_VIEW}"
+      },
+      "set-ViewServicePort": {
+        "name": "Configuration - View Service Port",
+        "find_string": "DA_VIEW_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_VIEW_SERVICE}"
+      },
+      "set-ViewIndexPort": {
+        "name": "Configuration - View Index Port",
+        "find_string": "DA_VIEW_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_VIEW_INDEX}"
+      },
+      "set-ViewIdolPortPassageAgentstore": {
+        "name": "Configuration - View IDOL Port (Passage Agentstore)",
+        "find_string": "DA_PASSAGEEXTRATOR_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_AGENTSTORE}"
+      }
+    },
+    "output-path": "${persistent_data_path}/dataadmin_viewserver/view/cfg/view.cfg",
+    "template-path": "${persistent_data_templates_path}/dataadmin_viewserver/view/cfg/view.cfg"
+  },
+  "${persistent_data_path}/dataadmin_viewserver/view/cfg/idol.common.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "configuration",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name, enabling proper license server resolution within the Docker network.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      }
+    },
+    "output-path": "${persistent_data_path}/dataadmin_viewserver/view/cfg/idol.common.cfg",
+    "template-path": "${persistent_data_templates_path}/dataadmin_viewserver/view/cfg/idol.common.cfg"
+  },
+  "${persistent_data_path}/dataadmin_viewserver/view/cfg/original.view.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-ViewAciPort": {
+        "name": "Configuration - View ACI Port",
+        "find_string": "DA_VIEW_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_VIEW}"
+      },
+      "set-ViewServicePort": {
+        "name": "Configuration - View Service Port",
+        "find_string": "DA_VIEW_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_VIEW_SERVICE}"
+      },
+      "set-ViewIndexPort": {
+        "name": "Configuration - View Index Port",
+        "find_string": "DA_VIEW_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_VIEW_INDEX}"
+      },
+      "set-ViewIdolPortPassageContent": {
+        "name": "Configuration - View IDOL Port (Passage Content)",
+        "find_string": "DA_PASSAGEEXTRATOR_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_CONTENT}"
+      }
+    },
+    "output-path": "${persistent_data_path}/dataadmin_viewserver/view/cfg/original.view.cfg",
+    "template-path": "${persistent_data_templates_path}/dataadmin_viewserver/view/cfg/original.view.cfg"
+  },
+  "${persistent_data_path}/answerbank_agentstore/content/cfg/content.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      }
+    },
+    "output-path": "${persistent_data_path}/answerbank_agentstore/content/cfg/content.cfg",
+    "template-path": "${persistent_data_templates_path}/answerbank_agentstore/content/cfg/content.cfg"
+  },
+  "${persistent_data_path}/answerbank_agentstore/content/cfg/agentstore.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-AnswerBankAciPort": {
+        "name": "Configuration - Answerbank Agentstore ACI Port",
+        "find_string": "DA_ANSWER_BANK_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_BANK_AGENTSTORE}"
+      },
+      "set-AnswerBankIndexPort": {
+        "name": "Configuration - Answerbank Agentstore Index Port",
+        "find_string": "DA_ANSWER_BANK_AGENTSTORE_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_BANK_AGENTSTORE_INDEX}"
+      },
+      "set-AnswerBankServicePort": {
+        "name": "Configuration - Answerbank Agentstore Service Port",
+        "find_string": "DA_ANSWER_BANK_AGENTSTORE_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_BANK_AGENTSTORE_SERVICE}"
+      }
+    },
+    "output-path": "${persistent_data_path}/answerbank_agentstore/content/cfg/agentstore.cfg",
+    "template-path": "${persistent_data_templates_path}/answerbank_agentstore/content/cfg/agentstore.cfg"
+  },
+  "${persistent_data_path}/answerbank_agentstore/content/cfg/original.agentstore.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      },
+      "set-AnswerBankAciPort": {
+        "name": "Configuration - Answerbank Agentstore ACI Port",
+        "find_string": "DA_ANSWER_BANK_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_BANK_AGENTSTORE}"
+      },
+      "set-AnswerBankIndexPort": {
+        "name": "Configuration - Answerbank Agentstore Index Port",
+        "find_string": "DA_ANSWER_BANK_AGENTSTORE_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_BANK_AGENTSTORE_INDEX}"
+      },
+      "set-AnswerBankServicePort": {
+        "name": "Configuration - Answerbank Agentstore Service Port",
+        "find_string": "DA_ANSWER_BANK_AGENTSTORE_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_BANK_AGENTSTORE_SERVICE}"
+      }
+    },
+    "output-path": "${persistent_data_path}/answerbank_agentstore/content/cfg/original.agentstore.cfg",
+    "template-path": "${persistent_data_templates_path}/answerbank_agentstore/content/cfg/original.agentstore.cfg"
+  },
+  "${persistent_data_path}/answerbank_agentstore/content/cfg/idol.common.cfg": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-LicenseServerHost": {
+        "name": "Configuration - License Server Host",
+        "description": "Sets the LicenseServerHost value from localhost to the licenseserver container name.",
+        "find_string": "LicenseServerHost=LICENSESERVER-FQDN-PLACEHOLDER",
+        "replacement_with": "LicenseServerHost=${IDOL_LICENSESERVER_FQDN}"
+      }
+    },
+    "output-path": "${persistent_data_path}/answerbank_agentstore/content/cfg/idol.common.cfg",
+    "template-path": "${persistent_data_templates_path}/answerbank_agentstore/content/cfg/idol.common.cfg"
+  },
+  "${licenseserver_toolkit_path}/docker-compose.licenseserver.yml": {
+    "file-operation": "CREATE",
+    "deployment-type": "licenseserver",
+    "licenseserver": {
+      "docker-compose-network": {
+        "name": "License Server - Docker Network",
+        "description": "Defines the Docker network for Basic IDOL services. Ensures proper communication and isolation between containers while allowing external access to necessary ports.",
+        "variable": "IDOL_DEPLOYMENT_NETWORK",
+        "placeholder": "DEPLOYMENT-TYPE-PLACEHOLDER"
+      },
+      "docker-compose-mac-address": {
+        "name": "License Server - Mac Address",
+        "description": "Defines the Docker mac address.",
+        "variable": "IDOL_LICENSE_KEY_MAC",
+        "placeholder": "MAC-ADDRESS-PLACEHOLDER"
+      },
+      "licenseserver-path": {
+        "name": "License Server - path",
+        "description": "Defines the License Server path.",
+        "variable": "IDOL_LICENSESERVER_NAME",
+        "placeholder": "LICENSE-SERVER-NAME-PLACEHOLDER"
+      },
+      "licenseserver-configuration-path": {
+        "name": "License Server - configuration full path",
+        "description": "Defines the IDOL License Server configuration full path.",
+        "variable": "IDOL_PRESERVE_LICENSESERVER_CFG_PATH",
+        "placeholder": "PRESERVE-LICENSESERVER-CFG-PATH-PLACEHOLDER"
+      }
+    },
+    "output-path": "${licenseserver_toolkit_path}/docker-compose.licenseserver.yml",
+    "template-path": "${licenseserver_templates_path}/docker-compose.licenseserver.yml-template"
+  },
+  "${licenseserver_toolkit_path}/dockerfile": {
+    "file-operation": "CREATE",
+    "deployment-type": "licenseserver",
+    "licenseserver": {
+      "licenseserver-path": {
+        "name": "License Server - path",
+        "description": "Defines the License Server path.",
+        "variable": "IDOL_LICENSESERVER_NAME",
+        "placeholder": "LICENSE-SERVER-NAME-PLACEHOLDER"
+      }
+    },
+    "output-path": "${licenseserver_toolkit_path}/dockerfile",
+    "template-path": "${licenseserver_templates_path}/dockerfile-template"
+  },
+  "${licenseserver_toolkit_path}/start-licenseserver.sh": {
+    "file-operation": "CREATE",
+    "deployment-type": "licenseserver",
+    "licenseserver": {
+      "licenseserver-path": {
+        "name": "License Server - path",
+        "description": "Defines the License Server path.",
+        "variable": "IDOL_LICENSESERVER_NAME",
+        "placeholder": "LICENSE-SERVER-NAME-PLACEHOLDER"
+      }
+    },
+    "output-path": "${licenseserver_toolkit_path}/start-licenseserver.sh",
+    "template-path": "${licenseserver_templates_path}/start-licenseserver.sh-template"
+  },
+  "${basic_idol_toolkit_path}/.env": {
+    "file-operation": "CREATE",
+    "deployment-type": "basic-idol",
+    "basic-idol": {
+      "idol-environment-keystorepass": {
+        "name": "Basic IDOL - environment keystorepass variable",
+        "description": "Defines the environment keystorepass variable.",
+        "variable": "IDOL_CERT_KEYSTORE_PASS",
+        "placeholder": "CERT-KEYSTORE-PASS-PLACEHOLDER"
+      },
+      "idol-environment-truststorepass": {
+        "name": "Basic IDOL - environment truststorepass variable",
+        "description": "Defines the environment truststorepass variable.",
+        "variable": "IDOL_CERT_TRUSTSTORE_PASS",
+        "placeholder": "CERT-TRUSTSTORE-PASS-PLACEHOLDER"
+      },
+      "idol-environment-server-version": {
+        "name": "Basic IDOL - environment server version variable",
+        "description": "Defines the environment server version variable.",
+        "variable": "IDOL_SERVER_VERSION",
+        "placeholder": "SETUP-SERVER-VERSION-PLACEHOLDER"
+      },
+      "idol-environment-dataadmin-version": {
+        "name": "Basic IDOL - environment dataadmin version variable",
+        "description": "Defines the environment dataadmin version variable.",
+        "variable": "IDOL_DATA_ADMIN_VERSION",
+        "placeholder": "SETUP-DATA-ADMIN-VERSION-PLACEHOLDER"
+      },
+      "idol-environment-host-ip": {
+        "name": "Basic IDOL - environment host IP variable",
+        "description": "Defines the environment host IP variable.",
+        "variable": "IDOL_NET_HOST_IP",
+        "placeholder": "HOST-IP-PLACEHOLDER"
+      }
+    },
+    "output-path": "${basic_idol_toolkit_path}/.env",
+    "template-path": "${basic_idol_templates_path}/.env"
+  },
+  "${basic_idol_toolkit_path}/docker-compose.bindmount.yml": {
+    "file-operation": "CREATE",
+    "deployment-type": "basic-idol",
+    "basic-idol": {
+      "idol-environment-driver-type": {
+        "name": "Basic IDOL - environment driver type variable",
+        "description": "Defines the environment driver type variable.",
+        "variable": "IDOL_DRIVER_TYPE",
+        "placeholder": "DRIVER-PLACEHOLDER"
+      },
+      "idol-environment-device-path": {
+        "name": "Basic IDOL - environment device path variable",
+        "description": "Defines the environment device path variable.",
+        "variable": "IDOL_HOST_STORAGE_PATH",
+        "placeholder": "DEVICE-PATH-PLACEHOLDER"
+      }
+    },
+    "output-path": "${basic_idol_toolkit_path}/docker-compose.bindmount.yml",
+    "template-path": "${basic_idol_templates_path}/docker-compose.bindmount.yml-template"
+  },
+    "${basic_idol_toolkit_path}/docker-compose.expose-ports.yml": {
+    "file-operation": "CREATE",
+    "deployment-type": "basic-idol",
+    "configuration": {
+      "set-httpd-reverse-proxy": {
+        "name": "Basic IDOL - HTTPD Reverse Proxy Port",
+        "find_string": "BI_HTTPD_REVERSE_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_HTTPD_REVERSE}"
+      },
+      "set-agentstore-aci": {
+        "name": "Basic IDOL - Agentstore ACI Port",
+        "find_string": "BI_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_AGENTSTORE}"
+      },
+      "set-agentstore-index": {
+        "name": "Basic IDOL - Agentstore Index Port",
+        "find_string": "BI_AGENTSTORE_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_AGENTSTORE_INDEX}"
+      },
+      "set-agentstore-service": {
+        "name": "Basic IDOL - Agentstore Service Port",
+        "find_string": "BI_AGENTSTORE_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_AGENTSTORE_SERVICE}"
+      },
+      "set-categorisation-aci": {
+        "name": "Basic IDOL - Categorisation Agentstore ACI Port",
+        "find_string": "BI_CATEGORISATION_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CATEGORISATION_AGENTSTORE}"
+      },
+      "set-categorisation-index": {
+        "name": "Basic IDOL - Categorisation Agentstore Index Port",
+        "find_string": "BI_CATEGORISATION_AGENTSTORE_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CATEGORISATION_AGENTSTORE_INDEX}"
+      },
+      "set-categorisation-service": {
+        "name": "Basic IDOL - Categorisation Agentstore Service Port",
+        "find_string": "BI_CATEGORISATION_AGENTSTORE_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CATEGORISATION_AGENTSTORE_SERVICE}"
+      },
+      "set-categorisation-query": {
+        "name": "Basic IDOL - Categorisation Agentstore Query Port",
+        "find_string": "BI_CATEGORISATION_AGENTSTORE_QRY_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CATEGORISATION_AGENTSTORE_QUERY}"
+      },
+      "set-category-aci": {
+        "name": "Basic IDOL - Category ACI Port",
+        "find_string": "BI_CATEGORY_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CATEGORY}"
+      },
+      "set-category-service": {
+        "name": "Basic IDOL - Category Service Port",
+        "find_string": "BI_CATEGORY_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CATEGORY_SERVICE}"
+      },
+      "set-community-aci": {
+        "name": "Basic IDOL - Community ACI Port",
+        "find_string": "BI_COMMUNITY_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_COMMUNITY}"
+      },
+      "set-community-service": {
+        "name": "Basic IDOL - Community Service Port",
+        "find_string": "BI_COMMUNITY_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_COMMUNITY_SERVICE}"
+      },
+      "set-content-aci": {
+        "name": "Basic IDOL - Content ACI Port",
+        "find_string": "BI_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CONTENT}"
+      },
+      "set-content-service": {
+        "name": "Basic IDOL - Content Service Port",
+        "find_string": "BI_CONTENT_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CONTENT_SERVICE}"
+      },
+      "set-content-port-range": {
+        "name": "Basic IDOL - Content Port Range (combined)",
+        "find_string": "BI_CONTENT_ACI_PLACEHOLDER-BI_CONTENT_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CONTENT}-${PORT_BASIC_IDOL_CONTENT_SERVICE}"
+      },
+      "set-view-aci": {
+        "name": "Basic IDOL - View ACI Port",
+        "find_string": "BI_VIEW_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_VIEW}"
+      },
+      "set-view-service": {
+        "name": "Basic IDOL - View Service Port",
+        "find_string": "BI_VIEW_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_VIEW_SERVICE}"
+      },
+      "set-find-ui": {
+        "name": "Basic IDOL - Find UI Port",
+        "find_string": "FIND_UI_PLACEHOLDER",
+        "replacement_with": "${IDOL_FIND_UI_BASIC_IDOL_PORT}"
+      },
+      "set-nifi-ui": {
+        "name": "Basic IDOL - NiFi UI Port",
+        "find_string": "NIFI_UI_PLACEHOLDER",
+        "replacement_with": "${IDOL_NIFI_UI_PORT}"
+      }
+    },
+    "output-path": "${basic_idol_toolkit_path}/docker-compose.expose-ports.yml",
+    "template-path": "${basic_idol_templates_path}/docker-compose.expose-ports.yml"
+  },
+  "${basic_idol_toolkit_path}/docker-compose.ssl.yml": {
+    "file-operation": "CREATE",
+    "deployment-type": "basic-idol",
+    "basic-idol": {
+      "idol-environment-keystorepass": {
+        "name": "Basic IDOL - environment keystorepass variable",
+        "description": "Defines the environment keystorepass variable.",
+        "variable": "IDOL_CERT_KEYSTORE_PASS",
+        "placeholder": "CERT-KEYSTORE-PASS-PLACEHOLDER"
+      }
+    },
+    "output-path": "${basic_idol_toolkit_path}/docker-compose.ssl.yml",
+    "template-path": "${basic_idol_templates_path}/docker-compose.ssl.yml"
+  },
+  "${basic_idol_toolkit_path}/docker-compose.yml": {
+    "file-operation": "CREATE",
+    "deployment-type": "basic-idol",
+    "basic-idol": {
+            "idol-shared-folder": {
+        "name": "IDOL - Shared Folder",
+        "description": "Defines the IDOL Shared Folder",
+        "variable": "IDOL_SHARED_FOLDER_PATH",
+        "placeholder": "SHARED-FOLDER-PATH-PLACEHOLDER"
+      },
+      "docker-compose-mediaserver-pretraine-models": {
+        "name": "Rich Media - Media Server Docker Compose configuration for mediaserver pre-traine models",
+        "description": "Defines the Docker Compose configuration for setting mediaserver pre-traine models path.",
+        "variable": "IDOL_MEDIASERVER_PRETRAINE_MODELS_FOLDER_NAME",
+        "placeholder": "MEDIASERVER-PRETRAINE-MODELS-FOLDER-NAME-PLACEHOLDER"
+      },
+      "docker-compose-mediaserver-nifi-policy": {
+        "name": "Rich Media - Media Server Docker Compose configuration for mediaserver nifi policy",
+        "description": "Defines the Docker Compose configuration for setting mediaserver nifi policy path.",
+        "variable": "IDOL_MEDIASERVER_NIFI_POLICY_FOLDER_NAME",
+        "placeholder": "MEDIASERVER-NIFI-POLICY-FOLDER-NAME-PLACEHOLDER"
+      },
+      "docker-compose-network": {
+        "name": "Basic IDOL - Docker Network",
+        "description": "Defines the Docker network for Basic IDOL services. Ensures proper communication and isolation between containers while allowing external access to necessary ports.",
+        "variable": "IDOL_DEPLOYMENT_NETWORK",
+        "placeholder": "DEPLOYMENT-TYPE-PLACEHOLDER"
+      },
+      "docker-compose-content": {
+        "name": "Basic IDOL - Content Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL Content engine. Specifies the container setup, environment variables, and port mappings for the Content service.",
+        "variable": "IDOL_PRESERVE_CONTENT_PATH",
+        "placeholder": "PRESERVE-CONTENT-PATH-PLACEHOLDER"
+      },
+      "docker-compose-agentstore": {
+        "name": "Basic IDOL - Agentstore Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL Agentstore component. Specifies the container setup, environment variables, and port mappings for the Agentstore service.",
+        "variable": "IDOL_PRESERVE_AGENTSTORE_PATH",
+        "placeholder": "PRESERVE-AGENTSTORE-PATH-PLACEHOLDER"
+      },
+      "docker-compose-category": {
+        "name": "Basic IDOL - Category Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL Category component. Specifies the container setup, environment variables, and port mappings for the Category service.",
+        "variable": "IDOL_PRESERVE_CATEGORY_PATH",
+        "placeholder": "PRESERVE-CATEGORY-PATH-PLACEHOLDER"
+      },
+      "docker-compose-categorisation-agentstore": {
+        "name": "Basic IDOL - Categorisation Agentstore Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL Categorisation Agentstore component. Specifies the container setup, environment variables, and port mappings for the Categorisation Agentstore service.",
+        "variable": "IDOL_PRESERVE_CATEGORISATION_AGENTSTORE_PATH",
+        "placeholder": "PRESERVE-CATEGORISATION-AGENTSTORE-PATH-PLACEHOLDER"
+      },
+      "docker-compose-community": {
+        "name": "Basic IDOL - Community Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL Community component. Specifies the container setup, environment variables, and port mappings for the Community service.",
+        "variable": "IDOL_PRESERVE_COMMUNITY_PATH",
+        "placeholder": "PRESERVE-COMMUNITY-PATH-PLACEHOLDER"
+      },
+      "docker-compose-view": {
+        "name": "Basic IDOL - View Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL View component. Specifies the container setup, environment variables, and port mappings for the View service.",
+        "variable": "IDOL_VIEW_PATH",
+        "placeholder": "VIEW-PATH-PLACEHOLDER"
+      },
+      "docker-compose-find": {
+        "name": "Basic IDOL - Find Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL Find component. Specifies the container setup, environment variables, and port mappings for the Find service.",
+        "variable": "IDOL_PRESERVE_FIND_PATH",
+        "placeholder": "FIND-PATH-PLACEHOLDER"
+      },
+      "docker-compose-host-fqdn": {
+        "name": "Basic IDOL - Host FQDN Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL Host FQDN.",
+        "variable": "IDOL_HOST_FQDN",
+        "placeholder": "NIFI-FQDN-PLACEHOLDER"
+      },
+      "docker-compose-nifi-scripts-path": {
+        "name": "Basic IDOL - NIFI Scripts Path Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL NIFI Scripts Path.",
+        "variable": "IDOL_NIFI_SCRIPTS_PATH",
+        "placeholder": "NIFI-SCRIPTS-PATH-PLACEHOLDER"
+      },
+      "docker-compose-nifi-nar-path": {
+        "name": "Basic IDOL - NIFI NAR Path Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL NIFI NAR Path.",
+        "variable": "IDOL_NIFI_CONNECTOR_NAR_PATH",
+        "placeholder": "NIFI-CONNECTOR-NAR-PATH-PLACEHOLDER"
+      },      
+      "docker-compose-nifi-data-path": {
+        "name": "Basic IDOL - NIFI Data Path Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL NIFI Data Path.",
+        "variable": "IDOL_NIFI_DATA_PATH",
+        "placeholder": "NIFI-DATA-PATH-PLACEHOLDER"
+      }, 
+      "set-nifi-ui": {
+        "name": "Basic IDOL - NiFi UI Port",
+        "find_string": "NIFI_UI_PLACEHOLDER",
+        "replacement_with": "${IDOL_NIFI_UI_PORT}"
+      },
+      "httpd_reverse_proxy": {
+        "name": "Basic IDOL - HTTPD Reverse Proxy Port",
+        "description": "Routes external HTTP/HTTPS traffic to internal IDOL services. Configure to avoid conflicts with other services and ensure proper access to the Basic IDOL UI and APIs.",
+        "variable": "PORT_BASIC_IDOL_HTTPD_REVERSE",
+        "placeholder": "BI_HTTPD_REVERSE_PLACEHOLDER"
+      }
+    },
+    "output-path": "${basic_idol_toolkit_path}/docker-compose.yml",
+    "template-path": "${basic_idol_templates_path}/docker-compose.yml"
+  },
+  "${basic_idol_toolkit_path}/idol_ssl.env": {
+    "file-operation": "CREATE",
+    "deployment-type": "basic-idol",
+    "basic-idol": {
+      "idol-environment-keystorepass": {
+        "name": "Basic IDOL - environment keystorepass variable",
+        "description": "Defines the environment keystorepass variable.",
+        "variable": "IDOL_CERT_KEYSTORE_PASS",
+        "placeholder": "CERT-KEYSTORE-PASS-PLACEHOLDER"
+      }
+    },
+    "output-path": "${basic_idol_toolkit_path}/idol_ssl.env",
+    "template-path": "${basic_idol_templates_path}/idol_ssl.env"
+  },
+  "${persistent_data_path}/find/basic-idol/home/config.json": {
+    "file-operation": "CREATE",
+    "deployment-type": "basic-idol",
+    "configuration": {
+      "set-find-community-port": {
+        "name": "Basic IDOL Find UI - Community Port",
+        "description": "Replaces the Community ACI port placeholder in the Find UI configuration.",
+        "find_string": "BI_COMMUNITY_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_COMMUNITY}"
+      },
+      "set-find-content-port": {
+        "name": "Basic IDOL Find UI - Content Port",
+        "description": "Replaces the Content ACI port placeholder in the Find UI configuration.",
+        "find_string": "BI_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CONTENT}"
+      }
+    },
+    "output-path": "${persistent_data_path}/find/basic-idol/home/config.json",
+    "template-path": "${persistent_data_templates_path}/find/basic-idol/home/config.json"
+  },
+  "${persistent_data_path}/find/basic-idol/home/config_ssl.json": {
+    "file-operation": "CREATE",
+    "deployment-type": "basic-idol",
+    "configuration": {
+      "set-find-community-port": {
+        "name": "Basic IDOL Find UI SSL - Community Port",
+        "description": "Replaces the Community ACI port placeholder in the Find UI SSL configuration.",
+        "find_string": "BI_COMMUNITY_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_COMMUNITY}"
+      },
+      "set-find-content-port": {
+        "name": "Basic IDOL Find UI SSL - Content Port",
+        "description": "Replaces the Content ACI port placeholder in the Find UI SSL configuration.",
+        "find_string": "BI_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CONTENT}"
+      }
+    },
+    "output-path": "${persistent_data_path}/find/basic-idol/home/config_ssl.json",
+    "template-path": "${persistent_data_templates_path}/find/basic-idol/home/config_ssl.json"
+  },
+  "${rich_media_toolkit_path}/.env": {
+    "file-operation": "CREATE",
+    "deployment-type": "rich-media",
+    "rich-media": {
+      "idol-environment-keystorepass": {
+        "name": "Rich Media - environment keystorepass variable",
+        "description": "Defines the environment keystorepass variable.",
+        "variable": "IDOL_CERT_KEYSTORE_PASS",
+        "placeholder": "CERT-KEYSTORE-PASS-PLACEHOLDER"
+      },
+      "idol-environment-truststorepass": {
+        "name": "Rich Media - environment truststorepass variable",
+        "description": "Defines the environment truststorepass variable.",
+        "variable": "IDOL_CERT_TRUSTSTORE_PASS",
+        "placeholder": "CERT-TRUSTSTORE-PASS-PLACEHOLDER"
+      },
+      "idol-environment-server-version": {
+        "name": "Rich Media - environment server version variable",
+        "description": "Defines the environment server version variable.",
+        "variable": "IDOL_RICH_MEDIA_VERSION",
+        "placeholder": "SETUP-SERVER-VERSION-PLACEHOLDER"
+      },
+      "idol-environment-richmedia-version": {
+        "name": "Rich Media - environment dataadmin version variable",
+        "description": "Defines the environment dataadmin version variable.",
+        "variable": "IDOL_RICH_MEDIA_VERSION",
+        "placeholder": "SETUP-RICH-MEDIA-VERSION-PLACEHOLDER"
+      },
+      "idol-environment-host-ip": {
+        "name": "Rich Media - environment host IP variable",
+        "description": "Defines the environment host IP variable.",
+        "variable": "IDOL_NET_HOST_IP",
+        "placeholder": "HOST-IP-PLACEHOLDER"
+      }
+    },
+    "output-path": "${rich_media_toolkit_path}/.env",
+    "template-path": "${rich_media_templates_path}/.env"
+  },
+  "${rich_media_toolkit_path}/docker-compose.add-mmap.yml": {
+    "file-operation": "CREATE",
+    "deployment-type": "rich-media",
+    "configuration": {
+      "set-shared-folder-nifi-policy": {
+        "name": "Rich Media - Shared Folder Nifi Policy Path",
+        "find_string": "SHARED-FOLDER-PATH-PLACEHOLDER/MEDIASERVER-NIFI-POLICY-FOLDER-NAME-PLACEHOLDER",
+        "replacement_with": "${IDOL_SHARED_FOLDER_PATH}/${IDOL_MEDIASERVER_NIFI_POLICY_FOLDER_NAME}"
+      },
+      "set-shared-folder-pretrained-models": {
+        "name": "Rich Media - Shared Folder Pretrained Models Path",
+        "find_string": "SHARED-FOLDER-PATH-PLACEHOLDER/MEDIASERVER-PRETRAINE-MODELS-FOLDER-NAME-PLACEHOLDER",
+        "replacement_with": "${IDOL_SHARED_FOLDER_PATH}/${IDOL_MEDIASERVER_PRETRAINE_MODELS_FOLDER_NAME}"
+      },
+      "set-mediaserver-port-range": {
+        "name": "Rich Media - Media Server Port Range",
+        "find_string": "RM_MEDIASERVER_ACI_PLACEHOLDER-RM_MEDIASERVER_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_RICH_MEDIA_MEDIASERVER}-${PORT_RICH_MEDIA_MEDIASERVER_SERVICE}"
+      },
+      "set-playlistserver-port-range": {
+        "name": "Rich Media - Playlist Server Port Range",
+        "find_string": "RM_MEDIASERVER_PLAYLISTSERVER_ACI_PLACEHOLDER-RM_MEDIASERVER_PLAYLISTSERVER_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_RICH_MEDIA_MEDIASERVER_PLAYLISTSERVER}-${PORT_RICH_MEDIA_MEDIASERVER_PLAYLISTSERVER_SERVICE}"
+      },
+      "set-mmap-app-http": {
+        "name": "Rich Media - Media Server Application HTTP Port",
+        "find_string": "RM_MEDIASERVER_APPLICATION_HTTP_PLACEHOLDER",
+        "replacement_with": "${PORT_RICH_MEDIA_MEDIASERVER_HTTP_APPLICATION}"
+      },
+      "set-mmap-app-https": {
+        "name": "Rich Media - Media Server Application HTTPS Port",
+        "find_string": "RM_MEDIASERVER_APPLICATION_HTTPS_PLACEHOLDER",
+        "replacement_with": "${PORT_RICH_MEDIA_MEDIASERVER_HTTPS_APPLICATION}"
+      }
+    },
+    "rich-media": {
+      "docker-compose-network": {
+        "name": "Rich Media - Docker Network",
+        "description": "Defines the Docker network for Rich Media services.",
+        "variable": "IDOL_DEPLOYMENT_NETWORK",
+        "placeholder": "DEPLOYMENT-TYPE-PLACEHOLDER"
+      },
+      "docker-compose-mediaserver": {
+        "name": "Rich Media - Media Server Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL Media Server.",
+        "variable": "IDOL_PRESERVE_MEDIASERVER_PATH",
+        "placeholder": "PRESERVE-MEDIASERVER-PATH-PLACEHOLDER"
+      },
+      "idol-shared-folder": {
+        "name": "IDOL - Shared Folder",
+        "description": "Defines the IDOL Shared Folder",
+        "variable": "IDOL_SHARED_FOLDER_PATH",
+        "placeholder": "SHARED-FOLDER-PATH-PLACEHOLDER"
+      },
+      "docker-compose-mediaserver-pretraine-models": {
+        "name": "Rich Media - Media Server Docker Compose configuration for mediaserver pre-traine models",
+        "description": "Defines the Docker Compose configuration for setting mediaserver pre-traine models path.",
+        "variable": "IDOL_MEDIASERVER_PRETRAINE_MODELS_FOLDER_NAME",
+        "placeholder": "MEDIASERVER-PRETRAINE-MODELS-FOLDER-NAME-PLACEHOLDER"
+      },
+      "docker-compose-mediaserver-nifi-policy": {
+        "name": "Rich Media - Media Server Docker Compose configuration for mediaserver nifi policy",
+        "description": "Defines the Docker Compose configuration for setting mediaserver nifi policy path.",
+        "variable": "IDOL_MEDIASERVER_NIFI_POLICY_FOLDER_NAME",
+        "placeholder": "MEDIASERVER-NIFI-POLICY-FOLDER-NAME-PLACEHOLDER"
+      }
+    },
+    "output-path": "${rich_media_toolkit_path}/docker-compose.add-mmap.yml",
+    "template-path": "${rich_media_templates_path}/docker-compose.add-mmap.yml"
+  },
+  "${rich_media_toolkit_path}/docker-compose.bindmount.yml": {
+    "file-operation": "CREATE",
+    "deployment-type": "rich-media",
+    "rich-media": {
+      "idol-environment-driver-type": {
+        "name": "Rich Media - IDOL environment driver type variable",
+        "description": "Defines the environment driver type variable.",
+        "variable": "IDOL_DRIVER_TYPE",
+        "placeholder": "DRIVER-PLACEHOLDER"
+      },
+      "idol-environment-device-path": {
+        "name": "Rich Media - IDOL environment device path variable",
+        "description": "Defines the environment device path variable.",
+        "variable": "IDOL_HOST_STORAGE_PATH",
+        "placeholder": "DEVICE-PATH-PLACEHOLDER"
+      }
+    },
+    "output-path": "${rich_media_toolkit_path}/docker-compose.bindmount.yml",
+    "template-path": "${rich_media_templates_path}/docker-compose.bindmount.yml-template"
+  },
+  "${rich_media_toolkit_path}/docker-compose.expose-ports.yml": {
+    "file-operation": "CREATE",
+    "deployment-type": "rich-media",
+    "rich-media": {
+      "httpd_reverse_proxy": {
+        "name": "Rich Media - HTTPD Reverse Proxy Port",
+        "description": "Routes external HTTP/HTTPS traffic to internal IDOL services.",
+        "variable": "PORT_BASIC_IDOL_HTTPD_REVERSE",
+        "placeholder": "RM_HTTPD_REVERSE_PLACEHOLDER"
+      },
+      "set-content-port-range": {
+        "name": "Rich Media - Content Port Range",
+        "find_string": "BI_CONTENT_ACI_PLACEHOLDER-BI_CONTENT_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CONTENT}-${PORT_BASIC_IDOL_CONTENT_SERVICE}"
+      },
+      "set-agentstore-port-range": {
+        "name": "Rich Media - Agentstore Port Range",
+        "find_string": "BI_AGENTSTORE_ACI_PLACEHOLDER-BI_AGENTSTORE_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_AGENTSTORE}-${PORT_BASIC_IDOL_AGENTSTORE_SERVICE}"
+      },
+      "set-category-port-range": {
+        "name": "Rich Media - Category Port Range",
+        "find_string": "BI_CATEGORY_ACI_PLACEHOLDER-BI_CATEGORY_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CATEGORY}-${PORT_BASIC_IDOL_CATEGORY_SERVICE}"
+      },
+      "set-categorisation-port-range": {
+        "name": "Rich Media - Categorisation Agentstore Port Range",
+        "find_string": "BI_CATEGORISATION_AGENTSTORE_ACI_PLACEHOLDER-BI_CATEGORISATION_AGENTSTORE_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_CATEGORISATION_AGENTSTORE}-${PORT_BASIC_IDOL_CATEGORISATION_AGENTSTORE_SERVICE}"
+      },
+      "set-community-port-range": {
+        "name": "Rich Media - Community Port Range",
+        "find_string": "BI_COMMUNITY_ACI_PLACEHOLDER-BI_COMMUNITY_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_COMMUNITY}-${PORT_BASIC_IDOL_COMMUNITY_SERVICE}"
+      },
+      "set-view-port-range": {
+        "name": "Rich Media - View Port Range",
+        "find_string": "BI_VIEW_ACI_PLACEHOLDER-BI_VIEW_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_VIEW}-${PORT_BASIC_IDOL_VIEW_SERVICE}"
+      },
+      "set-nifi-ui": {
+        "name": "Rich Media - NiFi UI Port",
+        "find_string": "NIFI_UI_PLACEHOLDER",
+        "replacement_with": "${IDOL_NIFI_UI_PORT}"
+      }
+    },
+    "output-path": "${rich_media_toolkit_path}/docker-compose.expose-ports.yml",
+    "template-path": "${rich_media_templates_path}/docker-compose.expose-ports.yml"
+  },
+  "${rich_media_toolkit_path}/docker-compose.ssl.yml": {
+    "file-operation": "CREATE",
+    "deployment-type": "rich-media",
+    "rich-media": {
+      "idol-environment-keystorepass": {
+        "name": "Rich Media - environment keystorepass variable",
+        "description": "Defines the environment keystorepass variable.",
+        "variable": "IDOL_CERT_KEYSTORE_PASS",
+        "placeholder": "CERT-KEYSTORE-PASS-PLACEHOLDER"
+      }
+    },
+    "output-path": "${rich_media_toolkit_path}/docker-compose.ssl.yml",
+    "template-path": "${rich_media_templates_path}/docker-compose.ssl.yml"
+  },
+  "${rich_media_toolkit_path}/docker-compose.yml": {
+    "file-operation": "CREATE",
+    "deployment-type": "rich-media",
+    "rich-media": {
+      "docker-compose-network": {
+        "name": "Rich Media - Docker Network",
+        "description": "Defines the Docker network for Rich Media services.",
+        "variable": "IDOL_DEPLOYMENT_NETWORK",
+        "placeholder": "DEPLOYMENT-TYPE-PLACEHOLDER"
+      },
+      "docker-compose-content": {
+        "name": "Rich Media - Content Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL Content engine.",
+        "variable": "IDOL_PRESERVE_CONTENT_PATH",
+        "placeholder": "PRESERVE-CONTENT-PATH-PLACEHOLDER"
+      },
+      "docker-compose-agentstore": {
+        "name": "Rich Media - Agentstore Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL Agentstore component.",
+        "variable": "IDOL_PRESERVE_AGENTSTORE_PATH",
+        "placeholder": "PRESERVE-AGENTSTORE-PATH-PLACEHOLDER"
+      },
+      "docker-compose-category": {
+        "name": "Rich Media - Category Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL Category component.",
+        "variable": "IDOL_PRESERVE_CATEGORY_PATH",
+        "placeholder": "PRESERVE-CATEGORY-PATH-PLACEHOLDER"
+      },
+      "docker-compose-categorisation-agentstore": {
+        "name": "Rich Media - Categorisation Agentstore Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL Categorisation Agentstore component.",
+        "variable": "IDOL_PRESERVE_CATEGORISATION_AGENTSTORE_PATH",
+        "placeholder": "PRESERVE-CATEGORISATION-AGENTSTORE-PATH-PLACEHOLDER"
+      },
+      "docker-compose-community": {
+        "name": "Rich Media - Community Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL Community component.",
+        "variable": "IDOL_PRESERVE_COMMUNITY_PATH",
+        "placeholder": "PRESERVE-COMMUNITY-PATH-PLACEHOLDER"
+      },
+      "docker-compose-view": {
+        "name": "Rich Media - View Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL View component.",
+        "variable": "IDOL_VIEW_PATH",
+        "placeholder": "VIEW-PATH-PLACEHOLDER"
+      },
+      "docker-compose-find": {
+        "name": "Rich Media - Find Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL Find component.",
+        "variable": "IDOL_PRESERVE_FIND_PATH",
+        "placeholder": "FIND-PATH-PLACEHOLDER"
+      },
+      "docker-compose-host-fqdn": {
+        "name": "Rich Media - Host FQDN Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL Host FQDN.",
+        "variable": "IDOL_HOST_FQDN",
+        "placeholder": "NIFI-FQDN-PLACEHOLDER"
+      },      
+      "docker-compose-nifi-scripts-path": {
+        "name": "Rich Media - NIFI Scripts Path Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL NIFI Scripts Path.",
+        "variable": "IDOL_NIFI_SCRIPTS_PATH",
+        "placeholder": "NIFI-SCRIPTS-PATH-PLACEHOLDER"
+      },
+      "docker-compose-nifi-nar-path": {
+        "name": "Rich Media - NIFI NAR Path Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL NIFI NAR Path.",
+        "variable": "IDOL_NIFI_CONNECTOR_NAR_PATH",
+        "placeholder": "NIFI-CONNECTOR-NAR-PATH-PLACEHOLDER"
+      }, 
+      "docker-compose-nifi-data-path": {
+        "name": "Rich Media - NIFI Data Path Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL NIFI Data Path.",
+        "variable": "IDOL_NIFI_DATA_PATH",
+        "placeholder": "NIFI-DATA-PATH-PLACEHOLDER"
+      },
+      "docker-compose-nifi-extensions-path": {
+        "name": "Rich Media - NIFI Extensions Path Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL NIFI Extensions Path.",
+        "variable": "IDOL_NIFI_DATA_PATH",
+        "placeholder": "NIFI-EXTENSIONS-PATH-PLACEHOLDER"
+      },
+      "httpd_reverse_proxy": {
+        "name": "Rich Media - HTTPD Reverse Proxy Port",
+        "description": "Routes external HTTP/HTTPS traffic to internal IDOL services.",
+        "variable": "PORT_BASIC_IDOL_HTTPD_REVERSE",
+        "placeholder": "RM_HTTPD_REVERSE_PLACEHOLDER"
+      },
+      "set-nifi-web-https-port": {
+        "name": "Rich Media - NIFI Web HTTPS Port",
+        "find_string": "NIFI_UI_PLACEHOLDER",
+        "replacement_with": "${IDOL_NIFI_UI_PORT}"
+      },
+      "set-nifi-web-proxy-host": {
+        "name": "Rich Media - NIFI Web Proxy Host",
+        "find_string": "NIFI_UI_PLACEHOLDER",
+        "replacement_with": "${IDOL_NIFI_UI_PORT}"
+      }
+    },
+    "output-path": "${rich_media_toolkit_path}/docker-compose.yml",
+    "template-path": "${rich_media_templates_path}/docker-compose.yml"
+  },
+  "${rich_media_toolkit_path}/idol_ssl.env": {
+    "file-operation": "CREATE",
+    "deployment-type": "rich-media",
+    "rich-media": {
+      "idol-environment-keystorepass": {
+        "name": "Rich Media - environment keystorepass variable",
+        "description": "Defines the environment keystorepass variable.",
+        "variable": "IDOL_CERT_KEYSTORE_PASS",
+        "placeholder": "CERT-KEYSTORE-PASS-PLACEHOLDER"
+      }
+    },
+    "output-path": "${rich_media_toolkit_path}/idol_ssl.env",
+    "template-path": "${rich_media_templates_path}/idol_ssl.env"
+  },
+  "${data_admin_toolkit_path}/.env": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "data-admin": {
+      "idol-environment-keystorepass": {
+        "name": "Data Admin - IDOL environment keystorepass variable",
+        "description": "Defines the environment keystorepass variable.",
+        "variable": "IDOL_CERT_KEYSTORE_PASS",
+        "placeholder": "CERT-KEYSTORE-PASS-PLACEHOLDER"
+      },
+      "idol-environment-truststorepass": {
+        "name": "Data Admin - IDOL environment truststorepass variable",
+        "description": "Defines the environment truststorepass variable.",
+        "variable": "IDOL_CERT_TRUSTSTORE_PASS",
+        "placeholder": "CERT-TRUSTSTORE-PASS-PLACEHOLDER"
+      },
+      "idol-environment-server-version": {
+        "name": "Data Admin - IDOL environment server version variable",
+        "description": "Defines the environment server version variable.",
+        "variable": "IDOL_SERVER_VERSION",
+        "placeholder": "SETUP-SERVER-VERSION-PLACEHOLDER"
+      },
+      "idol-environment-dataadmin-version": {
+        "name": "Data Admin - IDOL environment dataadmin version variable",
+        "description": "Defines the environment dataadmin version variable.",
+        "variable": "IDOL_DATA_ADMIN_VERSION",
+        "placeholder": "SETUP-DATA-ADMIN-VERSION-PLACEHOLDER"
+      },
+      "idol-environment-host-ip": {
+        "name": "Data Admin - IDOL environment host IP variable",
+        "description": "Defines the environment host IP variable.",
+        "variable": "IDOL_NET_HOST_IP",
+        "placeholder": "HOST-IP-PLACEHOLDER"
+      }
+    },
+    "output-path": "${data_admin_toolkit_path}/.env",
+    "template-path": "${data_admin_templates_path}/.env"
+  },
+"${data_admin_toolkit_path}/docker-compose.expose-ports.yml": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-httpd-reverse-proxy": {
+        "name": "Data Admin - HTTPD Reverse Proxy Port",
+        "find_string": "DA_HTTPD_REVERSE_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_HTTPD_REVERSE}"
+      },
+      "set-answerbank-aci": {
+        "name": "Data Admin - Answerbank Agentstore ACI Port",
+        "find_string": "DA_ANSWER_BANK_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_BANK_AGENTSTORE}"
+      },
+      "set-answerbank-index": {
+        "name": "Data Admin - Answerbank Agentstore Index Port",
+        "find_string": "DA_ANSWER_BANK_AGENTSTORE_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_BANK_AGENTSTORE_INDEX}"
+      },
+      "set-answerbank-service": {
+        "name": "Data Admin - Answerbank Agentstore Service Port",
+        "find_string": "DA_ANSWER_BANK_AGENTSTORE_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_BANK_AGENTSTORE_SERVICE}"
+      },
+      "set-passage-content-aci": {
+        "name": "Data Admin - Passage Extractor Content ACI Port",
+        "find_string": "DA_PASSAGEEXTRATOR_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_CONTENT}"
+      },
+      "set-passage-content-index": {
+        "name": "Data Admin - Passage Extractor Content Index Port",
+        "find_string": "DA_PASSAGEEXTRATOR_CONTENT_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_CONTENT_INDEX}"
+      },
+      "set-passage-content-service": {
+        "name": "Data Admin - Passage Extractor Content Service Port",
+        "find_string": "DA_PASSAGEEXTRATOR_CONTENT_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_CONTENT_SERVICE}"
+      },
+      "set-passage-agentstore-aci": {
+        "name": "Data Admin - Passage Extractor Agentstore ACI Port",
+        "find_string": "DA_PASSAGEEXTRATOR_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_AGENTSTORE}"
+      },
+      "set-passage-agentstore-index": {
+        "name": "Data Admin - Passage Extractor Agentstore Index Port",
+        "find_string": "DA_PASSAGEEXTRATOR_AGENTSTORE_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_AGENTSTORE_INDEX}"
+      },
+      "set-passage-agentstore-service": {
+        "name": "Data Admin - Passage Extractor Agentstore Service Port",
+        "find_string": "DA_PASSAGEEXTRATOR_AGENTSTORE_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_AGENTSTORE_SERVICE}"
+      },
+      "set-answer-server-aci": {
+        "name": "Data Admin - Answer Server ACI Port",
+        "find_string": "DA_ANSWER_SERVER_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_SERVER}"
+      },
+      "set-answer-server-index": {
+        "name": "Data Admin - Answer Server Index Port",
+        "find_string": "DA_ANSWER_SERVER_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_SERVER_INDEX}"
+      },
+      "set-answer-server-service": {
+        "name": "Data Admin - Answer Server Service Port",
+        "find_string": "DA_ANSWER_SERVER_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_ANSWER_SERVER_SERVICE}"
+      },
+      "set-qms-agentstore-aci": {
+        "name": "Data Admin - QMS Agentstore ACI Port",
+        "find_string": "DA_QMS_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_AGENTSTORE}"
+      },
+      "set-qms-agentstore-index": {
+        "name": "Data Admin - QMS Agentstore Index Port",
+        "find_string": "DA_QMS_AGENTSTORE_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_AGENTSTORE_INDEX}"
+      },
+      "set-qms-agentstore-service": {
+        "name": "Data Admin - QMS Agentstore Service Port",
+        "find_string": "DA_QMS_AGENTSTORE_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_AGENTSTORE_SERVICE}"
+      },
+      "set-qms-aci": {
+        "name": "Data Admin - QMS ACI Port",
+        "find_string": "DA_QMS_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS}"
+      },
+      "set-qms-index": {
+        "name": "Data Admin - QMS Index Port",
+        "find_string": "DA_QMS_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_INDEX}"
+      },
+      "set-qms-service": {
+        "name": "Data Admin - QMS Service Port",
+        "find_string": "DA_QMS_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_SERVICE}"
+      },
+      "set-stats-server-aci": {
+        "name": "Data Admin - Stats Server ACI Port",
+        "find_string": "DA_STATS_SERVER_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_STATS_SERVER}"
+      },
+      "set-stats-server-index": {
+        "name": "Data Admin - Stats Server Index Port",
+        "find_string": "DA_STATS_SERVER_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_STATS_SERVER_INDEX}"
+      },
+      "set-stats-server-service": {
+        "name": "Data Admin - Stats Server Service Port",
+        "find_string": "DA_STATS_SERVER_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_STATS_SERVER_SERVICE}"
+      },
+      "set-view-aci": {
+        "name": "Data Admin - View ACI Port",
+        "find_string": "DA_VIEW_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_VIEW}"
+      },
+      "set-view-index": {
+        "name": "Data Admin - View Index Port",
+        "find_string": "DA_VIEW_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_VIEW_INDEX}"
+      },
+      "set-view-service": {
+        "name": "Data Admin - View Service Port",
+        "find_string": "DA_VIEW_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_VIEW_SERVICE}"
+      },
+      "set-community-aci": {
+        "name": "Data Admin - Community ACI Port",
+        "find_string": "DA_COMMUNITY_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_COMMUNITY}"
+      },
+      "set-community-index": {
+        "name": "Data Admin - Community Index Port",
+        "find_string": "DA_COMMUNITY_IDX_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_COMMUNITY_INDEX}"
+      },
+      "set-community-service": {
+        "name": "Data Admin - Community Service Port",
+        "find_string": "DA_COMMUNITY_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_COMMUNITY_SERVICE}"
+      },
+      "set-nifi-ui": {
+        "name": "Data Admin - NiFi UI Port",
+        "find_string": "NIFI_UI_PLACEHOLDER",
+        "replacement_with": "${IDOL_NIFI_UI_PORT}"
+      },
+      "set-find-ui": {
+        "name": "Data Admin - Find UI Port",
+        "find_string": "FIND_UI_PLACEHOLDER",
+        "replacement_with": "${IDOL_FIND_UI_DATA_ADMIN_PORT}"
+      },
+      "set-dataadmin-https-ui": {
+        "name": "Data Admin - HTTPS UI Port",
+        "find_string": "DATAADMIN_HTTPS_UI_PLACEHOLDER",
+        "replacement_with": "${IDOL_DATA_ADMIN_HTTPS_UI_PORT}"
+      },
+      "set-dataadmin-internal-ui": {
+        "name": "Data Admin - Internal UI Port",
+        "find_string": "DATAADMIN_INTERNAL_UI_PLACEHOLDER",
+        "replacement_with": "${IDOL_DATA_ADMIN_INTERNAL_UI_PORT}"
+      }
+    },
+    "output-path": "${data_admin_toolkit_path}/docker-compose.expose-ports.yml",
+    "template-path": "${data_admin_templates_path}/docker-compose.expose-ports.yml"
+  },
+  "${data_admin_toolkit_path}/docker-compose.ssl.yml": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "data-admin": {
+      "idol-environment-keystorepass": {
+        "name": "Data Admin - IDOL environment keystorepass variable",
+        "description": "Defines the environment keystorepass variable.",
+        "variable": "IDOL_CERT_KEYSTORE_PASS",
+        "placeholder": "CERT-KEYSTORE-PASS-PLACEHOLDER"
+      },
+      "set-dataadmin-https-ui": {
+        "name": "Data Admin - HTTPS UI Port",
+        "find_string": "DATAADMIN_HTTPS_UI_PLACEHOLDER",
+        "replacement_with": "${IDOL_DATA_ADMIN_HTTPS_UI_PORT}"
+      }
+    },
+    "output-path": "${data_admin_toolkit_path}/docker-compose.ssl.yml",
+    "template-path": "${data_admin_templates_path}/docker-compose.ssl.yml"
+  },
+    "${data_admin_toolkit_path}/docker-compose.yml": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "configuration": {
+      "set-passage-content-port": {
+        "name": "Data Admin - Passage Extractor Content Port",
+        "find_string": "DA_PASSAGEEXTRATOR_CONTENT_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_PASSAGE_CONTENT}"
+      },
+      "set-qms-agentstore-port": {
+        "name": "Data Admin - QMS Agentstore Port",
+        "find_string": "DA_QMS_AGENTSTORE_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_QMS_AGENTSTORE}"
+      },
+      "set-nifi-ui": {
+        "name": "Data Admin - NiFi UI Port",
+        "find_string": "NIFI_UI_PLACEHOLDER",
+        "replacement_with": "${IDOL_NIFI_UI_PORT}"
+      },
+      "set-dataadmin-https-ui": {
+        "name": "Data Admin - HTTPS UI Port",
+        "find_string": "DATAADMIN_HTTPS_UI_PLACEHOLDER",
+        "replacement_with": "${IDOL_DATA_ADMIN_HTTPS_UI_PORT}"
+      },
+      "set-dataadmin-internal-ui": {
+        "name": "Data Admin - Internal UI Port",
+        "find_string": "DATAADMIN_INTERNAL_UI_PLACEHOLDER",
+        "replacement_with": "${IDOL_DATA_ADMIN_INTERNAL_UI_PORT}"
+      },
+      "set-docker-network": {
+        "name": "Data Admin - Docker Network",
+        "description": "Defines the Docker network for Data Admin services.",
+        "find_string": "DEPLOYMENT-TYPE-PLACEHOLDER",
+        "replacement_with": "${IDOL_DEPLOYMENT_NETWORK}"
+      },
+      "set-httpd-reverse-proxy": {
+        "name": "Data Admin - HTTPD Reverse Proxy Port",
+        "find_string": "DA_HTTPD_REVERSE_PLACEHOLDER",
+        "replacement_with": "${PORT_BASIC_IDOL_HTTPD_REVERSE}"
+      },
+      "set-answerbank-agentstore-path": {
+        "name": "Data Admin - Answerbank Agentstore Path",
+        "find_string": "PRESERVE-ANSWERBANK-AGENTSTORE-PATH-PLACEHOLDER",
+        "replacement_with": "${IDOL_PRESERVE_ANSWERBANK_AGENTSTORE_PATH}"
+      },
+      "set-passageextractor-content-path": {
+        "name": "Data Admin - Passage Extractor Content Path",
+        "find_string": "PRESERVE-PASSAGEEXTRACTOR-CONTENT-PATH-PLACEHOLDER",
+        "replacement_with": "${IDOL_PRESERVE_PASSAGEEXTRACTOR_CONTENT_PATH}"
+      },
+      "set-passageextractor-agentstore-path": {
+        "name": "Data Admin - Passage Extractor Agentstore Path",
+        "find_string": "PRESERVE-PASSAGEEXTRACTOR-AGENTSTORE-PATH-PLACEHOLDER",
+        "replacement_with": "${IDOL_PRESERVE_PASSAGEEXTRACTOR_AGENTSTORE_PATH}"
+      },
+      "set-answerserver-path": {
+        "name": "Data Admin - Answer Server Path",
+        "find_string": "PRESERVE-ANSWERSERVER-PATH-PLACEHOLDER",
+        "replacement_with": "${IDOL_PRESERVE_ANSWERSERVER_PATH}"
+      },
+      "set-qms-agentstore-path": {
+        "name": "Data Admin - QMS Agentstore Path",
+        "find_string": "PRESERVE-QMS-AGENTSTORE-PATH-PLACEHOLDER",
+        "replacement_with": "${IDOL_PRESERVE_QMS_AGENTSTORE_PATH}"
+      },
+      "set-qms-path": {
+        "name": "Data Admin - QMS Path",
+        "find_string": "PRESERVE-QMS-PATH-PLACEHOLDER",
+        "replacement_with": "${IDOL_PRESERVE_QMS_PATH}"
+      },
+      "set-dataadmin-statsserver-path": {
+        "name": "Data Admin - Stats Server Path",
+        "find_string": "PRESERVE-DATAADMIN-STATSSERVER-PATH-PLACEHOLDER",
+        "replacement_with": "${IDOL_PRESERVE_DATAADMIN_STATSSERVER_PATH}"
+      },
+      "set-dataadmin-viewserver-path": {
+        "name": "Data Admin - View Server Path",
+        "find_string": "PRESERVE-DATAADMIN-VIEWSERVER-PATH-PLACEHOLDER",
+        "replacement_with": "${IDOL_PRESERVE_DATAADMIN_VIEWSERVER_PATH}"
+      },
+      "set-dataadmin-community-path": {
+        "name": "Data Admin - Community Path",
+        "find_string": "PRESERVE-DATAADMIN-COMMUNITY-PATH-PLACEHOLDER",
+        "replacement_with": "${IDOL_PRESERVE_DATAADMIN_COMMUNITY_PATH}"
+      },
+      "set-CommunityAciPort": {
+        "name": "Configuration - Community ACI Port",
+        "find_string": "DA_COMMUNITY_ACI_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_COMMUNITY}"
+      },
+      "set-CommunityServicePort": {
+        "name": "Configuration - Community Service Port",
+        "find_string": "DA_COMMUNITY_SRV_PLACEHOLDER",
+        "replacement_with": "${PORT_DATA_ADMIN_COMMUNITY_SERVICE}"
+      },
+      "set-dataadmin-path": {
+        "name": "Data Admin - Main Path",
+        "find_string": "PRESERVE-DATAADMIN-PATH-PLACEHOLDER",
+        "replacement_with": "${IDOL_PRESERVE_DATAADMIN_PATH}"
+      },
+      "set-nifi-fqdn": {
+        "name": "Data Admin - NiFi FQDN",
+        "find_string": "NIFI-FQDN-PLACEHOLDER",
+        "replacement_with": "${IDOL_HOST_FQDN}"
+      },      
+      "docker-compose-nifi-scripts-path": {
+        "name": "Data Admin - NIFI Scripts Path Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL NIFI Scripts Path.",
+        "variable": "IDOL_NIFI_SCRIPTS_PATH",
+        "placeholder": "NIFI-SCRIPTS-PATH-PLACEHOLDER"
+      },
+      "docker-compose-nifi-nar-path": {
+        "name": "Data Admin - NIFI NAR Path Docker Compose Configuration",
+        "description": "Defines the Docker Compose configuration for the IDOL NIFI NAR Path.",
+        "variable": "IDOL_NIFI_CONNECTOR_NAR_PATH",
+        "placeholder": "NIFI-CONNECTOR-NAR-PATH-PLACEHOLDER"
+      }, 
+      "docker-compose-nifi-data-path": {
+        "name": "Data Admin - NiFi Data Path",
+        "find_string": "NIFI-DATA-PATH-PLACEHOLDER",
+        "replacement_with": "${IDOL_NIFI_DATA_PATH}"
+      },
+      "set-find-path": {
+        "name": "Data Admin - Find Path",
+        "find_string": "FIND-PATH-PLACEHOLDER",
+        "replacement_with": "${IDOL_PRESERVE_FIND_PATH}"
+      }
+    },
+    "output-path": "${data_admin_toolkit_path}/docker-compose.yml",
+    "template-path": "${data_admin_templates_path}/docker-compose.yml"
+  },
+  "${data_admin_toolkit_path}/idol_ssl.env": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "data-admin": {
+      "idol-environment-keystorepass": {
+        "name": "Data Admin - IDOL environment keystorepass variable",
+        "description": "Defines the environment keystorepass variable.",
+        "variable": "IDOL_CERT_KEYSTORE_PASS",
+        "placeholder": "CERT-KEYSTORE-PASS-PLACEHOLDER"
+      }
+    },
+    "output-path": "${data_admin_toolkit_path}/idol_ssl.env",
+    "template-path": "${data_admin_templates_path}/idol_ssl.env"
+  },
+  "${persistent_data_path}/dataadmin_community/community/prestart_scripts/oren_fix_001_startup.sh": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "output-path": "${persistent_data_path}/dataadmin_community/community/prestart_scripts/oren_fix_001_startup.sh",
+    "template-path": "${persistent_data_templates_path}/dataadmin_community/community/prestart_scripts/oren_fix_001_startup.sh"
+  },
+  "${persistent_data_path}/find/data-admin/home/config.json": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "output-path": "${persistent_data_path}/find/data-admin/home/config.json",
+    "template-path": "${persistent_data_templates_path}/find/data-admin/home/config.json"
+  },
+  "${persistent_data_path}/find/data-admin/home/config_ssl.json": {
+    "file-operation": "CREATE",
+    "deployment-type": "data-admin",
+    "output-path": "${persistent_data_path}/find/data-admin/home/config_ssl.json",
+    "template-path": "${persistent_data_templates_path}/find/data-admin/home/config_ssl.json"
+  },
+  "${llmsandbox_toolkit_path}/llm-docker-compose.yml": {
+    "file-operation": "CREATE",
+    "deployment-type": "llm",
+    "llm": {
+      "llm-model-name": {
+        "name": "LLM model name",
+        "description": "Defines the LLM model name.",
+        "variable": "IDOL_LLM_MODEL_NAME",
+        "placeholder": "LLM-MODEL-NAME-PLACEHOLDER"
+      },
+      "llm-model-path": {
+        "name": "LLM model path",
+        "description": "Defines the LLM model path.",
+        "variable": "IDOL_LLM_MODEL_PATH",
+        "placeholder": "PRESERVE-LLM-MODEL-PATH-PLACEHOLDER"
+      }
+    },
+    "output-path": "${llmsandbox_toolkit_path}/llm-docker-compose.yml",
+    "template-path": "${llmsandbox_templates_path}/llm-docker-compose.yml"
+  },
+  "${persistent_data_path}/answerserver/rag/grok/grok4.py": {
+    "file-operation": "CREATE",
+    "deployment-type": "llm",
+    "llm": {
+      "llm-api-key": {
+        "name": "Data Admin - Answer Server RAG LLM API Key",
+        "description": "API key used by the Answer Server to authenticate requests to the LLM provider.",
+        "variable": "IDOL_LLM_API_KEY",
+        "placeholder": "LLM-API-KEY-PLACEHOLDER"
+      }
+    },
+    "output-path": "${persistent_data_path}/answerserver/rag/grok/grok4.py",
+    "template-path": "${persistent_data_templates_path}/answerserver/rag/grok/grok4.py"
+  }
+}

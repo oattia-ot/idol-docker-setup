@@ -1,0 +1,1013 @@
+27/07/2026 08:48:54 [0] 30-Normal: ACI Server validated operations key.
+27/07/2026 08:48:54 [0] 30-Normal: ACI Server has no QPS limit.
+27/07/2026 08:48:54 [0] 30-Normal: ACI Server is licensed for SSL encryption.
+27/07/2026 08:48:54 [0] 30-Normal: Performed hostname lookup and converted ADMINCLIENTS from [*.*.*.*] -> [*].
+27/07/2026 08:48:54 [0] 30-Normal: Performed hostname lookup and converted USERCLIENTS from [*.*.*.*,*.*.*.*] -> [*,*].
+27/07/2026 08:48:54 [0] 30-Normal: Running with FIPS mode inactive
+27/07/2026 08:48:54 [0] 30-Normal: ACI Servers runs in SSL mode.
+27/07/2026 08:48:54 [0] 30-Normal: ACI Server setting MaxInputString to 64000.
+27/07/2026 08:48:54 [0] 30-Normal: ACI Server is configured for XSLT templating.
+27/07/2026 08:48:54 [0] 50-Warning: XSLT template directory not found (/community/acitemplates).
+27/07/2026 08:48:54 [0] 30-Normal: ACI Server successfully loaded online help.
+27/07/2026 08:48:54 [0] 30-Normal: ACI Server successfully loaded admin UI.
+27/07/2026 08:49:02 [6] 00-Always: Request from 172.18.0.16
+27/07/2026 08:49:02 [6] 00-Always: Action=RoleGetRoleList (172.18.0.16)
+27/07/2026 08:49:02 [6] 00-Always: Generated ActionId 46f16e4ae38228b868657cb1947dd1df26250815
+27/07/2026 08:49:02 [6] 30-Normal: Success
+27/07/2026 08:49:02 [6] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:02 [8] 00-Always: Request from 172.18.0.16
+27/07/2026 08:49:02 [8] 00-Always: Action=RoleAdd&RoleName=ISOUser (172.18.0.16)
+27/07/2026 08:49:02 [8] 00-Always: Generated ActionId 8061710d65e5d592430ffff3cbd5fc4bd42b8bd2
+27/07/2026 08:49:02 [8] 30-Normal: Success
+27/07/2026 08:49:02 [8] 30-Normal: Request completed in 1 ms.
+27/07/2026 08:49:02 [7] 00-Always: Request from 172.18.0.16
+27/07/2026 08:49:02 [7] 00-Always: Action=RoleAdd&RoleName=AnswerBankUser (172.18.0.16)
+27/07/2026 08:49:02 [7] 00-Always: Generated ActionId d278a3eb10dcebead61dfbd7db6372774bd835a1
+27/07/2026 08:49:02 [7] 30-Normal: Success
+27/07/2026 08:49:02 [7] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:02 [5] 00-Always: Request from 172.18.0.16
+27/07/2026 08:49:02 [5] 00-Always: Action=RoleAdd&RoleName=ISOAdmin (172.18.0.16)
+27/07/2026 08:49:02 [5] 00-Always: Generated ActionId 1a836de4b1f77c0bbfcc408aa09eb14b3cc841b0
+27/07/2026 08:49:02 [5] 30-Normal: Success
+27/07/2026 08:49:02 [5] 30-Normal: Request completed in 1 ms.
+27/07/2026 08:49:02 [6] 00-Always: Request from 172.18.0.16
+27/07/2026 08:49:02 [6] 00-Always: Action=RoleAdd&RoleName=IDAUser (172.18.0.16)
+27/07/2026 08:49:02 [6] 00-Always: Generated ActionId 3afd5fff0aceb1c89b3f61245e4e5f9c8124b71e
+27/07/2026 08:49:02 [6] 30-Normal: Success
+27/07/2026 08:49:02 [6] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:03 [5] 00-Always: Request from 172.18.0.16
+27/07/2026 08:49:03 [5] 00-Always: Action=RoleGetRoleList (172.18.0.16)
+27/07/2026 08:49:03 [5] 00-Always: Generated ActionId de51fece775a848bbbeb73e011c48789a4dfcead
+27/07/2026 08:49:03 [5] 30-Normal: Success
+27/07/2026 08:49:03 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:03 [6] 00-Always: Request from 172.18.0.16
+27/07/2026 08:49:03 [6] 00-Always: Action=UserReadUserListDetails (172.18.0.16)
+27/07/2026 08:49:03 [6] 00-Always: Generated ActionId af4668022f089903c5db5f2d0c93aa636da411b5
+27/07/2026 08:49:03 [6] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:03 [8] 00-Always: Request from 172.18.0.16
+27/07/2026 08:49:03 [8] 00-Always: Action=RoleGetUserList&RoleName=ISOUser (172.18.0.16)
+27/07/2026 08:49:03 [8] 00-Always: Generated ActionId 2e8277633d65728734ac27505cbf9e6b90bb24f6
+27/07/2026 08:49:03 [8] 30-Normal: Success
+27/07/2026 08:49:03 [8] 30-Normal: Request completed in 1 ms.
+27/07/2026 08:49:03 [7] 00-Always: Request from 172.18.0.16
+27/07/2026 08:49:03 [7] 00-Always: Action=RoleGetUserList&RoleName=ISOAdmin (172.18.0.16)
+27/07/2026 08:49:03 [7] 00-Always: Generated ActionId bcd1f0860ffa0f825ebf5419e2d01b3935951648
+27/07/2026 08:49:03 [7] 30-Normal: Success
+27/07/2026 08:49:03 [7] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:16 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:16 [5] 00-Always: action=RoleAdd&RoleName=FindBI (172.18.0.1)
+27/07/2026 08:49:16 [5] 00-Always: Generated ActionId 7ee5d15f329a7ff2cf67fd7c75efbb6b86ef9584
+27/07/2026 08:49:16 [5] 30-Normal: Success
+27/07/2026 08:49:16 [5] 30-Normal: Request completed in 1 ms.
+27/07/2026 08:49:16 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:16 [8] 00-Always: action=RoleAdd&RoleName=FindUser (172.18.0.1)
+27/07/2026 08:49:16 [8] 00-Always: Generated ActionId d9deb79e8474320d8bece709a6167e30cf7fa337
+27/07/2026 08:49:16 [8] 30-Normal: Success
+27/07/2026 08:49:16 [8] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:16 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:16 [5] 00-Always: action=RoleAdd&RoleName=FindAdmin (172.18.0.1)
+27/07/2026 08:49:16 [5] 00-Always: Generated ActionId 797eba0fa63bd412509c0097952d765b4c2cb930
+27/07/2026 08:49:16 [5] 30-Normal: Success
+27/07/2026 08:49:16 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:16 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:16 [8] 00-Always: action=RoleAdd&RoleName=AnswerBankUser (172.18.0.1)
+27/07/2026 08:49:16 [8] 00-Always: Generated ActionId 223e3f7a402773f68a4437a5ba6a1b378264d9f1
+27/07/2026 08:49:16 [8] 30-Normal: Error: Role Exists
+27/07/2026 08:49:16 [8] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:16 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:16 [5] 00-Always: action=RoleAdd&RoleName=IDAUser (172.18.0.1)
+27/07/2026 08:49:16 [5] 00-Always: Generated ActionId af6324146ba190a1c694eee3835bd15890b137cc
+27/07/2026 08:49:16 [5] 30-Normal: Error: Role Exists
+27/07/2026 08:49:16 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:16 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:16 [8] 00-Always: action=RoleAdd&RoleName=ISOAdmin (172.18.0.1)
+27/07/2026 08:49:16 [8] 00-Always: Generated ActionId 2f679cbadf597341f7c5e754ed21800b0bc02ad3
+27/07/2026 08:49:16 [8] 30-Normal: Error: Role Exists
+27/07/2026 08:49:16 [8] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:17 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:17 [5] 00-Always: action=RoleAdd&RoleName=ISOUser (172.18.0.1)
+27/07/2026 08:49:17 [5] 00-Always: Generated ActionId 5a38e0b3ca9b472c98848e6989c98adc0caf5b25
+27/07/2026 08:49:17 [5] 30-Normal: Error: Role Exists
+27/07/2026 08:49:17 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:17 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:17 [8] 00-Always: action=RoleAdd&RoleName=everyone (172.18.0.1)
+27/07/2026 08:49:17 [8] 00-Always: Generated ActionId 7087648470cedc13a462d9010d35558ed8cde5e2
+27/07/2026 08:49:17 [8] 30-Normal: Error: Role Exists
+27/07/2026 08:49:17 [8] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:17 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:17 [5] 00-Always: action=RoleAddUserToRole&RoleName=FindBI&UserName=admin (172.18.0.1)
+27/07/2026 08:49:17 [5] 00-Always: Generated ActionId 91211ef9dea20831d109082a36341d384b1864c4
+27/07/2026 08:49:17 [5] 30-Normal: Success
+27/07/2026 08:49:17 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:17 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:17 [8] 00-Always: action=RoleAddUserToRole&RoleName=FindAdmin&UserName=admin (172.18.0.1)
+27/07/2026 08:49:17 [8] 00-Always: Generated ActionId 32ce1627020e576b4627810fe4ead7805c496931
+27/07/2026 08:49:17 [8] 30-Normal: Success
+27/07/2026 08:49:17 [8] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:17 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:17 [5] 00-Always: action=RoleAddUserToRole&RoleName=FindUser&UserName=admin (172.18.0.1)
+27/07/2026 08:49:17 [5] 00-Always: Generated ActionId 9bed3d509a973343a39277aef806f73d6bc7dfce
+27/07/2026 08:49:17 [5] 30-Normal: Success
+27/07/2026 08:49:17 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:17 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:17 [8] 00-Always: action=RoleAddUserToRole&RoleName=IDAUser&UserName=admin (172.18.0.1)
+27/07/2026 08:49:17 [8] 00-Always: Generated ActionId b8e7ca3b34579d8ad067e539ddd065046845eb1c
+27/07/2026 08:49:17 [8] 30-Normal: Success
+27/07/2026 08:49:17 [8] 30-Normal: Request completed in 1 ms.
+27/07/2026 08:49:17 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:17 [5] 00-Always: action=RoleAddUserToRole&RoleName=AnswerBankUser&UserName=admin (172.18.0.1)
+27/07/2026 08:49:17 [5] 00-Always: Generated ActionId 6e1070a124e01e03a1731c01185ac42761bd02d9
+27/07/2026 08:49:17 [5] 30-Normal: Success
+27/07/2026 08:49:17 [5] 30-Normal: Request completed in 1 ms.
+27/07/2026 08:49:18 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:18 [8] 00-Always: action=RoleAddUserToRole&RoleName=FindUser&UserName=bank (172.18.0.1)
+27/07/2026 08:49:18 [8] 00-Always: Generated ActionId 379c43641296a8915a84219a086aa5efb7c0bd44
+27/07/2026 08:49:18 [8] 30-Normal: Success
+27/07/2026 08:49:18 [8] 30-Normal: Request completed in 1 ms.
+27/07/2026 08:49:18 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:18 [5] 00-Always: action=RoleAddUserToRole&RoleName=IDAUser&UserName=bank (172.18.0.1)
+27/07/2026 08:49:18 [5] 00-Always: Generated ActionId 0dfbc2ae3888956821bf66b87879a7c9c15a3383
+27/07/2026 08:49:18 [5] 30-Normal: Success
+27/07/2026 08:49:18 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 08:49:18 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 08:49:18 [8] 00-Always: action=RoleAddUserToRole&RoleName=AnswerBankUser&UserName=bank (172.18.0.1)
+27/07/2026 08:49:18 [8] 00-Always: Generated ActionId 5a34804c7f532e46cb411d5c9716da30f27ad05a
+27/07/2026 08:49:18 [8] 30-Normal: Success
+27/07/2026 08:49:18 [8] 30-Normal: Request completed in 0 ms.
+27/07/2026 09:04:49 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:49 [8] 00-Always: action=RoleAdd&RoleName=FindBI (172.18.0.1)
+27/07/2026 09:04:49 [8] 00-Always: Generated ActionId fe4f101dd1bd9636c28d9710878abf8b8cc8e820
+27/07/2026 09:04:49 [8] 30-Normal: Error: Role Exists
+27/07/2026 09:04:49 [8] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:49 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:49 [5] 00-Always: action=RoleAdd&RoleName=FindUser (172.18.0.1)
+27/07/2026 09:04:49 [5] 00-Always: Generated ActionId ad049345ab46068bfedfca5a98516ac5f5c5cf15
+27/07/2026 09:04:49 [5] 30-Normal: Error: Role Exists
+27/07/2026 09:04:49 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 09:04:49 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:49 [8] 00-Always: action=RoleAdd&RoleName=FindAdmin (172.18.0.1)
+27/07/2026 09:04:49 [8] 00-Always: Generated ActionId 6effa341c9157fae402ccc27100c95200695ac3f
+27/07/2026 09:04:49 [8] 30-Normal: Error: Role Exists
+27/07/2026 09:04:49 [8] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:49 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:49 [5] 00-Always: action=RoleAdd&RoleName=AnswerBankUser (172.18.0.1)
+27/07/2026 09:04:49 [5] 00-Always: Generated ActionId 5eccd114f2e65c8f8ad74fa184ca7037f57f4fb8
+27/07/2026 09:04:49 [5] 30-Normal: Error: Role Exists
+27/07/2026 09:04:49 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 09:04:49 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:49 [8] 00-Always: action=RoleAdd&RoleName=IDAUser (172.18.0.1)
+27/07/2026 09:04:49 [8] 00-Always: Generated ActionId 060fdcf620b31d858e96f779c608f840723538be
+27/07/2026 09:04:49 [8] 30-Normal: Error: Role Exists
+27/07/2026 09:04:49 [8] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:49 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:49 [5] 00-Always: action=RoleAdd&RoleName=ISOAdmin (172.18.0.1)
+27/07/2026 09:04:49 [5] 00-Always: Generated ActionId 08fe741abfbed0e3d16b7b23ddf9467e950d03c3
+27/07/2026 09:04:49 [5] 30-Normal: Error: Role Exists
+27/07/2026 09:04:49 [5] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:49 [8] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:49 [8] 00-Always: action=RoleAdd&RoleName=ISOUser (172.18.0.1)
+27/07/2026 09:04:49 [8] 00-Always: Generated ActionId e1609d06fc282b1d21fa6221e954312ada6f1fd5
+27/07/2026 09:04:49 [8] 30-Normal: Error: Role Exists
+27/07/2026 09:04:49 [8] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:49 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:49 [5] 00-Always: action=RoleAdd&RoleName=everyone (172.18.0.1)
+27/07/2026 09:04:49 [5] 00-Always: Generated ActionId b5cd3e3f8b28ca91b0b485a603ce4b669187cb20
+27/07/2026 09:04:49 [5] 30-Normal: Error: Role Exists
+27/07/2026 09:04:49 [5] 30-Normal: Request completed in 0 ms.
+27/07/2026 09:04:50 [7] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:50 [7] 00-Always: action=RoleAddUserToRole&RoleName=FindBI&UserName=admin (172.18.0.1)
+27/07/2026 09:04:50 [7] 00-Always: Generated ActionId d006c6d522c526b6141b193b4e0422bb79370390
+27/07/2026 09:04:50 [7] 30-Normal: Success
+27/07/2026 09:04:50 [7] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:50 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:50 [5] 00-Always: action=RoleAddUserToRole&RoleName=FindAdmin&UserName=admin (172.18.0.1)
+27/07/2026 09:04:50 [5] 00-Always: Generated ActionId 577c67e982e81cb57ff426ef1841d1e225390d03
+27/07/2026 09:04:50 [5] 30-Normal: Success
+27/07/2026 09:04:50 [5] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:50 [7] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:50 [7] 00-Always: action=RoleAddUserToRole&RoleName=FindUser&UserName=admin (172.18.0.1)
+27/07/2026 09:04:50 [7] 00-Always: Generated ActionId 8c4273fae0ed8ffe29e249d63fb78a4624c53ad4
+27/07/2026 09:04:50 [7] 30-Normal: Success
+27/07/2026 09:04:50 [7] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:50 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:50 [5] 00-Always: action=RoleAddUserToRole&RoleName=IDAUser&UserName=admin (172.18.0.1)
+27/07/2026 09:04:50 [5] 00-Always: Generated ActionId 9ab2dbf336f5c30c454e76117b744c7f98495f83
+27/07/2026 09:04:50 [5] 30-Normal: Success
+27/07/2026 09:04:50 [5] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:50 [7] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:50 [7] 00-Always: action=RoleAddUserToRole&RoleName=AnswerBankUser&UserName=admin (172.18.0.1)
+27/07/2026 09:04:50 [7] 00-Always: Generated ActionId 52b17d28837d893b31a67d9e789320c37b97706f
+27/07/2026 09:04:50 [7] 30-Normal: Success
+27/07/2026 09:04:50 [7] 30-Normal: Request completed in 0 ms.
+27/07/2026 09:04:50 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:50 [5] 00-Always: action=RoleAddUserToRole&RoleName=FindUser&UserName=bank (172.18.0.1)
+27/07/2026 09:04:50 [5] 00-Always: Generated ActionId 98c6589354b264032befbb1e8b099c0ba3d5ce8d
+27/07/2026 09:04:50 [5] 30-Normal: Success
+27/07/2026 09:04:50 [5] 30-Normal: Request completed in 1 ms.
+27/07/2026 09:04:50 [7] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:50 [7] 00-Always: action=RoleAddUserToRole&RoleName=IDAUser&UserName=bank (172.18.0.1)
+27/07/2026 09:04:50 [7] 00-Always: Generated ActionId 73dcb87231da243e42bcfa1758ed67c8c038f345
+27/07/2026 09:04:50 [7] 30-Normal: Success
+27/07/2026 09:04:50 [7] 30-Normal: Request completed in 0 ms.
+27/07/2026 09:04:50 [5] 00-Always: Request from 172.18.0.1
+27/07/2026 09:04:50 [5] 00-Always: action=RoleAddUserToRole&RoleName=AnswerBankUser&UserName=bank (172.18.0.1)
+27/07/2026 09:04:50 [5] 00-Always: Generated ActionId f6f4c329bf00d340f57c460575481e6421416985
+27/07/2026 09:04:50 [5] 30-Normal: Success
+27/07/2026 09:04:50 [5] 30-Normal: Request completed in 0 ms.
+29/08/2026 10:54:01 [0] 30-Normal: ACI Server validated operations key.
+29/08/2026 10:54:01 [0] 30-Normal: ACI Server has no QPS limit.
+29/08/2026 10:54:01 [0] 30-Normal: ACI Server is licensed for SSL encryption.
+29/08/2026 10:54:01 [0] 30-Normal: Performed hostname lookup and converted ADMINCLIENTS from [*.*.*.*] -> [*].
+29/08/2026 10:54:01 [0] 30-Normal: Performed hostname lookup and converted USERCLIENTS from [*.*.*.*,*.*.*.*] -> [*,*].
+29/08/2026 10:54:01 [0] 30-Normal: Running with FIPS mode inactive
+29/08/2026 10:54:01 [0] 30-Normal: ACI Servers runs in SSL mode.
+29/08/2026 10:54:01 [0] 30-Normal: ACI Server setting MaxInputString to 64000.
+29/08/2026 10:54:01 [0] 30-Normal: ACI Server is configured for XSLT templating.
+29/08/2026 10:54:01 [0] 50-Warning: XSLT template directory not found (/community/acitemplates).
+29/08/2026 10:54:01 [0] 30-Normal: ACI Server successfully loaded online help.
+29/08/2026 10:54:01 [0] 30-Normal: ACI Server successfully loaded admin UI.
+29/08/2026 10:54:09 [6] 00-Always: Request from 172.18.0.7
+29/08/2026 10:54:09 [6] 00-Always: Action=RoleGetRoleList (172.18.0.7)
+29/08/2026 10:54:09 [6] 00-Always: Generated ActionId e9f1d604878136603c474ed9f6bd30c80e4a7515
+29/08/2026 10:54:09 [6] 30-Normal: Success
+29/08/2026 10:54:09 [6] 30-Normal: Request completed in 0 ms.
+29/08/2026 10:54:09 [8] 00-Always: Request from 172.18.0.7
+29/08/2026 10:54:09 [8] 00-Always: Action=RoleAdd&RoleName=ISOUser (172.18.0.7)
+29/08/2026 10:54:09 [8] 00-Always: Generated ActionId 3146662ad5bf1787366ec6a0ee7519ad78fefe0b
+29/08/2026 10:54:09 [8] 30-Normal: Success
+29/08/2026 10:54:09 [8] 30-Normal: Request completed in 0 ms.
+29/08/2026 10:54:09 [5] 00-Always: Request from 172.18.0.7
+29/08/2026 10:54:09 [5] 00-Always: Action=RoleAdd&RoleName=AnswerBankUser (172.18.0.7)
+29/08/2026 10:54:09 [5] 00-Always: Generated ActionId b395fd912ecbdc043778c839adf2255a34799ef3
+29/08/2026 10:54:09 [5] 30-Normal: Success
+29/08/2026 10:54:09 [5] 30-Normal: Request completed in 0 ms.
+29/08/2026 10:54:09 [7] 00-Always: Request from 172.18.0.7
+29/08/2026 10:54:09 [7] 00-Always: Action=RoleAdd&RoleName=ISOAdmin (172.18.0.7)
+29/08/2026 10:54:09 [7] 00-Always: Generated ActionId 880e138a875418cd2937067d8fa5f843da789545
+29/08/2026 10:54:09 [7] 30-Normal: Success
+29/08/2026 10:54:09 [7] 30-Normal: Request completed in 0 ms.
+29/08/2026 10:54:09 [6] 00-Always: Request from 172.18.0.7
+29/08/2026 10:54:09 [6] 00-Always: Action=RoleAdd&RoleName=IDAUser (172.18.0.7)
+29/08/2026 10:54:09 [6] 00-Always: Generated ActionId eb64ed1db668150204c89c7a181c0f58f04fd1e8
+29/08/2026 10:54:09 [6] 30-Normal: Success
+29/08/2026 10:54:09 [6] 30-Normal: Request completed in 1 ms.
+29/08/2026 10:54:10 [7] 00-Always: Request from 172.18.0.7
+29/08/2026 10:54:10 [7] 00-Always: Action=RoleGetRoleList (172.18.0.7)
+29/08/2026 10:54:10 [7] 00-Always: Generated ActionId 39f540557a57d10d018cbde15fc38237d8b92300
+29/08/2026 10:54:10 [7] 30-Normal: Success
+29/08/2026 10:54:10 [7] 30-Normal: Request completed in 1 ms.
+29/08/2026 10:54:10 [6] 00-Always: Request from 172.18.0.7
+29/08/2026 10:54:10 [6] 00-Always: Action=UserReadUserListDetails (172.18.0.7)
+29/08/2026 10:54:10 [6] 00-Always: Generated ActionId 5fef5be1d131f099cf5e0ff2adde5d97aa3f4487
+29/08/2026 10:54:10 [6] 30-Normal: Request completed in 0 ms.
+29/08/2026 10:54:10 [8] 00-Always: Request from 172.18.0.7
+29/08/2026 10:54:10 [8] 00-Always: Action=RoleGetUserList&RoleName=ISOUser (172.18.0.7)
+29/08/2026 10:54:10 [8] 00-Always: Generated ActionId a78aabe5940cd5ffd5012c071a0e50390edacd3d
+29/08/2026 10:54:10 [8] 30-Normal: Success
+29/08/2026 10:54:10 [8] 30-Normal: Request completed in 1 ms.
+29/08/2026 10:54:10 [5] 00-Always: Request from 172.18.0.7
+29/08/2026 10:54:10 [5] 00-Always: Action=RoleGetUserList&RoleName=ISOAdmin (172.18.0.7)
+29/08/2026 10:54:10 [5] 00-Always: Generated ActionId 5a300b0da69841a9da4697dfa617c0083ac1480f
+29/08/2026 10:54:10 [5] 30-Normal: Success
+29/08/2026 10:54:10 [5] 30-Normal: Request completed in 0 ms.
+29/08/2026 11:01:09 [7] 70-Error: Action not completed (::1): Invalid ACI request: no action was specified
+29/08/2026 11:06:27 [0] 30-Normal: ACI Server validated operations key.
+29/08/2026 11:06:27 [0] 30-Normal: ACI Server has no QPS limit.
+29/08/2026 11:06:27 [0] 30-Normal: ACI Server is licensed for SSL encryption.
+29/08/2026 11:06:27 [0] 30-Normal: Performed hostname lookup and converted ADMINCLIENTS from [*.*.*.*] -> [*].
+29/08/2026 11:06:27 [0] 30-Normal: Performed hostname lookup and converted USERCLIENTS from [*.*.*.*,*.*.*.*] -> [*,*].
+29/08/2026 11:06:27 [0] 30-Normal: Running with FIPS mode inactive
+29/08/2026 11:06:27 [0] 30-Normal: ACI Servers runs in SSL mode.
+29/08/2026 11:06:27 [0] 30-Normal: ACI Server setting MaxInputString to 64000.
+29/08/2026 11:06:27 [0] 30-Normal: ACI Server is configured for XSLT templating.
+29/08/2026 11:06:27 [0] 50-Warning: XSLT template directory not found (/community/acitemplates).
+29/08/2026 11:06:27 [0] 30-Normal: ACI Server successfully loaded online help.
+29/08/2026 11:06:27 [0] 30-Normal: ACI Server successfully loaded admin UI.
+29/08/2026 11:06:34 [8] 00-Always: Request from 172.18.0.7
+29/08/2026 11:06:34 [8] 00-Always: Action=RoleGetRoleList (172.18.0.7)
+29/08/2026 11:06:34 [8] 00-Always: Generated ActionId 813b29b204c6f470e70e059fb3960cba6fa5628d
+29/08/2026 11:06:34 [8] 30-Normal: Success
+29/08/2026 11:06:34 [8] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:06:34 [6] 00-Always: Request from 172.18.0.7
+29/08/2026 11:06:34 [6] 00-Always: Action=RoleAdd&RoleName=ISOUser (172.18.0.7)
+29/08/2026 11:06:34 [6] 00-Always: Generated ActionId ce74654fa363954786bf3c04388607223b8793d1
+29/08/2026 11:06:34 [6] 30-Normal: Success
+29/08/2026 11:06:34 [6] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:06:34 [5] 00-Always: Request from 172.18.0.7
+29/08/2026 11:06:34 [5] 00-Always: Action=RoleAdd&RoleName=AnswerBankUser (172.18.0.7)
+29/08/2026 11:06:34 [5] 00-Always: Generated ActionId 9167ffd76a6b3699ce328aaa784fbb239530d6f5
+29/08/2026 11:06:34 [5] 30-Normal: Success
+29/08/2026 11:06:34 [5] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:06:34 [7] 00-Always: Request from 172.18.0.7
+29/08/2026 11:06:34 [7] 00-Always: Action=RoleAdd&RoleName=ISOAdmin (172.18.0.7)
+29/08/2026 11:06:34 [7] 00-Always: Generated ActionId dc5c7596532af93153fef04f001982c487c1c467
+29/08/2026 11:06:34 [7] 30-Normal: Success
+29/08/2026 11:06:34 [7] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:06:34 [8] 00-Always: Request from 172.18.0.7
+29/08/2026 11:06:34 [8] 00-Always: Action=RoleAdd&RoleName=IDAUser (172.18.0.7)
+29/08/2026 11:06:34 [8] 00-Always: Generated ActionId 5ea4d63350378405e046b2ca465fa3277af3dcc7
+29/08/2026 11:06:34 [8] 30-Normal: Success
+29/08/2026 11:06:34 [8] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:06:35 [7] 00-Always: Request from 172.18.0.7
+29/08/2026 11:06:35 [7] 00-Always: Action=RoleGetRoleList (172.18.0.7)
+29/08/2026 11:06:35 [7] 00-Always: Generated ActionId 657310ae63f6ea2e1641e6d634bf3e9ed51ee825
+29/08/2026 11:06:35 [7] 30-Normal: Success
+29/08/2026 11:06:35 [7] 30-Normal: Request completed in 0 ms.
+29/08/2026 11:06:35 [8] 00-Always: Request from 172.18.0.7
+29/08/2026 11:06:35 [8] 00-Always: Action=UserReadUserListDetails (172.18.0.7)
+29/08/2026 11:06:35 [8] 00-Always: Generated ActionId 13d21e0982fd1da23bfd6310e84330b38fac0f6e
+29/08/2026 11:06:35 [8] 30-Normal: Request completed in 0 ms.
+29/08/2026 11:06:35 [6] 00-Always: Request from 172.18.0.7
+29/08/2026 11:06:35 [6] 00-Always: Action=RoleGetUserList&RoleName=ISOUser (172.18.0.7)
+29/08/2026 11:06:35 [6] 00-Always: Generated ActionId 3f7199ee5afa2eddc722a53b62b655c5b9047b39
+29/08/2026 11:06:35 [6] 30-Normal: Success
+29/08/2026 11:06:35 [6] 30-Normal: Request completed in 0 ms.
+29/08/2026 11:06:35 [5] 00-Always: Request from 172.18.0.7
+29/08/2026 11:06:35 [5] 00-Always: Action=RoleGetUserList&RoleName=ISOAdmin (172.18.0.7)
+29/08/2026 11:06:35 [5] 00-Always: Generated ActionId 207856369c7e37071a2d29e1cc34e6d7ab5ae17d
+29/08/2026 11:06:35 [5] 30-Normal: Success
+29/08/2026 11:06:35 [5] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:22:18 [0] 30-Normal: ACI Server validated operations key.
+29/08/2026 11:22:18 [0] 30-Normal: ACI Server has no QPS limit.
+29/08/2026 11:22:18 [0] 30-Normal: ACI Server is licensed for SSL encryption.
+29/08/2026 11:22:18 [0] 30-Normal: Performed hostname lookup and converted ADMINCLIENTS from [*.*.*.*] -> [*].
+29/08/2026 11:22:18 [0] 30-Normal: Performed hostname lookup and converted USERCLIENTS from [*.*.*.*,*.*.*.*] -> [*,*].
+29/08/2026 11:22:18 [0] 30-Normal: Running with FIPS mode inactive
+29/08/2026 11:22:18 [0] 30-Normal: ACI Servers runs in SSL mode.
+29/08/2026 11:22:18 [0] 30-Normal: ACI Server setting MaxInputString to 64000.
+29/08/2026 11:22:18 [0] 30-Normal: ACI Server is configured for XSLT templating.
+29/08/2026 11:22:18 [0] 50-Warning: XSLT template directory not found (/community/acitemplates).
+29/08/2026 11:22:18 [0] 30-Normal: ACI Server successfully loaded online help.
+29/08/2026 11:22:18 [0] 30-Normal: ACI Server successfully loaded admin UI.
+29/08/2026 11:22:25 [5] 00-Always: Request from 172.18.0.7
+29/08/2026 11:22:25 [5] 00-Always: Action=RoleGetRoleList (172.18.0.7)
+29/08/2026 11:22:25 [5] 00-Always: Generated ActionId edd22763452bd0149a31cc5c548ba23c08105f5e
+29/08/2026 11:22:25 [5] 30-Normal: Success
+29/08/2026 11:22:25 [5] 30-Normal: Request completed in 0 ms.
+29/08/2026 11:22:25 [6] 00-Always: Request from 172.18.0.7
+29/08/2026 11:22:25 [6] 00-Always: Action=RoleAdd&RoleName=ISOUser (172.18.0.7)
+29/08/2026 11:22:25 [6] 00-Always: Generated ActionId 2ba86a43428902e46d24cfe58e8565ae976d9658
+29/08/2026 11:22:25 [6] 30-Normal: Success
+29/08/2026 11:22:25 [6] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:22:25 [4] 00-Always: Request from 172.18.0.7
+29/08/2026 11:22:25 [4] 00-Always: Action=RoleAdd&RoleName=AnswerBankUser (172.18.0.7)
+29/08/2026 11:22:25 [4] 00-Always: Generated ActionId 988a8555f852a15008e277fe2015a8fc1fff37b2
+29/08/2026 11:22:25 [4] 30-Normal: Success
+29/08/2026 11:22:25 [4] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:22:25 [7] 00-Always: Request from 172.18.0.7
+29/08/2026 11:22:25 [7] 00-Always: Action=RoleAdd&RoleName=ISOAdmin (172.18.0.7)
+29/08/2026 11:22:25 [7] 00-Always: Generated ActionId 78a8f4605f020073673f52dfc88c4dc0ecd2029a
+29/08/2026 11:22:25 [7] 30-Normal: Success
+29/08/2026 11:22:25 [7] 30-Normal: Request completed in 0 ms.
+29/08/2026 11:22:25 [5] 00-Always: Request from 172.18.0.7
+29/08/2026 11:22:25 [5] 00-Always: Action=RoleAdd&RoleName=IDAUser (172.18.0.7)
+29/08/2026 11:22:25 [5] 00-Always: Generated ActionId c015823e7c54f685ffff2ebfd1df33f536dcc968
+29/08/2026 11:22:25 [5] 30-Normal: Success
+29/08/2026 11:22:25 [5] 30-Normal: Request completed in 0 ms.
+29/08/2026 11:22:26 [7] 00-Always: Request from 172.18.0.7
+29/08/2026 11:22:26 [7] 00-Always: Action=RoleGetRoleList (172.18.0.7)
+29/08/2026 11:22:26 [7] 00-Always: Generated ActionId 3ce982d1ca8124d44505a8429a82635971de5619
+29/08/2026 11:22:26 [7] 30-Normal: Success
+29/08/2026 11:22:26 [7] 30-Normal: Request completed in 0 ms.
+29/08/2026 11:22:26 [5] 00-Always: Request from 172.18.0.7
+29/08/2026 11:22:26 [5] 00-Always: Action=UserReadUserListDetails (172.18.0.7)
+29/08/2026 11:22:26 [5] 00-Always: Generated ActionId 0570dd35a319faaff1c3151bda0c966c6bf9b433
+29/08/2026 11:22:26 [5] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:22:26 [6] 00-Always: Request from 172.18.0.7
+29/08/2026 11:22:26 [6] 00-Always: Action=RoleGetUserList&RoleName=ISOUser (172.18.0.7)
+29/08/2026 11:22:26 [6] 00-Always: Generated ActionId 2793fc7ca8ba3b5476fcb6a17d671a1b62247d28
+29/08/2026 11:22:26 [6] 30-Normal: Success
+29/08/2026 11:22:26 [6] 30-Normal: Request completed in 0 ms.
+29/08/2026 11:22:26 [4] 00-Always: Request from 172.18.0.7
+29/08/2026 11:22:26 [4] 00-Always: Action=RoleGetUserList&RoleName=ISOAdmin (172.18.0.7)
+29/08/2026 11:22:26 [4] 00-Always: Generated ActionId f67f2ad675de6ab53eb8fa2392a448dcaf58b859
+29/08/2026 11:22:26 [4] 30-Normal: Success
+29/08/2026 11:22:26 [4] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:27:25 [0] 30-Normal: ACI Server validated operations key.
+29/08/2026 11:27:25 [0] 30-Normal: ACI Server has no QPS limit.
+29/08/2026 11:27:25 [0] 30-Normal: ACI Server is licensed for SSL encryption.
+29/08/2026 11:27:25 [0] 30-Normal: Performed hostname lookup and converted ADMINCLIENTS from [*.*.*.*] -> [*].
+29/08/2026 11:27:25 [0] 30-Normal: Performed hostname lookup and converted USERCLIENTS from [*.*.*.*,*.*.*.*] -> [*,*].
+29/08/2026 11:27:25 [0] 30-Normal: Running with FIPS mode inactive
+29/08/2026 11:27:25 [0] 30-Normal: ACI Servers runs in SSL mode.
+29/08/2026 11:27:25 [0] 30-Normal: ACI Server setting MaxInputString to 64000.
+29/08/2026 11:27:25 [0] 30-Normal: ACI Server is configured for XSLT templating.
+29/08/2026 11:27:25 [0] 50-Warning: XSLT template directory not found (/community/acitemplates).
+29/08/2026 11:27:25 [0] 30-Normal: ACI Server successfully loaded online help.
+29/08/2026 11:27:25 [0] 30-Normal: ACI Server successfully loaded admin UI.
+29/08/2026 11:27:32 [6] 00-Always: Request from 172.18.0.7
+29/08/2026 11:27:32 [6] 00-Always: Action=RoleGetRoleList (172.18.0.7)
+29/08/2026 11:27:32 [6] 00-Always: Generated ActionId f5a03cd4b3187372272d039240f9641d5ebfcfec
+29/08/2026 11:27:32 [6] 30-Normal: Success
+29/08/2026 11:27:32 [6] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:27:32 [7] 00-Always: Request from 172.18.0.7
+29/08/2026 11:27:32 [7] 00-Always: Action=RoleAdd&RoleName=ISOUser (172.18.0.7)
+29/08/2026 11:27:32 [7] 00-Always: Generated ActionId f73a9527682b8aa2e16875b1f1ccce18e1878649
+29/08/2026 11:27:32 [7] 30-Normal: Success
+29/08/2026 11:27:32 [7] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:27:32 [7] 00-Always: Request from 172.18.0.7
+29/08/2026 11:27:32 [7] 00-Always: Action=RoleAdd&RoleName=AnswerBankUser (172.18.0.7)
+29/08/2026 11:27:32 [7] 00-Always: Generated ActionId ebf74590031b4f5443c2a36d616f3afbb117aa15
+29/08/2026 11:27:32 [7] 30-Normal: Success
+29/08/2026 11:27:32 [7] 30-Normal: Request completed in 0 ms.
+29/08/2026 11:27:32 [5] 00-Always: Request from 172.18.0.7
+29/08/2026 11:27:32 [5] 00-Always: Action=RoleAdd&RoleName=ISOAdmin (172.18.0.7)
+29/08/2026 11:27:32 [5] 00-Always: Generated ActionId 0361ccfa3810a690923a3eea1d4c3f642a163530
+29/08/2026 11:27:32 [5] 30-Normal: Success
+29/08/2026 11:27:32 [5] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:27:32 [6] 00-Always: Request from 172.18.0.7
+29/08/2026 11:27:32 [6] 00-Always: Action=RoleAdd&RoleName=IDAUser (172.18.0.7)
+29/08/2026 11:27:32 [6] 00-Always: Generated ActionId e6c244d41a9e586fedaf427ef12219dc606f0425
+29/08/2026 11:27:32 [6] 30-Normal: Success
+29/08/2026 11:27:32 [6] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:27:33 [5] 00-Always: Request from 172.18.0.7
+29/08/2026 11:27:33 [5] 00-Always: Action=RoleGetRoleList (172.18.0.7)
+29/08/2026 11:27:33 [5] 00-Always: Generated ActionId 8d7ced8724dafa24c6faa8f1d03bbef52d57a8ec
+29/08/2026 11:27:33 [5] 30-Normal: Success
+29/08/2026 11:27:33 [5] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:27:33 [6] 00-Always: Request from 172.18.0.7
+29/08/2026 11:27:33 [6] 00-Always: Action=UserReadUserListDetails (172.18.0.7)
+29/08/2026 11:27:33 [6] 00-Always: Generated ActionId 1578d1a450c3c73994a1ab4fcb44d39bee2dbcd0
+29/08/2026 11:27:33 [6] 30-Normal: Request completed in 0 ms.
+29/08/2026 11:27:33 [8] 00-Always: Request from 172.18.0.7
+29/08/2026 11:27:33 [8] 00-Always: Action=RoleGetUserList&RoleName=ISOUser (172.18.0.7)
+29/08/2026 11:27:33 [8] 00-Always: Generated ActionId 5e494dbdb6433a003a3e74e0b37d1c99a242209a
+29/08/2026 11:27:33 [8] 30-Normal: Success
+29/08/2026 11:27:33 [8] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:27:33 [7] 00-Always: Request from 172.18.0.7
+29/08/2026 11:27:33 [7] 00-Always: Action=RoleGetUserList&RoleName=ISOAdmin (172.18.0.7)
+29/08/2026 11:27:33 [7] 00-Always: Generated ActionId 480b59694d727895bd4c5c499a03a4b868e1fb38
+29/08/2026 11:27:33 [7] 30-Normal: Success
+29/08/2026 11:27:33 [7] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:32:28 [0] 30-Normal: ACI Server validated operations key.
+29/08/2026 11:32:28 [0] 30-Normal: ACI Server has no QPS limit.
+29/08/2026 11:32:28 [0] 30-Normal: ACI Server is licensed for SSL encryption.
+29/08/2026 11:32:28 [0] 30-Normal: Performed hostname lookup and converted ADMINCLIENTS from [*.*.*.*] -> [*].
+29/08/2026 11:32:28 [0] 30-Normal: Performed hostname lookup and converted USERCLIENTS from [*.*.*.*,*.*.*.*] -> [*,*].
+29/08/2026 11:32:28 [0] 30-Normal: Running with FIPS mode inactive
+29/08/2026 11:32:28 [0] 30-Normal: ACI Servers runs in SSL mode.
+29/08/2026 11:32:28 [0] 30-Normal: ACI Server setting MaxInputString to 64000.
+29/08/2026 11:32:28 [0] 30-Normal: ACI Server is configured for XSLT templating.
+29/08/2026 11:32:28 [0] 50-Warning: XSLT template directory not found (/community/acitemplates).
+29/08/2026 11:32:28 [0] 30-Normal: ACI Server successfully loaded online help.
+29/08/2026 11:32:28 [0] 30-Normal: ACI Server successfully loaded admin UI.
+29/08/2026 11:32:34 [5] 00-Always: Request from 172.18.0.7
+29/08/2026 11:32:34 [5] 00-Always: Action=RoleGetRoleList (172.18.0.7)
+29/08/2026 11:32:34 [5] 00-Always: Generated ActionId 8eae7c9280a14427543ab2b074cad4d6c21b80b8
+29/08/2026 11:32:34 [5] 30-Normal: Success
+29/08/2026 11:32:34 [5] 30-Normal: Request completed in 0 ms.
+29/08/2026 11:32:34 [8] 00-Always: Request from 172.18.0.7
+29/08/2026 11:32:34 [8] 00-Always: Action=RoleAdd&RoleName=ISOUser (172.18.0.7)
+29/08/2026 11:32:34 [8] 00-Always: Generated ActionId 5b8331f20fd5f2aed2289e2eba8a4cf7b52823b2
+29/08/2026 11:32:34 [8] 30-Normal: Success
+29/08/2026 11:32:34 [8] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:32:34 [6] 00-Always: Request from 172.18.0.7
+29/08/2026 11:32:34 [6] 00-Always: Action=RoleAdd&RoleName=AnswerBankUser (172.18.0.7)
+29/08/2026 11:32:34 [6] 00-Always: Generated ActionId 70aa1440221cbf91484c33e81b8e8b189d761a61
+29/08/2026 11:32:34 [6] 30-Normal: Success
+29/08/2026 11:32:34 [6] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:32:34 [7] 00-Always: Request from 172.18.0.7
+29/08/2026 11:32:34 [7] 00-Always: Action=RoleAdd&RoleName=ISOAdmin (172.18.0.7)
+29/08/2026 11:32:34 [7] 00-Always: Generated ActionId 4da6b435358dbbea2023c61c0c26edfc945e135f
+29/08/2026 11:32:34 [7] 30-Normal: Success
+29/08/2026 11:32:34 [7] 30-Normal: Request completed in 0 ms.
+29/08/2026 11:32:34 [5] 00-Always: Request from 172.18.0.7
+29/08/2026 11:32:34 [5] 00-Always: Action=RoleAdd&RoleName=IDAUser (172.18.0.7)
+29/08/2026 11:32:34 [5] 00-Always: Generated ActionId bf9aded5729d845e407b4a960214b1c93ec69d76
+29/08/2026 11:32:34 [5] 30-Normal: Success
+29/08/2026 11:32:34 [5] 30-Normal: Request completed in 0 ms.
+29/08/2026 11:32:35 [7] 00-Always: Request from 172.18.0.7
+29/08/2026 11:32:35 [7] 00-Always: Action=RoleGetRoleList (172.18.0.7)
+29/08/2026 11:32:35 [7] 00-Always: Generated ActionId 58f92ee39548a99dcb5570dc2e4f3b2e2489be0c
+29/08/2026 11:32:35 [7] 30-Normal: Success
+29/08/2026 11:32:35 [7] 30-Normal: Request completed in 0 ms.
+29/08/2026 11:32:35 [5] 00-Always: Request from 172.18.0.7
+29/08/2026 11:32:35 [5] 00-Always: Action=UserReadUserListDetails (172.18.0.7)
+29/08/2026 11:32:35 [5] 00-Always: Generated ActionId 549522baf08e208c1fbe19fe9ce389fb63a49800
+29/08/2026 11:32:35 [5] 30-Normal: Request completed in 1 ms.
+29/08/2026 11:32:35 [8] 00-Always: Request from 172.18.0.7
+29/08/2026 11:32:35 [8] 00-Always: Action=RoleGetUserList&RoleName=ISOUser (172.18.0.7)
+29/08/2026 11:32:35 [8] 00-Always: Generated ActionId e8c7a5f2fc92f116701223f2eab3672058d1ea05
+29/08/2026 11:32:35 [8] 30-Normal: Success
+29/08/2026 11:32:35 [8] 30-Normal: Request completed in 0 ms.
+29/08/2026 11:32:35 [6] 00-Always: Request from 172.18.0.7
+29/08/2026 11:32:35 [6] 00-Always: Action=RoleGetUserList&RoleName=ISOAdmin (172.18.0.7)
+29/08/2026 11:32:35 [6] 00-Always: Generated ActionId 3e7540dd0d085b7a04c51c76e2fdc70c8bf2b712
+29/08/2026 11:32:35 [6] 30-Normal: Success
+29/08/2026 11:32:35 [6] 30-Normal: Request completed in 0 ms.
+29/08/2026 15:50:21 [0] 30-Normal: ACI Server validated operations key.
+29/08/2026 15:50:21 [0] 30-Normal: ACI Server has no QPS limit.
+29/08/2026 15:50:21 [0] 30-Normal: ACI Server is licensed for SSL encryption.
+29/08/2026 15:50:21 [0] 30-Normal: Performed hostname lookup and converted ADMINCLIENTS from [*.*.*.*] -> [*].
+29/08/2026 15:50:21 [0] 30-Normal: Performed hostname lookup and converted USERCLIENTS from [*.*.*.*,*.*.*.*] -> [*,*].
+29/08/2026 15:50:21 [0] 30-Normal: Running with FIPS mode inactive
+29/08/2026 15:50:21 [0] 30-Normal: ACI Servers runs in SSL mode.
+29/08/2026 15:50:21 [0] 30-Normal: ACI Server setting MaxInputString to 64000.
+29/08/2026 15:50:21 [0] 30-Normal: ACI Server is configured for XSLT templating.
+29/08/2026 15:50:21 [0] 50-Warning: XSLT template directory not found (/community/acitemplates).
+29/08/2026 15:50:21 [0] 30-Normal: ACI Server successfully loaded online help.
+29/08/2026 15:50:21 [0] 30-Normal: ACI Server successfully loaded admin UI.
+29/08/2026 15:50:29 [8] 00-Always: Request from 172.18.0.7
+29/08/2026 15:50:29 [8] 00-Always: Action=RoleGetRoleList (172.18.0.7)
+29/08/2026 15:50:29 [8] 00-Always: Generated ActionId 4a566ef207bef8639625e2a8e81de9a0a0c89486
+29/08/2026 15:50:29 [8] 30-Normal: Success
+29/08/2026 15:50:29 [8] 30-Normal: Request completed in 1 ms.
+29/08/2026 15:50:29 [5] 00-Always: Request from 172.18.0.7
+29/08/2026 15:50:29 [5] 00-Always: Action=RoleAdd&RoleName=ISOUser (172.18.0.7)
+29/08/2026 15:50:29 [5] 00-Always: Generated ActionId 60e12710945d657b5c787c0fa13b55dbb951f7e7
+29/08/2026 15:50:29 [5] 30-Normal: Success
+29/08/2026 15:50:29 [5] 30-Normal: Request completed in 0 ms.
+29/08/2026 15:50:29 [7] 00-Always: Request from 172.18.0.7
+29/08/2026 15:50:29 [7] 00-Always: Action=RoleAdd&RoleName=AnswerBankUser (172.18.0.7)
+29/08/2026 15:50:29 [7] 00-Always: Generated ActionId c9ab74958fb69baa74790c12776d26a2343caa54
+29/08/2026 15:50:29 [7] 30-Normal: Success
+29/08/2026 15:50:29 [7] 30-Normal: Request completed in 1 ms.
+29/08/2026 15:50:29 [6] 00-Always: Request from 172.18.0.7
+29/08/2026 15:50:29 [6] 00-Always: Action=RoleAdd&RoleName=ISOAdmin (172.18.0.7)
+29/08/2026 15:50:29 [6] 00-Always: Generated ActionId 5739369b4a497989eb51b34f2360ad03c1bef41e
+29/08/2026 15:50:29 [6] 30-Normal: Success
+29/08/2026 15:50:29 [6] 30-Normal: Request completed in 1 ms.
+29/08/2026 15:50:29 [8] 00-Always: Request from 172.18.0.7
+29/08/2026 15:50:29 [8] 00-Always: Action=RoleAdd&RoleName=IDAUser (172.18.0.7)
+29/08/2026 15:50:29 [8] 00-Always: Generated ActionId 2115a717761fb914e8dd94f00080f72b28c3097f
+29/08/2026 15:50:29 [8] 30-Normal: Success
+29/08/2026 15:50:29 [8] 30-Normal: Request completed in 1 ms.
+29/08/2026 15:50:30 [6] 00-Always: Request from 172.18.0.7
+29/08/2026 15:50:30 [6] 00-Always: Action=RoleGetRoleList (172.18.0.7)
+29/08/2026 15:50:30 [6] 00-Always: Generated ActionId a3325ea1a6a42637f462194b9dbcd287103f220e
+29/08/2026 15:50:30 [6] 30-Normal: Success
+29/08/2026 15:50:30 [6] 30-Normal: Request completed in 0 ms.
+29/08/2026 15:50:30 [8] 00-Always: Request from 172.18.0.7
+29/08/2026 15:50:30 [8] 00-Always: Action=UserReadUserListDetails (172.18.0.7)
+29/08/2026 15:50:30 [8] 00-Always: Generated ActionId 1a00ee78921bc33de294b062ecc70aec45e5656e
+29/08/2026 15:50:30 [8] 30-Normal: Request completed in 0 ms.
+29/08/2026 15:50:30 [5] 00-Always: Request from 172.18.0.7
+29/08/2026 15:50:30 [5] 00-Always: Action=RoleGetUserList&RoleName=ISOUser (172.18.0.7)
+29/08/2026 15:50:30 [5] 00-Always: Generated ActionId 1f1307c6153c4be0a926b39a4e14b97dfba56863
+29/08/2026 15:50:30 [5] 30-Normal: Success
+29/08/2026 15:50:30 [5] 30-Normal: Request completed in 0 ms.
+29/08/2026 15:50:30 [7] 00-Always: Request from 172.18.0.7
+29/08/2026 15:50:30 [7] 00-Always: Action=RoleGetUserList&RoleName=ISOAdmin (172.18.0.7)
+29/08/2026 15:50:30 [7] 00-Always: Generated ActionId 9f50297e480649dc82de880ed4f0631389496c09
+29/08/2026 15:50:30 [7] 30-Normal: Success
+29/08/2026 15:50:30 [7] 30-Normal: Request completed in 0 ms.
+29/08/2026 16:21:59 [0] 30-Normal: ACI Server validated operations key.
+29/08/2026 16:21:59 [0] 30-Normal: ACI Server has no QPS limit.
+29/08/2026 16:21:59 [0] 30-Normal: ACI Server is licensed for SSL encryption.
+29/08/2026 16:21:59 [0] 30-Normal: Performed hostname lookup and converted ADMINCLIENTS from [*.*.*.*] -> [*].
+29/08/2026 16:21:59 [0] 30-Normal: Performed hostname lookup and converted USERCLIENTS from [*.*.*.*,*.*.*.*] -> [*,*].
+29/08/2026 16:21:59 [0] 30-Normal: Running with FIPS mode inactive
+29/08/2026 16:21:59 [0] 30-Normal: ACI Servers runs in SSL mode.
+29/08/2026 16:21:59 [0] 30-Normal: ACI Server setting MaxInputString to 64000.
+29/08/2026 16:21:59 [0] 30-Normal: ACI Server is configured for XSLT templating.
+29/08/2026 16:21:59 [0] 50-Warning: XSLT template directory not found (/community/acitemplates).
+29/08/2026 16:21:59 [0] 30-Normal: ACI Server successfully loaded online help.
+29/08/2026 16:21:59 [0] 30-Normal: ACI Server successfully loaded admin UI.
+29/08/2026 16:22:06 [7] 00-Always: Request from 172.18.0.7
+29/08/2026 16:22:06 [7] 00-Always: Action=RoleGetRoleList (172.18.0.7)
+29/08/2026 16:22:06 [7] 00-Always: Generated ActionId aa150416c93184c3276f5eceae78594d01767870
+29/08/2026 16:22:06 [7] 30-Normal: Success
+29/08/2026 16:22:06 [7] 30-Normal: Request completed in 1 ms.
+29/08/2026 16:22:06 [6] 00-Always: Request from 172.18.0.7
+29/08/2026 16:22:06 [6] 00-Always: Action=RoleAdd&RoleName=ISOUser (172.18.0.7)
+29/08/2026 16:22:06 [6] 00-Always: Generated ActionId 3dcd290a6a7535f1ebd9e370e535bc70b4a886b3
+29/08/2026 16:22:06 [6] 30-Normal: Success
+29/08/2026 16:22:06 [6] 30-Normal: Request completed in 1 ms.
+29/08/2026 16:22:06 [5] 00-Always: Request from 172.18.0.7
+29/08/2026 16:22:06 [5] 00-Always: Action=RoleAdd&RoleName=AnswerBankUser (172.18.0.7)
+29/08/2026 16:22:06 [5] 00-Always: Generated ActionId 2ce173c72a399d53a3b6c14dee19113b24f9609b
+29/08/2026 16:22:06 [5] 30-Normal: Success
+29/08/2026 16:22:06 [5] 30-Normal: Request completed in 1 ms.
+29/08/2026 16:22:06 [8] 00-Always: Request from 172.18.0.7
+29/08/2026 16:22:06 [8] 00-Always: Action=RoleAdd&RoleName=ISOAdmin (172.18.0.7)
+29/08/2026 16:22:06 [8] 00-Always: Generated ActionId 2478ec28beaa69aa25d6229716e88f853e8d05e1
+29/08/2026 16:22:06 [8] 30-Normal: Success
+29/08/2026 16:22:06 [8] 30-Normal: Request completed in 1 ms.
+29/08/2026 16:22:06 [7] 00-Always: Request from 172.18.0.7
+29/08/2026 16:22:06 [7] 00-Always: Action=RoleAdd&RoleName=IDAUser (172.18.0.7)
+29/08/2026 16:22:06 [7] 00-Always: Generated ActionId 36d7948a341ff96a412a7ab55b7e66927f3b9392
+29/08/2026 16:22:06 [7] 30-Normal: Success
+29/08/2026 16:22:06 [7] 30-Normal: Request completed in 1 ms.
+29/08/2026 16:22:06 [8] 00-Always: Request from 172.18.0.7
+29/08/2026 16:22:06 [8] 00-Always: Action=RoleGetRoleList (172.18.0.7)
+29/08/2026 16:22:06 [8] 00-Always: Generated ActionId c8f065f48ddfad08b95e1a82a08dd1f60069111f
+29/08/2026 16:22:06 [8] 30-Normal: Success
+29/08/2026 16:22:06 [8] 30-Normal: Request completed in 0 ms.
+29/08/2026 16:22:06 [7] 00-Always: Request from 172.18.0.7
+29/08/2026 16:22:06 [7] 00-Always: Action=UserReadUserListDetails (172.18.0.7)
+29/08/2026 16:22:06 [7] 00-Always: Generated ActionId 144328c8295fc69c67f9df42eb4280e4463278d5
+29/08/2026 16:22:06 [7] 30-Normal: Request completed in 0 ms.
+29/08/2026 16:22:07 [6] 00-Always: Request from 172.18.0.7
+29/08/2026 16:22:07 [6] 00-Always: Action=RoleGetUserList&RoleName=ISOUser (172.18.0.7)
+29/08/2026 16:22:07 [6] 00-Always: Generated ActionId 582b9a20f307d9c0f827359cbd2c8ccece1a4a46
+29/08/2026 16:22:07 [6] 30-Normal: Success
+29/08/2026 16:22:07 [6] 30-Normal: Request completed in 0 ms.
+29/08/2026 16:22:07 [5] 00-Always: Request from 172.18.0.7
+29/08/2026 16:22:07 [5] 00-Always: Action=RoleGetUserList&RoleName=ISOAdmin (172.18.0.7)
+29/08/2026 16:22:07 [5] 00-Always: Generated ActionId feea2d9374d286e4955e71aa54dc975a31e08e41
+29/08/2026 16:22:07 [5] 30-Normal: Success
+29/08/2026 16:22:07 [5] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:43:37 [0] 30-Normal: ACI Server validated operations key.
+30/08/2026 07:43:37 [0] 30-Normal: ACI Server has no QPS limit.
+30/08/2026 07:43:37 [0] 30-Normal: ACI Server is licensed for SSL encryption.
+30/08/2026 07:43:37 [0] 30-Normal: Performed hostname lookup and converted ADMINCLIENTS from [*.*.*.*] -> [*].
+30/08/2026 07:43:37 [0] 30-Normal: Performed hostname lookup and converted USERCLIENTS from [*.*.*.*,*.*.*.*] -> [*,*].
+30/08/2026 07:43:37 [0] 30-Normal: Running with FIPS mode inactive
+30/08/2026 07:43:37 [0] 30-Normal: ACI Servers runs in SSL mode.
+30/08/2026 07:43:37 [0] 30-Normal: ACI Server setting MaxInputString to 64000.
+30/08/2026 07:43:37 [0] 30-Normal: ACI Server is configured for XSLT templating.
+30/08/2026 07:43:37 [0] 50-Warning: XSLT template directory not found (/community/acitemplates).
+30/08/2026 07:43:37 [0] 30-Normal: ACI Server successfully loaded online help.
+30/08/2026 07:43:37 [0] 30-Normal: ACI Server successfully loaded admin UI.
+30/08/2026 07:43:46 [7] 00-Always: Request from 172.18.0.16
+30/08/2026 07:43:46 [7] 00-Always: Action=RoleGetRoleList (172.18.0.16)
+30/08/2026 07:43:46 [7] 00-Always: Generated ActionId aa0d6e3c9ade4cc76d6e4d7ea8960d08cfe75cee
+30/08/2026 07:43:46 [7] 30-Normal: Success
+30/08/2026 07:43:46 [7] 30-Normal: Request completed in 1 ms.
+30/08/2026 07:43:46 [5] 00-Always: Request from 172.18.0.16
+30/08/2026 07:43:46 [5] 00-Always: Action=RoleAdd&RoleName=ISOUser (172.18.0.16)
+30/08/2026 07:43:46 [5] 00-Always: Generated ActionId 81c6e944b95f1b7b45b8c3aab13a538f5ec2bc41
+30/08/2026 07:43:46 [5] 30-Normal: Success
+30/08/2026 07:43:46 [5] 30-Normal: Request completed in 1 ms.
+30/08/2026 07:43:46 [8] 00-Always: Request from 172.18.0.16
+30/08/2026 07:43:46 [8] 00-Always: Action=RoleAdd&RoleName=AnswerBankUser (172.18.0.16)
+30/08/2026 07:43:46 [8] 00-Always: Generated ActionId 24d1802af58e1337a090aa9ad8d49ae77891946d
+30/08/2026 07:43:46 [8] 30-Normal: Success
+30/08/2026 07:43:46 [8] 30-Normal: Request completed in 1 ms.
+30/08/2026 07:43:46 [6] 00-Always: Request from 172.18.0.16
+30/08/2026 07:43:46 [6] 00-Always: Action=RoleAdd&RoleName=ISOAdmin (172.18.0.16)
+30/08/2026 07:43:46 [6] 00-Always: Generated ActionId 5924b1f07a0d8442dd4102ff91912ac0c7c18434
+30/08/2026 07:43:46 [6] 30-Normal: Success
+30/08/2026 07:43:46 [6] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:43:46 [7] 00-Always: Request from 172.18.0.16
+30/08/2026 07:43:46 [7] 00-Always: Action=RoleAdd&RoleName=IDAUser (172.18.0.16)
+30/08/2026 07:43:46 [7] 00-Always: Generated ActionId 907b49fa2179b8f28bf7c9ba671cad7828e48169
+30/08/2026 07:43:46 [7] 30-Normal: Success
+30/08/2026 07:43:46 [7] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:43:47 [6] 00-Always: Request from 172.18.0.16
+30/08/2026 07:43:47 [6] 00-Always: Action=RoleGetRoleList (172.18.0.16)
+30/08/2026 07:43:47 [6] 00-Always: Generated ActionId 0fe5adb843de8caf02119fac3592a457b61c5e31
+30/08/2026 07:43:47 [6] 30-Normal: Success
+30/08/2026 07:43:47 [6] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:43:47 [7] 00-Always: Request from 172.18.0.16
+30/08/2026 07:43:47 [7] 00-Always: Action=UserReadUserListDetails (172.18.0.16)
+30/08/2026 07:43:47 [7] 00-Always: Generated ActionId 59faded67178514f842ed881c8a922d4c49dcd4c
+30/08/2026 07:43:47 [7] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:43:47 [5] 00-Always: Request from 172.18.0.16
+30/08/2026 07:43:47 [5] 00-Always: Action=RoleGetUserList&RoleName=ISOUser (172.18.0.16)
+30/08/2026 07:43:47 [5] 00-Always: Generated ActionId 2135189c9476e0eb921eb9b5bb43b16b13b4d7b5
+30/08/2026 07:43:47 [5] 30-Normal: Success
+30/08/2026 07:43:47 [5] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:43:47 [8] 00-Always: Request from 172.18.0.16
+30/08/2026 07:43:47 [8] 00-Always: Action=RoleGetUserList&RoleName=ISOAdmin (172.18.0.16)
+30/08/2026 07:43:47 [8] 00-Always: Generated ActionId 1423dd884032acb3edd70e32e20d235c9b56da15
+30/08/2026 07:43:47 [8] 30-Normal: Success
+30/08/2026 07:43:47 [8] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:43:53 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 07:43:53 [6] 00-Always: action=RoleAdd&RoleName=FindBI (172.18.0.1)
+30/08/2026 07:43:53 [6] 00-Always: Generated ActionId 7f856365412ad2f28f11e1ea87ad9aa812556dde
+30/08/2026 07:43:53 [6] 30-Normal: Success
+30/08/2026 07:43:53 [6] 30-Normal: Request completed in 1 ms.
+30/08/2026 07:43:53 [5] 00-Always: Request from 172.18.0.1
+30/08/2026 07:43:53 [5] 00-Always: action=RoleAdd&RoleName=FindUser (172.18.0.1)
+30/08/2026 07:43:53 [5] 00-Always: Generated ActionId 21408ff71efe19531ce1c1040e1efbf2f12ab4f9
+30/08/2026 07:43:53 [5] 30-Normal: Success
+30/08/2026 07:43:53 [5] 30-Normal: Request completed in 1 ms.
+30/08/2026 07:43:53 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 07:43:53 [6] 00-Always: action=RoleAdd&RoleName=FindAdmin (172.18.0.1)
+30/08/2026 07:43:53 [6] 00-Always: Generated ActionId 7840fc94ce3ddc2c2465d67b93f17cdb267a1e95
+30/08/2026 07:43:53 [6] 30-Normal: Success
+30/08/2026 07:43:53 [6] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:43:53 [5] 00-Always: Request from 172.18.0.1
+30/08/2026 07:43:53 [5] 00-Always: action=RoleAdd&RoleName=AnswerBankUser (172.18.0.1)
+30/08/2026 07:43:53 [5] 00-Always: Generated ActionId 8a39ceb45e2533f93517f010c82253f7d4bdecd5
+30/08/2026 07:43:53 [5] 30-Normal: Error: Role Exists
+30/08/2026 07:43:53 [5] 30-Normal: Request completed in 1 ms.
+30/08/2026 07:43:53 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 07:43:53 [6] 00-Always: action=RoleAdd&RoleName=IDAUser (172.18.0.1)
+30/08/2026 07:43:53 [6] 00-Always: Generated ActionId e5b2b6b71faea99ca5f5343d7c4ce0c8fc1913ad
+30/08/2026 07:43:53 [6] 30-Normal: Error: Role Exists
+30/08/2026 07:43:53 [6] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:43:53 [5] 00-Always: Request from 172.18.0.1
+30/08/2026 07:43:53 [5] 00-Always: action=RoleAdd&RoleName=ISOAdmin (172.18.0.1)
+30/08/2026 07:43:53 [5] 00-Always: Generated ActionId 6f41a605fa30fe31f50c7067cae1775c7a2a0bb3
+30/08/2026 07:43:53 [5] 30-Normal: Error: Role Exists
+30/08/2026 07:43:53 [5] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:43:53 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 07:43:53 [6] 00-Always: action=RoleAdd&RoleName=ISOUser (172.18.0.1)
+30/08/2026 07:43:53 [6] 00-Always: Generated ActionId 2cc7d6a0580b7061fda4befee84f7de1f7bc393f
+30/08/2026 07:43:53 [6] 30-Normal: Error: Role Exists
+30/08/2026 07:43:53 [6] 30-Normal: Request completed in 1 ms.
+30/08/2026 07:43:53 [5] 00-Always: Request from 172.18.0.1
+30/08/2026 07:43:53 [5] 00-Always: action=RoleAdd&RoleName=everyone (172.18.0.1)
+30/08/2026 07:43:53 [5] 00-Always: Generated ActionId d7353df8e9ee76112cf935bf0131a7e25a806c58
+30/08/2026 07:43:53 [5] 30-Normal: Error: Role Exists
+30/08/2026 07:43:53 [5] 30-Normal: Request completed in 1 ms.
+30/08/2026 07:43:53 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 07:43:53 [6] 00-Always: action=RoleAddUserToRole&RoleName=FindBI&UserName=admin (172.18.0.1)
+30/08/2026 07:43:53 [6] 00-Always: Generated ActionId 08489d94d2b12b1352460a0416f6ebd4432cd161
+30/08/2026 07:43:53 [6] 30-Normal: Success
+30/08/2026 07:43:53 [6] 30-Normal: Request completed in 1 ms.
+30/08/2026 07:43:53 [5] 00-Always: Request from 172.18.0.1
+30/08/2026 07:43:53 [5] 00-Always: action=RoleAddUserToRole&RoleName=FindAdmin&UserName=admin (172.18.0.1)
+30/08/2026 07:43:53 [5] 00-Always: Generated ActionId 454985d4c23499d681c48b71b9f76b46b2fd04f6
+30/08/2026 07:43:53 [5] 30-Normal: Success
+30/08/2026 07:43:53 [5] 30-Normal: Request completed in 1 ms.
+30/08/2026 07:43:53 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 07:43:53 [6] 00-Always: action=RoleAddUserToRole&RoleName=FindUser&UserName=admin (172.18.0.1)
+30/08/2026 07:43:53 [6] 00-Always: Generated ActionId ca9c1bc16268c003febff320031f6994fbebd3f7
+30/08/2026 07:43:53 [6] 30-Normal: Success
+30/08/2026 07:43:53 [6] 30-Normal: Request completed in 1 ms.
+30/08/2026 07:43:53 [5] 00-Always: Request from 172.18.0.1
+30/08/2026 07:43:53 [5] 00-Always: action=RoleAddUserToRole&RoleName=IDAUser&UserName=admin (172.18.0.1)
+30/08/2026 07:43:53 [5] 00-Always: Generated ActionId a370d12ffb0e4c8766daf0631142a884fd6905fd
+30/08/2026 07:43:53 [5] 30-Normal: Success
+30/08/2026 07:43:53 [5] 30-Normal: Request completed in 1 ms.
+30/08/2026 07:43:53 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 07:43:53 [6] 00-Always: action=RoleAddUserToRole&RoleName=AnswerBankUser&UserName=admin (172.18.0.1)
+30/08/2026 07:43:53 [6] 00-Always: Generated ActionId f4d12551532951b4e4766f76cbc998b655561ee7
+30/08/2026 07:43:53 [6] 30-Normal: Success
+30/08/2026 07:43:53 [6] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:43:54 [5] 00-Always: Request from 172.18.0.1
+30/08/2026 07:43:54 [5] 00-Always: action=RoleAddUserToRole&RoleName=FindUser&UserName=bank (172.18.0.1)
+30/08/2026 07:43:54 [5] 00-Always: Generated ActionId fa20b080346549513031b5e6ab98c336d703c646
+30/08/2026 07:43:54 [5] 30-Normal: Success
+30/08/2026 07:43:54 [5] 30-Normal: Request completed in 1 ms.
+30/08/2026 07:43:54 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 07:43:54 [6] 00-Always: action=RoleAddUserToRole&RoleName=IDAUser&UserName=bank (172.18.0.1)
+30/08/2026 07:43:54 [6] 00-Always: Generated ActionId c30d679db66080d96f931e61709bf202fa480902
+30/08/2026 07:43:54 [6] 30-Normal: Success
+30/08/2026 07:43:54 [6] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:43:54 [5] 00-Always: Request from 172.18.0.1
+30/08/2026 07:43:54 [5] 00-Always: action=RoleAddUserToRole&RoleName=AnswerBankUser&UserName=bank (172.18.0.1)
+30/08/2026 07:43:54 [5] 00-Always: Generated ActionId 65262ec3bf2e6ecc5c8e6f7286e0b34af7c72a25
+30/08/2026 07:43:54 [5] 30-Normal: Success
+30/08/2026 07:43:54 [5] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:44:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:44:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:44:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:44:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:44:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:44:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:44:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:44:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:44:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:44:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:45:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:45:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:45:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:45:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:45:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:45:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:45:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:45:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:45:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:45:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:46:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:46:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:46:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:46:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:46:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:46:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:46:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:46:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:46:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:46:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:47:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:47:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:47:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:47:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:47:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:47:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:47:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:47:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:47:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:47:38 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:47:57 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:47:57 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:47:57 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:48:00 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:48:00 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:48:00 [7] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:48:00 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:48:00 [5] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:48:00 [8] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:48:00 [5] 00-Always: Request from 172.18.0.1
+30/08/2026 07:48:00 [5] 00-Always: action=GetStatus&ActionId=IdolAdmin%2Db0c6661f%2D7c51%2D4837%2D983e%2Db50113b2b622&responseFormat=json%2F1&%5F=1788076080762 (172.18.0.1)
+30/08/2026 07:48:00 [5] 30-Normal: Success
+30/08/2026 07:48:00 [5] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:48:00 [7] 00-Always: Request from 172.18.0.1
+30/08/2026 07:48:00 [7] 00-Always: action=RoleGetRoleList&ActionId=IdolAdmin%2D184e09f4%2D9fd9%2D46fc%2D839d%2Dfc3dc59b3b72&responseFormat=json%2F1&%5F=1788076080770 (172.18.0.1)
+30/08/2026 07:48:00 [7] 30-Normal: Success
+30/08/2026 07:48:00 [7] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:48:00 [8] 00-Always: Request from 172.18.0.1
+30/08/2026 07:48:00 [8] 00-Always: action=memoryreport&ResponseFormat=json%2F1&ActionId=IdolAdmin%2D4a96e987%2D3b97%2D4962%2Da703%2D3f5b637e8410&%5F=1788076080774 (172.18.0.1)
+30/08/2026 07:48:00 [8] 30-Normal: Success
+30/08/2026 07:48:00 [8] 30-Normal: Request completed in 1 ms.
+30/08/2026 07:48:00 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 07:48:00 [6] 00-Always: action=memoryreport&ResponseFormat=json%2F1&ActionId=IdolAdmin%2Ddb660383%2D1e69%2D4a1d%2D92aa%2Dd987f94ff247&%5F=1788076080775 (172.18.0.1)
+30/08/2026 07:48:00 [6] 30-Normal: Success
+30/08/2026 07:48:00 [6] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:48:00 [7] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:48:00 [7] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:48:00 [7] 00-Always: Request from 172.18.0.1
+30/08/2026 07:48:00 [7] 00-Always: action=UserReadUserListDetails&ActionId=IdolAdmin%2D5c4ab51f%2D8a5f%2D4538%2Dbf20%2D4ec6c7bf1ff7&Match=&MaxUsers=10&Start=0&responseFormat=json%2F1&%5F=1788076080777 (172.18.0.1)
+30/08/2026 07:48:00 [7] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:48:00 [8] 00-Always: Request from 172.18.0.1
+30/08/2026 07:48:00 [8] 00-Always: action=GetStatus&ActionId=IdolAdmin%2D06592756%2Da51e%2D46c6%2D8bab%2Dea1bca5442db&responseFormat=json%2F1&%5F=1788076080777 (172.18.0.1)
+30/08/2026 07:48:00 [8] 30-Normal: Success
+30/08/2026 07:48:00 [8] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:48:00 [5] 00-Always: Request from 172.18.0.1
+30/08/2026 07:48:00 [5] 00-Always: action=RoleGetPrivilegeList&ActionId=IdolAdmin%2D9cb8e895%2D0d9e%2D4221%2D9ce8%2Dd276a3c335a6&responseFormat=json%2F1&%5F=1788076080779 (172.18.0.1)
+30/08/2026 07:48:00 [5] 30-Normal: Success
+30/08/2026 07:48:00 [5] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:48:10 [8] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:48:10 [8] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:48:10 [8] 00-Always: Request from 172.18.0.1
+30/08/2026 07:48:10 [8] 00-Always: action=GetStatus&ActionId=IdolAdmin%2Db11a2a7c%2Def62%2D4bba%2Dbc17%2D46ce4681a4d7&responseFormat=json%2F1&%5F=1788076090858 (172.18.0.1)
+30/08/2026 07:48:10 [8] 30-Normal: Success
+30/08/2026 07:48:10 [8] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:48:10 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 07:48:10 [6] 00-Always: action=RoleGetRoleList&ActionId=IdolAdmin%2D69f49833%2D420e%2D49e7%2D81a5%2Dc0db78b3df25&responseFormat=json%2F1&%5F=1788076090860 (172.18.0.1)
+30/08/2026 07:48:10 [6] 30-Normal: Success
+30/08/2026 07:48:10 [6] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:48:10 [7] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:48:10 [7] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:48:10 [7] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:48:10 [7] 00-Always: Request from 172.18.0.1
+30/08/2026 07:48:10 [7] 00-Always: action=UserReadUserListDetails&ActionId=IdolAdmin%2D15df3644%2D4833%2D402b%2D84f5%2D8b4095377d73&Match=&MaxUsers=10&Start=0&responseFormat=json%2F1&%5F=1788076090861 (172.18.0.1)
+30/08/2026 07:48:10 [8] 00-Always: Request from 172.18.0.1
+30/08/2026 07:48:10 [8] 00-Always: action=GetStatus&ActionId=IdolAdmin%2D3967dc65%2D1d28%2D48b9%2D9ed7%2Df24b74263aa0&responseFormat=json%2F1&%5F=1788076090861 (172.18.0.1)
+30/08/2026 07:48:10 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 07:48:10 [6] 00-Always: action=memoryreport&ResponseFormat=json%2F1&ActionId=IdolAdmin%2De18abb70%2Dbcf2%2D43e8%2Dbf85%2D0eb1f985dcc4&%5F=1788076090860 (172.18.0.1)
+30/08/2026 07:48:10 [8] 30-Normal: Success
+30/08/2026 07:48:10 [6] 30-Normal: Success
+30/08/2026 07:48:10 [7] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:48:10 [8] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:48:10 [6] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:48:10 [5] 00-Always: Request from 172.18.0.1
+30/08/2026 07:48:10 [5] 00-Always: action=RoleGetPrivilegeList&ActionId=IdolAdmin%2D0da0e132%2Db846%2D46dc%2Db301%2D31db46855572&responseFormat=json%2F1&%5F=1788076090861 (172.18.0.1)
+30/08/2026 07:48:10 [5] 30-Normal: Success
+30/08/2026 07:48:10 [5] 30-Normal: Request completed in 1 ms.
+30/08/2026 07:48:20 [5] 00-Always: Request from 172.18.0.1
+30/08/2026 07:48:20 [5] 00-Always: action=GetStatus&ActionId=IdolAdmin%2D0a3eacee%2D862e%2D4d68%2Dac11%2D9b85b1cdae43&responseFormat=json%2F1&%5F=1788076100845 (172.18.0.1)
+30/08/2026 07:48:20 [5] 30-Normal: Success
+30/08/2026 07:48:20 [5] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:48:20 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 07:48:20 [6] 00-Always: action=RoleGetRoleList&ActionId=IdolAdmin%2D8f9163b1%2D6301%2D4ff5%2Dae99%2D7e4130429ea0&responseFormat=json%2F1&%5F=1788076100846 (172.18.0.1)
+30/08/2026 07:48:20 [6] 30-Normal: Success
+30/08/2026 07:48:20 [6] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:48:20 [8] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:48:20 [8] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:48:20 [8] 70-Error: SSL handshake failed: sslAccept returned -1, SSL error a000416 in SSL routines: ssl/tls alert certificate unknown
+30/08/2026 07:48:20 [8] 00-Always: Request from 172.18.0.1
+30/08/2026 07:48:20 [8] 00-Always: action=GetStatus&ActionId=IdolAdmin%2Dad458d80%2D154d%2D4f98%2D9813%2D525f9f35336c&responseFormat=json%2F1&%5F=1788076100847 (172.18.0.1)
+30/08/2026 07:48:20 [8] 30-Normal: Success
+30/08/2026 07:48:20 [8] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:48:20 [5] 00-Always: Request from 172.18.0.1
+30/08/2026 07:48:20 [5] 00-Always: action=memoryreport&ResponseFormat=json%2F1&ActionId=IdolAdmin%2D2ba7fc3f%2Dc32f%2D4977%2D9416%2D5613cdd5aa97&%5F=1788076100847 (172.18.0.1)
+30/08/2026 07:48:20 [5] 30-Normal: Success
+30/08/2026 07:48:20 [5] 30-Normal: Request completed in 1 ms.
+30/08/2026 07:48:20 [7] 00-Always: Request from 172.18.0.1
+30/08/2026 07:48:20 [7] 00-Always: action=UserReadUserListDetails&ActionId=IdolAdmin%2Db3e62fb1%2D4229%2D4680%2Da30b%2D56e6ff84031c&Match=&MaxUsers=10&Start=0&responseFormat=json%2F1&%5F=1788076100847 (172.18.0.1)
+30/08/2026 07:48:20 [7] 30-Normal: Request completed in 0 ms.
+30/08/2026 07:48:20 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 07:48:20 [6] 00-Always: action=RoleGetPrivilegeList&ActionId=IdolAdmin%2D3a95effa%2D1803%2D4cd7%2D8471%2D2b449f121148&responseFormat=json%2F1&%5F=1788076100847 (172.18.0.1)
+30/08/2026 07:48:20 [6] 30-Normal: Success
+30/08/2026 07:48:20 [6] 30-Normal: Request completed in 0 ms.
+30/08/2026 08:18:16 [0] 30-Normal: ACI Server validated operations key.
+30/08/2026 08:18:16 [0] 30-Normal: ACI Server has no QPS limit.
+30/08/2026 08:18:16 [0] 30-Normal: ACI Server is licensed for SSL encryption.
+30/08/2026 08:18:16 [0] 30-Normal: Performed hostname lookup and converted ADMINCLIENTS from [*.*.*.*] -> [*].
+30/08/2026 08:18:16 [0] 30-Normal: Performed hostname lookup and converted USERCLIENTS from [*.*.*.*,*.*.*.*] -> [*,*].
+30/08/2026 08:18:16 [0] 30-Normal: Running with FIPS mode inactive
+30/08/2026 08:18:16 [0] 30-Normal: ACI Servers runs in SSL mode.
+30/08/2026 08:18:16 [0] 30-Normal: ACI Server setting MaxInputString to 64000.
+30/08/2026 08:18:16 [0] 30-Normal: ACI Server is configured for XSLT templating.
+30/08/2026 08:18:16 [0] 50-Warning: XSLT template directory not found (/community/acitemplates).
+30/08/2026 08:18:16 [0] 30-Normal: ACI Server successfully loaded online help.
+30/08/2026 08:18:16 [0] 30-Normal: ACI Server successfully loaded admin UI.
+30/08/2026 08:18:27 [5] 00-Always: Request from 172.18.0.17
+30/08/2026 08:18:27 [5] 00-Always: Action=RoleGetRoleList (172.18.0.17)
+30/08/2026 08:18:27 [5] 00-Always: Generated ActionId 583e4a429509362908b0a359bfeca782df42bbeb
+30/08/2026 08:18:27 [5] 30-Normal: Success
+30/08/2026 08:18:27 [5] 30-Normal: Request completed in 0 ms.
+30/08/2026 08:18:27 [7] 00-Always: Request from 172.18.0.17
+30/08/2026 08:18:27 [7] 00-Always: Action=RoleAdd&RoleName=ISOUser (172.18.0.17)
+30/08/2026 08:18:27 [7] 00-Always: Generated ActionId f5262ccf630ea5a37a34c95a4a63a859d72e5cda
+30/08/2026 08:18:27 [7] 30-Normal: Success
+30/08/2026 08:18:27 [7] 30-Normal: Request completed in 1 ms.
+30/08/2026 08:18:27 [8] 00-Always: Request from 172.18.0.17
+30/08/2026 08:18:27 [8] 00-Always: Action=RoleAdd&RoleName=AnswerBankUser (172.18.0.17)
+30/08/2026 08:18:27 [8] 00-Always: Generated ActionId 5b440815d1cde7dfd5ebc2a1a0c905e5e5b9c567
+30/08/2026 08:18:27 [8] 30-Normal: Success
+30/08/2026 08:18:27 [8] 30-Normal: Request completed in 1 ms.
+30/08/2026 08:18:27 [6] 00-Always: Request from 172.18.0.17
+30/08/2026 08:18:27 [6] 00-Always: Action=RoleAdd&RoleName=ISOAdmin (172.18.0.17)
+30/08/2026 08:18:27 [6] 00-Always: Generated ActionId ab151226ac1dac13ece8d8e1fae71a9cb719c3da
+30/08/2026 08:18:27 [6] 30-Normal: Success
+30/08/2026 08:18:27 [6] 30-Normal: Request completed in 1 ms.
+30/08/2026 08:18:27 [5] 00-Always: Request from 172.18.0.17
+30/08/2026 08:18:27 [5] 00-Always: Action=RoleAdd&RoleName=IDAUser (172.18.0.17)
+30/08/2026 08:18:27 [5] 00-Always: Generated ActionId 063dbd9fd00fd5a797e7f309a8189a67e0461aad
+30/08/2026 08:18:27 [5] 30-Normal: Success
+30/08/2026 08:18:27 [5] 30-Normal: Request completed in 1 ms.
+30/08/2026 08:18:28 [6] 00-Always: Request from 172.18.0.17
+30/08/2026 08:18:28 [6] 00-Always: Action=RoleGetRoleList (172.18.0.17)
+30/08/2026 08:18:28 [6] 00-Always: Generated ActionId ecd44194b599080f163be90f1cf2a749ee13cf18
+30/08/2026 08:18:28 [6] 30-Normal: Success
+30/08/2026 08:18:28 [6] 30-Normal: Request completed in 0 ms.
+30/08/2026 08:18:28 [5] 00-Always: Request from 172.18.0.17
+30/08/2026 08:18:28 [5] 00-Always: Action=UserReadUserListDetails (172.18.0.17)
+30/08/2026 08:18:28 [5] 00-Always: Generated ActionId e2901735cf27d1e90822bfa6851f118ff5196966
+30/08/2026 08:18:28 [5] 30-Normal: Request completed in 1 ms.
+30/08/2026 08:18:28 [7] 00-Always: Request from 172.18.0.17
+30/08/2026 08:18:28 [7] 00-Always: Action=RoleGetUserList&RoleName=ISOUser (172.18.0.17)
+30/08/2026 08:18:28 [7] 00-Always: Generated ActionId a13567536b7e7ea9364f75a0bf2067e126b1ea46
+30/08/2026 08:18:28 [7] 30-Normal: Success
+30/08/2026 08:18:28 [7] 30-Normal: Request completed in 0 ms.
+30/08/2026 08:18:28 [8] 00-Always: Request from 172.18.0.17
+30/08/2026 08:18:28 [8] 00-Always: Action=RoleGetUserList&RoleName=ISOAdmin (172.18.0.17)
+30/08/2026 08:18:28 [8] 00-Always: Generated ActionId b87935d4e6258ad45bbc0d3ab0f31d109cae6a60
+30/08/2026 08:18:28 [8] 30-Normal: Success
+30/08/2026 08:18:28 [8] 30-Normal: Request completed in 1 ms.
+30/08/2026 08:18:32 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 08:18:32 [6] 00-Always: action=RoleAdd&RoleName=FindBI (172.18.0.1)
+30/08/2026 08:18:32 [6] 00-Always: Generated ActionId 6ceb2db20898daf1867070faa8a2faa41a67a616
+30/08/2026 08:18:32 [6] 30-Normal: Success
+30/08/2026 08:18:32 [6] 30-Normal: Request completed in 1 ms.
+30/08/2026 08:18:32 [7] 00-Always: Request from 172.18.0.1
+30/08/2026 08:18:32 [7] 00-Always: action=RoleAdd&RoleName=FindUser (172.18.0.1)
+30/08/2026 08:18:32 [7] 00-Always: Generated ActionId 925df5199084267542d46b3e541c3edb1e4a85f7
+30/08/2026 08:18:32 [7] 30-Normal: Success
+30/08/2026 08:18:32 [7] 30-Normal: Request completed in 0 ms.
+30/08/2026 08:18:32 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 08:18:32 [6] 00-Always: action=RoleAdd&RoleName=FindAdmin (172.18.0.1)
+30/08/2026 08:18:32 [6] 00-Always: Generated ActionId 81a4939aeafc102344f1e1b583a6f872805c7640
+30/08/2026 08:18:32 [6] 30-Normal: Success
+30/08/2026 08:18:32 [6] 30-Normal: Request completed in 0 ms.
+30/08/2026 08:18:32 [7] 00-Always: Request from 172.18.0.1
+30/08/2026 08:18:32 [7] 00-Always: action=RoleAdd&RoleName=AnswerBankUser (172.18.0.1)
+30/08/2026 08:18:32 [7] 00-Always: Generated ActionId 2b690c2fc68c89ac782d2bb1732cf20203680296
+30/08/2026 08:18:32 [7] 30-Normal: Error: Role Exists
+30/08/2026 08:18:32 [7] 30-Normal: Request completed in 0 ms.
+30/08/2026 08:18:32 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 08:18:32 [6] 00-Always: action=RoleAdd&RoleName=IDAUser (172.18.0.1)
+30/08/2026 08:18:32 [6] 00-Always: Generated ActionId 28d7dd20f40ff28d56d34df0943f1d64a4fa2ea3
+30/08/2026 08:18:32 [6] 30-Normal: Error: Role Exists
+30/08/2026 08:18:32 [6] 30-Normal: Request completed in 1 ms.
+30/08/2026 08:18:32 [7] 00-Always: Request from 172.18.0.1
+30/08/2026 08:18:32 [7] 00-Always: action=RoleAdd&RoleName=ISOAdmin (172.18.0.1)
+30/08/2026 08:18:32 [7] 00-Always: Generated ActionId 0fa42c9742f181d85681f004ca7312d71a6c427e
+30/08/2026 08:18:32 [7] 30-Normal: Error: Role Exists
+30/08/2026 08:18:32 [7] 30-Normal: Request completed in 1 ms.
+30/08/2026 08:18:32 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 08:18:32 [6] 00-Always: action=RoleAdd&RoleName=ISOUser (172.18.0.1)
+30/08/2026 08:18:32 [6] 00-Always: Generated ActionId d58ec42dff516189e024093e238c1afd2e5f9459
+30/08/2026 08:18:32 [6] 30-Normal: Error: Role Exists
+30/08/2026 08:18:32 [6] 30-Normal: Request completed in 0 ms.
+30/08/2026 08:18:32 [7] 00-Always: Request from 172.18.0.1
+30/08/2026 08:18:32 [7] 00-Always: action=RoleAdd&RoleName=everyone (172.18.0.1)
+30/08/2026 08:18:32 [7] 00-Always: Generated ActionId 8f23c1adec77b9d56da5b08594bb3770508da899
+30/08/2026 08:18:32 [7] 30-Normal: Error: Role Exists
+30/08/2026 08:18:32 [7] 30-Normal: Request completed in 0 ms.
+30/08/2026 08:18:33 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 08:18:33 [6] 00-Always: action=RoleAddUserToRole&RoleName=FindBI&UserName=admin (172.18.0.1)
+30/08/2026 08:18:33 [6] 00-Always: Generated ActionId fe92ca340f30f89a55b7daa9c694f227b6006033
+30/08/2026 08:18:33 [6] 30-Normal: Success
+30/08/2026 08:18:33 [6] 30-Normal: Request completed in 0 ms.
+30/08/2026 08:18:33 [7] 00-Always: Request from 172.18.0.1
+30/08/2026 08:18:33 [7] 00-Always: action=RoleAddUserToRole&RoleName=FindAdmin&UserName=admin (172.18.0.1)
+30/08/2026 08:18:33 [7] 00-Always: Generated ActionId 52fc29edaf8b5e1ef6564d6e42722f0b32d9c90f
+30/08/2026 08:18:33 [7] 30-Normal: Success
+30/08/2026 08:18:33 [7] 30-Normal: Request completed in 1 ms.
+30/08/2026 08:18:33 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 08:18:33 [6] 00-Always: action=RoleAddUserToRole&RoleName=FindUser&UserName=admin (172.18.0.1)
+30/08/2026 08:18:33 [6] 00-Always: Generated ActionId 8d4d0bd9e90d637678bfa693bf1cf207b568997b
+30/08/2026 08:18:33 [6] 30-Normal: Success
+30/08/2026 08:18:33 [6] 30-Normal: Request completed in 1 ms.
+30/08/2026 08:18:33 [7] 00-Always: Request from 172.18.0.1
+30/08/2026 08:18:33 [7] 00-Always: action=RoleAddUserToRole&RoleName=IDAUser&UserName=admin (172.18.0.1)
+30/08/2026 08:18:33 [7] 00-Always: Generated ActionId 9a85b6e8e9649a77331e04de5211621910d32162
+30/08/2026 08:18:33 [7] 30-Normal: Success
+30/08/2026 08:18:33 [7] 30-Normal: Request completed in 1 ms.
+30/08/2026 08:18:33 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 08:18:33 [6] 00-Always: action=RoleAddUserToRole&RoleName=AnswerBankUser&UserName=admin (172.18.0.1)
+30/08/2026 08:18:33 [6] 00-Always: Generated ActionId 3ac2e3636d2b9985c62346b419dc31bd2f54fa92
+30/08/2026 08:18:33 [6] 30-Normal: Success
+30/08/2026 08:18:33 [6] 30-Normal: Request completed in 0 ms.
+30/08/2026 08:18:33 [7] 00-Always: Request from 172.18.0.1
+30/08/2026 08:18:33 [7] 00-Always: action=RoleAddUserToRole&RoleName=FindUser&UserName=bank (172.18.0.1)
+30/08/2026 08:18:33 [7] 00-Always: Generated ActionId 3a300fdac2f16ea7c06b7595a548bd99b0ad5289
+30/08/2026 08:18:33 [7] 30-Normal: Success
+30/08/2026 08:18:33 [7] 30-Normal: Request completed in 1 ms.
+30/08/2026 08:18:33 [6] 00-Always: Request from 172.18.0.1
+30/08/2026 08:18:33 [6] 00-Always: action=RoleAddUserToRole&RoleName=IDAUser&UserName=bank (172.18.0.1)
+30/08/2026 08:18:33 [6] 00-Always: Generated ActionId 7ce017db40ada788f3b9df4bb682ed4350bb418e
+30/08/2026 08:18:33 [6] 30-Normal: Success
+30/08/2026 08:18:33 [6] 30-Normal: Request completed in 0 ms.
+30/08/2026 08:18:33 [7] 00-Always: Request from 172.18.0.1
+30/08/2026 08:18:33 [7] 00-Always: action=RoleAddUserToRole&RoleName=AnswerBankUser&UserName=bank (172.18.0.1)
+30/08/2026 08:18:33 [7] 00-Always: Generated ActionId 10f6f2ee27924eff308799d9d5edfc2d959a6d8d
+30/08/2026 08:18:33 [7] 30-Normal: Success
+30/08/2026 08:18:33 [7] 30-Normal: Request completed in 0 ms.

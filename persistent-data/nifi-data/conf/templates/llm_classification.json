@@ -1,0 +1,354 @@
+{
+    "externalControllerServices": {
+        "9f64332c-8d01-3949-bf85-d80a3513e14f": {
+            "identifier": "9f64332c-8d01-3949-bf85-d80a3513e14f",
+            "name": "IdolLicenseServiceImpl"
+        }
+    },
+    "flowContents": {
+        "comments": "",
+        "componentType": "PROCESS_GROUP",
+        "connections": [
+            {
+                "backPressureDataSizeThreshold": "1 GB",
+                "backPressureObjectThreshold": 10000,
+                "bends": [],
+                "componentType": "CONNECTION",
+                "destination": {
+                    "comments": "",
+                    "groupId": "588cff07-6385-333a-8e7c-237859532365",
+                    "id": "79ee7c54-992c-3d0e-b346-9e128d4c9594",
+                    "instanceIdentifier": "1dfeeba1-417f-3616-ff9f-244b9814d1a6",
+                    "name": "ExecuteDocumentPython",
+                    "type": "PROCESSOR"
+                },
+                "flowFileExpiration": "0 sec",
+                "groupIdentifier": "588cff07-6385-333a-8e7c-237859532365",
+                "identifier": "90c52d24-1829-3ac5-9656-1dd8900f75ce",
+                "instanceIdentifier": "83fb7309-0c00-3e78-6214-bdd371faa83b",
+                "labelIndex": 0,
+                "loadBalanceCompression": "DO_NOT_COMPRESS",
+                "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+                "name": "",
+                "partitioningAttribute": "",
+                "prioritizers": [],
+                "selectedRelationships": [
+                    ""
+                ],
+                "source": {
+                    "groupId": "588cff07-6385-333a-8e7c-237859532365",
+                    "id": "bf4fc45f-c099-3ff6-af88-1bcc0a11aad6",
+                    "instanceIdentifier": "0e5b936f-f4c4-33e5-0088-3c7ee92f1500",
+                    "name": "Input",
+                    "type": "INPUT_PORT"
+                },
+                "zIndex": 0
+            },
+            {
+                "backPressureDataSizeThreshold": "1 GB",
+                "backPressureObjectThreshold": 10000,
+                "bends": [],
+                "componentType": "CONNECTION",
+                "destination": {
+                    "groupId": "588cff07-6385-333a-8e7c-237859532365",
+                    "id": "5f50919a-b331-3ba2-be5d-cba71a787ce4",
+                    "instanceIdentifier": "a7da630d-be68-3838-de71-b7cb4a16dbd9",
+                    "name": "Output",
+                    "type": "OUTPUT_PORT"
+                },
+                "flowFileExpiration": "0 sec",
+                "groupIdentifier": "588cff07-6385-333a-8e7c-237859532365",
+                "identifier": "b4446b22-c9db-39a7-9477-1d574eead75d",
+                "instanceIdentifier": "870662d8-67f7-33f2-5f2a-70db43e33bb6",
+                "labelIndex": 0,
+                "loadBalanceCompression": "DO_NOT_COMPRESS",
+                "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+                "name": "",
+                "partitioningAttribute": "",
+                "prioritizers": [],
+                "selectedRelationships": [
+                    "success",
+                    "failure"
+                ],
+                "source": {
+                    "comments": "",
+                    "groupId": "588cff07-6385-333a-8e7c-237859532365",
+                    "id": "79ee7c54-992c-3d0e-b346-9e128d4c9594",
+                    "instanceIdentifier": "1dfeeba1-417f-3616-ff9f-244b9814d1a6",
+                    "name": "ExecuteDocumentPython",
+                    "type": "PROCESSOR"
+                },
+                "zIndex": 0
+            }
+        ],
+        "controllerServices": [],
+        "defaultBackPressureDataSizeThreshold": "1 GB",
+        "defaultBackPressureObjectThreshold": 10000,
+        "defaultFlowFileExpiration": "0 sec",
+        "executionEngine": "INHERITED",
+        "flowFileConcurrency": "UNBOUNDED",
+        "flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE",
+        "funnels": [],
+        "identifier": "588cff07-6385-333a-8e7c-237859532365",
+        "inputPorts": [
+            {
+                "allowRemoteAccess": false,
+                "componentType": "INPUT_PORT",
+                "concurrentlySchedulableTaskCount": 1,
+                "groupIdentifier": "588cff07-6385-333a-8e7c-237859532365",
+                "identifier": "bf4fc45f-c099-3ff6-af88-1bcc0a11aad6",
+                "instanceIdentifier": "0e5b936f-f4c4-33e5-0088-3c7ee92f1500",
+                "name": "Input",
+                "portFunction": "STANDARD",
+                "position": {
+                    "x": -192.0,
+                    "y": -104.0
+                },
+                "scheduledState": "ENABLED",
+                "type": "INPUT_PORT"
+            }
+        ],
+        "instanceIdentifier": "cab4484e-541c-37c9-a5c8-7157349f39fd",
+        "labels": [],
+        "maxConcurrentTasks": 1,
+        "name": "LLM Classification",
+        "outputPorts": [
+            {
+                "allowRemoteAccess": false,
+                "componentType": "OUTPUT_PORT",
+                "concurrentlySchedulableTaskCount": 1,
+                "groupIdentifier": "588cff07-6385-333a-8e7c-237859532365",
+                "identifier": "5f50919a-b331-3ba2-be5d-cba71a787ce4",
+                "instanceIdentifier": "a7da630d-be68-3838-de71-b7cb4a16dbd9",
+                "name": "Output",
+                "portFunction": "STANDARD",
+                "position": {
+                    "x": -192.0,
+                    "y": 248.0
+                },
+                "scheduledState": "ENABLED",
+                "type": "OUTPUT_PORT"
+            }
+        ],
+        "position": {
+            "x": 1296.0,
+            "y": 600.0
+        },
+        "processGroups": [],
+        "processors": [
+            {
+                "annotationData": "/opt/nifi/nifi-current/idol_repository/ExecuteDocumentPython_1dfeeba1-417f-3616-ff9f-244b9814d1a6/documentclassifier-1.py",
+                "autoTerminatedRelationships": [],
+                "backoffMechanism": "PENALIZE_FLOWFILE",
+                "bulletinLevel": "ERROR",
+                "bundle": {
+                    "artifact": "idol-nifi-framework",
+                    "group": "idol.nifi",
+                    "version": "26.2.0-nifi2"
+                },
+                "comments": "",
+                "componentType": "PROCESSOR",
+                "concurrentlySchedulableTaskCount": 1,
+                "executionNode": "ALL",
+                "groupIdentifier": "588cff07-6385-333a-8e7c-237859532365",
+                "identifier": "79ee7c54-992c-3d0e-b346-9e128d4c9594",
+                "instanceIdentifier": "1dfeeba1-417f-3616-ff9f-244b9814d1a6",
+                "maxBackoffPeriod": "10 mins",
+                "name": "ExecuteDocumentPython",
+                "penaltyDuration": "30 sec",
+                "position": {
+                    "x": -248.0,
+                    "y": 32.0
+                },
+                "properties": {
+                    "AdditionalOutputRelationships": null,
+                    "IdolLicenseService": "",
+                    "PythonScriptFile": "#\n# Copyright 2025 Open Text.\n#\n# The only warranties for products and services of Open Text and its\n# affiliates and licensors (\"Open Text\") are as may be set forth in the\n# express warranty statements accompanying such products and services.\n# Nothing herein should be construed as constituting an additional\n# warranty. Open Text shall not be liable for technical or editorial\n# errors or omissions contained herein. The information contained herein\n# is subject to change without notice.\n#\n# Except as specifically indicated otherwise, this document contains\n# confidential information and a valid license is required for possession,\n# use or copying. If this work is provided to the U.S. Government,\n# consistent with FAR 12.211 and 12.212, Commercial Computer Software,\n# Computer Software Documentation, and Technical Data for Commercial Items\n# are licensed to the U.S. Government under vendor's standard commercial\n# license.\n#\n\nimport traceback\n\nfrom idolnifi import logError,logInfo\nfrom documentclassifier import DocumentClassifier, Document\n\ndef handler(context, doc):\n    \"\"\"\n    Handler for the ExecuteDocumentPython processor to perform LLM-based document\n    classification. Typically this is achieved via callout to an external service.\n\n    Configuration is through NiFi properties:\n\n    category.definitions:\n        JSON defining the categories into which to classify documents.\n        Can be verbatim data, or a path to a JSON file on disk, of the form:\n        { \"categories\": [\n            { \"name\": \"MyCat\", \"description\": \"Documents I find interesting\",\n              \"examples\": [\n                \"Some text I'd typically expect in a document of this category\",\n                \"Another example of something I'd like to go into this category\"\n              ]\n            },\n            ... <more category definitions>\n        ] }\n\n    connection.class:\n        Name of a Python class to connect to the backing LLM service. Provided\n        classes as `OpenAIConnection` and `VertexConnection` to connect to either\n        a server that implements the OpenAI API, or a generative model running\n        on the Vertex service.\n\n    connection.openai.*, connection.vertex.*: Connection-specific properties\n\n    fields.category: The name of the document metadata field in which to put the\n        name of the category, following a successful classification.\n    fields.title: The name of the document metadata field from which to read the\n        document title, to send to the LLM along with the document content.\n\n    prompt.template: The prompt to send to the LLM.\n        This can be a file path, or literal data. The prompt template can contain\n        the placeholders '{{categories}}', '{{title}}' and '{{text}}', which will\n        be replaced with the category definition JSON, the document title, and the\n        document text content respectively, before sending to the LLM.\n    prompt.maxContentLength: Document text content will be truncated at this many\n        bytes before substituting into the prompt template.\n    \"\"\"\n\n    #Create the document classifier from properties\n    props = {desc.getName():prop for desc,prop in context.getProperties().items()\n             if not desc.getName().startswith(\"py:\")} # Ignore script properties\n    try:\n        classifier = DocumentClassifier.create_from_props(props)\n    except Exception as ex:\n        logError(f\"Error creating DocumentClassifier: {ex}\", traceback.format_exc())\n        return\n\n    #Locally-required properties\n    titleField = props.get(\"fields.title\", \"DRETITLE\")\n    categoryField = props.get(\"fields.category\", \"CATEGORY\")\n    maxContentLength = int(props.get(\"prompt.maxContentLength\", \"100000\"))\n\n    with doc.updatingAttributes() as action:\n\n        #Perform any pre-operations using action (DocumentAction)\n        xmlmeta = action.getXmlMetadata()\n        docTitle = None\n        if xmlTitle := xmlmeta.getFirstChild(titleField):\n            docTitle = xmlTitle.getValue()\n\n        #Get all content for the current part as a list of page strings\n        docContent = \"\"\n        for part in action.parts():\n            if part.isContentPart():\n                for content in part.getContent():\n                    docContent += content + \"\\n\"\n                    if len(docContent) >= maxContentLength:\n                        break\n            if len(docContent) > maxContentLength:\n                docContent = docContent[:maxContentLength]\n                break\n\n        # Do the classification\n        doc = Document(title=docTitle or \"\", text=docContent)\n        category = None\n        try:\n            category = classifier.classify(doc)\n        except Exception as ex:\n            logError(f\"Error classifying document: {ex}\")\n            return\n\n        #Perform any post-operations using action (DocumentAction)\n        if category:\n            logInfo(f\"Document '{docTitle}' classified as '{category}'\")\n            xmlmeta[categoryField] = category\n        else:\n            logInfo(f\"Document '{docTitle}' could not be classified\")\n",
+                    "PythonScriptFunction": "handler",
+                    "RouteReturnedTo": null,
+                    "RouteTo": "success",
+                    "RouteUntransferredTo": null,
+                    "category.definitions": "{\n    \"$schema\": \"./definitions.schema.json\",\n    \"categories\": [\n        {\n            \"name\": \"sport\",\n            \"description\": \"Sports-related content\",\n            \"examples\": [\n                \"The team won the championship after a thrilling final match.\",\n                \"The player scored a hat-trick in the last game.\"\n            ]\n        },\n        {\n            \"name\": \"technology\",\n            \"description\": \"Technology-related content\",\n            \"examples\": [\n                \"The latest smartphone model features an advanced camera system.\",\n                \"Artificial intelligence is transforming various industries.\"\n            ]\n        },\n        {\n            \"name\": \"religion\",\n            \"description\": \"Religious content\",\n            \"examples\": [\n                \"The church held a special service for the holiday.\",\n                \"The teachings of the prophet are followed by millions.\"\n            ]\n        },\n        {\n            \"name\": \"politics\",\n            \"description\": \"Political content\",\n            \"examples\": [\n                \"The government passed a new law to improve healthcare.\",\n                \"The election results were announced yesterday.\"\n            ]\n        },\n        {\n            \"name\": \"science\",\n            \"description\": \"Scientific content\",\n            \"examples\": [\n                \"The research study provided new insights into climate change.\",\n                \"The experiment confirmed the hypothesis about particle behavior.\"\n            ]\n        }\n    ]\n}",
+                    "connection.class": "OpenAIConnection",
+                    "connection.openai.endpoint": "",
+                    "connection.vertex.credentials": "",
+                    "connection.vertex.location": "",
+                    "connection.vertex.model": "gemini-2.0-flash",
+                    "connection.vertex.project": "",
+                    "fields.category": "CATEGORY",
+                    "fields.title": "TITLE",
+                    "prompt.template": "You are an expert document classifier.\n\nYou will be given:\n\n* A set of categories, each with a name, description, and (optionally) examples, provided in structured JSON format.\n* A document to classify, provided as a block of text.\n\nYour task:\n\n* Read the document.\n* Choose the single most appropriate category for the document, based on the provided definitions.\n* Respond only with the category name.\n\nIf none of the categories are appropriate, respond with \"none\".\n\nCategories (JSON): {{categories}}\n\nDocument title: {{title}}\n\nDocument: {{text}}\n",
+                    "py:documentclassifier": "#\n# Copyright 2025 Open Text.\n#\n# The only warranties for products and services of Open Text and its\n# affiliates and licensors (\"Open Text\") are as may be set forth in the\n# express warranty statements accompanying such products and services.\n# Nothing herein should be construed as constituting an additional\n# warranty. Open Text shall not be liable for technical or editorial\n# errors or omissions contained herein. The information contained herein\n# is subject to change without notice.\n#\n# Except as specifically indicated otherwise, this document contains\n# confidential information and a valid license is required for possession,\n# use or copying. If this work is provided to the U.S. Government,\n# consistent with FAR 12.211 and 12.212, Commercial Computer Software,\n# Computer Software Documentation, and Technical Data for Commercial Items\n# are licensed to the U.S. Government under vendor's standard commercial\n# license.\n#\n\nimport json\nimport os\n\nfrom collections.abc import Callable\nfrom dataclasses import dataclass\n\n\n@dataclass\nclass Document:\n    title: str\n    text: str\n\n\nclass DocumentClassifier:\n    \"\"\"Classify documents using a connected LLM service.\"\"\"\n\n    __instance_cache: dict[tuple[tuple[str,str],...],\"DocumentClassifier\"] = {}\n\n    @staticmethod\n    def load_file_or_content(value: str) -> str:\n        \"\"\"\n        Deal with a property that may be a filename or literal content.\n        If it's a filename, load and return the file contents.\n        \"\"\"\n        if os.path.isfile(value):\n            with open(value, \"r\") as file:\n                return file.read()\n        return value\n\n    @staticmethod\n    def filter_properties(properties: dict[str,str], prefix: str, value_modifier: Callable[[str], str] = lambda x: x) -> dict[str,str]:\n        \"\"\"Return a new dictionary containing only properties with the given prefix.\"\"\"\n        if not prefix.endswith(\".\"):\n            prefix += \".\"\n        return { k[len(prefix):]: value_modifier(v)\n                    for k,v in properties.items() if k.startswith(prefix) }\n\n    @classmethod\n    def create_from_props(cls, properties: dict[str,str]) -> \"DocumentClassifier\":\n        cache_key = tuple(sorted(properties.items()))\n        cached = cls.__instance_cache.get(cache_key)\n        if cached is None:\n            cached = cls(properties)\n            cls.__instance_cache[cache_key] = cached\n        return cached\n\n    @classmethod\n    def _init_llmconnection(cls, connection_props: dict[str,str]) -> \"LLMConnection\":\n        # Find name of the LLM connection class to use\n        connection_type = connection_props.get(\"class\", \"OpenAIConnection\")\n        # Try to find class definition in llmconnection module\n        import llmconnection\n        if not (connection_cls := getattr(llmconnection, connection_type, None)):\n            # Try to load it as a module\n            from importlib import import_module\n            if connection_module := import_module(connection_type.lower()):\n                connection_cls = getattr(connection_module, connection_type, None)\n        if not connection_cls:\n            raise ImportError(f\"LLM connection class {connection_type} not found\")\n        # Initialize the connection; filter properties to those with the right prefix\n        return connection_cls.create(cls.filter_properties(\n            connection_props, connection_cls.propertyPrefix, cls.load_file_or_content))\n\n\n    def __init__(self, properties: dict[str,str]):\n        # Initialize the connection\n        self.llm_connection = self._init_llmconnection(self.filter_properties(properties, \"connection\"))\n        # Load category definitions from JSON property\n        if category_definitions := properties.get(\"category.definitions\"):\n            category_definitions = self.load_file_or_content(category_definitions)\n            self.category_definitions = json.loads(category_definitions)[\"categories\"]\n        else:\n            raise RuntimeError(\"No category definitions provided\")\n        self.categories = {name.lower():name for name in (cat[\"name\"] for cat in self.category_definitions)}\n        # Load prompt template from property or file\n        if prompt_template := properties.get(\"prompt.template\"):\n            prompt_template = self.load_file_or_content(prompt_template)\n            self.prompt_template = prompt_template\n        else:\n            raise RuntimeError(\"No prompt template provided\")\n        # Check expected placeholders in the prompt template\n        for placeholder in (\"{{categories}}\", \"{{text}}\", \"{{title}}\"):\n            if placeholder not in self.prompt_template:\n                raise RuntimeError(f\"Prompt template is missing required placeholder {placeholder}\")\n\n    def _build_prompt(self, document: Document) -> str:\n        \"\"\"Build the prompt to send to the LLM for the given document.\"\"\"\n        prompt = self.prompt_template\n        prompt = prompt.replace(\"{{categories}}\", json.dumps(self.category_definitions))\n        prompt = prompt.replace(\"{{text}}\", document.text)\n        prompt = prompt.replace(\"{{title}}\", document.title)\n        return prompt\n\n    def classify(self, document: Document) -> str|None:\n        prompt = self._build_prompt(document)\n        response = self.llm_connection.send_request(prompt)\n        response = response.strip().lower()\n        if response == \"none\":\n            return None\n        elif response in self.categories:\n            return self.categories[response]\n        else:\n            raise RuntimeError(f\"Unexpected category '{response}' returned by LLM\")",
+                    "py:llmconnection": "#\n# Copyright 2025 Open Text.\n#\n# The only warranties for products and services of Open Text and its\n# affiliates and licensors (\"Open Text\") are as may be set forth in the\n# express warranty statements accompanying such products and services.\n# Nothing herein should be construed as constituting an additional\n# warranty. Open Text shall not be liable for technical or editorial\n# errors or omissions contained herein. The information contained herein\n# is subject to change without notice.\n#\n# Except as specifically indicated otherwise, this document contains\n# confidential information and a valid license is required for possession,\n# use or copying. If this work is provided to the U.S. Government,\n# consistent with FAR 12.211 and 12.212, Commercial Computer Software,\n# Computer Software Documentation, and Technical Data for Commercial Items\n# are licensed to the U.S. Government under vendor's standard commercial\n# license.\n#\n\nfrom typing import Protocol\n\n\nclass LLMConnection(Protocol):\n    \"\"\"Implement this protocol to connect to a specific LLM provider.\"\"\"\n\n    propertyPrefix: str # NiFi property prefix for this connection\n\n    @classmethod\n    def create(cls, properties: dict[str,str]) -> \"LLMConnection\":\n        \"\"\"Create an instance of this connection from the given properties.\"\"\"\n        ...\n\n    def send_request(self, prompt: str) -> str:\n        \"\"\"Send a prompt to the LLM and return the response, as plain text.\"\"\"\n        ...\n\n\nclass MyLLMConnection(LLMConnection):\n\n    propertyPrefix = \"myllm.\"\n\n    @classmethod\n    def create(cls, properties: dict[str,str]) -> \"MyLLMConnection\":\n        # Extract any properties needed to configure the connection\n        api_key = properties.get(cls.propertyPrefix + \"api-key\", \"\")\n        return cls(api_key)\n\n    def __init__(self, api_key: str):\n        self.api_key = api_key\n        # Initialize any client libraries here using the API key\n\n    def send_request(self, prompt: str) -> str:\n        # Send the prompt to the LLM service and return the response text\n        response = f\"Response to '{prompt}' from MyLLM using API key {self.api_key}\"\n        return response\n",
+                    "py:openaiconnection": "#\n# Copyright 2025 Open Text.\n#\n# The only warranties for products and services of Open Text and its\n# affiliates and licensors (\"Open Text\") are as may be set forth in the\n# express warranty statements accompanying such products and services.\n# Nothing herein should be construed as constituting an additional\n# warranty. Open Text shall not be liable for technical or editorial\n# errors or omissions contained herein. The information contained herein\n# is subject to change without notice.\n#\n# Except as specifically indicated otherwise, this document contains\n# confidential information and a valid license is required for possession,\n# use or copying. If this work is provided to the U.S. Government,\n# consistent with FAR 12.211 and 12.212, Commercial Computer Software,\n# Computer Software Documentation, and Technical Data for Commercial Items\n# are licensed to the U.S. Government under vendor's standard commercial\n# license.\n#\n\ntry:\n    import requests\nexcept ImportError:\n    from idolnifi import installPackage,PersistentPackageDirectory\n    installPackage(\"requests\", packageDirectory=PersistentPackageDirectory)\n    import requests\n\n\nclass OpenAIConnection:\n\n    DEFAULT_MODEL = \"mistralai/Mistral-7B-Instruct-v0.2\"\n    propertyPrefix = \"openai\"\n\n    @classmethod\n    def create(cls, properties: dict[str,str]) -> \"OpenAIConnection\":\n        endpoint = properties[\"endpoint\"]\n        model = properties.get(\"model\", cls.DEFAULT_MODEL)\n        return cls(endpoint, model)\n\n    def __init__(self, endpoint: str, model: str = DEFAULT_MODEL):\n        self.api_base = endpoint.rstrip('/')\n        self.model = model\n        self.headers = {\"Content-Type\": \"application/json\"}\n        self.kwargs = {\"temperature\": 0}\n\n    def send_request(self, prompt: str) -> str:\n        url = f\"{self.api_base}/completions\"\n        payload = {\n            \"model\": self.model,\n            \"max_tokens\": 500,\n            \"n\": 1,\n            \"temperature\": self.kwargs[\"temperature\"],\n            \"prompt\": prompt\n        }\n        response = requests.post(url, json=payload, headers=self.headers)\n        response.raise_for_status()\n        data = response.json()\n        answer = data[\"choices\"][0][\"text\"]\n        answer = answer.replace(\"\\\"\", \"\")\n        return answer.strip()\n",
+                    "py:vertexconnection": "#\n# Copyright 2025 Open Text.\n#\n# The only warranties for products and services of Open Text and its\n# affiliates and licensors (\"Open Text\") are as may be set forth in the\n# express warranty statements accompanying such products and services.\n# Nothing herein should be construed as constituting an additional\n# warranty. Open Text shall not be liable for technical or editorial\n# errors or omissions contained herein. The information contained herein\n# is subject to change without notice.\n#\n# Except as specifically indicated otherwise, this document contains\n# confidential information and a valid license is required for possession,\n# use or copying. If this work is provided to the U.S. Government,\n# consistent with FAR 12.211 and 12.212, Commercial Computer Software,\n# Computer Software Documentation, and Technical Data for Commercial Items\n# are licensed to the U.S. Government under vendor's standard commercial\n# license.\n#\n\nimport json\n\ntry:\n    import vertexai\nexcept ImportError:\n    from idolnifi import installPackage,PersistentPackageDirectory\n    installPackage(\"vertexai==1.71.1\", packageDirectory=PersistentPackageDirectory)\n    import vertexai\n\nfrom vertexai.generative_models import Content, GenerationConfig, GenerationResponse, GenerativeModel, Part\nfrom google.oauth2.service_account import Credentials\n\n\nclass VertexConnection:\n\n    DEFAULT_MODEL = \"gemini-2.0-flash\"\n    propertyPrefix = \"vertex\"\n    _initialized = False\n\n    @classmethod\n    def create(cls, properties: dict[str,str]) -> \"VertexConnection\":\n        if not cls._initialized:\n            project = properties[\"project\"]\n            location = properties[\"location\"]\n            credentials = Credentials.from_service_account_info(json.loads(properties[\"credentials\"]))\n            vertexai.init(project=project, location=location, credentials=credentials)\n            cls._initialized = True\n        # Once Vertex API is initialized, create the connection instance\n        model = properties.get(\"model\", cls.DEFAULT_MODEL)\n        return cls(model)\n\n    def __init__(self, model: str = DEFAULT_MODEL):\n        self.vertex_model = GenerativeModel(\n            model_name=model,\n            generation_config=GenerationConfig(\n                candidate_count=1,\n                max_output_tokens=500,\n                temperature=0.0\n            ))\n\n    def send_request(self, prompt: str) -> str:\n        chat_history = [Content(\n            role='user',\n            parts=[Part.from_text(prompt)]\n        )]\n        response = self.vertex_model.generate_content(contents=chat_history)\n        if isinstance(response, GenerationResponse):\n            response = [response]\n        text_response = []\n        for chunk in response:\n            if chunk.candidates:\n                text_response.append(chunk.candidates[0].text)\n        if not text_response:\n            raise RuntimeError(\"Cannot get the response text.\")\n        return ''.join(text_response)\n"
+                },
+                "propertyDescriptors": {
+                    "AdditionalOutputRelationships": {
+                        "displayName": "Additional output relationships",
+                        "dynamic": false,
+                        "identifiesControllerService": false,
+                        "name": "AdditionalOutputRelationships",
+                        "sensitive": false
+                    },
+                    "IdolLicenseService": {
+                        "displayName": "Idol License Service",
+                        "dynamic": false,
+                        "identifiesControllerService": true,
+                        "name": "IdolLicenseService",
+                        "sensitive": false
+                    },
+                    "PythonScriptFile": {
+                        "displayName": "Python script file",
+                        "dynamic": false,
+                        "identifiesControllerService": false,
+                        "name": "PythonScriptFile",
+                        "sensitive": false
+                    },
+                    "PythonScriptFunction": {
+                        "displayName": "Python script function",
+                        "dynamic": false,
+                        "identifiesControllerService": false,
+                        "name": "PythonScriptFunction",
+                        "sensitive": false
+                    },
+                    "RouteReturnedTo": {
+                        "displayName": "Route returned to",
+                        "dynamic": false,
+                        "identifiesControllerService": false,
+                        "name": "RouteReturnedTo",
+                        "sensitive": false
+                    },
+                    "RouteTo": {
+                        "displayName": "Route to",
+                        "dynamic": false,
+                        "identifiesControllerService": false,
+                        "name": "RouteTo",
+                        "sensitive": false
+                    },
+                    "RouteUntransferredTo": {
+                        "displayName": "Route untransferred to",
+                        "dynamic": false,
+                        "identifiesControllerService": false,
+                        "name": "RouteUntransferredTo",
+                        "sensitive": false
+                    },
+                    "category.definitions": {
+                        "displayName": "category.definitions",
+                        "dynamic": true,
+                        "identifiesControllerService": false,
+                        "name": "category.definitions",
+                        "sensitive": false
+                    },
+                    "connection.class": {
+                        "displayName": "connection.class",
+                        "dynamic": true,
+                        "identifiesControllerService": false,
+                        "name": "connection.class",
+                        "sensitive": false
+                    },
+                    "connection.openai.endpoint": {
+                        "displayName": "connection.openai.endpoint",
+                        "dynamic": true,
+                        "identifiesControllerService": false,
+                        "name": "connection.openai.endpoint",
+                        "sensitive": false
+                    },
+                    "connection.vertex.credentials": {
+                        "displayName": "connection.vertex.credentials",
+                        "dynamic": true,
+                        "identifiesControllerService": false,
+                        "name": "connection.vertex.credentials",
+                        "sensitive": false
+                    },
+                    "connection.vertex.location": {
+                        "displayName": "connection.vertex.location",
+                        "dynamic": true,
+                        "identifiesControllerService": false,
+                        "name": "connection.vertex.location",
+                        "sensitive": false
+                    },
+                    "connection.vertex.model": {
+                        "displayName": "connection.vertex.model",
+                        "dynamic": true,
+                        "identifiesControllerService": false,
+                        "name": "connection.vertex.model",
+                        "sensitive": false
+                    },
+                    "connection.vertex.project": {
+                        "displayName": "connection.vertex.project",
+                        "dynamic": true,
+                        "identifiesControllerService": false,
+                        "name": "connection.vertex.project",
+                        "sensitive": false
+                    },
+                    "fields.category": {
+                        "displayName": "fields.category",
+                        "dynamic": true,
+                        "identifiesControllerService": false,
+                        "name": "fields.category",
+                        "sensitive": false
+                    },
+                    "fields.title": {
+                        "displayName": "fields.title",
+                        "dynamic": true,
+                        "identifiesControllerService": false,
+                        "name": "fields.title",
+                        "sensitive": false
+                    },
+                    "prompt.template": {
+                        "displayName": "prompt.template",
+                        "dynamic": true,
+                        "identifiesControllerService": false,
+                        "name": "prompt.template",
+                        "sensitive": false
+                    },
+                    "py:documentclassifier": {
+                        "displayName": "py:documentclassifier",
+                        "dynamic": true,
+                        "identifiesControllerService": false,
+                        "name": "py:documentclassifier",
+                        "sensitive": false
+                    },
+                    "py:llmconnection": {
+                        "displayName": "py:llmconnection",
+                        "dynamic": true,
+                        "identifiesControllerService": false,
+                        "name": "py:llmconnection",
+                        "sensitive": false
+                    },
+                    "py:openaiconnection": {
+                        "displayName": "py:openaiconnection",
+                        "dynamic": true,
+                        "identifiesControllerService": false,
+                        "name": "py:openaiconnection",
+                        "sensitive": false
+                    },
+                    "py:vertexconnection": {
+                        "displayName": "py:vertexconnection",
+                        "dynamic": true,
+                        "identifiesControllerService": false,
+                        "name": "py:vertexconnection",
+                        "sensitive": false
+                    }
+                },
+                "retriedRelationships": [],
+                "retryCount": 10,
+                "runDurationMillis": 0,
+                "scheduledState": "ENABLED",
+                "schedulingPeriod": "0 sec",
+                "schedulingStrategy": "TIMER_DRIVEN",
+                "style": {},
+                "type": "idol.nifi.processor.ExecuteDocumentPython",
+                "yieldDuration": "1 sec"
+            }
+        ],
+        "remoteProcessGroups": [],
+        "scheduledState": "ENABLED",
+        "statelessFlowTimeout": "1 min"
+    },
+    "flowEncodingVersion": "1.0",
+    "latest": false,
+    "parameterContexts": {},
+    "parameterProviders": {}
+}

@@ -1,0 +1,136 @@
+#
+# Copyright 2024-2025 Open Text.
+#
+# The only warranties for products and services of Open Text and its
+# affiliates and licensors ("Open Text") are as may be set forth in the
+# express warranty statements accompanying such products and services.
+# Nothing herein should be construed as constituting an additional
+# warranty. Open Text shall not be liable for technical or editorial
+# errors or omissions contained herein. The information contained herein
+# is subject to change without notice.
+#
+# Except as specifically indicated otherwise, this document contains
+# confidential information and a valid license is required for possession,
+# use or copying. If this work is provided to the U.S. Government,
+# consistent with FAR 12.211 and 12.212, Commercial Computer Software,
+# Computer Software Documentation, and Technical Data for Commercial Items
+# are licensed to the U.S. Government under vendor's standard commercial
+# license.
+#
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: search-abstractor-answerserver-deployment-resources-cfg
+  labels: {{- include "idol-library.labels" (dict "root" . "component" .Values.answerserver ) | nindent 4 }}
+data:
+  prompt_template.txt: |
+{{ tpl (print "resources/prompt_template.txt" | .Files.Get) . | indent 4 }}
+  topic_template.txt: |
+{{ tpl (print "resources/topic_template.txt" | .Files.Get) . | indent 4}}
+  vertex.py: |
+{{ tpl (print "resources/vertex.py" | .Files.Get) . | indent 4 }}
+  vllm.py: |
+{{ tpl (print "resources/vllm.py" | .Files.Get) . | indent 4 }}
+  conversation_tasks.json: |
+{{ tpl (print "resources/conversation_tasks.json" | .Files.Get) . | indent 4 }}
+  {{- if eq .Values.saapi.vertexai.authentication "credentials" }}
+  google_cloud_credentials.json: |
+{{ mustToPrettyJson .Values.saapi.vertexai.credentials | indent 4 }}
+  {{- else if ne .Values.saapi.vertexai.authentication "serviceAccount" }}
+{{- fail "VertexAI authentication must be `credentials` or `serviceAccount`" }}
+  {{- else if not .Values.answerserver.serviceAccountName }}
+{{- fail "AnswerServer serviceAccountName must be set for VertexAI serviceAccount authentication" }}
+  {{- end}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: search-abstractor-answerserver-deployment-env-cfg
+  labels: {{- include "idol-library.labels" (dict "root" . "component" .Values.answerserver ) | nindent 4 }}
+data:
+  {{- if .Values.saapi.vllm.model }}
+  OPENTEXT_VLLM_MODEL: {{ .Values.saapi.vllm.model }}
+  OPENTEXT_VLLM_MODEL_REVISION: {{ .Values.saapi.vllm.modelRevision | quote }}
+  {{- end }}
+  {{- if .Values.vllmdeployment.enabled }}
+  OPENTEXT_VLLM_ENDPOINT: "http://{{ .Values.vllmdeployment.nameOverride }}:{{ .Values.vllmdeployment.service.port }}/v1/completions"
+  {{- else if .Values.saapi.vllm.endpoint }}
+  OPENTEXT_VLLM_ENDPOINT: {{ .Values.saapi.vllm.endpoint }}
+  {{- end }}
+  {{- if .Values.vllmdeployment.enabled }}
+  OPENTEXT_VLLM_CHAT_ENDPOINT: "http://{{ .Values.vllmdeployment.nameOverride }}:{{ .Values.vllmdeployment.service.port }}/v1/chat/completions"
+  {{- else if .Values.saapi.vllm.chatEndpoint }}
+  OPENTEXT_VLLM_CHAT_ENDPOINT: {{ .Values.saapi.vllm.chatEndpoint }}
+  {{- end }}
+  {{- if .Values.saapi.vllm.HFToken }}
+  OPENTEXT_HUGGINGFACE_API_TOKEN: {{ .Values.saapi.vllm.HFToken }}
+  {{- end }}
+  {{- if .Values.saapi.vertexai.project }}
+  OPENTEXT_VERTEX_PROJECT: {{ .Values.saapi.vertexai.project }}
+  {{- end}}
+  {{- if .Values.saapi.vertexai.location }}
+  OPENTEXT_VERTEX_LOCATION: {{ .Values.saapi.vertexai.location }}
+  {{- end}}
+  {{- if .Values.saapi.vertexai.model }}
+  OPENTEXT_VERTEX_MODEL: {{ .Values.saapi.vertexai.model }}
+  {{- end}}
+  {{- if eq .Values.saapi.vertexai.authentication "credentials" }}
+  OPENTEXT_VERTEX_CREDENTIALS: "/answerserver/resources/llmdata/google_cloud_credentials.json"
+  {{- end}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: search-abstractor-ogs-deployment-oauth-cfg
+  labels: {{- include "idol-library.labels" (dict "root" . "component" .Values.ogs ) | nindent 4 }}
+data:
+  oauth_tool.cfg: |
+{{ tpl (print "resources/oauth_tool.cfg" | .Files.Get) . | indent 4 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: search-abstractor-security-aes-key
+  labels: {{- include "idol-library.labels" (dict "root" . "component" .Values ) | nindent 4 }}
+data:
+  aes.keyfile: |-
+{{ sha256sum .Values.aes.key | indent 4 }}
+
+{{- define "searchabstractor.configmap" }}
+{{- $root := get . "root" | required "searchabstractor.configmap missing root" -}}
+{{- $name := get . "name" | required "searchabstractor.configmap missing name" -}}
+{{- $component := get . "component" | required "searchabstractor.configmap missing component" -}}
+{{- $filename := get . "filename" | required "searchabstractor.configmap missing filename" -}}
+{{- $file := dig "file" (print "resources/" $filename) . -}}
+{{- $enabled := dig "enabled" $component.enabled . -}}
+{{- if and $enabled (eq $component.existingConfigMap $name) -}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $name }}
+  labels: {{- include "idol-library.labels" (dict "root" $root "component" $component ) | nindent 4 }}
+data:
+  {{ $filename }}: |-
+{{ tpl (print $file | $root.Files.Get) $root | indent 4 }}
+{{- end }}
+{{- end }}
+
+{{- if and .Values.content.enabled .Values.distributedidol.enabled }}
+{{- fail "single-content and distributedidol should not both be enabled." }}
+{{- end }}
+
+{{/* Search Abstractor configmaps for ACI Server config files (unless overridden by user) */}}
+{{ range $vals := list 
+  (dict "root" . "name" "search-abstractor-answerserver-deployment-cfg" "component" .Values.answerserver "filename" "answerserver.cfg" )
+  (dict "root" . "name" "search-abstractor-content-deployment-cfg" "component" .Values.content "filename" "content.cfg" "enabled" (or .Values.content.enabled .Values.distributedidol.enabled) )
+  (dict "root" . "name" "search-abstractor-idol-dah-deployment-cfg" "component" .Values.distributedidol "filename" "dah.cfg" )
+  (dict "root" . "name" "search-abstractor-idol-dih-deployment-cfg" "component" .Values.distributedidol "filename" "dih.cfg" )
+  (dict "root" . "name" "search-abstractor-community-deployment-cfg" "component" .Values.community "filename" "community.cfg" )
+  (dict "root" . "name" "search-abstractor-ogs-deployment-cfg" "component" .Values.ogs "filename" "omnigroupserver.cfg" )
+  (dict "root" . "name" "search-abstractor-qms-deployment-cfg" "component" .Values.qms "filename" "qms.cfg" )
+  (dict "root" . "name" "search-abstractor-view-deployment-cfg" "component" .Values.view "filename" "view.cfg" )
+}}
+{{ include "searchabstractor.configmap" $vals }}
+{{ end }}

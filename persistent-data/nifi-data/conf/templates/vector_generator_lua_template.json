@@ -1,0 +1,306 @@
+{
+    "flowContents": {
+        "identifier": "82ed52fc-723e-33a0-ab18-bc79240b2841",
+        "instanceIdentifier": "4b026c9f-fe79-3827-6b08-973cf3994df6",
+        "name": "Vector Generator Lua",
+        "comments": "",
+        "position": {
+            "x": 1792.0,
+            "y": 1608.0
+        },
+        "processGroups": [],
+        "remoteProcessGroups": [],
+        "processors": [
+            {
+                "identifier": "c32c87f1-3cba-392a-ae77-96352025a3ba",
+                "instanceIdentifier": "0807ad2f-e955-3fb5-590b-0b73249fb038",
+                "name": "Vector Embedding Generator",
+                "comments": "",
+                "position": {
+                    "x": 1848.0,
+                    "y": 1384.0
+                },
+                "type": "idol.nifi.processor.ExecuteDocumentLua",
+                "bundle": {
+                    "group": "idol.nifi",
+                    "artifact": "idol-nifi-framework",
+                    "version": "25.4.0-nifi1"
+                },
+                "properties": {
+                    "LuaScriptFunctionArguments": "LuaDocument",
+                    "AdditionalOutputRelationships": null,
+                    "LuaScriptFile": "function handler(document)\n    -- Ask our QMS server to generate embeddings for given document content and add them to the document\n\n    -- THE USER SHOULD MODIFY THESE PARAMETERS AS APPROPRIATE\n    local HOST = \"idol-qms\"\n    local PORT = \"16000\"\n    local MODEL = \"SentenceTransformer\"\n\n    log_info(string.format(\"Processing document '%s'...\", document:getReference()))\n    local config_string =\n        [===[\n        [http]\n        ]===]\n\n    local config = LuaConfig:new(config_string)\n    local request = LuaHttpRequest:new(config, \"http\")\n\n    -- details such as port and host should be set by the user\n    request:set_url(string.format(\"http://%s:%s/action=modelencode&model=%s\", HOST, PORT, MODEL))\n    request:set_method(\"POST\")\n    request:set_header(\"content-type\", \"application/x-www-form-urlencoded\")\n\n    -- generate embeddings for each section and add them to the document\n    local document_offset = 0\n    local final_offset = 0\n    local section = document\n    while section do\n        document_offset = final_offset\n        local to_send = section:getContent()\n        request:set_body(string.format(\"text=%s\", url_escape(to_send)))\n\n        local response = request:send()\n\n        if 200 == response:get_http_code() then\n            local body = response:get_body()\n            for vector in string.gmatch(body, \"<autn:vector[ start=\\\"[0-9]*\\\" end=\\\"[0-9]*\\\" length=\\\"[0-9]*\\\"]?>.-</autn:vector>\") do\n                local start_offset = string.match(vector, \"start=\\\"([0-9]*)\\\"\")\n                local end_offset = string.match(vector, \"end=\\\"([0-9]*)\\\"\")\n                if start_offset ~= nil and end_offset ~= nil then\n                    local actual_start_offset = tonumber(start_offset) + document_offset\n                    local actual_end_offset = tonumber(end_offset) + document_offset\n                    local i, j = string.find(vector, \">.-<\")\n                    vector_with_offsets = \"<autn:vector>\"..vector:sub(i+1, j-1)..\";source=DRECONTENT[\"..actual_start_offset..\":\"..actual_end_offset..\"]\"..vector:sub(j,-1)\n                    local xml = parse_xml(vector_with_offsets)\n                    document:insertXml(xml:root(), \"VECTOR\")\n                    final_offset = actual_end_offset\n                else\n                    local xml = parse_xml(vector)\n                    document:insertXml(xml:root(), \"VECTOR\")\n                end\n            end\n            log_info(string.format(\"Generated embeddings for document '%s'\", document:getReference()))\n        else\n            log_error(string.format(\"Failed to get response from server for document '%s': %s (%d)\", document:getReference(), response:get_body(), response:get_http_code()))\n        end\n        section = section:getNextSection()\n    end\nend",
+                    "RouteUntransferredTo": null,
+                    "DocumentRegistryService": null,
+                    "RouteReturnedTo": "returned",
+                    "EnableDebugger": "false",
+                    "IdolLicenseService": "9f64332c-8d01-3949-bf85-d80a3513e14f",
+                    "RouteTo": "success",
+                    "LuaScriptFunction": "handler"
+                },
+                "propertyDescriptors": {
+                    "LuaScriptFunctionArguments": {
+                        "name": "LuaScriptFunctionArguments",
+                        "displayName": "Lua script function arguments",
+                        "identifiesControllerService": false,
+                        "sensitive": false
+                    },
+                    "AdditionalOutputRelationships": {
+                        "name": "AdditionalOutputRelationships",
+                        "displayName": "Additional output relationships",
+                        "identifiesControllerService": false,
+                        "sensitive": false
+                    },
+                    "LuaScriptFile": {
+                        "name": "LuaScriptFile",
+                        "displayName": "Lua script file",
+                        "identifiesControllerService": false,
+                        "sensitive": false
+                    },
+                    "RouteUntransferredTo": {
+                        "name": "RouteUntransferredTo",
+                        "displayName": "Route untransferred to",
+                        "identifiesControllerService": false,
+                        "sensitive": false
+                    },
+                    "DocumentRegistryService": {
+                        "name": "DocumentRegistryService",
+                        "displayName": "Document Registry Service",
+                        "identifiesControllerService": true,
+                        "sensitive": false
+                    },
+                    "RouteReturnedTo": {
+                        "name": "RouteReturnedTo",
+                        "displayName": "Route returned to",
+                        "identifiesControllerService": false,
+                        "sensitive": false
+                    },
+                    "EnableDebugger": {
+                        "name": "EnableDebugger",
+                        "displayName": "Enable Debugger",
+                        "identifiesControllerService": false,
+                        "sensitive": false
+                    },
+                    "IdolLicenseService": {
+                        "name": "IdolLicenseService",
+                        "displayName": "Idol License Service",
+                        "identifiesControllerService": true,
+                        "sensitive": false
+                    },
+                    "RouteTo": {
+                        "name": "RouteTo",
+                        "displayName": "Route to",
+                        "identifiesControllerService": false,
+                        "sensitive": false
+                    },
+                    "LuaScriptFunction": {
+                        "name": "LuaScriptFunction",
+                        "displayName": "Lua script function",
+                        "identifiesControllerService": false,
+                        "sensitive": false
+                    }
+                },
+                "style": {},
+                "schedulingPeriod": "0 sec",
+                "schedulingStrategy": "TIMER_DRIVEN",
+                "executionNode": "ALL",
+                "penaltyDuration": "30 sec",
+                "yieldDuration": "1 sec",
+                "bulletinLevel": "ERROR",
+                "runDurationMillis": 0,
+                "concurrentlySchedulableTaskCount": 1,
+                "autoTerminatedRelationships": [],
+                "scheduledState": "ENABLED",
+                "retryCount": 10,
+                "retriedRelationships": [],
+                "backoffMechanism": "PENALIZE_FLOWFILE",
+                "maxBackoffPeriod": "10 mins",
+                "componentType": "PROCESSOR",
+                "groupIdentifier": "82ed52fc-723e-33a0-ab18-bc79240b2841"
+            }
+        ],
+        "inputPorts": [
+            {
+                "identifier": "4b883fed-16db-3161-bf77-7036cbf01177",
+                "instanceIdentifier": "1a802023-553a-364d-0646-7a1dd1526e7e",
+                "name": "Input",
+                "comments": "",
+                "position": {
+                    "x": 1896.0,
+                    "y": 1280.0
+                },
+                "type": "INPUT_PORT",
+                "concurrentlySchedulableTaskCount": 1,
+                "scheduledState": "ENABLED",
+                "allowRemoteAccess": false,
+                "componentType": "INPUT_PORT",
+                "groupIdentifier": "82ed52fc-723e-33a0-ab18-bc79240b2841"
+            }
+        ],
+        "outputPorts": [
+            {
+                "identifier": "208df99c-126d-3649-b2b3-8d2746669e6f",
+                "instanceIdentifier": "4c88f41d-cb08-39db-24ee-5bc5ce5b0c39",
+                "name": "Failures",
+                "comments": "",
+                "position": {
+                    "x": 2144.0,
+                    "y": 1592.0
+                },
+                "type": "OUTPUT_PORT",
+                "concurrentlySchedulableTaskCount": 1,
+                "scheduledState": "ENABLED",
+                "allowRemoteAccess": false,
+                "componentType": "OUTPUT_PORT",
+                "groupIdentifier": "82ed52fc-723e-33a0-ab18-bc79240b2841"
+            },
+            {
+                "identifier": "c68c7efc-2e5f-3ebf-843f-0db3d5cffd22",
+                "instanceIdentifier": "a5ab3193-997a-3765-63da-4e839c03eeb2",
+                "name": "Response",
+                "comments": "",
+                "position": {
+                    "x": 1712.0,
+                    "y": 1592.0
+                },
+                "type": "OUTPUT_PORT",
+                "concurrentlySchedulableTaskCount": 1,
+                "scheduledState": "ENABLED",
+                "allowRemoteAccess": false,
+                "componentType": "OUTPUT_PORT",
+                "groupIdentifier": "82ed52fc-723e-33a0-ab18-bc79240b2841"
+            }
+        ],
+        "connections": [
+            {
+                "identifier": "54645a4f-b7b4-307c-a705-ef791487e78c",
+                "instanceIdentifier": "06031a28-b6d2-37c6-c3ca-3962187a2b67",
+                "name": "",
+                "source": {
+                    "id": "c32c87f1-3cba-392a-ae77-96352025a3ba",
+                    "type": "PROCESSOR",
+                    "groupId": "82ed52fc-723e-33a0-ab18-bc79240b2841",
+                    "name": "Vector Embedding Generator",
+                    "comments": "",
+                    "instanceIdentifier": "0807ad2f-e955-3fb5-590b-0b73249fb038"
+                },
+                "destination": {
+                    "id": "208df99c-126d-3649-b2b3-8d2746669e6f",
+                    "type": "OUTPUT_PORT",
+                    "groupId": "82ed52fc-723e-33a0-ab18-bc79240b2841",
+                    "name": "Failures",
+                    "comments": "",
+                    "instanceIdentifier": "4c88f41d-cb08-39db-24ee-5bc5ce5b0c39"
+                },
+                "labelIndex": 1,
+                "zIndex": 0,
+                "selectedRelationships": [
+                    "failure"
+                ],
+                "backPressureObjectThreshold": 10000,
+                "backPressureDataSizeThreshold": "1 GB",
+                "flowFileExpiration": "0 sec",
+                "prioritizers": [],
+                "bends": [],
+                "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+                "partitioningAttribute": "",
+                "loadBalanceCompression": "DO_NOT_COMPRESS",
+                "componentType": "CONNECTION",
+                "groupIdentifier": "82ed52fc-723e-33a0-ab18-bc79240b2841"
+            },
+            {
+                "identifier": "7e00b573-e172-3235-a4bb-fd6693ff5b67",
+                "instanceIdentifier": "64f5adf4-805e-3886-7903-e3fe7bde7b43",
+                "name": "",
+                "source": {
+                    "id": "c32c87f1-3cba-392a-ae77-96352025a3ba",
+                    "type": "PROCESSOR",
+                    "groupId": "82ed52fc-723e-33a0-ab18-bc79240b2841",
+                    "name": "Vector Embedding Generator",
+                    "comments": "",
+                    "instanceIdentifier": "0807ad2f-e955-3fb5-590b-0b73249fb038"
+                },
+                "destination": {
+                    "id": "c68c7efc-2e5f-3ebf-843f-0db3d5cffd22",
+                    "type": "OUTPUT_PORT",
+                    "groupId": "82ed52fc-723e-33a0-ab18-bc79240b2841",
+                    "name": "Response",
+                    "comments": "",
+                    "instanceIdentifier": "a5ab3193-997a-3765-63da-4e839c03eeb2"
+                },
+                "labelIndex": 1,
+                "zIndex": 0,
+                "selectedRelationships": [
+                    "success",
+                    "returned"
+                ],
+                "backPressureObjectThreshold": 10000,
+                "backPressureDataSizeThreshold": "1 GB",
+                "flowFileExpiration": "0 sec",
+                "prioritizers": [],
+                "bends": [],
+                "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+                "partitioningAttribute": "",
+                "loadBalanceCompression": "DO_NOT_COMPRESS",
+                "componentType": "CONNECTION",
+                "groupIdentifier": "82ed52fc-723e-33a0-ab18-bc79240b2841"
+            },
+            {
+                "identifier": "8e417a0e-07ab-399f-ae7c-e8749ef57ac8",
+                "instanceIdentifier": "af1cbb58-ab11-369f-add6-8feaca02440b",
+                "name": "",
+                "source": {
+                    "id": "4b883fed-16db-3161-bf77-7036cbf01177",
+                    "type": "INPUT_PORT",
+                    "groupId": "82ed52fc-723e-33a0-ab18-bc79240b2841",
+                    "name": "Input",
+                    "comments": "",
+                    "instanceIdentifier": "1a802023-553a-364d-0646-7a1dd1526e7e"
+                },
+                "destination": {
+                    "id": "c32c87f1-3cba-392a-ae77-96352025a3ba",
+                    "type": "PROCESSOR",
+                    "groupId": "82ed52fc-723e-33a0-ab18-bc79240b2841",
+                    "name": "Vector Embedding Generator",
+                    "comments": "",
+                    "instanceIdentifier": "0807ad2f-e955-3fb5-590b-0b73249fb038"
+                },
+                "labelIndex": 1,
+                "zIndex": 0,
+                "selectedRelationships": [
+                    ""
+                ],
+                "backPressureObjectThreshold": 10000,
+                "backPressureDataSizeThreshold": "1 GB",
+                "flowFileExpiration": "0 sec",
+                "prioritizers": [],
+                "bends": [],
+                "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+                "partitioningAttribute": "",
+                "loadBalanceCompression": "DO_NOT_COMPRESS",
+                "componentType": "CONNECTION",
+                "groupIdentifier": "82ed52fc-723e-33a0-ab18-bc79240b2841"
+            }
+        ],
+        "labels": [],
+        "funnels": [],
+        "controllerServices": [],
+        "variables": {},
+        "defaultFlowFileExpiration": "0 sec",
+        "defaultBackPressureObjectThreshold": 10000,
+        "defaultBackPressureDataSizeThreshold": "1 GB",
+        "flowFileConcurrency": "UNBOUNDED",
+        "flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE",
+        "componentType": "PROCESS_GROUP"
+    },
+    "externalControllerServices": {
+        "9f64332c-8d01-3949-bf85-d80a3513e14f": {
+            "identifier": "9f64332c-8d01-3949-bf85-d80a3513e14f",
+            "name": "IdolLicenseServiceImpl"
+        }
+    },
+    "parameterContexts": {},
+    "flowEncodingVersion": "1.0",
+    "parameterProviders": {},
+    "latest": false
+}

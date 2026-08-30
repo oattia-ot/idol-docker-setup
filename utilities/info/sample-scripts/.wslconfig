@@ -1,0 +1,39 @@
+[wsl2]
+macAddress=<<<YOUR IDOL MAC ADDRESS HERE>>>
+
+# Memory: Increased to 40GB based on usage pattern
+# Current: 13GB used of 31GB allocated (42% utilization)
+# Headroom for growth and bursty workloads without host lag
+memory=40GB
+
+# Processors: Increased to 14 cores
+# CPU appears to be constraint; leaving only 2 cores for Windows is acceptable
+# Monitor Windows performance; dial back to 12 if host feels sluggish
+processors=14
+
+# Smaller swap improves performance by avoiding disk I/O
+# Keep as safety net without excessive overhead
+swap=8GB
+
+# Networking: Enable localhost forwarding
+localhostForwarding=true
+
+# Kernel: Default for stability
+kernel=
+
+# Kernel command line: Default
+kernelCommandLine=
+
+# VM idle timeout: 5 minutes (300000ms)
+# Efficient memory release without frequent VM restarts
+vmIdleTimeout=300000
+
+[experimental]
+# Gradual memory reclaim prevents long-term RAM hogging
+autoMemoryReclaim=gradual
+
+# Efficient sparse VHD disk growth
+sparseVhd=true
+
+# Enable DNS proxy for better DNS resolution
+dnsTunneling=true

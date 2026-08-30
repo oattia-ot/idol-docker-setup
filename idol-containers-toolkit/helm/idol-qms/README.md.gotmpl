@@ -1,0 +1,36 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{- $component := "QMS" }}
+{{- $appVersion := .AppVersion }}
+{{- $versionList := slice (splitList "." $appVersion) 0 2 }}
+
+{{- $docsLink := printf "https://www.microfocus.com/documentation/idol/knowledge-discovery-%s/%s_%s_Documentation/Help/" 
+  (join "." $versionList ) $component (join "." $versionList) }}
+
+Provides a Knowledge Discovery {{ $component }} deployment.
+
+Depends on connections to:
+
+- Knowledge Discovery LicenseServer (`licenseServerHostname`)
+- Knowledge Discovery Content/Agentstore (`queryserviceName`, `queryserviceACIPort`, `agentStoreName`, `agentStoreACIPort`)
+
+The config file can be overridden via `existingConfigMap`.
+
+This chart may be used to provide query & result modification and promotion management functionality.
+
+> Full documentation for QMS available from <{{ $docsLink }}>
+
+{{ template "chart.homepageLine" . }}
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.sourcesSection" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}
+
+{{ template "helm-docs.versionFooter" . }}
