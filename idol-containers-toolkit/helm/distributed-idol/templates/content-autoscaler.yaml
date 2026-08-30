@@ -1,0 +1,61 @@
+# BEGIN COPYRIGHT NOTICE
+# (c) Copyright 2022 Micro Focus or one of its affiliates.
+# END COPYRIGHT NOTICE
+{{- if .Values.autoscaling.enabled }}
+kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v2
+metadata:
+  name: {{ .Values.content.name }}
+  labels: {{- include "distributedidol.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: {{ .Values.content.name }}
+  minReplicas: {{ ternary .Values.autoscaling.minReplicas "1" .Values.setupMirrored | int }}
+  maxReplicas: {{ .Values.autoscaling.maxReplicas | int }}
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 60
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 15
+    scaleUp:
+      policies:
+      - type: Pods
+        value: 1
+        periodSeconds: 60
+  metrics:
+{{- if .Values.setupMirrored }}
+  - type: Resource
+    resource:
+      name: cpu 
+      target:
+        type: AverageValue 
+        averageValue: {{ .Values.autoscaling.targetAverageCpuUse }} 
+{{- else }}
+  - type: Object
+    object:
+      describedObject:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: {{ .Values.dih.name }}
+      metric:
+        name: dih_full_ratio
+      target:
+        type: Value
+        value: 1
+  - type: Object
+    object:
+      describedObject:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: {{ .Values.dih.name }}
+      metric:
+        name: full_ratio_latch
+      target:
+        type: Value
+        value: 1
+{{- end }}
+{{- end }}

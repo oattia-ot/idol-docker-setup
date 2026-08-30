@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<providers>
+  <flowPersistenceProvider>
+    <class>org.apache.nifi.registry.provider.flow.git.GitFlowPersistenceProvider</class>
+    <property name="Flow Storage Directory">./versioned_flows</property>
+    <property name="Remote To Push">origin</property>
+    <property name="Remote Access User">GIT-ACCESS-USER-PLACEHOLDER</property>
+    <property name="Remote Access Password">GIT-ACCESS-TOKEN-PLACEHOLDER</property>
+    <property name="Remote Clone Repository">GIT-REMOTE-URL-PLACEHOLDER</property>
+    <property name="Commit To Push">main</property>
+  </flowPersistenceProvider>
+</providers>

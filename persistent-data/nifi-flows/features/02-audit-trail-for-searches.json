@@ -1,0 +1,1796 @@
+{
+  "externalControllerServices" : { },
+  "flow" : {
+    "createdTimestamp" : 1744004595903,
+    "description" : "Capturing search keywords and processing them for an audit purpose. ",
+    "identifier" : "Audit-trail-for-searches",
+    "lastModifiedTimestamp" : 1744004595903,
+    "name" : "Audit trail for searches",
+    "versionCount" : 0
+  },
+  "flowContents" : {
+    "comments" : "",
+    "componentType" : "PROCESS_GROUP",
+    "connections" : [ {
+      "backPressureDataSizeThreshold" : "5 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "af1e9b2d-213b-33e0-9d72-758b1002287b",
+        "name" : "Create a backup of the audit",
+        "type" : "PROCESSOR"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "2d2ef97b-90f7-37a3-a196-b09f14e78ac7",
+      "labelIndex" : 0,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "success" ],
+      "source" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "528ba3e3-935a-3a3d-99c7-928aea05db7d",
+        "name" : "PutIDOL",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 0
+    }, {
+      "backPressureDataSizeThreshold" : "5 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "f60fa800-f750-31e0-bd53-dc0bd901440c",
+        "name" : "Funnel",
+        "type" : "FUNNEL"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "700e027c-dea5-3af3-95eb-d0b45802f12e",
+      "labelIndex" : 0,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "processed" ],
+      "source" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "66dfc79e-8fb2-370e-9a63-4ccfecfd6baa",
+        "name" : "ConvertJSONToDocuments",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 0
+    }, {
+      "backPressureDataSizeThreshold" : "5 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "a0d7d77a-34cc-37f0-a670-8515ef7814c3",
+        "name" : "Funnel",
+        "type" : "FUNNEL"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "87c474b8-7ed3-3aec-93e3-3e10eadc5179",
+      "labelIndex" : 0,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "unmatched" ],
+      "source" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "c11a856e-326c-366d-9a31-b9df000685b9",
+        "name" : "EvaluateJsonPath",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 0
+    }, {
+      "backPressureDataSizeThreshold" : "5 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "52b3bc5b-cef7-34f0-93a9-340695059a36",
+        "name" : "Funnel",
+        "type" : "FUNNEL"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "5a3c7532-4b9e-33f9-925f-b93ad6102a0d",
+      "labelIndex" : 0,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "failure" ],
+      "source" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "66dfc79e-8fb2-370e-9a63-4ccfecfd6baa",
+        "name" : "ConvertJSONToDocuments",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 0
+    }, {
+      "backPressureDataSizeThreshold" : "5 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "66dfc79e-8fb2-370e-9a63-4ccfecfd6baa",
+        "name" : "ConvertJSONToDocuments",
+        "type" : "PROCESSOR"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "3aac7966-0a56-3b4b-b4c1-98d42014d19b",
+      "labelIndex" : 0,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "success" ],
+      "source" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "c7220971-d11a-3fa3-b556-3b2b136cf86e",
+        "name" : "UpdateAttribute",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 0
+    }, {
+      "backPressureDataSizeThreshold" : "5 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "c7220971-d11a-3fa3-b556-3b2b136cf86e",
+        "name" : "UpdateAttribute",
+        "type" : "PROCESSOR"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "4222a473-7ae7-3dc6-995b-d23e90f0ae6b",
+      "labelIndex" : 0,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "matched" ],
+      "source" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "c11a856e-326c-366d-9a31-b9df000685b9",
+        "name" : "EvaluateJsonPath",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 0
+    }, {
+      "backPressureDataSizeThreshold" : "5 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "c11a856e-326c-366d-9a31-b9df000685b9",
+        "name" : "EvaluateJsonPath",
+        "type" : "PROCESSOR"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "2f3f1fb8-4dd5-353a-b64c-6e2ee164bf74",
+      "labelIndex" : 0,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "success" ],
+      "source" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "ed05fa29-784e-3333-992b-7a7e4cbc3d7c",
+        "name" : "HandleHttpRequest",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 0
+    }, {
+      "backPressureDataSizeThreshold" : "5 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "d3b173e3-41b8-3a76-b035-d0e9f0f7b5df",
+        "name" : "ReplaceText",
+        "type" : "PROCESSOR"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "c5ff2248-24ac-3502-bda4-ace56c21d8b2",
+      "labelIndex" : 0,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "matched" ],
+      "source" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "c11a856e-326c-366d-9a31-b9df000685b9",
+        "name" : "EvaluateJsonPath",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 0
+    }, {
+      "backPressureDataSizeThreshold" : "5 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "083a5e04-0299-3a8e-a5d7-2d6a2f7235f6",
+        "name" : "Funnel",
+        "type" : "FUNNEL"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "d1e89ab1-4711-34f2-9447-4aad64a0f772",
+      "labelIndex" : 0,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "failure" ],
+      "source" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "c11a856e-326c-366d-9a31-b9df000685b9",
+        "name" : "EvaluateJsonPath",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 0
+    }, {
+      "backPressureDataSizeThreshold" : "5 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "111920a2-3fcd-3aa2-98e2-dc790205a3a4",
+        "name" : "Funnel",
+        "type" : "FUNNEL"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "9213e61b-78e9-3489-8009-4f10d045f636",
+      "labelIndex" : 0,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "unprocessed" ],
+      "source" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "66dfc79e-8fb2-370e-9a63-4ccfecfd6baa",
+        "name" : "ConvertJSONToDocuments",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 0
+    }, {
+      "backPressureDataSizeThreshold" : "5 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "528ba3e3-935a-3a3d-99c7-928aea05db7d",
+        "name" : "PutIDOL",
+        "type" : "PROCESSOR"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "2e529aef-23d2-39aa-b03c-cf5c85c14afa",
+      "labelIndex" : 0,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "extracted" ],
+      "source" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "66dfc79e-8fb2-370e-9a63-4ccfecfd6baa",
+        "name" : "ConvertJSONToDocuments",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 0
+    }, {
+      "backPressureDataSizeThreshold" : "5 GB",
+      "backPressureObjectThreshold" : 10000,
+      "bends" : [ ],
+      "componentType" : "CONNECTION",
+      "destination" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "c6d16c65-6911-3750-b16e-5b7e4b2b0af3",
+        "name" : "HandleHttpResponse",
+        "type" : "PROCESSOR"
+      },
+      "flowFileExpiration" : "0 sec",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "ce22bb6a-bd64-37f9-b44d-955ddf93fb4f",
+      "labelIndex" : 0,
+      "loadBalanceCompression" : "DO_NOT_COMPRESS",
+      "loadBalanceStrategy" : "DO_NOT_LOAD_BALANCE",
+      "name" : "",
+      "partitioningAttribute" : "",
+      "prioritizers" : [ ],
+      "selectedRelationships" : [ "success" ],
+      "source" : {
+        "comments" : "",
+        "groupId" : "flow-contents-group",
+        "id" : "d3b173e3-41b8-3a76-b035-d0e9f0f7b5df",
+        "name" : "ReplaceText",
+        "type" : "PROCESSOR"
+      },
+      "zIndex" : 0
+    } ],
+    "controllerServices" : [ {
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "idol-nifi-framework",
+        "group" : "idol.nifi",
+        "version" : "25.1.0-nifi2"
+      },
+      "comments" : "",
+      "componentType" : "CONTROLLER_SERVICE",
+      "controllerServiceApis" : [ {
+        "bundle" : {
+          "artifact" : "idol-nifi-framework-api",
+          "group" : "idol.nifi",
+          "version" : "25.1.0-nifi2"
+        },
+        "type" : "idol.nifi.service.IdolSslConfigService"
+      } ],
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "5556cb91-fa19-3bb7-b0e3-764940510b93",
+      "name" : "IdolSslConfigServiceImpl",
+      "properties" : {
+        "CheckCommonName" : "true",
+        "CheckCertificate" : "true",
+        "Method" : "Negotiate"
+      },
+      "propertyDescriptors" : {
+        "CheckCommonName" : {
+          "displayName" : "Check common name",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "CheckCommonName",
+          "sensitive" : false
+        },
+        "Private key" : {
+          "displayName" : "Private key",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Private key",
+          "sensitive" : true
+        },
+        "CipherSuite" : {
+          "displayName" : "Cipher suite",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "CipherSuite",
+          "sensitive" : false
+        },
+        "Private key password" : {
+          "displayName" : "Private key password",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Private key password",
+          "sensitive" : true
+        },
+        "CheckCertificate" : {
+          "displayName" : "Check certificate",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "CheckCertificate",
+          "sensitive" : false
+        },
+        "Method" : {
+          "displayName" : "Method",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Method",
+          "sensitive" : false
+        },
+        "AuthorityCertificates" : {
+          "displayName" : "Authority certificates",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "AuthorityCertificates",
+          "sensitive" : false
+        },
+        "Certificate" : {
+          "displayName" : "Certificate",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Certificate",
+          "sensitive" : false
+        }
+      },
+      "scheduledState" : "DISABLED",
+      "type" : "idol.nifi.service.IdolSslConfigServiceImpl"
+    }, {
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "nifi-http-context-map-nar",
+        "group" : "org.apache.nifi",
+        "version" : "2.2.0"
+      },
+      "comments" : "",
+      "componentType" : "CONTROLLER_SERVICE",
+      "controllerServiceApis" : [ {
+        "bundle" : {
+          "artifact" : "nifi-standard-services-api-nar",
+          "group" : "org.apache.nifi",
+          "version" : "2.2.0"
+        },
+        "type" : "org.apache.nifi.http.HttpContextMap"
+      } ],
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "51cd3eb8-c418-307b-8fde-c2041c979602",
+      "name" : "StandardHttpContextMap",
+      "properties" : {
+        "Request Expiration" : "1 min",
+        "Maximum Outstanding Requests" : "5000"
+      },
+      "propertyDescriptors" : {
+        "Request Expiration" : {
+          "displayName" : "Request Expiration",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Request Expiration",
+          "sensitive" : false
+        },
+        "Maximum Outstanding Requests" : {
+          "displayName" : "Maximum Outstanding Requests",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Maximum Outstanding Requests",
+          "sensitive" : false
+        }
+      },
+      "scheduledState" : "DISABLED",
+      "type" : "org.apache.nifi.http.StandardHttpContextMap"
+    }, {
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "nifi-ssl-context-service-nar",
+        "group" : "org.apache.nifi",
+        "version" : "2.2.0"
+      },
+      "comments" : "",
+      "componentType" : "CONTROLLER_SERVICE",
+      "controllerServiceApis" : [ {
+        "bundle" : {
+          "artifact" : "nifi-standard-services-api-nar",
+          "group" : "org.apache.nifi",
+          "version" : "2.2.0"
+        },
+        "type" : "org.apache.nifi.ssl.SSLContextService"
+      }, {
+        "bundle" : {
+          "artifact" : "nifi-standard-services-api-nar",
+          "group" : "org.apache.nifi",
+          "version" : "2.2.0"
+        },
+        "type" : "org.apache.nifi.ssl.SSLContextProvider"
+      }, {
+        "bundle" : {
+          "artifact" : "nifi-standard-services-api-nar",
+          "group" : "org.apache.nifi",
+          "version" : "2.2.0"
+        },
+        "type" : "org.apache.nifi.ssl.RestrictedSSLContextService"
+      } ],
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "a8aee464-58e7-3d7b-a2d9-218785f75077",
+      "name" : "StandardRestrictedSSLContextService",
+      "properties" : {
+        "Truststore Type" : "JKS",
+        "SSL Protocol" : "TLSv1.3",
+        "Keystore Type" : "PKCS12",
+        "Truststore Filename" : "./conf/truststore.jks",
+        "Keystore Filename" : "./conf/keystore_regenv2.p12"
+      },
+      "propertyDescriptors" : {
+        "Truststore Type" : {
+          "displayName" : "Truststore Type",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Truststore Type",
+          "sensitive" : false
+        },
+        "SSL Protocol" : {
+          "displayName" : "TLS Protocol",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "SSL Protocol",
+          "sensitive" : false
+        },
+        "Keystore Type" : {
+          "displayName" : "Keystore Type",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Keystore Type",
+          "sensitive" : false
+        },
+        "Truststore Filename" : {
+          "displayName" : "Truststore Filename",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Truststore Filename",
+          "resourceDefinition" : {
+            "cardinality" : "SINGLE",
+            "resourceTypes" : [ "FILE" ]
+          },
+          "sensitive" : false
+        },
+        "Keystore Password" : {
+          "displayName" : "Keystore Password",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Keystore Password",
+          "sensitive" : true
+        },
+        "key-password" : {
+          "displayName" : "Key Password",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "key-password",
+          "sensitive" : true
+        },
+        "Truststore Password" : {
+          "displayName" : "Truststore Password",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Truststore Password",
+          "sensitive" : true
+        },
+        "Keystore Filename" : {
+          "displayName" : "Keystore Filename",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Keystore Filename",
+          "resourceDefinition" : {
+            "cardinality" : "SINGLE",
+            "resourceTypes" : [ "FILE" ]
+          },
+          "sensitive" : false
+        }
+      },
+      "scheduledState" : "DISABLED",
+      "type" : "org.apache.nifi.ssl.StandardRestrictedSSLContextService"
+    }, {
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "idol-nifi-framework",
+        "group" : "idol.nifi",
+        "version" : "25.1.0-nifi2"
+      },
+      "comments" : "",
+      "componentType" : "CONTROLLER_SERVICE",
+      "controllerServiceApis" : [ {
+        "bundle" : {
+          "artifact" : "idol-nifi-framework-api",
+          "group" : "idol.nifi",
+          "version" : "25.1.0-nifi2"
+        },
+        "type" : "idol.nifi.service.IdolLicenseService"
+      } ],
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "b5da2e4b-d6f9-3dcb-96a8-b766a050904d",
+      "name" : "IdolLicenseServiceImpl",
+      "properties" : {
+        "SSLConfigService" : "5556cb91-fa19-3bb7-b0e3-764940510b93",
+        "LicenseServerHost" : "eecmidollicense.idoldemos.net",
+        "LicenseServerPort" : "20000"
+      },
+      "propertyDescriptors" : {
+        "SSLConfigService" : {
+          "displayName" : "SSL Config Service",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "SSLConfigService",
+          "sensitive" : false
+        },
+        "LicenseServerHost" : {
+          "displayName" : "License Server Hostname",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "LicenseServerHost",
+          "sensitive" : false
+        },
+        "LicenseServerPort" : {
+          "displayName" : "License Server Port",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "LicenseServerPort",
+          "sensitive" : false
+        }
+      },
+      "scheduledState" : "DISABLED",
+      "type" : "idol.nifi.service.IdolLicenseServiceImpl"
+    } ],
+    "defaultBackPressureDataSizeThreshold" : "5 GB",
+    "defaultBackPressureObjectThreshold" : 10000,
+    "defaultFlowFileExpiration" : "0 sec",
+    "executionEngine" : "INHERITED",
+    "externalControllerServiceReferences" : { },
+    "flowFileConcurrency" : "UNBOUNDED",
+    "flowFileOutboundPolicy" : "STREAM_WHEN_AVAILABLE",
+    "funnels" : [ {
+      "componentType" : "FUNNEL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "52b3bc5b-cef7-34f0-93a9-340695059a36",
+      "position" : {
+        "x" : -632.0,
+        "y" : 544.0
+      }
+    }, {
+      "componentType" : "FUNNEL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "083a5e04-0299-3a8e-a5d7-2d6a2f7235f6",
+      "position" : {
+        "x" : -482.0,
+        "y" : 47.20001220703125
+      }
+    }, {
+      "componentType" : "FUNNEL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "111920a2-3fcd-3aa2-98e2-dc790205a3a4",
+      "position" : {
+        "x" : -632.0,
+        "y" : 688.0
+      }
+    }, {
+      "componentType" : "FUNNEL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "f60fa800-f750-31e0-bd53-dc0bd901440c",
+      "position" : {
+        "x" : -632.0,
+        "y" : 616.0
+      }
+    }, {
+      "componentType" : "FUNNEL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "a0d7d77a-34cc-37f0-a670-8515ef7814c3",
+      "position" : {
+        "x" : -488.0,
+        "y" : 176.0
+      }
+    } ],
+    "identifier" : "flow-contents-group",
+    "inputPorts" : [ ],
+    "labels" : [ ],
+    "maxConcurrentTasks" : 1,
+    "name" : "Auditing tracking for searches",
+    "outputPorts" : [ ],
+    "position" : {
+      "x" : 0.0,
+      "y" : 0.0
+    },
+    "processGroups" : [ ],
+    "processors" : [ {
+      "autoTerminatedRelationships" : [ "failure" ],
+      "backoffMechanism" : "PENALIZE_FLOWFILE",
+      "bulletinLevel" : "ERROR",
+      "bundle" : {
+        "artifact" : "idol-nifi-framework",
+        "group" : "idol.nifi",
+        "version" : "25.1.0-nifi2"
+      },
+      "comments" : "",
+      "componentType" : "PROCESSOR",
+      "concurrentlySchedulableTaskCount" : 1,
+      "executionNode" : "ALL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "528ba3e3-935a-3a3d-99c7-928aea05db7d",
+      "maxBackoffPeriod" : "10 mins",
+      "name" : "PutIDOL",
+      "penaltyDuration" : "5 min",
+      "position" : {
+        "x" : -160.0,
+        "y" : 720.0
+      },
+      "properties" : {
+        "SSLConfigService" : "5556cb91-fa19-3bb7-b0e3-764940510b93",
+        "BatchSize" : "100",
+        "CompressIndexFiles" : "false",
+        "UseXmlIndexing" : "false",
+        "Port" : "9400",
+        "ReplaceAllRefs" : "false",
+        "IdolLicenseService" : "b5da2e4b-d6f9-3dcb-96a8-b766a050904d",
+        "Host" : "content3.idoldemos.net",
+        "IndexOverSocket" : "true",
+        "DefaultDatabaseName" : "Audit",
+        "IdxUseXmlSafeFieldValues" : "false",
+        "KeepExisting" : "false",
+        "IndexInterval" : "1 second",
+        "CreateDatabase" : "false",
+        "XmlDocumentTag" : "DOCUMENT",
+        "XmlRootTag" : "DOCUMENTS"
+      },
+      "propertyDescriptors" : {
+        "SSLConfigService" : {
+          "displayName" : "SSL Config Service",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "SSLConfigService",
+          "sensitive" : false
+        },
+        "BatchSize" : {
+          "displayName" : "Indexer Batch Size",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "BatchSize",
+          "sensitive" : false
+        },
+        "CompressIndexFiles" : {
+          "displayName" : "Compress Index Files",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "CompressIndexFiles",
+          "sensitive" : false
+        },
+        "KillDuplicates" : {
+          "displayName" : "Kill Duplicate Documents",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "KillDuplicates",
+          "sensitive" : false
+        },
+        "UseXmlIndexing" : {
+          "displayName" : "Use XML Indexing",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "UseXmlIndexing",
+          "sensitive" : false
+        },
+        "Port" : {
+          "displayName" : "IDOL ACI Port",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Port",
+          "sensitive" : false
+        },
+        "DocumentRegistryService" : {
+          "displayName" : "Document Registry Service",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "DocumentRegistryService",
+          "sensitive" : false
+        },
+        "ReplaceAllRefs" : {
+          "displayName" : "Replace All References",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "ReplaceAllRefs",
+          "sensitive" : false
+        },
+        "IdolLicenseService" : {
+          "displayName" : "Idol License Service",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "IdolLicenseService",
+          "sensitive" : false
+        },
+        "Host" : {
+          "displayName" : "IDOL Host",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Host",
+          "sensitive" : false
+        },
+        "IndexOverSocket" : {
+          "displayName" : "Index Over Socket",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "IndexOverSocket",
+          "sensitive" : false
+        },
+        "DefaultDatabaseName" : {
+          "displayName" : "Default IDOL Database Name",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "DefaultDatabaseName",
+          "sensitive" : false
+        },
+        "IndexPriority" : {
+          "displayName" : "Index Priority",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "IndexPriority",
+          "sensitive" : false
+        },
+        "IdxUseXmlSafeFieldValues" : {
+          "displayName" : "IDX - Use Xml Safe Field Values",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "IdxUseXmlSafeFieldValues",
+          "sensitive" : false
+        },
+        "KeepExisting" : {
+          "displayName" : "Keep Existing Documents",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "KeepExisting",
+          "sensitive" : false
+        },
+        "IndexInterval" : {
+          "displayName" : "Indexing Interval Duration",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "IndexInterval",
+          "sensitive" : false
+        },
+        "CreateDatabase" : {
+          "displayName" : "Create IDOL Database",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "CreateDatabase",
+          "sensitive" : false
+        },
+        "GssServiceName" : {
+          "displayName" : "GSSAPI Service Name",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "GssServiceName",
+          "sensitive" : false
+        },
+        "XmlDocumentTag" : {
+          "displayName" : "XML Document Tag",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "XmlDocumentTag",
+          "sensitive" : false
+        },
+        "XmlRootTag" : {
+          "displayName" : "XML Root Tag",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "XmlRootTag",
+          "sensitive" : false
+        }
+      },
+      "retriedRelationships" : [ ],
+      "retryCount" : 10,
+      "runDurationMillis" : 0,
+      "scheduledState" : "ENABLED",
+      "schedulingPeriod" : "0 sec",
+      "schedulingStrategy" : "TIMER_DRIVEN",
+      "style" : { },
+      "type" : "idol.nifi.processor.PutIDOL",
+      "yieldDuration" : "1 sec"
+    }, {
+      "autoTerminatedRelationships" : [ ],
+      "backoffMechanism" : "PENALIZE_FLOWFILE",
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "nifi-update-attribute-nar",
+        "group" : "org.apache.nifi",
+        "version" : "2.2.0"
+      },
+      "comments" : "",
+      "componentType" : "PROCESSOR",
+      "concurrentlySchedulableTaskCount" : 1,
+      "executionNode" : "ALL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "c7220971-d11a-3fa3-b556-3b2b136cf86e",
+      "maxBackoffPeriod" : "10 mins",
+      "name" : "UpdateAttribute",
+      "penaltyDuration" : "30 sec",
+      "position" : {
+        "x" : -160.0,
+        "y" : 312.0
+      },
+      "properties" : {
+        "idol.reference" : "${ref}",
+        "idol.reference.action" : "add",
+        "idol.type" : "contentfile",
+        "Store State" : "Do not store state",
+        "canonical-value-lookup-cache-size" : "100"
+      },
+      "propertyDescriptors" : {
+        "idol.reference" : {
+          "displayName" : "idol.reference",
+          "dynamic" : true,
+          "identifiesControllerService" : false,
+          "name" : "idol.reference",
+          "sensitive" : false
+        },
+        "Delete Attributes Expression" : {
+          "displayName" : "Delete Attributes Expression",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Delete Attributes Expression",
+          "sensitive" : false
+        },
+        "idol.reference.action" : {
+          "displayName" : "idol.reference.action",
+          "dynamic" : true,
+          "identifiesControllerService" : false,
+          "name" : "idol.reference.action",
+          "sensitive" : false
+        },
+        "idol.type" : {
+          "displayName" : "idol.type",
+          "dynamic" : true,
+          "identifiesControllerService" : false,
+          "name" : "idol.type",
+          "sensitive" : false
+        },
+        "Store State" : {
+          "displayName" : "Store State",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Store State",
+          "sensitive" : false
+        },
+        "canonical-value-lookup-cache-size" : {
+          "displayName" : "Cache Value Lookup Cache Size",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "canonical-value-lookup-cache-size",
+          "sensitive" : false
+        },
+        "Stateful Variables Initial Value" : {
+          "displayName" : "Stateful Variables Initial Value",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Stateful Variables Initial Value",
+          "sensitive" : false
+        }
+      },
+      "retriedRelationships" : [ ],
+      "retryCount" : 10,
+      "runDurationMillis" : 25,
+      "scheduledState" : "ENABLED",
+      "schedulingPeriod" : "0 sec",
+      "schedulingStrategy" : "TIMER_DRIVEN",
+      "style" : { },
+      "type" : "org.apache.nifi.processors.attributes.UpdateAttribute",
+      "yieldDuration" : "1 sec"
+    }, {
+      "autoTerminatedRelationships" : [ "failure" ],
+      "backoffMechanism" : "PENALIZE_FLOWFILE",
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "nifi-standard-nar",
+        "group" : "org.apache.nifi",
+        "version" : "2.2.0"
+      },
+      "comments" : "",
+      "componentType" : "PROCESSOR",
+      "concurrentlySchedulableTaskCount" : 1,
+      "executionNode" : "ALL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "d3b173e3-41b8-3a76-b035-d0e9f0f7b5df",
+      "maxBackoffPeriod" : "10 mins",
+      "name" : "ReplaceText",
+      "penaltyDuration" : "30 sec",
+      "position" : {
+        "x" : 416.0,
+        "y" : 128.0
+      },
+      "properties" : {
+        "Regular Expression" : ".*",
+        "Replacement Value" : "{\"message\":\"Thank you\"}",
+        "Evaluation Mode" : "Entire text",
+        "Line-by-Line Evaluation Mode" : "All",
+        "Character Set" : "UTF-8",
+        "Maximum Buffer Size" : "1 MB",
+        "Replacement Strategy" : "Regex Replace"
+      },
+      "propertyDescriptors" : {
+        "Regular Expression" : {
+          "displayName" : "Search Value",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Regular Expression",
+          "sensitive" : false
+        },
+        "Replacement Value" : {
+          "displayName" : "Replacement Value",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Replacement Value",
+          "sensitive" : false
+        },
+        "Evaluation Mode" : {
+          "displayName" : "Evaluation Mode",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Evaluation Mode",
+          "sensitive" : false
+        },
+        "Text to Prepend" : {
+          "displayName" : "Text to Prepend",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Text to Prepend",
+          "sensitive" : false
+        },
+        "Line-by-Line Evaluation Mode" : {
+          "displayName" : "Line-by-Line Evaluation Mode",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Line-by-Line Evaluation Mode",
+          "sensitive" : false
+        },
+        "Character Set" : {
+          "displayName" : "Character Set",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Character Set",
+          "sensitive" : false
+        },
+        "Maximum Buffer Size" : {
+          "displayName" : "Maximum Buffer Size",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Maximum Buffer Size",
+          "sensitive" : false
+        },
+        "Replacement Strategy" : {
+          "displayName" : "Replacement Strategy",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Replacement Strategy",
+          "sensitive" : false
+        },
+        "Text to Append" : {
+          "displayName" : "Text to Append",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Text to Append",
+          "sensitive" : false
+        }
+      },
+      "retriedRelationships" : [ ],
+      "retryCount" : 10,
+      "runDurationMillis" : 25,
+      "scheduledState" : "ENABLED",
+      "schedulingPeriod" : "0 sec",
+      "schedulingStrategy" : "TIMER_DRIVEN",
+      "style" : { },
+      "type" : "org.apache.nifi.processors.standard.ReplaceText",
+      "yieldDuration" : "1 sec"
+    }, {
+      "autoTerminatedRelationships" : [ "original", "failure", "written" ],
+      "backoffMechanism" : "PENALIZE_FLOWFILE",
+      "bulletinLevel" : "ERROR",
+      "bundle" : {
+        "artifact" : "idol-nifi-framework",
+        "group" : "idol.nifi",
+        "version" : "25.1.0-nifi2"
+      },
+      "comments" : "",
+      "componentType" : "PROCESSOR",
+      "concurrentlySchedulableTaskCount" : 1,
+      "executionNode" : "ALL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "af1e9b2d-213b-33e0-9d72-758b1002287b",
+      "maxBackoffPeriod" : "10 mins",
+      "name" : "Create a backup of the audit",
+      "penaltyDuration" : "30 sec",
+      "position" : {
+        "x" : -160.0,
+        "y" : 896.0
+      },
+      "properties" : {
+        "Format" : "IDX",
+        "WriteXmlValidFieldValues" : "false",
+        "Filename" : "/opt/audit_backups/search.idx",
+        "IdolLicenseService" : "b5da2e4b-d6f9-3dcb-96a8-b766a050904d"
+      },
+      "propertyDescriptors" : {
+        "Format" : {
+          "displayName" : "Format",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Format",
+          "sensitive" : false
+        },
+        "WriteXmlValidFieldValues" : {
+          "displayName" : "IDX - Write Xml Safe Field Values",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "WriteXmlValidFieldValues",
+          "sensitive" : false
+        },
+        "Filename" : {
+          "displayName" : "File in which to write the document",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Filename",
+          "sensitive" : false
+        },
+        "IdolLicenseService" : {
+          "displayName" : "Idol License Service",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "IdolLicenseService",
+          "sensitive" : false
+        },
+        "ArchiveDir" : {
+          "displayName" : "Archive Directory",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "ArchiveDir",
+          "sensitive" : false
+        },
+        "MaxFileSizeBytes" : {
+          "displayName" : "Max file size in bytes before archiving",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "MaxFileSizeBytes",
+          "sensitive" : false
+        }
+      },
+      "retriedRelationships" : [ ],
+      "retryCount" : 10,
+      "runDurationMillis" : 0,
+      "scheduledState" : "ENABLED",
+      "schedulingPeriod" : "0 sec",
+      "schedulingStrategy" : "TIMER_DRIVEN",
+      "style" : { },
+      "type" : "idol.nifi.processor.WriteDocument",
+      "yieldDuration" : "1 sec"
+    }, {
+      "autoTerminatedRelationships" : [ ],
+      "backoffMechanism" : "PENALIZE_FLOWFILE",
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "nifi-standard-nar",
+        "group" : "org.apache.nifi",
+        "version" : "2.2.0"
+      },
+      "comments" : "",
+      "componentType" : "PROCESSOR",
+      "concurrentlySchedulableTaskCount" : 1,
+      "executionNode" : "ALL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "ed05fa29-784e-3333-992b-7a7e4cbc3d7c",
+      "maxBackoffPeriod" : "10 mins",
+      "name" : "HandleHttpRequest",
+      "penaltyDuration" : "30 sec",
+      "position" : {
+        "x" : -160.0,
+        "y" : -72.0
+      },
+      "properties" : {
+        "multipart-request-max-size" : "1 MB",
+        "Allow POST" : "true",
+        "Default URL Character Set" : "UTF-8",
+        "Allow DELETE" : "true",
+        "Request Header Maximum Size" : "8 KB",
+        "Maximum Threads" : "200",
+        "HTTP Protocols" : "HTTP_1_1",
+        "container-queue-size" : "50",
+        "HTTP Context Map" : "51cd3eb8-c418-307b-8fde-c2041c979602",
+        "multipart-read-buffer-size" : "512 KB",
+        "SSL Context Service" : "a8aee464-58e7-3d7b-a2d9-218785f75077",
+        "Allow OPTIONS" : "false",
+        "Allowed Paths" : "/audit/search",
+        "Allow GET" : "true",
+        "Allow HEAD" : "false",
+        "Listening Port" : "7877",
+        "Client Authentication" : "No Authentication",
+        "Allow PUT" : "true"
+      },
+      "propertyDescriptors" : {
+        "multipart-request-max-size" : {
+          "displayName" : "Multipart Request Max Size",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "multipart-request-max-size",
+          "sensitive" : false
+        },
+        "parameters-to-attributes" : {
+          "displayName" : "Parameters to Attributes List",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "parameters-to-attributes",
+          "sensitive" : false
+        },
+        "Allow POST" : {
+          "displayName" : "Allow POST",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Allow POST",
+          "sensitive" : false
+        },
+        "Hostname" : {
+          "displayName" : "Hostname",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Hostname",
+          "sensitive" : false
+        },
+        "Default URL Character Set" : {
+          "displayName" : "Default URL Character Set",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Default URL Character Set",
+          "sensitive" : false
+        },
+        "Allow DELETE" : {
+          "displayName" : "Allow DELETE",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Allow DELETE",
+          "sensitive" : false
+        },
+        "Request Header Maximum Size" : {
+          "displayName" : "Request Header Maximum Size",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Request Header Maximum Size",
+          "sensitive" : false
+        },
+        "Maximum Threads" : {
+          "displayName" : "Maximum Threads",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Maximum Threads",
+          "sensitive" : false
+        },
+        "HTTP Protocols" : {
+          "displayName" : "HTTP Protocols",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "HTTP Protocols",
+          "sensitive" : false
+        },
+        "Additional HTTP Methods" : {
+          "displayName" : "Additional HTTP Methods",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Additional HTTP Methods",
+          "sensitive" : false
+        },
+        "container-queue-size" : {
+          "displayName" : "Container Queue Size",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "container-queue-size",
+          "sensitive" : false
+        },
+        "HTTP Context Map" : {
+          "displayName" : "HTTP Context Map",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "HTTP Context Map",
+          "sensitive" : false
+        },
+        "multipart-read-buffer-size" : {
+          "displayName" : "Multipart Read Buffer Size",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "multipart-read-buffer-size",
+          "sensitive" : false
+        },
+        "SSL Context Service" : {
+          "displayName" : "SSL Context Service",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "SSL Context Service",
+          "sensitive" : false
+        },
+        "Allow OPTIONS" : {
+          "displayName" : "Allow OPTIONS",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Allow OPTIONS",
+          "sensitive" : false
+        },
+        "Allowed Paths" : {
+          "displayName" : "Allowed Paths",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Allowed Paths",
+          "sensitive" : false
+        },
+        "Allow GET" : {
+          "displayName" : "Allow GET",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Allow GET",
+          "sensitive" : false
+        },
+        "Allow HEAD" : {
+          "displayName" : "Allow HEAD",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Allow HEAD",
+          "sensitive" : false
+        },
+        "Listening Port" : {
+          "displayName" : "Listening Port",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Listening Port",
+          "sensitive" : false
+        },
+        "Client Authentication" : {
+          "displayName" : "Client Authentication",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Client Authentication",
+          "sensitive" : false
+        },
+        "Allow PUT" : {
+          "displayName" : "Allow PUT",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Allow PUT",
+          "sensitive" : false
+        }
+      },
+      "retriedRelationships" : [ ],
+      "retryCount" : 10,
+      "runDurationMillis" : 0,
+      "scheduledState" : "ENABLED",
+      "schedulingPeriod" : "0 sec",
+      "schedulingStrategy" : "TIMER_DRIVEN",
+      "style" : { },
+      "type" : "org.apache.nifi.processors.standard.HandleHttpRequest",
+      "yieldDuration" : "1 sec"
+    }, {
+      "autoTerminatedRelationships" : [ ],
+      "backoffMechanism" : "PENALIZE_FLOWFILE",
+      "bulletinLevel" : "ERROR",
+      "bundle" : {
+        "artifact" : "idol-nifi-framework",
+        "group" : "idol.nifi",
+        "version" : "25.1.0-nifi2"
+      },
+      "comments" : "",
+      "componentType" : "PROCESSOR",
+      "concurrentlySchedulableTaskCount" : 1,
+      "executionNode" : "ALL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "66dfc79e-8fb2-370e-9a63-4ccfecfd6baa",
+      "maxBackoffPeriod" : "10 mins",
+      "name" : "ConvertJSONToDocuments",
+      "penaltyDuration" : "30 sec",
+      "position" : {
+        "x" : -160.0,
+        "y" : 512.0
+      },
+      "properties" : {
+        "[username]Path" : "username",
+        "IdolLicenseService" : "b5da2e4b-d6f9-3dcb-96a8-b766a050904d",
+        "ContentPaths" : "searchinput",
+        "FieldSections" : "username\ntime\nsearchinput",
+        "[time]ExpandArrays" : "false",
+        "[time]Path" : "time",
+        "ExpandArrays" : "false",
+        "[searchinput]Path" : "searchinput",
+        "DocRootPath" : "",
+        "[searchinput]ExpandArrays" : "false",
+        "CommitBatchSize" : "100",
+        "[username]ExpandArrays" : "false",
+        "ReferencePath" : "ref"
+      },
+      "propertyDescriptors" : {
+        "[time]FieldSections" : {
+          "displayName" : "[time]FieldSections",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "[time]FieldSections",
+          "sensitive" : false
+        },
+        "[username]Path" : {
+          "displayName" : "[username]Path",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "[username]Path",
+          "sensitive" : false
+        },
+        "[searchinput]FieldSections" : {
+          "displayName" : "[searchinput]FieldSections",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "[searchinput]FieldSections",
+          "sensitive" : false
+        },
+        "[username]NamePath" : {
+          "displayName" : "[username]NamePath",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "[username]NamePath",
+          "sensitive" : false
+        },
+        "DocumentRegistryService" : {
+          "displayName" : "Document Registry Service",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "DocumentRegistryService",
+          "sensitive" : false
+        },
+        "IdolLicenseService" : {
+          "displayName" : "Idol License Service",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "IdolLicenseService",
+          "sensitive" : false
+        },
+        "[searchinput]AttributeSections" : {
+          "displayName" : "[searchinput]AttributeSections",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "[searchinput]AttributeSections",
+          "sensitive" : false
+        },
+        "ContentPaths" : {
+          "displayName" : "ContentPaths",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "ContentPaths",
+          "sensitive" : false
+        },
+        "[time]AttributeSections" : {
+          "displayName" : "[time]AttributeSections",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "[time]AttributeSections",
+          "sensitive" : false
+        },
+        "[username]ValuePath" : {
+          "displayName" : "[username]ValuePath",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "[username]ValuePath",
+          "sensitive" : false
+        },
+        "FieldSections" : {
+          "displayName" : "FieldSections",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "FieldSections",
+          "sensitive" : false
+        },
+        "[time]ValuePath" : {
+          "displayName" : "[time]ValuePath",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "[time]ValuePath",
+          "sensitive" : false
+        },
+        "[username]AttributeSections" : {
+          "displayName" : "[username]AttributeSections",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "[username]AttributeSections",
+          "sensitive" : false
+        },
+        "[time]ExpandArrays" : {
+          "displayName" : "[time]ExpandArrays",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "[time]ExpandArrays",
+          "sensitive" : false
+        },
+        "[time]Path" : {
+          "displayName" : "[time]Path",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "[time]Path",
+          "sensitive" : false
+        },
+        "ExpandArrays" : {
+          "displayName" : "ExpandArrays",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "ExpandArrays",
+          "sensitive" : false
+        },
+        "[searchinput]Path" : {
+          "displayName" : "[searchinput]Path",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "[searchinput]Path",
+          "sensitive" : false
+        },
+        "DocRootPath" : {
+          "displayName" : "DocRootPath",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "DocRootPath",
+          "sensitive" : false
+        },
+        "[username]FieldSections" : {
+          "displayName" : "[username]FieldSections",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "[username]FieldSections",
+          "sensitive" : false
+        },
+        "[searchinput]ExpandArrays" : {
+          "displayName" : "[searchinput]ExpandArrays",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "[searchinput]ExpandArrays",
+          "sensitive" : false
+        },
+        "[searchinput]NamePath" : {
+          "displayName" : "[searchinput]NamePath",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "[searchinput]NamePath",
+          "sensitive" : false
+        },
+        "[time]NamePath" : {
+          "displayName" : "[time]NamePath",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "[time]NamePath",
+          "sensitive" : false
+        },
+        "CommitBatchSize" : {
+          "displayName" : "Commit Batch Size",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "CommitBatchSize",
+          "sensitive" : false
+        },
+        "[username]ExpandArrays" : {
+          "displayName" : "[username]ExpandArrays",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "[username]ExpandArrays",
+          "sensitive" : false
+        },
+        "ReferencePath" : {
+          "displayName" : "ReferencePath",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "ReferencePath",
+          "sensitive" : false
+        },
+        "[searchinput]ValuePath" : {
+          "displayName" : "[searchinput]ValuePath",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "[searchinput]ValuePath",
+          "sensitive" : false
+        }
+      },
+      "retriedRelationships" : [ ],
+      "retryCount" : 10,
+      "runDurationMillis" : 0,
+      "scheduledState" : "ENABLED",
+      "schedulingPeriod" : "0 sec",
+      "schedulingStrategy" : "TIMER_DRIVEN",
+      "style" : { },
+      "type" : "idol.nifi.processor.ConvertJSONToDocuments",
+      "yieldDuration" : "1 sec"
+    }, {
+      "autoTerminatedRelationships" : [ "success", "failure" ],
+      "backoffMechanism" : "PENALIZE_FLOWFILE",
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "nifi-standard-nar",
+        "group" : "org.apache.nifi",
+        "version" : "2.2.0"
+      },
+      "comments" : "",
+      "componentType" : "PROCESSOR",
+      "concurrentlySchedulableTaskCount" : 1,
+      "executionNode" : "ALL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "c6d16c65-6911-3750-b16e-5b7e4b2b0af3",
+      "maxBackoffPeriod" : "10 mins",
+      "name" : "HandleHttpResponse",
+      "penaltyDuration" : "30 sec",
+      "position" : {
+        "x" : 416.0,
+        "y" : -80.0
+      },
+      "properties" : {
+        "HTTP Context Map" : "51cd3eb8-c418-307b-8fde-c2041c979602",
+        "HTTP Status Code" : "200"
+      },
+      "propertyDescriptors" : {
+        "HTTP Context Map" : {
+          "displayName" : "HTTP Context Map",
+          "dynamic" : false,
+          "identifiesControllerService" : true,
+          "name" : "HTTP Context Map",
+          "sensitive" : false
+        },
+        "Attributes to add to the HTTP Response (Regex)" : {
+          "displayName" : "Attributes to add to the HTTP Response (Regex)",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Attributes to add to the HTTP Response (Regex)",
+          "sensitive" : false
+        },
+        "HTTP Status Code" : {
+          "displayName" : "HTTP Status Code",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "HTTP Status Code",
+          "sensitive" : false
+        }
+      },
+      "retriedRelationships" : [ ],
+      "retryCount" : 10,
+      "runDurationMillis" : 0,
+      "scheduledState" : "ENABLED",
+      "schedulingPeriod" : "0 sec",
+      "schedulingStrategy" : "TIMER_DRIVEN",
+      "style" : { },
+      "type" : "org.apache.nifi.processors.standard.HandleHttpResponse",
+      "yieldDuration" : "1 sec"
+    }, {
+      "autoTerminatedRelationships" : [ ],
+      "backoffMechanism" : "PENALIZE_FLOWFILE",
+      "bulletinLevel" : "WARN",
+      "bundle" : {
+        "artifact" : "nifi-standard-nar",
+        "group" : "org.apache.nifi",
+        "version" : "2.2.0"
+      },
+      "comments" : "",
+      "componentType" : "PROCESSOR",
+      "concurrentlySchedulableTaskCount" : 1,
+      "executionNode" : "ALL",
+      "groupIdentifier" : "flow-contents-group",
+      "identifier" : "c11a856e-326c-366d-9a31-b9df000685b9",
+      "maxBackoffPeriod" : "10 mins",
+      "name" : "EvaluateJsonPath",
+      "penaltyDuration" : "30 sec",
+      "position" : {
+        "x" : -160.0,
+        "y" : 136.0
+      },
+      "properties" : {
+        "Destination" : "flowfile-attribute",
+        "ref" : "$.ref",
+        "searchinput" : "$.searchinput",
+        "Max String Length" : "20 MB",
+        "Return Type" : "auto-detect",
+        "Null Value Representation" : "empty string",
+        "time" : "$.time",
+        "Path Not Found Behavior" : "ignore",
+        "username" : "$.username"
+      },
+      "propertyDescriptors" : {
+        "Destination" : {
+          "displayName" : "Destination",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Destination",
+          "sensitive" : false
+        },
+        "ref" : {
+          "displayName" : "ref",
+          "dynamic" : true,
+          "identifiesControllerService" : false,
+          "name" : "ref",
+          "sensitive" : false
+        },
+        "searchinput" : {
+          "displayName" : "searchinput",
+          "dynamic" : true,
+          "identifiesControllerService" : false,
+          "name" : "searchinput",
+          "sensitive" : false
+        },
+        "Max String Length" : {
+          "displayName" : "Max String Length",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Max String Length",
+          "sensitive" : false
+        },
+        "Return Type" : {
+          "displayName" : "Return Type",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Return Type",
+          "sensitive" : false
+        },
+        "Null Value Representation" : {
+          "displayName" : "Null Value Representation",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Null Value Representation",
+          "sensitive" : false
+        },
+        "time" : {
+          "displayName" : "time",
+          "dynamic" : true,
+          "identifiesControllerService" : false,
+          "name" : "time",
+          "sensitive" : false
+        },
+        "Path Not Found Behavior" : {
+          "displayName" : "Path Not Found Behavior",
+          "dynamic" : false,
+          "identifiesControllerService" : false,
+          "name" : "Path Not Found Behavior",
+          "sensitive" : false
+        },
+        "username" : {
+          "displayName" : "username",
+          "dynamic" : true,
+          "identifiesControllerService" : false,
+          "name" : "username",
+          "sensitive" : false
+        }
+      },
+      "retriedRelationships" : [ ],
+      "retryCount" : 10,
+      "runDurationMillis" : 0,
+      "scheduledState" : "ENABLED",
+      "schedulingPeriod" : "0 sec",
+      "schedulingStrategy" : "TIMER_DRIVEN",
+      "style" : { },
+      "type" : "org.apache.nifi.processors.standard.EvaluateJsonPath",
+      "yieldDuration" : "1 sec"
+    } ],
+    "remoteProcessGroups" : [ ],
+    "scheduledState" : "ENABLED",
+    "statelessFlowTimeout" : "1 min"
+  },
+  "flowEncodingVersion" : "1.0",
+  "latest" : false,
+  "parameterContexts" : { },
+  "parameterProviders" : { },
+  "snapshotMetadata" : {
+    "author" : "vinay.joseph@demo.local",
+    "flowIdentifier" : "Audit-trail-for-searches",
+    "timestamp" : 0
+  }
+}

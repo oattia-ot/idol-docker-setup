@@ -1,0 +1,38 @@
+version: '3.9'
+name: nifi-registry
+
+services:
+  nifi-registry:
+    image: apache/nifi-registry:latest
+    container_name: nifi-registry
+    ports:
+      - "18080:18080"
+    environment:
+      - NIFI_REGISTRY_WEB_HTTP_HOST=0.0.0.0
+      - NIFI_REGISTRY_WEB_HTTP_PORT=18080
+      # tell registry to use GitFlowPersistenceProvider
+      - FLOW_PROVIDER=git
+      # Git remote repo URL (HTTPS or SSH)
+      - GIT_CHECKOUT_BRANCH=main
+      - FLOW_PROVIDER_GIT_FLOW_STORAGE_DIRECTORY=/opt/nifi-registry/versioned_flows
+      - FLOW_PROVIDER_GIT_REMOTE_TO_PUSH=origin
+      - FLOW_PROVIDER_GIT_REMOTE_ACCESS_USER=GIT-ACCESS-USER-PLACEHOLDER
+      - FLOW_PROVIDER_GIT_REMOTE_ACCESS_PASSWORD=GIT-ACCESS-TOKEN-PLACEHOLDER
+      - GIT_REMOTE_URL=GIT-REMOTE-URL-PLACEHOLDER
+      - GIT_CONFIG_USER_NAME=nifi-registry
+      - GIT_CONFIG_USER_EMAIL=nifi-registry@yourdomain.com
+    volumes:
+      - ./git-flows:/opt/nifi-registry/versioned_flows   # this is the git-backed flow dir
+      - ./registry/bootstrap.conf:/opt/nifi-registry/conf/bootstrap.conf
+      - ./registry/providers.xml:/opt/nifi-registry/conf/providers.xml
+      - ./nifi-registry/conf:/opt/nifi-registry/nifi-registry-current/conf
+      - ./nifi-registry/database:/opt/nifi-registry/nifi-registry-current/database
+      - ./nifi-registry/flow_storage:/opt/nifi-registry/nifi-registry-current/flow_storage
+    networks:
+      - nifi-registry-network
+    restart: unless-stopped
+
+# NETWORK DEFINITIONS
+networks:
+  nifi-registry-network:
+    external: true

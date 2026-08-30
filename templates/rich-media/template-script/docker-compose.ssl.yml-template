@@ -1,0 +1,76 @@
+###
+# Copyright (c) 2019-2020 Micro Focus or one of its affiliates.
+#
+# Licensed under the MIT License (the "License"); you may not use this file
+# except in compliance with the License.
+#
+# The only warranties for products and services of Micro Focus and its affiliates
+# and licensors ("Micro Focus") are as may be set forth in the express warranty
+# statements accompanying such products and services. Nothing herein should be
+# construed as constituting an additional warranty. Micro Focus shall not be
+# liable for technical or editorial errors or omissions contained herein. The
+# information contained herein is subject to change without notice.
+###
+
+# This is designed to be used atop of docker-compose.yml
+# Therefore the incantation to use this is something like
+# docker-compose -f docker-compose.yml -f docker-compose.ssl.yml up 
+
+version: "3.8"
+name: ${IDOL_DEPLOYMENT_TYPE:-idol-demo}
+
+# bind mount holding certificates
+x-ssl-volume: &ssl-volume
+  type: bind
+  source: ./ssl/intermediate
+  target: /ssl
+
+services:
+  idol-content:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-content-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-content.key.pem  
+    volumes:
+      - *ssl-volume
+  idol-agentstore:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-agentstore-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-agentstore.key.pem    
+    volumes:
+      - *ssl-volume
+  idol-category:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-category-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-category.key.pem       
+    volumes:
+      - *ssl-volume      
+  idol-categorisation-agentstore:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-categorisation-agentstore-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-categorisation-agentstore.key.pem       
+    volumes:
+      - *ssl-volume
+  idol-community:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-community-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-community.key.pem       
+    volumes:
+      - *ssl-volume
+  idol-view:
+    env_file:
+      - idol_ssl.env  
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-view-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-view.key.pem
+    volumes:
+      - *ssl-volume

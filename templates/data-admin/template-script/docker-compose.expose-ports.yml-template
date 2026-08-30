@@ -1,0 +1,51 @@
+###
+# Copyright (c) 2019-2020 Micro Focus or one of its affiliates.
+#
+# Licensed under the MIT License (the "License"); you may not use this file
+# except in compliance with the License.
+#
+# The only warranties for products and services of Micro Focus and its affiliates
+# and licensors ("Micro Focus") are as may be set forth in the express warranty
+# statements accompanying such products and services. Nothing herein should be
+# construed as constituting an additional warranty. Micro Focus shall not be
+# liable for technical or editorial errors or omissions contained herein. The
+# information contained herein is subject to change without notice.
+###
+
+# expose internal service ports that don't necessarily
+# need to be exposed to the outside world
+
+version: "3.8"
+name: ${IDOL_DEPLOYMENT_TYPE:-idol-demo}
+
+services:
+  idol-answerbank-agentstore:
+    ports:
+      - DA_ANSWER_BANK_AGENTSTORE_ACI_PLACEHOLDER-DA_ANSWER_BANK_AGENTSTORE_SRV_PLACEHOLDER:DA_ANSWER_BANK_AGENTSTORE_ACI_PLACEHOLDER-DA_ANSWER_BANK_AGENTSTORE_SRV_PLACEHOLDER      
+  idol-passageextractor-content:
+    ports:
+      - DA_PASSAGEEXTRATOR_CONTENT_ACI_PLACEHOLDER-DA_PASSAGEEXTRATOR_CONTENT_SRV_PLACEHOLDER:DA_PASSAGEEXTRATOR_CONTENT_ACI_PLACEHOLDER-DA_PASSAGEEXTRATOR_CONTENT_SRV_PLACEHOLDER
+  idol-passageextractor-agentstore:
+    ports:
+      - DA_PASSAGEEXTRATOR_AGENTSTORE_ACI_PLACEHOLDER-DA_PASSAGEEXTRATOR_AGENTSTORE_SRV_PLACEHOLDER:DA_PASSAGEEXTRATOR_AGENTSTORE_ACI_PLACEHOLDER-DA_PASSAGEEXTRATOR_AGENTSTORE_SRV_PLACEHOLDER
+  idol-answerserver:
+    ports:
+      - DA_ANSWER_SERVER_ACI_PLACEHOLDER-DA_ANSWER_SERVER_SRV_PLACEHOLDER:DA_ANSWER_SERVER_ACI_PLACEHOLDER-DA_ANSWER_SERVER_SRV_PLACEHOLDER
+  idol-qms-agentstore:
+    ports:
+      - DA_QMS_AGENTSTORE_ACI_PLACEHOLDER-DA_QMS_AGENTSTORE_SRV_PLACEHOLDER:DA_QMS_AGENTSTORE_ACI_PLACEHOLDER-DA_QMS_AGENTSTORE_SRV_PLACEHOLDER
+  idol-qms:
+    ports:
+      - DA_QMS_ACI_PLACEHOLDER-DA_QMS_SRV_PLACEHOLDER:DA_QMS_ACI_PLACEHOLDER-DA_QMS_SRV_PLACEHOLDER
+  idol-dataadmin-statsserver:
+    ports:
+      - DA_STATS_SERVER_ACI_PLACEHOLDER-DA_STATS_SERVER_SRV_PLACEHOLDER:DA_STATS_SERVER_ACI_PLACEHOLDER-DA_STATS_SERVER_SRV_PLACEHOLDER
+  idol-dataadmin-viewserver:
+    ports:
+      - DA_VIEW_ACI_PLACEHOLDER-DA_VIEW_SRV_PLACEHOLDER:DA_VIEW_ACI_PLACEHOLDER-DA_VIEW_SRV_PLACEHOLDER
+  idol-dataadmin-community:
+    ports:
+      - DA_COMMUNITY_ACI_PLACEHOLDER-DA_COMMUNITY_SRV_PLACEHOLDER:DA_COMMUNITY_ACI_PLACEHOLDER-DA_COMMUNITY_SRV_PLACEHOLDER
+  idol-dataadmin-find:
+    ports:
+      - FIND_UI_PLACEHOLDER:8000

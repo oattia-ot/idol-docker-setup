@@ -1,0 +1,82 @@
+# BEGIN COPYRIGHT NOTICE
+# Copyright 2023 Open Text.
+# 
+# The only warranties for products and services of Open Text and its affiliates and licensors
+# ("Open Text") are as may be set forth in the express warranty statements accompanying such
+# products and services. Nothing herein should be construed as constituting an additional warranty.
+# Open Text shall not be liable for technical or editorial errors or omissions contained herein.
+# The information contained herein is subject to change without notice.
+#
+# END COPYRIGHT NOTICE
+{{ $root := . }}
+{{ $component := .Values.dih }}
+
+{{ define "distributedidol.dih.statefulset.base" }}
+{{- $root := get . "root" | required "distributedidol.dih.statefulset.base: missing root" -}}
+{{- $component := get . "component" | required "distributedidol.dih.statefulset.base: missing component" -}}
+
+spec:
+  template:
+    spec:
+      setHostnameAsFQDN: true
+      initContainers:
+      - name: edit-config
+        # Use this version of busybox so nslookup output format is stable
+        image: busybox:1.28
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: IDOL_CONTENT_SERVICE_PORT_ACI_PORT
+          # This doesn't seem to be set by our headless service
+          value: {{ $root.Values.content.aciPort | quote }}
+        {{- if $component.usingTLS }}
+        - name: IDOL_SSL
+          value: "1"
+        {{- end }}
+        command:
+        - sh
+        - /scripts/distributed-idol/dih_init.sh
+        volumeMounts:
+        - name: config-map
+          mountPath: /mnt/config-map
+        - name: dih-persistent-storage
+          mountPath: /mnt/store/dih
+        - name: dih-scripts
+          mountPath: /scripts/distributed-idol
+  volumeClaimTemplates:
+  - metadata:
+      name: dih-persistent-storage
+      labels: {{- include "idol-library.labels.volumeClaimTemplates" . | nindent 8 }}
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: {{ $component.dihStorageClass }}
+      resources:
+        requests:
+          storage: 1Gi
+{{- end -}}
+
+{{- $dihVolumes := list (dict
+    "name" "dih-scripts"
+    "configMap" (dict "name" (print .Values.dih.name "-scripts"))
+)}}
+
+{{- if and ($root.Values.autoscaling.enabled) (not $root.Values.setupMirrored) }}
+{{- $dihVolumes = append $dihVolumes (dict "name" "dih-prometheus-exporter-python" "configMap" (dict "name" "dih-prometheus-exporter-python")) }}
+{{- $dihVolumes = append $dihVolumes (dict "name" "python-src-app" "emptyDir" (dict)) }}
+{{- $dihVolumes = append $dihVolumes (dict "name" "python-local" "emptyDir" (dict)) }}
+{{- end }}
+
+{{- $dihContainers := list}}
+{{- $dihContainers = append $dihContainers "distributedidol.dih.container" }}
+
+{{- if and ($root.Values.autoscaling.enabled) (not $root.Values.setupMirrored) }}
+{{- $dihContainers = append $dihContainers "distributedidol.prometheus.container" }}
+{{- end -}}
+
+{{ include "idol-library.util.merge" (dict
+  "root" .
+  "component" .Values.dih
+  "source" "idol-library.aciserver.statefulset.base.v1"
+  "destination" "distributedidol.dih.statefulset.base"
+  "containers" $dihContainers
+  "volumes" $dihVolumes
+) }}

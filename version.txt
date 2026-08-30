@@ -1,0 +1,4 @@
+IDOL Deployment Setup Manager
+=============================
+Version: ver-1.24r1m0
+Pushed to GitHub: 2026-08-30 23:05:16 IDT

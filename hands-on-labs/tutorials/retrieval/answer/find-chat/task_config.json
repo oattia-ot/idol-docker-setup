@@ -1,0 +1,32 @@
+{
+  "$schema": "../../resources/schemas/task_configuration/v1/schema.json",
+  "lua_script": "task_handlers.lua",
+
+  "initial_task": "INITIAL",
+  "fallback_task": "FALLBACK",
+
+  "tasks": [
+
+    {
+      "id": "INITIAL",
+      "pre": {
+        "response": "Welcome to Find chat!\nAsk me a question. I can access all your enterprise data to help you find an answer.",
+        "lua": "initialize_session"
+      },
+      "trigger": {
+        "regex": {
+          "case_insensitive": true,
+          "pattern": "\\b(?:start again|back to(?: the)? beginning)\\b"
+        }
+      }
+    },
+
+    {
+      "id": "FALLBACK",
+      "pre": {
+        "lua": "ask_answer_server"
+      }
+    }
+
+  ]
+}

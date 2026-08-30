@@ -1,0 +1,123 @@
+#! /bin/bash
+
+# BEGIN COPYRIGHT NOTICE
+# Copyright 2023-2024 Open Text.
+# 
+# The only warranties for products and services of Open Text and its affiliates and licensors
+# ("Open Text") are as may be set forth in the express warranty statements accompanying such
+# products and services. Nothing herein should be construed as constituting an additional warranty.
+# Open Text shall not be liable for technical or editorial errors or omissions contained herein.
+# The information contained herein is subject to change without notice.
+#
+# END COPYRIGHT NOTICE
+
+# Sections / paths are written into our configfiles with surrounding
+# characters [] or "". Remove these surrounding characters.
+function prepare_string() {
+    echo "$1" | tail -c +2 | head -c -2
+}
+
+function generate_missing_oauth_config() {
+    OAUTH_TOOL_PATH=$1
+    OAUTH_TOOL_CFG=$2
+    OAUTH_TOOL_CFG_SECTION=$3
+    REQUIRED_FILENAME=$4
+
+    # This touch is needed for the -ef check below to work
+    touch ./oauth.cfg
+    if [[ ./oauth.cfg -ef ${REQUIRED_FILENAME} ]]
+    then
+        echo "Error: Specified file to generate (${REQUIRED_FILENAME}) path-clashes with ./oauth.cfg. Please change this filename to any other value!"
+        rm ./oauth.cfg
+        return 1
+    fi
+    rm ./oauth.cfg
+
+    if [[ -e ${REQUIRED_FILENAME} ]]
+    then
+        echo "Info: Cowardly not overwriting existing file ${REQUIRED_FILENAME}"
+        return 0
+    fi
+
+    ${OAUTH_TOOL_PATH} ${OAUTH_TOOL_CFG} ${OAUTH_TOOL_CFG_SECTION} > /dev/null 2>&1
+    if [ $? -ne 0 ]
+    then
+        echo "Error: ${OAUTH_TOOL_PATH} ${OAUTH_TOOL_CFG} ${OAUTH_TOOL_CFG_SECTION} failed!"
+        return 1
+    fi
+
+    # oauth_tool.exe succeeded and will have generated oauth.cfg.
+    # This requires renaming to the required filename.
+    mv ./oauth.cfg ${REQUIRED_FILENAME}
+    if [ $? -ne 0 ]
+    then
+        echo "Error: Could not move ./oauth.cfg to ${REQUIRED_FILENAME}"
+        return 1
+    fi
+
+    echo "Info: Generated ${REQUIRED_FILENAME} for ${OAUTH_TOOL_CFG_SECTION} OAuth setup."
+    return 0
+}
+
+# Find lines in the component config that match the form
+# [$section_name] < "$configpath" [OAUTH]
+# For each matching line, the file at $configpath must
+# be generated via oauth_tool if it does not currently exist.
+function handle_oauth_setup() {
+    COMPONENT_NAME=$1
+    COMPONENT_CFG=$2
+    OAUTH_TOOL_CFG=$3
+
+    # /${COMPONENT_NAME}/oauth_tool.exe must exist as an executable for this to succeed
+    OAUTH_TOOL_PATH=/${COMPONENT_NAME}/oauth_tool.exe
+    if [[ ! -x ${OAUTH_TOOL_PATH} ]]
+    then
+        echo "Error: Could not find ${OAUTH_TOOL_PATH} for OAuth setup"
+        return 1
+    fi
+
+    if [[ ! -e ${COMPONENT_CFG} ]];
+    then
+        echo "Error: Could not find ${COMPONENT_CFG} to derive OAuth sections for OAuth setup"
+        return 1
+    fi
+
+    if [[ ! -e ${OAUTH_TOOL_CFG} ]]
+    then
+        echo "Error: Could not find ${OAUTH_TOOL_CFG} for configuring OAuth setup"
+        return 1
+    fi
+
+    unset BACKUP_CONFIG
+    if [[ -e ./oauth.cfg ]]
+    then
+        BACKUP_CONFIG="oauth.cfg.$(date +%s%N).bak"
+        echo "Info: oauth.cfg is overwritten by oauth_tool.exe calls, but one already exists. Renaming to ${BACKUP_CONFIG}"
+        mv ./oauth.cfg ./${BACKUP_CONFIG}
+    fi
+
+    grep -E "\[[^]]+]\s+<\s+.+\s+\[OAUTH\]" ${COMPONENT_CFG} | {
+        while read RAW_SECTION LT_SYMBOL RAW_CONFIGPATH OAUTH
+        do
+            echo "Info: Detected line in ${COMPONENT_CFG} for automatic oauth config generation: '${RAW_SECTION} ${LT_SYMBOL} ${RAW_CONFIGPATH} ${OAUTH}'."
+            SECTION=$(prepare_string ${RAW_SECTION})
+            CONFIGPATH=$(prepare_string ${RAW_CONFIGPATH})
+            echo "Info: Will attempt to generate ${CONFIGPATH} from ${SECTION} section of ${OAUTH_TOOL_CFG}, as required by ${COMPONENT_CFG}"
+            generate_missing_oauth_config ${OAUTH_TOOL_PATH} ${OAUTH_TOOL_CFG} ${SECTION} ${CONFIGPATH}
+            if [ $? -ne 0 ]
+            then
+                echo "Failed to generate ${CONFIGPATH} for ${SECTION}"
+                return 1
+            fi
+        done
+    }
+
+    if [[ -v BACKUP_CONFIG ]]
+    then
+        echo "Info: Restoring original oauth.cfg from ${BACKUP_CONFIG}"
+        mv ./${BACKUP_CONFIG} ./oauth.cfg
+        unset BACKUP_CONFIG
+    fi
+
+    return 0
+}

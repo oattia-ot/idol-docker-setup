@@ -1,0 +1,141 @@
+#
+# Copyright 2024-2025 Open Text.
+#
+# The only warranties for products and services of Open Text and its
+# affiliates and licensors ("Open Text") are as may be set forth in the
+# express warranty statements accompanying such products and services.
+# Nothing herein should be construed as constituting an additional
+# warranty. Open Text shall not be liable for technical or editorial
+# errors or omissions contained herein. The information contained herein
+# is subject to change without notice.
+#
+# Except as specifically indicated otherwise, this document contains
+# confidential information and a valid license is required for possession,
+# use or copying. If this work is provided to the U.S. Government,
+# consistent with FAR 12.211 and 12.212, Commercial Computer Software,
+# Computer Software Documentation, and Technical Data for Commercial Items
+# are licensed to the U.S. Government under vendor's standard commercial
+# license.
+#
+
+{{- define "sa.saapi.volumeMounts" }}
+{{- include "idol-library.util.range_array_or_map_values" (dict "root" . "vals" .Values.saapi.additionalVolumeMounts) }}
+{{- if .Values.global.idolOemLicenseSecret }}
+- name: oem-license
+  mountPath: "/data/license-oem/encryptionkey-encrypted.dat"
+  subPath: encryptionkey-encrypted.dat
+  readOnly: true
+{{- end }}
+{{- end }}
+{{- $volumeMountsDict := dict "volumeMounts" (include "sa.saapi.volumeMounts" . | fromYamlArray) }}
+
+{{- define "sa.saapi.volumes" }}
+{{- include "idol-library.util.range_array_or_map_values" (dict "root" . "vals" .Values.saapi.additionalVolumes) }}
+{{- if .Values.global.idolOemLicenseSecret }}
+- name: oem-license
+  secret:
+    secretName: {{ .Values.global.idolOemLicenseSecret }}
+{{- end }}
+{{- end }}
+{{- $volumesDict := dict "volumes" (include "sa.saapi.volumes" . | fromYamlArray) }}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.saapi.name }}
+
+spec:
+  replicas: {{ .Values.saapi.replicas }}
+  selector:
+    matchLabels:
+      component:  {{ .Values.saapi.name }}
+  template:
+    metadata:
+      labels:
+        component: {{ .Values.saapi.name }}
+    spec:
+      containers:
+        - name: {{ .Values.saapi.name }}
+          image: {{ include "idol-library.idolImage" (dict "root" . "idolImage" .Values.saapi.image) }}
+          imagePullPolicy: {{ .Values.saapi.image.pullPolicy }}
+          ports:
+            - containerPort: 8080
+              name: saapi-port
+            - containerPort: 8081
+              name: saapi-mgmt-port
+          envFrom:
+            - secretRef:
+                name: {{ .Values.saapi.secret }}
+            - configMapRef:
+                name: {{ .Values.saapi.config }}
+          {{- if (dig "resources" "enabled" false (.Values.saapi | merge (dict))) }}
+          resources: {{- omit .Values.saapi.resources "enabled" | toYaml | nindent 12 }}
+          {{- end }}
+          startupProbe:
+{{ include "saapi_probe.api" . | indent 12 }}
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 30
+          readinessProbe:
+{{ include "saapi_probe.api" . | indent 12 }}
+            failureThreshold: 2
+          livenessProbe:
+{{ include "saapi_probe.api" . | indent 12 }}
+            periodSeconds: 60
+            failureThreshold: 20
+{{ $volumeMountsDict | toYaml | indent 10 }}
+      imagePullSecrets:
+      {{- range .Values.global.imagePullSecrets }}
+        - name: {{ . }}
+      {{- end }}
+{{ $volumesDict | toYaml | indent 6 }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.saapi.service.name | quote }}
+spec:
+  ports:
+  - port: {{ .Values.saapi.service.port }}
+    targetPort: saapi-port
+    name: saapi-port
+  - port: {{ .Values.saapi.service.managePort }}
+    targetPort: saapi-mgmt-port
+    name: saapi-mgmt-port
+  selector:
+    component: {{ .Values.saapi.name | quote }}
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: saapi-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+
+spec:
+  {{- if .Values.saapi.ingress.className }}
+  ingressClassName: {{ .Values.saapi.ingress.className | quote }}
+  {{- end }}
+  rules:
+    - http:
+        paths:
+          - path: {{ .Values.saapi.ingress.path }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.saapi.service.name }}
+                port:
+                  name: saapi-port
+          - path: {{ .Values.saapi.management.basePath }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.saapi.service.name }}
+                port:
+                  name: saapi-mgmt-port
+{{- if .Values.saapi.ingress.host }}
+      host: {{ .Values.saapi.ingress.host | quote }}
+{{- end }}
