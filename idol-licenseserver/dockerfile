@@ -1,0 +1,6 @@
+FROM ubuntu:22.04
+
+WORKDIR /ssl
+WORKDIR /LicenseServer_26.2.0_LINUX_X86_64
+ENTRYPOINT ["/LicenseServer_26.2.0_LINUX_X86_64/start-licenseserver.sh"]
+ 

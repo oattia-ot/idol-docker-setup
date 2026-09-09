@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Knowledge Discovery Manager Dashboard</title>
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="/static/css/features/dashboard/dashboard.css">
+</head>
+<body>
+
+<!-- ─────────────────────────────────────────
+     Topbar
+───────────────────────────────────────── -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <div class="brand-icon"><i class="fas fa-cogs"></i></div>
+    <h1>Knowledge Discovery <span>Manager</span></h1>
+  </div>
+
+  <div class="topbar-meta">
+    <a
+      class="github-link"
+      href="https://github.com/oattia-ot/idol-docker-setup"
+      target="_blank"
+      rel="noopener noreferrer"
+      title="View source on GitHub"
+    >
+      <i class="fab fa-github"></i>
+      <span>oattia-ot/idol-docker-setup</span>
+    </a>
+    <span class="topbar-date" id="topbarDate"></span>
+    <span class="version-badge">v3.1</span>
+  </div>
+</header>
+
+<!-- ─────────────────────────────────────────
+     Main content
+───────────────────────────────────────── -->
+<main class="page">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-eyebrow">
+      <i class="fas fa-circle" style="font-size:7px;"></i>
+      Centralized Control Interface
+    </div>
+    <h2>Manage Your <span class="accent">Discovery Services</span></h2>
+    <p>Configure, monitor, and operate your IDOL and NiFi services from a single centralized interface.</p>
+  </div>
+
+  <!-- ── Top two cards ── -->
+  <div class="cards-grid">
+
+    <!-- IDOL Setup Configuration -->
+    <div class="service-card card-idol">
+      <div class="card-stripe"></div>
+      <div class="card-head">
+        <div class="card-icon icon-idol"><i class="fas fa-star"></i></div>
+        <div class="card-head-text">
+          <h2>IDOL Setup Configuration</h2>
+          <div class="status-indicator status-online">
+            <span class="dot"></span> Online
+          </div>
+        </div>
+      </div>
+      <p class="card-desc">
+        Configure and manage IDOL services, including content processing,
+        analytics, and search capabilities.
+      </p>
+      <div class="feature-tags">
+        <span class="tag">Content Processing</span>
+        <span class="tag">Analytics</span>
+        <span class="tag">Search</span>
+        <span class="tag">NiFi Deploy</span>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-value">N/A</div>
+          <div class="stat-label">Services</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">N/A</div>
+          <div class="stat-label">Uptime</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">N/A</div>
+          <div class="stat-label">Processed</div>
+        </div>
+      </div>
+      <a class="btn-open btn-idol" href="http://localhost:5000/config-idol">
+        <i class="fas fa-external-link-alt"></i> Open IDOL Setup
+      </a>
+    </div>
+
+    <!-- NiFi APIs Configuration -->
+    <div class="service-card card-nifi">
+      <div class="card-stripe"></div>
+      <div class="card-head">
+        <div class="card-icon icon-nifi"><i class="fas fa-stream"></i></div>
+        <div class="card-head-text">
+          <h2>NiFi APIs Configuration</h2>
+          <div class="status-indicator status-online">
+            <span class="dot"></span> Online
+          </div>
+        </div>
+      </div>
+      <p class="card-desc">
+        Manage data flows, processors, and connections in your Apache NiFi
+        API data integration platform.
+      </p>
+      <div class="feature-tags">
+        <span class="tag">Data Flows</span>
+        <span class="tag">Processors</span>
+        <span class="tag">GitHub Registry</span>
+        <span class="tag">REST API</span>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-value">N/A</div>
+          <div class="stat-label">Flows</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">N/A</div>
+          <div class="stat-label">Uptime</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">N/A</div>
+          <div class="stat-label">Queued</div>
+        </div>
+      </div>
+      <a class="btn-open btn-nifi" href="http://localhost:5000/config-nifi">
+        <i class="fas fa-external-link-alt"></i> Open NiFi Config
+      </a>
+    </div>
+
+  </div><!-- /cards-grid -->
+
+  <!-- ── Monitoring Stack ── -->
+  <div class="monitor-section">
+    <div class="monitor-card">
+
+      <!-- Header -->
+      <div class="monitor-header">
+        <div class="monitor-header-left">
+          <div class="monitor-icon"><i class="fas fa-chart-line"></i></div>
+          <div>
+            <div class="monitor-title">Monitoring Stack</div>
+            <div class="monitor-sub">IDOL infrastructure observability &amp; container management</div>
+          </div>
+        </div>
+        <div class="monitor-header-right">
+          <!-- Summary Stats + Open Button (side by side) -->
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            
+            <!-- Embedded Services Stats from Monitor UI -->
+            <div class="summary-stats" style="display:flex; gap:0.75rem; background:rgba(15,23,42,0.6); border:1px solid #334155; border-radius:9999px; padding:0.35rem 1rem;">
+              <div class="stat" style="display:flex; align-items:center; gap:0.4rem; font-size:0.9rem;">
+                <span class="stat-value" id="stat-total" style="font-weight:700; font-size:1.05rem; color:#e2e8f0;">—</span>
+                <span class="stat-label" style="color:#94a3b8; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.5px;">Total</span>
+              </div>
+              <div class="stat healthy" style="display:flex; align-items:center; gap:0.4rem; font-size:0.9rem;">
+                <span class="stat-value" id="stat-healthy" style="font-weight:700; font-size:1.05rem; color:#16a34a;">—</span>
+                <span class="stat-label" style="color:#94a3b8; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.5px;">Healthy</span>
+              </div>
+              <div class="stat degraded" style="display:flex; align-items:center; gap:0.4rem; font-size:0.9rem;">
+                <span class="stat-value" id="stat-degraded" style="font-weight:700; font-size:1.05rem; color:#ca8a04;">—</span>
+                <span class="stat-label" style="color:#94a3b8; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.5px;">Degraded</span>
+              </div>
+            </div>
+
+            <!-- Open Live Monitor Button (shown only when reachable) -->
+            <a id="btn-open-live-monitor" class="btn-open btn-monitor" href="http://localhost:5011" target="_blank" rel="noopener"
+              style="display: none;">
+              <i class="fas fa-external-link-alt"></i> Open Live Monitor
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Helpful instructions when monitor stack is not running -->
+      <!-- This now appears BELOW the summary stats -->
+      <div id="live-monitor-instructions"
+          style="display: none; margin-top: 0.5rem; padding: 0.75rem 1rem; background: #1e293b; border: 1px solid #334155; border-radius: 8px; font-size: 0.8rem; line-height: 1.4;">
+        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px; color: #f59e0b;">
+          <i class="fas fa-info-circle"></i>
+          <strong>Live Monitor is not running</strong>
+        </div>
+        <div style="color: #94a3b8; margin-bottom: 8px;">
+          To enable the Service Health Dashboard and real-time monitoring, run this command in your terminal:
+        </div>
+        <pre style="background: #0f172a; padding: 8px 10px; border-radius: 6px; font-size: 0.75rem; color: #e2e8f0; margin: 0; white-space: pre-wrap;"><code>cd ./idol-monitoring && ./monitor.sh start all</code></pre>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<!-- ─────────────────────────────────────────
+     Footer
+───────────────────────────────────────── -->
+<footer>
+  <p>
+    Knowledge Discovery Dashboard <span>v3.1</span>
+    &nbsp;·&nbsp;
+    Last updated: December 21st 2025
+    &nbsp;·&nbsp;
+    <a
+      href="https://github.com/oattia-ot/idol-docker-setup"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="color:var(--primary-light);text-decoration:none;"
+    >
+      <i class="fab fa-github" style="margin-right:4px;"></i>oattia-ot/idol-docker-setup
+    </a>
+  </p>
+</footer>
+
+<!-- Toast container -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- Main JS -->
+<script type="module" src="/static/js/features/dashboard/dashboard.page.js"></script>
+
+</body>
+</html>

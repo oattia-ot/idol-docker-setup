@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apache NiFi API Manager</title>
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/static/config-nifi/css/nifi-config.css">
+</head>
+<body>
+
+<!-- ════════════════════ SIDEBAR ════════════════════ -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon"><i class="fas fa-water"></i></div>
+    <h1>Apache NiFi<br>API Manager</h1>
+    <p>GitHub Registry &amp; REST API</p>
+    <div class="sidebar-date" id="currentDate"></div>
+  </div>
+  <div class="nav-section-label">Management</div>
+  <div class="nav-item active"    data-section="config">              <div class="nav-icon"><i class="fas fa-sliders-h"></i></div>Configuration</div>
+  <div class="nav-item"           data-section="repository-flow-files"><div class="nav-icon"><i class="fas fa-code-branch"></i></div>Repository Flows</div>
+  <div class="nav-item"           data-section="param-contexts">      <div class="nav-icon"><i class="fas fa-list-ul"></i></div>Parameter Contexts</div>
+  <div class="nav-item"           data-section="controller-services"> <div class="nav-icon"><i class="fas fa-cogs"></i></div>Controller Services</div>
+  <div class="sidebar-footer">v3.3 &nbsp;·&nbsp; NiFi API Manager<br>Updated April 2026</div>
+</nav>
+
+<!-- ════════════════════ MAIN ════════════════════ -->
+<div class="main">
+
+  <!-- ── TOPBAR ──────────────────────────────────────────────────────────── -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-icon" id="topbarIcon"><i class="fas fa-sliders-h"></i></div>
+      <span class="topbar-title" id="topbarTitle">Configuration</span>
+      <div class="breadcrumb">
+        <span>Home</span>
+        <span class="breadcrumb-sep">/</span>
+        <span>NiFi Manager</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-current" id="breadcrumbCurrent">Configuration</span>
+      </div>
+    </div>
+
+    <div class="topbar-actions">
+      <!-- LocalStorage Config Persistence Controls -->
+      <div class="config-persistence-group">
+        <button type="button"
+                class="btn btn-secondary"
+                onclick="saveConfigToLocalStorage()"
+                title="Save NiFi config fields to browser localStorage">
+          <i class="fas fa-save"></i> Save Config
+        </button>
+        <button type="button"
+                class="btn btn-secondary"
+                onclick="loadConfigFromLocalStorage()"
+                title="Restore saved configuration from localStorage">
+          <i class="fas fa-upload"></i> Load Config
+        </button>
+        <button type="button"
+                class="btn btn-danger"
+                onclick="clearLocalStorageConfig()"
+                title="Clear all saved NiFi configuration from localStorage">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+        <label class="professional-switch" title="Enable automatic saving of config fields on connection test">
+          <input type="checkbox" id="autoSaveToggle" checked onchange="toggleAutoSave()">
+          <span class="professional-slider"></span>
+        </label>
+        <span style="font-size: 12px; color: var(--text-muted);">Auto-save</span>
+        <!-- Back to Home button (rightmost) -->
+        <a class="home-btn" id="homeBtn" href="http://localhost:5000" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 6px;">
+          <i class="fas fa-external-link-alt"></i> Back to Home
+        </a>
+      </div>
+    </div>
+  </div><!-- /topbar -->
+
+  <div class="content">
+
+    <!-- ══════════════ CONFIGURATION ══════════════ -->
+    <div id="config" class="section active">
+
+      <div class="section-header">
+        <div>
+          <h2>Configuration</h2>
+          <p>Configure NiFi API, GitHub repository and access tokens</p>
+        </div>
+        <button class="btn btn-secondary" onclick="testNiFiConnection(); testGitHubConnection();">
+          <i class="fas fa-sync-alt"></i> Refresh Connections
+        </button>
+      </div>
+
+
+      <div class="grid-2">
+
+        <!-- NiFi -->
+        <div class="card connection-card">
+          <div class="card-title">
+            <span><i class="fas fa-plug ct-cyan"></i> NiFi Configuration</span>
+            <div id="nifiApiStatusBadge" class="status-badge" onclick="checkNiFiApiStatus()">
+              <i class="fas fa-circle status-badge__dot"></i> NiFi API Status
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="nifiApiUrl">NiFi API URL</label>
+            <input type="text" id="nifiApiUrl" placeholder="https://localhost:8443/nifi-api">
+          </div>
+          <div class="form-group">
+            <label for="nifiUsername">Username</label>
+            <input type="text" id="nifiUsername">
+          </div>
+          <div class="form-group">
+            <label for="nifiPassword">Password</label>
+            <input type="password" id="nifiPassword">
+          </div>
+
+          <button id="testNiFiBtn"
+                  class="btn btn-primary btn-full"
+                  onclick="testNiFiConnection();"
+                  disabled
+                  title="NiFi API must be reachable first">
+            <i class="fas fa-plug"></i> Test NiFi Connection
+          </button>
+
+          <div class="info-message" id="nifi-info"></div>
+        </div>
+
+        <!-- GitHub -->
+        <div class="card connection-card">
+          <div class="card-title">
+            <i class="fab fa-github ct-blue"></i> GitHub Configuration
+          </div>
+
+          <div class="form-group">
+            <label for="githubApiUrl">GitHub API URL</label>
+            <input type="text" id="githubApiUrl" value="https://api.github.com">
+          </div>
+          <div class="form-group">
+            <label for="githubOwner">Repository Owner</label>
+            <input type="text" id="githubOwner" placeholder="username or organization">
+          </div>
+          <div class="form-group">
+            <label for="githubRepoName">Repository Name</label>
+            <input type="text" id="githubRepoName" placeholder="repo-name">
+          </div>
+          <div class="form-group">
+            <label for="githubToken">Personal Access Token</label>
+            <input type="password" id="githubToken" placeholder="Token with repo permissions">
+          </div>
+          <div class="form-group">
+            <label for="githubBranch">Default Branch</label>
+            <input type="text" id="githubBranch" value="main">
+          </div>
+
+          <button class="btn btn-primary btn-full" onclick="testGitHubConnection()">
+            <i class="fas fa-plug"></i> Test GitHub Connection
+          </button>
+
+          <div class="info-message" id="github-info"></div>
+        </div>
+
+      </div><!-- /grid-2 -->
+
+      <div class="btn-group">
+        <button class="btn btn-secondary" onclick="exportConfigToFile()">
+          <i class="fas fa-download"></i> Export to File
+        </button>
+        <button class="btn btn-secondary" onclick="importConfigFromFile()">
+          <i class="fas fa-upload"></i> Import from File
+        </button>
+        <button class="btn btn-danger" onclick="resetConfig()">
+          <i class="fas fa-redo"></i> Reset Config
+        </button>
+      </div>
+
+      <div id="configTestStatus" class="info-message info-message--spaced"></div>
+
+    </div><!-- /config -->
+
+    <!-- ══════════════ REPOSITORY FLOWS ══════════════ -->
+    <div id="repository-flow-files" class="section">
+      <div class="section-header"><h2>Import Flows</h2><p>Import NiFi flow files from local host folders or GitHub repositories</p></div>
+      <div class="card">
+        <div class="card-title"><i class="fas fa-file-import ct-cyan"></i> Flow Import Explorer</div>
+
+        <div class="form-group">
+          <label for="flowImportSource">Import Source</label>
+          <select id="flowImportSource" onchange="toggleImportSource()">
+            <option value="host" selected>Host Folder Flows (Local Files)</option>
+            <option value="repository">Repository Flows (GitHub)</option>
+          </select>
+        </div>
+
+        <!-- Host folder config -->
+        <div id="hostConfig" class="import-source-config">
+          <div class="alert alert-info" style="margin-bottom: 20px;">
+            <div style="display: flex; align-items: flex-start; gap: 12px;">
+              <i class="fas fa-info-circle" style="font-size: 18px; color: #60a5fa; margin-top: 2px; flex-shrink: 0;"></i>
+              <div style="flex: 1;">
+                <div style="font-weight: 600; font-size: 0.95rem; color: #bae6fd; margin-bottom: 6px;">📂 Host Folder Setup</div>
+                <div style="color: #cbd5e1; margin-bottom: 8px; line-height: 1.5;">
+                  Enter the <strong>absolute path</strong> (from inside the container) to a folder on the host machine that contains NiFi flow files
+                  (<code>.json</code>, <code>.xml</code>, <code>.flow</code>).
+                </div>
+                <div style="color: #bae6fd; font-size: 0.875rem; line-height: 1.5;">
+                  <i class="fas fa-arrows-alt"></i>
+                  Files will be copied from the host folder to
+                  <code id="target-dir-display" style="font-weight: 600;">/setup-scripts</code>
+                  inside the container.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-2" style="grid-template-columns: 1fr 3fr; align-items: start; gap: 20px;">
+            <!-- LEFT: Scan Button + Drag & Drop -->
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <button onclick="loadHostFolderFlows()" class="btn btn-primary" style="width: 100%;">
+                <i class="fas fa-search" style="margin-right: 8px;"></i>Scan Folder
+              </button>
+              <!-- Drag & Drop Zone -->
+              <div id="uploadZoneContainer" style="border: 2px dashed #64748b; border-radius: 10px; padding: 28px 16px; background: rgba(255,255,255,0.03); text-align: center; transition: border-color 0.2s ease;">
+                <i class="fas fa-cloud-upload-alt" style="font-size: 30px; color: #60a5fa; margin-bottom: 10px; display: block;"></i>
+                <p style="margin: 0 0 4px; color: #f1f5f9; font-size: 0.95rem; font-weight: 600;">Drag &amp; drop NiFi flow file</p>
+                <p style="margin: 0 0 14px; color: #94a3b8; font-size: 0.85rem;">or</p>
+                <label for="fileInput" style="cursor: pointer;">
+                  <span style="display: inline-flex; align-items: center; gap: 6px; background: #334155; color: #60a5fa; padding: 9px 20px; border-radius: 9999px; font-weight: 600; font-size: 0.875rem; transition: background 0.2s ease;">
+                    <i class="fas fa-folder-open"></i> Select File
+                  </span>
+                </label>
+                <input type="file" id="fileInput" accept=".json,.xml,.flow,.template" style="display: none;">
+                <p style="margin-top: 16px; font-size: 0.78rem; color: #64748b;">
+                  Supported: <code style="background:#334155; padding:2px 5px; border-radius:4px;">.json</code>
+                  <code style="background:#334155; padding:2px 5px; border-radius:4px;">.xml</code>
+                  <code style="background:#334155; padding:2px 5px; border-radius:4px;">.flow</code>
+                  <code style="background:#334155; padding:2px 5px; border-radius:4px;">.template</code>
+                </p>
+              </div>
+            </div>
+
+            <!-- RIGHT: Host Flow List -->
+            <div style="border: 1px solid #334155; border-radius: 10px; background: rgba(255,255,255,0.02); padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+              <div id="importFilesList" style="min-height: 360px; overflow-y: auto; font-size: 0.875rem; color: #e2e8f0; line-height: 1.5;">
+                <div style="text-align: center; color: #64748b; padding: 80px 20px; display: flex; align-items: center; justify-content: center; flex-direction: column; height: 100%;">
+                  <i class="fas fa-folder-open" style="font-size: 32px; margin-bottom: 14px;"></i>
+                  <p>Click <strong>Scan Folder</strong> to load available NiFi flows</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /hostConfig -->
+
+        <!-- Repository config (GitHub) -->
+        <div id="repositoryConfig" class="import-source-config hidden">
+          <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i>
+            <span>Select a <strong>Bucket</strong> (folder) from your GitHub repository to browse its NiFi flows. You can filter by bucket and flow name.</span>
+          </div>
+
+          <!-- Filter Row -->
+          <div class="filter-row" style="margin-bottom:16px; display: grid; grid-template-columns: 1.6fr 3.4fr; gap: 14px; align-items: end;">
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="githubBucketSelect"><i class="fas fa-folder"></i> Bucket / Folder</label>
+              <select id="githubBucketSelect" onchange="loadRepositoryFlows()" style="width:100%;">
+                <option value="">-- All Buckets / Loading... --</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="githubFlowFilter">Flow Name Contains</label>
+              <input type="text" id="githubFlowFilter" placeholder="Type to filter flows dynamically..." onkeyup="debouncedFilterGitHubFlows()">
+            </div>
+          </div>
+
+          <div id="githubFlowsContainer" class="professional-feature-row" style="margin-top: 8px;">
+            <div class="table-meta">
+              <span class="table-meta-title">
+                <i class="fab fa-github"></i> Flows in Selected Bucket
+              </span>
+              <span id="githubFilesCount" class="table-meta-count">0 files found</span>
+            </div>
+
+            <div id="githubFilesStatus" class="info-message"></div>
+
+            <div id="githubFilesList" style="min-height: 360px; overflow-y: auto; border: 1px solid #334155; border-radius: 10px; background: rgba(255,255,255,0.02); padding: 20px;">
+              <!-- Populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+
+        <div id="importFilesStatus" class="info-message" style="margin-top:12px;"></div>
+      </div>
+    </div><!-- /repository-flow-files -->
+
+    <!-- ══════════════ PARAMETER CONTEXTS ══════════════ -->
+    <div id="param-contexts" class="section">
+      <div class="section-header">
+          <h2>Parameter Contexts</h2>
+          <p>Filter, view, edit and delete NiFi parameter contexts</p>
+      </div>
+
+      <div class="card">
+          <div class="card-title"><i class="fas fa-filter"></i> Search &amp; Filters</div>
+          <div class="filter-row">
+              <div class="form-group">
+                  <label for="paramFilterName">Name Contains</label>
+                  <input type="text" id="paramFilterName" placeholder="Search by name…" onkeyup="debouncedFilterParamContexts()">
+              </div>
+          </div>
+      </div>
+
+      <div class="card">
+          <div class="card-title"><i class="fas fa-list-ul"></i> Parameter Contexts</div>
+          <div class="table-meta">
+              <span class="table-meta-title">Contexts</span>
+              <span class="table-meta-count" id="paramContextCount">0 contexts</span>
+              <button class="btn btn-primary btn-sm" onclick="showCreateParamContext()" style="margin-left:auto;">
+                  <i class="fas fa-plus"></i> Create
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="listParamContexts()">
+                  <i class="fas fa-sync-alt"></i> Refresh
+              </button>
+              <button class="btn btn-danger btn-sm" onclick="clearAllParameterContexts()" style="margin-left:8px;">
+                  <i class="fas fa-trash-alt"></i> Delete All
+              </button>
+          </div>
+          <div class="scroll-box" style="max-height:520px;">
+              <table class="data-table" id="paramContextsTable">
+                  <thead>
+                      <tr>
+                          <th><i class="fas fa-tag"></i> Name</th>
+                          <th><i class="fas fa-id-card"></i> ID</th>
+                          <th><i class="fas fa-code-branch"></i> Parameters</th>
+                          <th style="text-align:center;"><i class="fas fa-cogs"></i> Actions</th>
+                      </tr>
+                  </thead>
+                  <tbody id="paramContextsTableBody"></tbody>
+              </table>
+              <div id="noParamContextsMessage" class="empty-state" style="display:none;">
+                  <i class="fas fa-list-ul"></i>
+                  <h4>No Parameter Contexts Found</h4>
+                  <p>Click "Create" to add a new parameter context.</p>
+              </div>
+          </div>
+      </div>
+    </div><!-- /param-contexts -->
+
+    <!-- ══════════════ CONTROLLER SERVICES ══════════════ -->
+    <div id="controller-services" class="section">
+      <div class="section-header"><h2>Controller Services</h2><p>Search, filter and manage all NiFi controller services</p></div>
+
+      <div class="card">
+        <div class="card-title"><i class="fas fa-filter ct-cyan"></i> Search &amp; Filters</div>
+        <div class="filter-row">
+          <div class="form-group">
+            <label for="filterState">State</label>
+            <select id="filterState" onchange="loadControllerServices(true)">
+              <option value="">All States</option>
+              <option value="ENABLED">Enabled</option>
+              <option value="DISABLED">Disabled</option>
+              <option value="ENABLING">Enabling</option>
+              <option value="DISABLING">Disabling</option>
+            </select>
+          </div>
+          <div class="form-group"><label for="filterName">Name Contains</label><input type="text" id="filterName" placeholder="Search by name…" onkeyup="debouncedLoadServices()"></div>
+          <div class="form-group"><label for="filterType">Type Contains</label><input type="text" id="filterType" placeholder="Search by type…" onkeyup="debouncedLoadServices()"></div>
+          <div class="form-group"><label for="filterLocation">Location Contains</label><input type="text" id="filterLocation" placeholder="Search by location…" onkeyup="debouncedLoadServices()"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="fas fa-cogs ct-blue"></i> Controller Services Management</div>
+        <div class="table-meta">
+          <span class="table-meta-title">Active Services</span>
+          <span class="table-meta-count" id="controllerServiceCount">0 services</span>
+          <button class="btn btn-secondary btn-sm" onclick="clearControllerServiceFilters()" style="margin-left:auto;"><i class="fas fa-times"></i> Clear Filters</button>
+          <button class="btn btn-secondary btn-sm" onclick="loadControllerServices()"><i class="fas fa-sync-alt"></i> Refresh</button>
+        </div>
+        <div class="scroll-box" id="controllerServicesTableContainer" style="max-height:520px;">
+          <table class="data-table" id="controllerServicesTable">
+            <thead>
+              <tr>
+                <th><i class="fas fa-cog"></i> Service Name</th>
+                <th><i class="fas fa-microchip"></i> Type</th>
+                <th><i class="fas fa-map-marker-alt"></i> Location</th>
+                <th><i class="fas fa-info-circle"></i> State</th>
+                <th><i class="fas fa-tasks"></i> Validation</th>
+                <th style="text-align:center;"><i class="fas fa-cogs"></i> Actions</th>
+              </tr>
+            </thead>
+            <tbody id="controllerServicesTableBody"></tbody>
+          </table>
+          <div id="noControllerServicesMessage" class="empty-state">
+            <i class="fas fa-cogs"></i>
+            <h4>No Controller Services Found</h4>
+            <p>Click "Refresh" to load available services.</p>
+            <button class="btn btn-primary" onclick="loadControllerServices()"><i class="fas fa-sync"></i> Refresh Services</button>
+          </div>
+        </div>
+        <div class="btn-group btn-group-right">
+          <button class="btn btn-secondary btn-sm" onclick="exportControllerServices()"><i class="fas fa-download"></i> Export All</button>
+          <button class="btn btn-success btn-sm" onclick="bulkEnableServices()"><i class="fas fa-play"></i> Bulk Enable</button>
+          <button class="btn btn-warning btn-sm" onclick="bulkDisableServices()"><i class="fas fa-stop"></i> Bulk Disable</button>
+        </div>
+      </div>
+    </div><!-- /controller-services -->
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- ══════════════ CREATE PARAMETER CONTEXT MODAL ══════════════ -->
+<div id="createParamContext" class="modal">
+  <div class="modal-content" style="max-width:720px;">
+    <div style="display:flex;justify-content:space-between;margin-bottom:22px;">
+      <h3><i class="fas fa-plus"></i> Create Parameter Context</h3>
+      <button class="btn btn-secondary btn-sm" onclick="closeModal('createParamContext')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="form-group"><label for="paramContextName">Name</label><input type="text" id="paramContextName"></div>
+    <div class="form-group"><label for="paramContextDesc">Description</label><input type="text" id="paramContextDesc"></div>
+    <div class="form-group">
+      <label for="paramContextParams">Parameters (JSON array)</label>
+      <div class="code-box">
+        <div class="code-box-header"><span><i class="fas fa-code"></i> JSON</span></div>
+        <textarea id="paramContextParams" rows="8">[{"parameter":{"name":"param1","value":"value1","description":"desc1","sensitive":false}}]</textarea>
+      </div>
+    </div>
+    <div class="btn-group" style="margin-top:22px;">
+      <button class="btn btn-success"   onclick="createParamContext()"><i class="fas fa-check"></i> Create</button>
+      <button class="btn btn-secondary" onclick="closeModal('createParamContext')"><i class="fas fa-times"></i> Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PARAMETER CONTEXT DETAIL MODAL ══════════════ -->
+<div id="paramContextDetailContainer" class="modal">
+  <div class="modal-content">
+    <div class="card-title" style="margin-bottom:20px;">
+      <i class="fas fa-info-circle ct-cyan"></i>
+      <span id="paramDetailTitle">Parameter Context Details</span>
+      <button class="btn btn-sm btn-secondary" onclick="hideInlineParamDetail()" style="margin-left:auto;"><i class="fas fa-times"></i> Close</button>
+    </div>
+    <div id="paramDetailContent"></div>
+  </div>
+</div>
+
+<!-- ══════════════ GLOBAL CONFIRM MODAL (in-page replacement for window.confirm) ══════════════ -->
+<div id="confirmActionModal" class="modal">
+  <div class="modal-content" style="max-width:460px;">
+    <h3 id="confirmActionTitle" style="margin-bottom:14px;"><i class="fas fa-circle-question"></i> Confirm Action</h3>
+    <p id="confirmActionMessage" style="color:var(--text-secondary);font-size:13px;line-height:1.6;margin-bottom:24px;"></p>
+    <div class="btn-group" style="justify-content:flex-end;">
+      <button id="confirmActionNoBtn" class="btn btn-secondary"><i class="fas fa-times"></i> Cancel</button>
+      <button id="confirmActionYesBtn" class="btn btn-success"><i class="fas fa-check"></i> Yes, continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ BLOCKING PROGRESS OVERLAY (in-page replacement for window.alert during async work) ══════════════ -->
+<div id="blockingProgressOverlay" class="progress-overlay">
+  <div class="progress-box">
+    <div class="progress-spinner"><i class="fas fa-spinner fa-spin"></i></div>
+    <div class="progress-message" id="progressMessage">Working…</div>
+    <div class="progress-steps" id="progressSteps"></div>
+  </div>
+</div>
+
+<!-- ══════════════ TOAST / ALERTS ══════════════ -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastMsg">Done!</span></div>
+<div id="alerts"></div>
+<input type="file" id="configFileInput" style="display:none;">
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- UPDATED: Modular ES Module entry point (required) -->
+<script type="module" src="/static/config-nifi/js/main.js"></script>
+
+</body>
+</html>

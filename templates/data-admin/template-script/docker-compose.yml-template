@@ -1,0 +1,186 @@
+# ==============================
+# === Updated by: Oren Attia
+# ==============================
+
+###
+# Copyright (c) 2019-2020 Micro Focus or one of its affiliates.
+#
+# Licensed under the MIT License (the "License"); you may not use this file
+# except in compliance with the License.
+#
+# The only warranties for products and services of Micro Focus and its affiliates
+# and licensors ("Micro Focus") are as may be set forth in the express warranty
+# statements accompanying such products and services. Nothing herein should be
+# construed as constituting an additional warranty. Micro Focus shall not be
+# liable for technical or editorial errors or omissions contained herein. The
+# information contained herein is subject to change without notice.
+###
+
+# Answerserver container setup
+# Creates an answerbank, factbank and passageextractor
+
+version: "3.8"
+name: ${IDOL_DEPLOYMENT_TYPE:-idol-demo}
+
+x-common-labels: &common-labels
+  docker-compose/instance: ${INSTANCE:-data-admin}
+
+x-common-server: &common-server
+# Change the IP to the address of an external IDOL LicenseServer instance
+  extra_hosts:
+  - idol-licenseserver:${LICENSESERVER_IP}
+  labels:
+    <<: *common-labels
+
+# Change the IP to the address of an external IDOL LicenseServer instance
+x-external-licenseserver-host: &external-licenseserver-host
+  - idol-licenseserver:${LICENSESERVER_IP}
+
+# Change to your http proxy, or remove altogether if you don't have a http proxy
+x-http-proxy: &http-proxy-settings
+  - HTTP_PROXY_HOST=${HTTP_PROXY}
+  - HTTP_PROXY_PORT=DA_HTTPD_REVERSE_PLACEHOLDER
+
+services:
+  idol-answerbank-agentstore:
+    image: ${IDOL_REGISTRY}/answerbank-agentstore:${IDOL_SERVER_VERSION}
+    extra_hosts: *external-licenseserver-host
+    volumes:
+      - PRESERVE-ANSWERBANK-AGENTSTORE-PATH-PLACEHOLDER/content/cfg:/content/cfg:rw     # this mounts an external cfg folder
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER      
+  idol-factbank-postgres:
+    image: postgres:11-alpine
+    environment:
+      - POSTGRES_DB=factbank-data
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ../common-files/factbank-postgres/factbank_unified.schema:/docker-entrypoint-initdb.d/00-schema.sql:ro
+      - ${INITIAL_FACTBANK_DATA}/codings.sql:/docker-entrypoint-initdb.d/codings.sql:ro
+      - ${INITIAL_FACTBANK_DATA}/facts.sql:/docker-entrypoint-initdb.d/facts.sql:ro
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER        
+  idol-passageextractor-content:
+    image: ${IDOL_REGISTRY}/content:${IDOL_SERVER_VERSION}
+    extra_hosts: *external-licenseserver-host
+    volumes:
+      - PRESERVE-PASSAGEEXTRACTOR-CONTENT-PATH-PLACEHOLDER/cfg:/content/cfg:rw     # this mounts an external cfg folder
+      - PRESERVE-PASSAGEEXTRACTOR-CONTENT-PATH-PLACEHOLDER/index:/content/index    # this mounts an external index 
+      - PRESERVE-PASSAGEEXTRACTOR-CONTENT-PATH-PLACEHOLDER/index/main/qssp.db:/content/index/main/qssp.db      # this mounts an external qssp.db database for Hebrew phrase support (if needed) 
+      - PRESERVE-PASSAGEEXTRACTOR-CONTENT-PATH-PLACEHOLDER/langfiles/hebrew.dat:/content/langfiles/hebrew.dat  # this mounts an external hebrew language pack (if needed)       
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER        
+  idol-passageextractor-agentstore:
+    image: ${IDOL_REGISTRY}/passageextractor-agentstore:${IDOL_SERVER_VERSION}
+    extra_hosts: *external-licenseserver-host
+    volumes:
+      # this mounts an external cfg folder
+      - PRESERVE-PASSAGEEXTRACTOR-AGENTSTORE-PATH-PLACEHOLDER/content/cfg:/passageextractor-agentstore/cfg:rw       
+      # FIX: Since this file is baked into the image, the cleanest fix is to override it via your bind mount.
+      - PRESERVE-PASSAGEEXTRACTOR-AGENTSTORE-PATH-PLACEHOLDER/content/poststart_scripts/oren_fix_002_startup_tasks.sh:/passageextractor-agentstore/poststart_scripts/002_startup_tasks.sh 
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER      
+  idol-answerserver:
+    image: ${IDOL_REGISTRY}/answerserver:${IDOL_SERVER_VERSION}
+    environment:
+      - IDOL_LLM_ENDPOINT=${IDOL_LLM_ENDPOINT}
+      - IDOL_LLM_MODEL=${IDOL_LLM_MODEL}      
+    volumes:
+      - PRESERVE-ANSWERSERVER-PATH-PLACEHOLDER/cfg/answerserver.cfg:/answerserver/cfg/answerserver.cfg
+      - PRESERVE-ANSWERSERVER-PATH-PLACEHOLDER/conversation:/answerserver/conversation
+      - PRESERVE-ANSWERSERVER-PATH-PLACEHOLDER/rag:/answerserver/rag
+      - ./answerserver/prestart_scripts/oren_fix_001_startup.sh:/answerserver/prestart_scripts/002_startup_tasks.sh
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER        
+  idol-qms-agentstore:
+    image: ${IDOL_REGISTRY}/qms-agentstore:${IDOL_SERVER_VERSION}
+    extra_hosts: *external-licenseserver-host
+    volumes:
+      # this mounts an external cfg folder 
+      - PRESERVE-QMS-AGENTSTORE-PATH-PLACEHOLDER/content/cfg:/qms-agentstore/cfg:rw    
+      # FIX: Since this file is baked into the image, the cleanest fix is to override it via your bind mount.
+      - PRESERVE-QMS-AGENTSTORE-PATH-PLACEHOLDER/content/poststart_scripts/oren_fix_002_startup_tasks.sh:/qms-agentstore/poststart_scripts/002_startup_tasks.sh 
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER      
+  idol-qms:
+    image: ${IDOL_REGISTRY}/qms:${IDOL_SERVER_VERSION}
+    extra_hosts: *external-licenseserver-host
+    volumes:
+      - PRESERVE-QMS-PATH-PLACEHOLDER/cfg/qms.cfg:/qms/cfg/qms.cfg
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER        
+  idol-dataadmin-statsserver:
+    image: ${IDOL_REGISTRY}/statsserver:${IDOL_SERVER_VERSION}
+    extra_hosts: *external-licenseserver-host
+    volumes:
+      # this mounts an external statsserver.cfg file 
+      - PRESERVE-DATAADMIN-STATSSERVER-PATH-PLACEHOLDER/statsserver/cfg/statsserver.cfg:/statsserver/cfg/statsserver.cfg
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER        
+  idol-dataadmin-viewserver:
+    image: ${IDOL_REGISTRY}/view:${IDOL_SERVER_VERSION}
+    extra_hosts: *external-licenseserver-host
+    environment: *http-proxy-settings
+    volumes:
+      # this mounts an external view.cfg file 
+      - PRESERVE-DATAADMIN-VIEWSERVER-PATH-PLACEHOLDER/view/cfg/view.cfg:/view/cfg/view.cfg:rw
+      #- PRESERVE-DATAADMIN-VIEWSERVER-PATH-PLACEHOLDER/filters/formats_e.ini:/view/filters/formats_e.ini
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER        
+  idol-dataadmin-community:
+    image: ${IDOL_REGISTRY}/community:${IDOL_SERVER_VERSION}
+    environment:
+      # Set the config file and startup script for the Data Admin Community service
+      - IDOL_CONTENT_HOST=idol-passageextractor-content
+      - IDOL_CONTENT_ACI_PORT=${PORT_DATA_ADMIN_PASSAGE_CONTENT:-9103}
+      - IDOL_AGENTSTORE_HOST=idol-qms-agentstore
+      - IDOL_AGENTSTORE_ACI_PORT=${PORT_DATA_ADMIN_QMS_AGENTSTORE:-20050}    
+    volumes:
+      # this mounts an external community.cfg file 
+      - PRESERVE-DATAADMIN-COMMUNITY-PATH-PLACEHOLDER/community/cfg:/community/cfg:rw 
+    depends_on:
+      - idol-passageextractor-content
+      - idol-qms-agentstore  
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER        
+  idol-dataadmin:
+    image: ${IDOL_REGISTRY}/dataadmin:${IDOL_DATA_ADMIN_VERSION}
+    environment:
+      - JAVA_OPTS=-Djavax.net.ssl.trustStore=/ssl/nifi/truststore.jks -Djavax.net.ssl.trustStorePassword=${IDOL_CERT_TRUSTSTORE_PASS} -Djavax.net.ssl.trustStoreType=JKS    
+    volumes:
+      # this mounts an external config.json file [setup Data Admin UI parameters]
+      - PRESERVE-DATAADMIN-PATH-PLACEHOLDER/home/config.json:/opt/dataadmin/home/config.json:rw
+    ports:
+      - DATAADMIN_HTTPS_UI_PLACEHOLDER:8000
+      - DATAADMIN_INTERNAL_UI_PLACEHOLDER:8000
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER       
+  idol-dataadmin-find:
+    image: ${IDOL_REGISTRY}/find:${IDOL_SERVER_VERSION}
+    labels:
+      <<: *common-labels
+    environment:
+      #- IDOL_UI_CFG=config_basic.json # this controls the configuration of Find
+      - IDOL_UI_CFG=config_ssl.json
+      - IDOL_UI_STARTUP_SCRIPT=ui_start_ssl.sh
+      # PKCS12 cert for Find's Tomcat SSL listener
+      - IDOL_UI_SSL_PKCS_FILE=/ssl/certs/idol-dataadmin-find.pkcs12
+      - IDOL_UI_SSL_PKCS_PASS=${IDOL_CERT_KEYSTORE_PASS}
+      # Intermediate CA PKCS12 (imported into Find's truststore)
+      - IDOL_UI_SSL_CA_PKCS12=/ssl/certs/intermediate.pkcs12
+      - IDOL_UI_SSL_CA_PASS=${IDOL_CERT_KEYSTORE_PASS}
+      # Root CA cert (also imported into truststore)
+      - IDOL_UI_ROOT_CERTIFICATE=/ssl/certs/ca.cert.pem      
+    depends_on:
+      - idol-dataadmin-community
+      - idol-dataadmin-viewserver
+    # Volume mount to persist find home data
+    volumes:
+      - FIND-PATH-PLACEHOLDER/data-admin/home:/opt/find/home
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER       
+  
+networks:
+  DEPLOYMENT-TYPE-PLACEHOLDER:
+    external: true        

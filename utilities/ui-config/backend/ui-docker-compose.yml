@@ -1,0 +1,69 @@
+version: '3.8'
+name: idol-config
+
+services:
+  # NiFi Manager Web Application
+  nifi-manager:
+    build:
+      context: ..
+      dockerfile: backend/dockerfile
+    container_name: nifi-manager
+    ports:
+      - "5000:5000"
+    environment:
+      # Set the base path for the project, allowing the container to access necessary files and scripts
+      - IDOL_BASE_PATH=${IDOL_BASE_PATH} 
+      - IDOL_NIFI_FLOWS_DIR=${IDOL_NIFI_FLOWS_DIR}
+      # NiFi Configuration
+      - NIFI_USERNAME=${NIFI_USERNAME:-admin}
+      - NIFI_PASSWORD=${NIFI_PASSWORD:-OpenText2026!}
+      - SSL_VERIFY=${SSL_VERIFY:-false}
+      
+      # GitHub Configuration
+      - GITHUB_REPO_URL=${GITHUB_REPO_URL:-}
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+      - GITHUB_BRANCH=${GITHUB_BRANCH:-main}
+      - GITHUB_FLOW_DIR=${GITHUB_FLOW_DIR:-nifi-flows}
+      
+      # Docker Configuration (for managing NiFi)
+      - NIFI_DOCKER_IMAGE=${NIFI_DOCKER_IMAGE:-apache/nifi:1.25.0}  # Pinned for stability
+      - NIFI_CONTAINER_NAME=${NIFI_CONTAINER_NAME:-nifi}
+      - NIFI_PORT=${NIFI_PORT:-8443}
+      - NIFI_API_URL=${NIFI_API_URL:-https://idol-docker-host:8443/nifi-api}
+
+      # Flask Configuration
+      - FLASK_ENV=${FLASK_ENV:-production}
+      - FLASK_DEBUG=${FLASK_DEBUG:-0}
+
+      # Monitoring Stack (idol-monitor-ui, published on the host at :5011)
+      - MONITOR_UI_URL=${MONITOR_UI_URL:-http://idol-docker-host:5011}
+    extra_hosts:
+      - "idol-docker-host:host-gateway"      
+    volumes:
+      # Mount Docker socket to allow container management
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Persistent data
+      - ./data:/app/data
+      # nifi-flows json folder
+      - ${IDOL_NIFI_FLOWS_DIR}:/nifi-flows:rw
+      # Pre-Setup script folder
+      - ../../../pre-setup.sh:/setup-scripts/pre-setup.sh:rw
+      # Load default-models.json list
+      - ../../../idol-containers-toolkit/data-admin/llm-sandbox/default-models.json:/setup-scripts/default-models.json:ro
+      # Rich Media Downloaded Software folder
+      - ${IDOL_SHARED_FOLDER_PATH}/richmedia-packages:/rich-media-software:ro
+    # Ensure the container has access to necessary system resources for Docker management
+    networks:
+      - shared-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/config"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  shared-network:
+    external: true
+    name: idol-demo-network 

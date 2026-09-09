@@ -1,0 +1,72 @@
+# ==============================
+# === Updated by: Oren Attia
+# ==============================
+
+###
+
+version: "3.8"
+name: ${IDOL_DEPLOYMENT_TYPE:-idol-demo}
+
+services:
+
+  # ── Obsidian ──────────────────────────────────────────────────────────────
+  obsidian:
+    # Build the custom image from the local Dockerfile.
+    # The vault-init script is now baked in — no separate init container needed.
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    image: obsidian-custom:latest   # tag given to the built image
+    container_name: obsidian
+
+    # ── Security ──────────────────────────────────────────────────────────────
+    cap_add:
+      - IPC_LOCK           # Electron shared-memory locking
+    security_opt:
+      - seccomp:unconfined # Chromium renderer syscalls
+
+    # ── Identity & runtime config ──────────────────────────────────────────────
+    # PUID/PGID — run `id $USER` on the host and set these to match.
+    # The baked-in init script reads them and chowns /vault accordingly.
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Jerusalem          # adjust to your timezone
+      - VAULT_PATH=/vault          # must match the volume mount target below
+      # - TITLE=Obsidian           # optional browser-tab title
+
+    # ── Volumes ───────────────────────────────────────────────────────────────
+    volumes:
+      # Obsidian settings, themes, and plugins
+      - obsidian-config:/config
+
+      # Your notes vault.
+      # ▸ Docker-managed (default, zero permission hassle):
+      - obsidian-vault:/vault
+      #
+      # ▸ Host bind-mount (your files stay on disk — just uncomment & adjust):
+      #   - /home/youruser/MyVault:/vault
+
+    # ── Ports ─────────────────────────────────────────────────────────────────
+    ports:
+      - "3000:3000"   # KasmVNC web UI  →  http://localhost:3000
+      - "3001:3001"   # HTTPS variant (optional)
+
+    # ── Resource limits ────────────────────────────────────────────────────────
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+        reservations:
+          memory: 512m
+
+    # Shared memory — prevents Electron GPU process from crashing
+    shm_size: "1gb"
+
+    restart: unless-stopped
+
+# ── Named volumes ──────────────────────────────────────────────────────────────
+volumes:
+  obsidian-config:   # Obsidian application data
+  obsidian-vault:    # Notes vault  (swap for a bind-mount if preferred)
