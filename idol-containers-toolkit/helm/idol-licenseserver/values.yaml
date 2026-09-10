@@ -1,0 +1,19 @@
+# BEGIN COPYRIGHT NOTICE
+# (c) Copyright 2023-2025 Micro Focus or one of its affiliates.
+# END COPYRIGHT NOTICE
+
+# As per https://helm.sh/docs/topics/charts/#the-chart-file-structure
+# this values.yaml file contains the default configuration values for this chart.
+# These default values can be overridden by using the --values or --set flags on the `helm install`
+# command: see https://helm.sh/docs/helm/helm_install/
+
+# One of licenseServerExternalName or licenseServerIp should be used
+# -- External DNS name of a LicenseServer instance
+licenseServerExternalName: "example.licenseserver.host"
+# -- IPv4 address of the LicenseServer instance
+licenseServerIp: 
+
+# -- ACI port of the LicenseServer instance
+licenseServerPort: "20000"
+# -- Name of the Service/EndpointSlice this chart creates
+licenseServerService: idol-licenseserver

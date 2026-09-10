@@ -1,0 +1,34 @@
+{
+  "Minikube_Settings": {
+    "Knowledge_Discovery": {
+      "Profile_Name": "opentext-idol",
+      "Memory": "8192",
+      "CPUs": "4",
+      "Storage": "50GB",
+      "Container_Runtime": "docker",
+      "Network_Policy": "calico",
+      "Insecure_Registry": "myregistry.local:5000",
+      "Kubernetes_Version": "stable"
+    },
+    "Extended_ECM": {
+      "Profile_Name": "opentext-xecm",
+      "Memory": "8192",
+      "CPUs": "4",
+      "Storage": "50GB",
+      "Container_Runtime": "docker",
+      "Network_Policy": "calico",
+      "Insecure_Registry": "myregistry.local:5000",
+      "Kubernetes_Version": "v1.35.0"
+    },    
+    "Default": {
+      "Profile_Name": "minikube",
+      "Memory": "4096",
+      "CPUs": "2",
+      "Storage": "20GB",
+      "Container_Runtime": "docker",
+      "Network_Policy": "bridge",
+      "Insecure_Registry": "",
+      "Kubernetes_Version": "stable"
+    }
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "locale" : "en_US",
+  "allowedOrigins" : [ ],
+  "locking" : {
+    "ttlSeconds" : 300
+  },
+  "uiCustomization" : {
+    "previewWhitelistUrls" : {
+      "^(https?://)?www\\.youtube(-nocookie)?\\.com/embed/.*" : "<iframe class=\"cboxIframe view-server-page\" allow=\"autoplay; encrypted-media\" allowfullscreen src=\"<%-reference%>\">",
+      "^(https?://)?www\\.facebook\\.com/plugins/.*" : "<iframe class=\"cboxIframe view-server-page\" allow=\"autoplay; encrypted-media\" allowfullscreen src=\"<%-reference%>\">",
+      "^(https?://)?video\\.xx\\.fbcdn\\.net/.*" : "<iframe class=\"cboxIframe view-server-page\" allow=\"autoplay; encrypted-media\" allowfullscreen src=\"<%-reference%>\">",
+      "^(https?:\\/\\/)?www.youtube.com\\/watch(.*?)[?&]v=([^&?]+)(.*)" : "<iframe class=\"cboxIframe view-server-page\" allow=\"autoplay; encrypted-media\" allowfullscreen src=\"https://www.youtube-nocookie.com/embed/<%-match[3]%>?<%-match[2]%><%-match[4]%>\">"
+    },
+    "listViewPagingSize" : 6
+  },
+  "view" : {
+    "connector" : {
+      "protocol" : "HTTPS",
+      "host" : "localhost",
+      "port" : 10000,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : null,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : null
+    },
+    "referenceField" : "DREREFERENCE",
+    "viewingMode" : "FIELD",
+    "serviceProtocol" : "HTTPS",
+    "protocol" : "HTTPS",
+    "host" : "idol-dataadmin-viewserver",
+    "port" : 9083
+  },
+  "agentstore" : {
+    "enabled" : true,
+    "distributed" : false,
+    "dah" : {
+      "protocol" : "HTTPS",
+      "host" : "",
+      "port" : 9160,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : null,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : null
+    },
+    "dih" : {
+      "protocol" : "HTTPS",
+      "host" : "",
+      "port" : 9170,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : null,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : null
+    },
+    "standard" : {
+      "protocol" : "HTTPS",
+      "host" : "idol-qms-agentstore",
+      "port" : 20050,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : 20051,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : 20052
+    }
+  },
+  "content" : {
+    "distributed" : false,
+    "standard" : {
+      "protocol" : "HTTPS",
+      "host" : "idol-passageextractor-content",
+      "port" : 9103,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : 9104,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : 9105
+    },
+    "dih" : {
+      "protocol" : "HTTPS",
+      "host" : "localhost",
+      "port" : 9070,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : null,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : null
+    },
+    "dah" : {
+      "protocol" : "HTTPS",
+      "host" : "localhost",
+      "port" : 9060,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : null,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : null
+    }
+  },
+  "referenceField" : "DREREFERENCE",
+  "synonymRootPrefix" : "/DOCUMENT/",
+  "qms" : {
+    "server" : {
+      "protocol" : "HTTPS",
+      "host" : "idol-qms",
+      "port" : 16000,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : 16001,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : 16002
+    },
+    "synonymDatabaseMatch" : true,
+    "blacklist" : "ISO_BLACKLIST",
+    "typeAheadMode" : "Index",
+    "enabled" : true
+  },
+  "statsServer" : {
+    "protocol" : "HTTPS",
+    "host" : "idol-dataadmin-statsserver",
+    "port" : 19870,
+    "productType" : [ "IDOLPROXY", "DAH", "STATS" ],
+    "enabled" : true
+  },
+  "login" : {
+    "name" : "CommunityAuthentication",
+    "defaultLogin" : {
+      "username" : "admin",
+      "password" : "admin"
+    },
+    "community" : {
+      "protocol" : "HTTPS",
+      "host" : "idol-dataadmin-community",
+      "port" : 9033,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : 9034,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : 9035
+    },
+    "method" : "default"
+  },
+  "answerServer" : {
+    "server" : {
+      "protocol" : "HTTPS",
+      "host" : "idol-answerserver",
+      "port" : 12000,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : 12001,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : 12002
+    },
+    "systemNames" : [ ],
+    "enabled" : true,
+    "conversationSystemName" : null,
+    "conceptualMinScore" : 10.0
+  },
+  "searchEngine" : {
+    "searchEngineString" : "http://google.com/search?q=%q",
+    "enabled" : true
+  },
+  "answerBankConceptualMinScore" : 10.0,
+  "combineMethod" : "Simple"
+}

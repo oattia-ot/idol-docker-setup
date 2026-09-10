@@ -1,0 +1,55 @@
+
+[1m[0;34m── Setup ──[0m
+
+[1m[0;34m── Setup ──[0m
+[0;36m[INFO][0m  Script dir     : /home/kduser3/idol-docker-setup/templates/data-admin/template-script/llm-sandbox
+[0;36m[INFO][0m  Script dir     : /home/kduser3/idol-docker-setup/templates/data-admin/template-script/llm-sandbox
+[0;36m[INFO][0m  Model directory: /home/kduser3/llm-models
+[0;36m[INFO][0m  Model directory: /home/kduser3/llm-models
+[0;36m[INFO][0m  Log file       : /home/kduser3/idol-docker-setup/templates/data-admin/template-script/llm-sandbox/logs/update-models-2026-06-25_09-28-58.log
+[0;36m[INFO][0m  Log file       : /home/kduser3/idol-docker-setup/templates/data-admin/template-script/llm-sandbox/logs/update-models-2026-06-25_09-28-58.log
+
+[1m[0;34m── Downloading Models ──[0m
+
+[1m[0;34m── Downloading Models ──[0m
+[1;33m[WARN][0m  Model already exists at: /home/kduser3/llm-models/gemma-4-e4b:latest.gguf (4.7G)
+[1;33m[WARN][0m  Model already exists at: /home/kduser3/llm-models/gemma-4-e4b:latest.gguf (4.7G)
+Choice [1/2]: [0;32m[OK][0m    Using existing model: gemma-4-e4b:latest.gguf (4.7G)
+[0;32m[OK][0m    Using existing model: gemma-4-e4b:latest.gguf (4.7G)
+[1;33m[WARN][0m  Model already exists at: /home/kduser3/llm-models/gemma-4-12b:latest.gguf (6.7G)
+[1;33m[WARN][0m  Model already exists at: /home/kduser3/llm-models/gemma-4-12b:latest.gguf (6.7G)
+Choice [1/2]: [0;32m[OK][0m    Using existing model: gemma-4-12b:latest.gguf (6.7G)
+[0;32m[OK][0m    Using existing model: gemma-4-12b:latest.gguf (6.7G)
+
+[1m[0;34m── Download Summary ──[0m
+
+[1m[0;34m── Download Summary ──[0m
+  Total models  : [1m2[0m
+  Total models  : [1m2[0m
+  Downloaded    : [0;32m[1m0[0m
+  Downloaded    : [0;32m[1m0[0m
+  Skipped       : [1;33m[1m2[0m
+  Skipped       : [1;33m[1m2[0m
+  Failed        : [0;31m[1m0[0m
+  Failed        : [0;31m[1m0[0m
+
+
+
+[1m[0;34m── Setting Main Model for AnswerBank ──[0m
+
+[1m[0;34m── Setting Main Model for AnswerBank ──[0m
+[0;32m[OK][0m    Main model configured from environment variables:
+[0;32m[OK][0m    Main model configured from environment variables:
+[0;36m[INFO][0m    IDOL_LLM_MAIN_MODEL_NAME = gemma-4-e4b:latest
+[0;36m[INFO][0m    IDOL_LLM_MAIN_MODEL_NAME = gemma-4-e4b:latest
+[0;36m[INFO][0m    IDOL_LLM_MAIN_MODEL_PATH = /home/kduser3/llm-models/gemma-4-e4b:latest.gguf
+[0;36m[INFO][0m    IDOL_LLM_MAIN_MODEL_PATH = /home/kduser3/llm-models/gemma-4-e4b:latest.gguf
+[0;32m[OK][0m    Main model configuration saved to: /home/kduser3/idol-docker-setup/templates/data-admin/template-script/llm-sandbox/config/main_model.conf
+[0;32m[OK][0m    Main model configuration saved to: /home/kduser3/idol-docker-setup/templates/data-admin/template-script/llm-sandbox/config/main_model.conf
+[0;36mYou can source this file:[0m source /home/kduser3/idol-docker-setup/templates/data-admin/template-script/llm-sandbox/config/main_model.conf
+
+[1m[0;34m── Done ──[0m
+
+[1m[0;34m── Done ──[0m
+[0;32m[OK][0m    [0;32mAll models processed. Main model for AnswerBank: [0;33mgemma-4-e4b:latest (/home/kduser3/llm-models/gemma-4-e4b:latest.gguf)[0m
+[0;32m[OK][0m    [0;32mAll models processed. Main model for AnswerBank: [0;33mgemma-4-e4b:latest (/home/kduser3/llm-models/gemma-4-e4b:latest.gguf)[0m

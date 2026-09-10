@@ -1,0 +1,66 @@
+# BEGIN COPYRIGHT NOTICE
+# Copyright 2023 Open Text.
+# 
+# The only warranties for products and services of Open Text and its affiliates and licensors
+# ("Open Text") are as may be set forth in the express warranty statements accompanying such
+# products and services. Nothing herein should be construed as constituting an additional warranty.
+# Open Text shall not be liable for technical or editorial errors or omissions contained herein.
+# The information contained herein is subject to change without notice.
+#
+# END COPYRIGHT NOTICE
+{{- define "idolnifi.nifi.service" }}
+{{ $root := get . "root" | required "idolnifi.nifi.service: missing nifiCluster" }}
+{{ $nifiCluster := get . "nifiCluster" | required "idolnifi.nifi.service: missing nifiCluster" }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $nifiCluster.clusterId }}
+  labels: {{- include "idol-library.labels" (dict "root" $root "component" $nifiCluster) | nindent 4 }}
+    app: {{ $nifiCluster.clusterId }}
+  annotations:
+    app.kubernetes.io/name: {{ $nifiCluster.clusterId }}
+    app.kubernetes.io/part-of: {{ $root.Values.name }}
+spec:
+  type: ClusterIP
+  clusterIP: None
+  selector:
+    app: {{ $nifiCluster.clusterId }}
+  ports:
+  - protocol: TCP
+    port: 6342
+    targetPort: 6342
+    name: cluster-lb
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+    name: http
+  - protocol: TCP
+    port: 8443
+    targetPort: 8443
+    name: https
+  - protocol: TCP
+    port: 11443
+    targetPort: 11443
+    name: cluster
+  - protocol: TCP
+    port: 11000
+    targetPort: 11000
+    name: connector-aci
+  - protocol: TCP
+    port: 9092
+    targetPort: 9092
+    name: metrics
+  - protocol: TCP
+    port: 10000
+    targetPort: 10000
+    name: remote-input
+  {{- range $portname,$portcfg := $nifiCluster.service.additionalPorts }}
+  {{- /* allow setting negative port to invalidate a configuration */}}
+  {{- if (gt (int $portcfg.port) 0) }}
+  - {{ merge $portcfg (dict "name" $portname) | toYaml | indent 4 | trim }}
+  {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- include "idolnifi.forEachCluster" (dict "root" . "tpl" "idolnifi.nifi.service") }}

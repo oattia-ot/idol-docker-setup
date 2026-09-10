@@ -1,0 +1,49 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Dockerfile — Custom Obsidian image
+#
+# Extends the official linuxserver image and bakes in:
+#   • A vault-init script written inline (no external files needed).
+#     It runs as root on every container start, before Obsidian launches,
+#     guaranteeing write access to /vault.
+#   • A default VAULT_PATH env var the init script reads at runtime.
+#
+# Build:  docker compose build
+# Run:    docker compose up -d
+# ──────────────────────────────────────────────────────────────────────────────
+
+FROM lscr.io/linuxserver/obsidian:latest
+
+# ── Labels ────────────────────────────────────────────────────────────────────
+LABEL maintainer="you@example.com" \
+      description="Obsidian with automatic vault permission init"
+
+# ── Vault configuration ───────────────────────────────────────────────────────
+# Override at runtime: -e VAULT_PATH=/my/notes
+ENV VAULT_PATH=/vault
+
+# ── Custom init hook (inline — no COPY needed) ────────────────────────────────
+# linuxserver images run every executable placed in /custom-cont-init.d/ as
+# root during the s6-overlay "cont-init" stage, before any user service starts.
+# Writing the script inline via RUN means the build context only needs the
+# Dockerfile itself — no scripts/ folder required.
+RUN mkdir -p /custom-cont-init.d && \
+    printf '%s\n' \
+      '#!/bin/bash' \
+      'set -euo pipefail' \
+      'VAULT_DIR="${VAULT_PATH:-/vault}"' \
+      'OWNER="${PUID:-1000}:${PGID:-1000}"' \
+      'echo "[init-vault] Preparing ${VAULT_DIR} ..."' \
+      'mkdir -p "${VAULT_DIR}"' \
+      'chmod 775 "${VAULT_DIR}"' \
+      'chown -R "${OWNER}" "${VAULT_DIR}"' \
+      'echo "[init-vault] Done — ${VAULT_DIR} owned by ${OWNER}"' \
+    > /custom-cont-init.d/10-init-vault.sh && \
+    chmod +x /custom-cont-init.d/10-init-vault.sh
+
+# ── Vault mount point ─────────────────────────────────────────────────────────
+# Declaring VOLUME here ensures Docker always provides a writable layer at
+# /vault even if the operator omits the -v flag.
+VOLUME ["/vault"]
+
+# Ports documented for clarity; binding is controlled by docker-compose.yml.
+EXPOSE 3000 3001

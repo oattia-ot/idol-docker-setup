@@ -1,0 +1,32 @@
+{{ template "chart.header" . }}
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.badgesSection" . }}
+
+{{- $component := "Content" }}
+{{- $appVersion := .AppVersion }}
+{{- $versionList := slice (splitList "." $appVersion) 0 2 }}
+
+{{- $docsLink := printf "<https://www.microfocus.com/documentation/idol/knowledge-discovery-%s/%s_%s_Documentation/Help/>" 
+    (join "." $versionList ) $component (join "." $versionList) }}
+
+Provides a Knowledge Discovery {{ $component }} statefulset.
+
+Provides `idol-query-service` and `idol-index-service` Service objects, backed by
+a single Knowledge Discovery Content instance. Intended as a much lighter-weight alternative to
+the `distributed-idol` chart, for use in testing charts that expect one or both
+of these endpoints to exist in the cluster.
+
+> Full documentation for {{ $component }} available from {{ $docsLink }}
+
+{{ template "chart.homepageLine" . }}
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.sourcesSection" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}
+
+{{ template "helm-docs.versionFooter" . }}

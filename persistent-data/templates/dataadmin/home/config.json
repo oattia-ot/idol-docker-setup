@@ -1,0 +1,156 @@
+{
+  "locale" : "en_US",
+  "allowedOrigins" : [ ],
+  "locking" : {
+    "ttlSeconds" : 300
+  },
+  "uiCustomization" : {
+    "previewWhitelistUrls" : {
+      "^(https?://)?www\\.youtube(-nocookie)?\\.com/embed/.*" : "<iframe class=\"cboxIframe view-server-page\" allow=\"autoplay; encrypted-media\" allowfullscreen src=\"<%-reference%>\">",
+      "^(https?://)?www\\.facebook\\.com/plugins/.*" : "<iframe class=\"cboxIframe view-server-page\" allow=\"autoplay; encrypted-media\" allowfullscreen src=\"<%-reference%>\">",
+      "^(https?://)?video\\.xx\\.fbcdn\\.net/.*" : "<iframe class=\"cboxIframe view-server-page\" allow=\"autoplay; encrypted-media\" allowfullscreen src=\"<%-reference%>\">",
+      "^(https?:\\/\\/)?www.youtube.com\\/watch(.*?)[?&]v=([^&?]+)(.*)" : "<iframe class=\"cboxIframe view-server-page\" allow=\"autoplay; encrypted-media\" allowfullscreen src=\"https://www.youtube-nocookie.com/embed/<%-match[3]%>?<%-match[2]%><%-match[4]%>\">"
+    },
+    "listViewPagingSize" : 6
+  },
+  "view" : {
+    "connector" : {
+      "protocol" : "HTTPS",
+      "host" : "localhost",
+      "port" : 10000,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : null,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : null
+    },
+    "referenceField" : "DREREFERENCE",
+    "viewingMode" : "FIELD",
+    "serviceProtocol" : "HTTPS",
+    "protocol" : "HTTPS",
+    "host" : "idol-dataadmin-viewserver",
+    "port" : DA_VIEW_ACI_PLACEHOLDER
+  },
+  "agentstore" : {
+    "enabled" : true,
+    "distributed" : false,
+    "dah" : {
+      "protocol" : "HTTPS",
+      "host" : "",
+      "port" : 9160,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : null,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : null
+    },
+    "dih" : {
+      "protocol" : "HTTPS",
+      "host" : "",
+      "port" : 9170,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : null,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : null
+    },
+    "standard" : {
+      "protocol" : "HTTPS",
+      "host" : "idol-qms-agentstore",
+      "port" : DA_QMS_AGENTSTORE_ACI_PLACEHOLDER,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : DA_QMS_AGENTSTORE_IDX_PLACEHOLDER,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : DA_QMS_AGENTSTORE_SRV_PLACEHOLDER
+    }
+  },
+  "content" : {
+    "distributed" : false,
+    "standard" : {
+      "protocol" : "HTTPS",
+      "host" : "idol-passageextractor-content",
+      "port" : DA_PASSAGEEXTRATOR_CONTENT_ACI_PLACEHOLDER,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : DA_PASSAGEEXTRATOR_CONTENT_IDX_PLACEHOLDER,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : DA_PASSAGEEXTRATOR_CONTENT_SRV_PLACEHOLDER
+    },
+    "dih" : {
+      "protocol" : "HTTPS",
+      "host" : "localhost",
+      "port" : 9070,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : null,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : null
+    },
+    "dah" : {
+      "protocol" : "HTTPS",
+      "host" : "localhost",
+      "port" : 9060,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : null,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : null
+    }
+  },
+  "referenceField" : "DREREFERENCE",
+  "synonymRootPrefix" : "/DOCUMENT/",
+  "qms" : {
+    "server" : {
+      "protocol" : "HTTPS",
+      "host" : "idol-qms",
+      "port" : DA_QMS_ACI_PLACEHOLDER,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : DA_QMS_IDX_PLACEHOLDER,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : DA_QMS_SRV_PLACEHOLDER
+    },
+    "synonymDatabaseMatch" : true,
+    "blacklist" : "ISO_BLACKLIST",
+    "typeAheadMode" : "Index",
+    "enabled" : true
+  },
+  "statsServer" : {
+    "protocol" : "HTTPS",
+    "host" : "idol-dataadmin-statsserver",
+    "port" : DA_STATS_SERVER_ACI_PLACEHOLDER,
+    "productType" : [ "IDOLPROXY", "DAH", "STATS" ],
+    "enabled" : true
+  },
+  "login" : {
+    "name" : "CommunityAuthentication",
+    "defaultLogin" : {
+      "username" : "admin",
+      "password" : "admin"
+    },
+    "community" : {
+      "protocol" : "HTTPS",
+      "host" : "idol-dataadmin-community",
+      "port" : DA_COMMUNITY_ACI_PLACEHOLDER,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : DA_COMMUNITY_IDX_PLACEHOLDER,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : DA_COMMUNITY_SRV_PLACEHOLDER
+    },
+    "method" : "default"
+  },
+  "answerServer" : {
+    "server" : {
+      "protocol" : "HTTPS",
+      "host" : "idol-answerserver",
+      "port" : DA_ANSWER_SERVER_ACI_PLACEHOLDER,
+      "indexProtocol" : "HTTPS",
+      "indexPort" : DA_ANSWER_SERVER_IDX_PLACEHOLDER,
+      "serviceProtocol" : "HTTPS",
+      "servicePort" : DA_ANSWER_SERVER_SRV_PLACEHOLDER
+    },
+    "systemNames" : [ ],
+    "enabled" : true,
+    "conversationSystemName" : null,
+    "conceptualMinScore" : 10.0
+  },
+  "searchEngine" : {
+    "searchEngineString" : "http://google.com/search?q=%q",
+    "enabled" : true
+  },
+  "answerBankConceptualMinScore" : 10.0,
+  "combineMethod" : "Simple"
+}
