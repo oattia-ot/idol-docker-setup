@@ -337,8 +337,8 @@ elif [[ "${IDOL_LLM_INTEGRATION:-}" == "TRUE" ]]; then
 
     # Run LLM deployment
     log INFO "Starting LLM deployment via llm-deploy.sh..."
-    ./llm-sandbox/llm-deploy.sh $LLM_DEPLOY_ARGS
-    LLM_EXIT=$?
+    LLM_EXIT=0
+    ./llm-sandbox/llm-deploy.sh $LLM_DEPLOY_ARGS || LLM_EXIT=$?
 
     if (( LLM_EXIT == 0 )); then
         log SUCCESS "LLM deployment completed successfully."
@@ -386,8 +386,8 @@ elif [[ "${IDOL_LLM_WIKI_ENABLED:-}" == "TRUE" ]]; then
     [[ -f "$WIKI_SCRIPT" ]] || die "LLM-Wiki script not found: $WIKI_SCRIPT"
     [[ -x "$WIKI_SCRIPT" ]] || chmod +x "$WIKI_SCRIPT"
 
-    "$WIKI_SCRIPT" $DOCKER_COMPOSE_ARGS
-    WIKI_EXIT=$?
+    "$WIKI_SCRIPT" $DOCKER_COMPOSE_ARGS || WIKI_EXIT=$?
+    WIKI_EXIT="${WIKI_EXIT:-0}"
 
     if (( WIKI_EXIT == 0 )); then
         log SUCCESS "LLM-Wiki deployment completed successfully."
@@ -417,13 +417,13 @@ log STEP "Starting Docker Compose"
 SSL_COMPOSE=""
 [[ "${IDOL_LICENSESERVER_PROTOCOL:-}" == "https" ]] && SSL_COMPOSE="-f docker-compose.ssl.yml"
 
+COMPOSE_EXIT=0
 docker compose --progress=auto \
     -f docker-compose.yml \
     $SSL_COMPOSE \
     -f docker-compose.expose-ports.yml \
-    $DOCKER_COMPOSE_ARGS
+    $DOCKER_COMPOSE_ARGS || COMPOSE_EXIT=$?
 
-COMPOSE_EXIT=$?
 if (( COMPOSE_EXIT != 0 )); then
     die "Docker Compose failed (exit code: $COMPOSE_EXIT)"
 fi
@@ -481,8 +481,11 @@ if $IS_UP; then
     if [[ -f ./wait-dataadmin-for-log.sh ]]; then
         log STEP "Waiting for IDOL Data Admin UI to become ready..."
         chmod +x ./wait-dataadmin-for-log.sh 2>/dev/null || true
-        ./wait-dataadmin-for-log.sh
-        log SUCCESS "Data Admin UI is ready."
+        if ./wait-dataadmin-for-log.sh; then
+            log SUCCESS "Data Admin UI is ready."
+        else
+            log WARN "Wait script failed — continuing with user/role setup anyway."
+        fi
     else
         log WARN "wait-dataadmin-for-log.sh not found — skipping wait."
     fi
@@ -497,21 +500,29 @@ if $IS_UP; then
         log INFO "COMMUNITY_HOST set from IDOL_NET_HOST_IP (or default) → ${COMMUNITY_HOST}"
     fi
 
-    if [[ -n "${PORT_DATA_ADMIN_COMMUNITY:-}" ]]; then
+    if [[ -n "${PORT_DATA_ADMIN_COMMUNITY:-}" ]] && [[ "${PORT_DATA_ADMIN_COMMUNITY}" =~ ^[0-9]+$ ]] \
+       && (( PORT_DATA_ADMIN_COMMUNITY >= 1 && PORT_DATA_ADMIN_COMMUNITY <= 65535 )); then
         export COMMUNITY_PORT="${PORT_DATA_ADMIN_COMMUNITY}"
         log INFO "COMMUNITY_PORT set from PORT_DATA_ADMIN_COMMUNITY → ${COMMUNITY_PORT}"
     else
+        if [[ -n "${PORT_DATA_ADMIN_COMMUNITY:-}" ]]; then
+            log WARN "PORT_DATA_ADMIN_COMMUNITY is set but not a valid port ('${PORT_DATA_ADMIN_COMMUNITY}') — ignoring it"
+        fi
         export COMMUNITY_PORT="${COMMUNITY_PORT:-9033}"
-        log WARN "PORT_DATA_ADMIN_COMMUNITY is unset — using ${COMMUNITY_PORT}"
+        log WARN "Using COMMUNITY_PORT → ${COMMUNITY_PORT}"
     fi
 
     export COMMUNITY_CERT="${COMMUNITY_CERT:-./ssl/intermediate/certs/ca-chain.cert.pem}"
     export COMMUNITY_YES=1
     log INFO "COMMUNITY_CERT=${COMMUNITY_CERT}"
+    log INFO "COMMUNITY_YES=${COMMUNITY_YES}"
 
     SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     USER_ROLE_SCRIPT=""
     for candidate in \
+        "${SCRIPT_DIR}/create-users-roles-da.py" \
+        "./create-users-roles-da.py" \
+        "${SCRIPT_DIR}/../create-users-roles-da.py" \
         "${SCRIPT_DIR}/create-users-roles.py" \
         "./create-users-roles.py" \
         "${SCRIPT_DIR}/../create-users-roles.py"
@@ -523,7 +534,7 @@ if $IS_UP; then
     done
 
     if [[ -z "$USER_ROLE_SCRIPT" ]]; then
-        log ERROR "create-users-roles.py not found next to this deploy script (${SCRIPT_DIR})."
+        log ERROR "create-users-roles-da.py not found next to this deploy script (${SCRIPT_DIR})."
     elif ! command -v python3 >/dev/null; then
         log ERROR "python3 is not installed or not in PATH."
     elif python3 "$USER_ROLE_SCRIPT" -y; then
