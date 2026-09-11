@@ -401,22 +401,29 @@ if [ $COMPOSE_EXIT_CODE -eq 0 ]; then
             echo -e "${BLUE}  →${NC} COMMUNITY_HOST set from IDOL_NET_HOST_IP (or default) → ${GREEN}${COMMUNITY_HOST}${NC}"
         fi
 
-        if [ -n "${PORT_BASIC_IDOL_COMMUNITY:-}" ]; then
+        if [ -n "${PORT_BASIC_IDOL_COMMUNITY:-}" ] && [[ "${PORT_BASIC_IDOL_COMMUNITY}" =~ ^[0-9]+$ ]] \
+           && [ "${PORT_BASIC_IDOL_COMMUNITY}" -ge 1 ] && [ "${PORT_BASIC_IDOL_COMMUNITY}" -le 65535 ]; then
             export COMMUNITY_PORT="${PORT_BASIC_IDOL_COMMUNITY}"
             echo -e "${BLUE}  →${NC} COMMUNITY_PORT set from PORT_BASIC_IDOL_COMMUNITY → ${GREEN}${COMMUNITY_PORT}${NC}"
         else
+            if [ -n "${PORT_BASIC_IDOL_COMMUNITY:-}" ]; then
+                echo -e "${YELLOW}  ⚠${NC} PORT_BASIC_IDOL_COMMUNITY is set but not a valid port ('${PORT_BASIC_IDOL_COMMUNITY}') — ignoring it"
+            fi
             export COMMUNITY_PORT="${COMMUNITY_PORT:-9030}"
-            echo -e "${YELLOW}  ⚠${NC} PORT_BASIC_IDOL_COMMUNITY is unset — using ${GREEN}${COMMUNITY_PORT}${NC}"
+            echo -e "${YELLOW}  ⚠${NC} Using COMMUNITY_PORT → ${GREEN}${COMMUNITY_PORT}${NC}"
         fi
         export COMMUNITY_CERT="${COMMUNITY_CERT:-./ssl/intermediate/certs/ca-chain.cert.pem}"
         export COMMUNITY_YES=1
 
         echo -e "${BLUE}  →${NC} COMMUNITY_CERT=${GREEN}${COMMUNITY_CERT}${NC}"
-        echo -e "${BLUE}  →${NC} COMMUNITY_CERT=${GREEN}${COMMUNITY_CERT}${NC}"
+        echo -e "${BLUE}  →${NC} COMMUNITY_YES=${GREEN}${COMMUNITY_YES}${NC}"
 
         SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
         USER_ROLE_SCRIPT=""
         for candidate in \
+            "${SCRIPT_DIR}/create-users-roles-bi.py" \
+            "./create-users-roles-bi.py" \
+            "${SCRIPT_DIR}/../create-users-roles-bi.py" \
             "${SCRIPT_DIR}/create-users-roles.py" \
             "./create-users-roles.py" \
             "${SCRIPT_DIR}/../create-users-roles.py"
@@ -428,8 +435,8 @@ if [ $COMPOSE_EXIT_CODE -eq 0 ]; then
         done
 
         if [ -z "$USER_ROLE_SCRIPT" ]; then
-            echo -e "${RED}${BOLD}✗${NC} create-users-roles.py not found next to this deploy script."
-            echo -e "${YELLOW}  ⚠${NC} Place create-users-roles.py in: ${CYAN}${SCRIPT_DIR}${NC}"
+            echo -e "${RED}${BOLD}✗${NC} create-users-roles-bi.py not found next to this deploy script."
+            echo -e "${YELLOW}  ⚠${NC} Place create-users-roles-bi.py in: ${CYAN}${SCRIPT_DIR}${NC}"
         elif ! command -v python3 >/dev/null 2>&1; then
             echo -e "${RED}${BOLD}✗${NC} python3 is not installed or not in PATH."
         elif python3 "$USER_ROLE_SCRIPT" -y; then
