@@ -47,8 +47,18 @@ except ImportError:
 # Defaults / candidate cert locations
 # ---------------------------------------------------------------------------
 
-DEFAULT_HOST = "idol-docker-host"
-DEFAULT_PORT = "9033"
+def _valid_port(val: str | None) -> str | None:
+    """Return val if it looks like a real TCP port (1-65535), else None."""
+    if val and val.isdigit() and 1 <= int(val) <= 65535:
+        return val
+    return None
+
+
+# Prefer the IDOL-provided host/port env vars (set by the deploy script) as the
+# built-in default, falling back to the historical hardcoded values if those
+# env vars are unset or, for the port, not a valid number.
+DEFAULT_HOST = os.environ.get("IDOL_HOST_FQDN") or "idol-docker-host"
+DEFAULT_PORT = _valid_port(os.environ.get("PORT_DATA_ADMIN_COMMUNITY")) or "9033"
 DEFAULT_CERT_RELATIVE = (
     "./idol-docker-setup/idol-containers-toolkit/data-admin/ssl/"
     "intermediate/certs/ca-chain.cert.pem"
