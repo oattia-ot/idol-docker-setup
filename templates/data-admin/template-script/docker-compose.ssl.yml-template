@@ -1,0 +1,150 @@
+# ==============================
+# === Updated by: Oren Attia
+# ==============================
+
+###
+# Copyright (c) 2019-2020 Micro Focus or one of its affiliates.
+#
+# Licensed under the MIT License (the "License"); you may not use this file
+# except in compliance with the License.
+#
+# The only warranties for products and services of Micro Focus and its affiliates
+# and licensors ("Micro Focus") are as may be set forth in the express warranty
+# statements accompanying such products and services. Nothing herein should be
+# construed as constituting an additional warranty. Micro Focus shall not be
+# liable for technical or editorial errors or omissions contained herein. The
+# information contained herein is subject to change without notice.
+###
+
+version: "3.8"
+name: ${IDOL_DEPLOYMENT_TYPE:-idol-demo}
+
+# bind mount holding certificates
+x-ssl-volume: &ssl-volume
+  type: bind
+  source: ./ssl/intermediate
+  target: /ssl
+  
+services:
+  ########################
+  ## [DATA-ADMIN] services
+  ########################
+  idol-answerbank-agentstore:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-answerbank-agentstore-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-answerbank-agentstore.key.pem  
+    volumes:
+      - *ssl-volume    
+  idol-factbank-postgres:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-factbank-postgres-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-factbank-postgres.key.pem  
+    volumes:
+      - *ssl-volume   
+  idol-passageextractor-agentstore:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-passageextractor-agentstore-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-passageextractor-agentstore.key.pem  
+    volumes:
+      - *ssl-volume           
+  idol-passageextractor-content:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-passageextractor-content-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-passageextractor-content.key.pem  
+    volumes:
+      - *ssl-volume  
+  idol-answerserver:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-answerserver-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-answerserver.key.pem  
+    volumes:
+      - *ssl-volume  
+  idol-qms-agentstore:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-qms-agentstore-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-qms-agentstore.key.pem  
+    volumes:
+      - *ssl-volume     
+  idol-qms:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-qms-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-qms.key.pem  
+    volumes:
+      - *ssl-volume   
+  idol-dataadmin-statsserver:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-dataadmin-statsserver-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-dataadmin-statsserver.key.pem  
+    volumes:
+      - *ssl-volume    
+  idol-dataadmin-viewserver:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-dataadmin-viewserver-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-dataadmin-viewserver.key.pem  
+    volumes:
+      - *ssl-volume   
+  idol-dataadmin-community:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-dataadmin-community-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-dataadmin-community.key.pem  
+    volumes:
+      - *ssl-volume  
+  idol-dataadmin:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_UI_CFG=config_ssl.json
+      - IDOL_UI_STARTUP_SCRIPT=ui_start_ssl.sh
+      # PKCS12 cert for dataadmin's Tomcat SSL listener
+      - IDOL_UI_SSL_PKCS_FILE=/ssl/certs/idol-dataadmin.pkcs12
+      - IDOL_UI_SSL_PKCS_PASS=${IDOL_CERT_KEYSTORE_PASS}
+      # Intermediate CA PKCS12 (imported into dataadmin's truststore)
+      - IDOL_UI_SSL_CA_PKCS12=/ssl/certs/intermediate.pkcs12
+      - IDOL_UI_SSL_CA_PASS=${IDOL_CERT_KEYSTORE_PASS}
+      # Root CA cert (also imported into truststore)
+      - IDOL_UI_ROOT_CERTIFICATE=/ssl/certs/ca.cert.pem         
+    ports:
+      - DATAADMIN_HTTPS_UI_PLACEHOLDER:8000
+    volumes:
+      - type: bind
+        source: ./ssl/intermediate
+        target: /ssl
+  idol-dataadmin-find:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_UI_CFG=config_ssl.json
+      - IDOL_UI_STARTUP_SCRIPT=ui_start_ssl.sh
+      # PKCS12 cert for Find's Tomcat SSL listener
+      - IDOL_UI_SSL_PKCS_FILE=/ssl/certs/idol-find.pkcs12
+      - IDOL_UI_SSL_PKCS_PASS=${IDOL_CERT_KEYSTORE_PASS}
+      # Intermediate CA PKCS12 (imported into Find's truststore)
+      - IDOL_UI_SSL_CA_PKCS12=/ssl/certs/intermediate.pkcs12
+      - IDOL_UI_SSL_CA_PASS=${IDOL_CERT_KEYSTORE_PASS}
+      # Root CA cert (also imported into truststore)
+      - IDOL_UI_ROOT_CERTIFICATE=/ssl/certs/ca.cert.pem         
+    depends_on:
+      - idol-dataadmin-community
+      - idol-dataadmin-viewserver
+    volumes:
+      - *ssl-volume

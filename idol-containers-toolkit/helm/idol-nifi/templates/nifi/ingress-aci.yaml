@@ -1,0 +1,113 @@
+# BEGIN COPYRIGHT NOTICE
+# Copyright 2023 Open Text.
+# 
+# The only warranties for products and services of Open Text and its affiliates and licensors
+# ("Open Text") are as may be set forth in the express warranty statements accompanying such
+# products and services. Nothing herein should be construed as constituting an additional warranty.
+# Open Text shall not be liable for technical or editorial errors or omissions contained herein.
+# The information contained herein is subject to change without notice.
+#
+# END COPYRIGHT NOTICE
+{{- define "idolnifi.nifi.ingress-aci" }}
+{{ $root := get . "root" | required "idolnifi.nifi.ingress-aci: missing nifiCluster" }}
+{{ $nifiCluster := get . "nifiCluster" | required "idolnifi.nifi.ingress-aci: missing nifiCluster" }}
+{{ $nifiClustersLen := get . "nifiClustersLen" | required "idolniif.nifi.ingress-aci: missing nifiClustersLen" }}
+{{- if $nifiCluster.ingress.enabled -}}
+{{- /*
+ nginx ingress needs path capture to achieve prefix type routing
+*/}}
+{{- $pathSuffix := "" }}
+{{- $pathType := "Prefix" }}
+{{- if eq $root.Values.ingressType "nginx" }}
+{{- $pathSuffix = "(.*)"}}
+{{- $pathType = "ImplementationSpecific" }}
+{{- end }}
+---
+{{- if eq $root.Values.ingressType "gateway" }}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ $nifiCluster.clusterId }}-aci
+  labels: {{- include "idol-library.labels" (dict "root" $root "component" $nifiCluster) | nindent 4 }}
+spec:
+  parentRefs:
+  - name: {{ $nifiCluster.ingress.gateway.name | required "Must specify ingress.gateway.name, having set ingressType=gateway" }}
+  {{- if $nifiCluster.ingress.gateway.namespace }}
+    namespace: {{ $nifiCluster.ingress.gateway.namespace }}
+  {{- end }}
+  hostnames: [{{ $nifiCluster.ingress.host }}]
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value:  {{ print ($nifiClustersLen | plural "" (print "/" $nifiCluster.clusterId)) "/connector-aci/" | quote }}
+    backendRefs:
+    - name: {{ $nifiCluster.clusterId }}
+      port: 11000
+    filters:
+    - type: RequestHeaderModifier
+      requestHeaderModifier:
+        add:
+        - name: X-Forwarded-Prefix
+          value: {{ print ($nifiClustersLen | plural "" (print "/" $nifiCluster.clusterId)) "/connector-aci/" }}
+        - name: X-Forwarded-Proto
+          value: {{ ternary "https" "http" (eq $nifiCluster.ingress.gateway.protocol "https") }}
+        - name: X-Forwarded-Host
+          value: {{ $nifiCluster.ingress.host }}
+        - name: X-Forwarded-Port
+          value: {{ $nifiCluster.ingress.port | quote }}
+    {{- if (or $nifiCluster.ingress.gateway.requestTimeout $nifiCluster.ingress.gateway.backendTimeout) }}
+    timeouts:
+      {{- if $nifiCluster.ingress.gateway.requestTimeout }}
+      request: {{ $nifiCluster.ingress.gateway.requestTimeout }}
+      {{- end -}}
+      {{- if $nifiCluster.ingress.gateway.backendTimeout }}
+      backendRequest: {{ $nifiCluster.ingress.gateway.backendTimeout }}
+      {{- end -}}
+    {{- end -}}
+{{- else }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $nifiCluster.clusterId }}-aci
+  labels: {{- include "idol-library.labels" (dict "root" $root "component" $nifiCluster) | nindent 4 }}
+  annotations:
+{{- if eq $root.Values.ingressType "nginx" }}
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/proxy-body-size: {{ $root.Values.ingressProxyBodySize }}
+{{- else if eq $root.Values.ingressType "haproxy" }}
+    haproxy.router.openshift.io/rewrite-target: / 
+    haproxy.router.openshift.io/proxy-body-size: {{ $root.Values.ingressProxyBodySize }}
+{{- end }}
+spec:
+{{- if $root.Values.ingressClassName }}
+  ingressClassName: {{ $root.Values.ingressClassName }}
+{{- end }}
+{{- if $nifiCluster.ingress.aciTLS.secretName }}
+  tls:
+  - hosts:
+      - {{ $nifiCluster.ingress.host }}
+    secretName: {{ $nifiCluster.ingress.aciTLS.secretName }}
+{{- end }}
+  rules:
+  - http:
+      paths:
+      - path: {{ print ($nifiClustersLen | plural "" (print "/" $nifiCluster.clusterId)) "/connector-aci/" $pathSuffix | quote }}
+        pathType: {{ $pathType }}
+        backend:
+          service:
+            name: {{ $nifiCluster.clusterId }}
+            port:
+              name: connector-aci
+{{- if $nifiCluster.ingress.aciHost }}
+    host: {{ $nifiCluster.ingress.aciHost | quote }}
+{{- end }}
+{{ if $nifiCluster.ingress.aciTLS.secretName -}}
+---
+{{ include "idol-library.ingress.secret" (dict "tls" $nifiCluster.ingress.aciTLS) -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{ include "idolnifi.forEachCluster" (dict "root" . "tpl" "idolnifi.nifi.ingress-aci" ) }}

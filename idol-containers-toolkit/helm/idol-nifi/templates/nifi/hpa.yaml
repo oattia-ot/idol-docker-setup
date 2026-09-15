@@ -1,0 +1,42 @@
+# BEGIN COPYRIGHT NOTICE
+# Copyright 2023 Open Text.
+# 
+# The only warranties for products and services of Open Text and its affiliates and licensors
+# ("Open Text") are as may be set forth in the express warranty statements accompanying such
+# products and services. Nothing herein should be construed as constituting an additional warranty.
+# Open Text shall not be liable for technical or editorial errors or omissions contained herein.
+# The information contained herein is subject to change without notice.
+#
+# END COPYRIGHT NOTICE
+{{- define "idolnifi.nifi.hpa" }}
+{{ $root := get . "root" | required "idolnifi.nifi.hpa: missing nifiCluster" }}
+{{ $nifiCluster := get . "nifiCluster" | required "idolnifi.nifi.hpa: missing nifiCluster" }}
+{{- if $nifiCluster.autoScaling.enabled }}
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ $nifiCluster.clusterId }}
+  labels: {{- include "idol-library.labels" (dict "root" $root "component" $nifiCluster) | nindent 4 }}
+    app.kubernetes.io/name: {{ $nifiCluster.clusterId }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: {{ $nifiCluster.clusterId }}
+  minReplicas: {{ $nifiCluster.autoScaling.minReplicas | int }}
+  maxReplicas: {{ $nifiCluster.autoScaling.maxReplicas | int }}
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: {{ $nifiCluster.autoScaling.stabilizationWindowSeconds | int }}
+    scaleDown:
+      stabilizationWindowSeconds: {{ $nifiCluster.autoScaling.stabilizationWindowSeconds | int }}
+  metrics:
+{{ with $nifiCluster.autoScaling.metrics }}
+{{- toYaml . | trim | indent 4 }}
+{{- end }}
+
+{{- end -}}
+{{- end -}}
+
+{{- include "idolnifi.forEachCluster" (dict "root" . "tpl" "idolnifi.nifi.hpa") }}
