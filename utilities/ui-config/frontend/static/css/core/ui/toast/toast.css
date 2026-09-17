@@ -1,0 +1,43 @@
+/* core/ui/toast/toast.css
+   Shared toast styling. Pages provide their own --bg-card/--border/etc.
+   tokens (see core/styles/tokens.css), so this file has zero hard-coded
+   colors and looks correct on every page's theme. */
+
+.toast-wrap,
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 999;
+}
+
+.toast {
+  background: var(--bg-card, var(--bg3, #141b2e));
+  border: 1px solid var(--border, #1e2d4e);
+  border-left: 3px solid var(--text-muted, #64748b);
+  color: var(--text-primary, var(--text, #e2e8f0));
+  font-family: var(--font-mono, var(--mono, monospace));
+  font-size: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm, 8px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  opacity: 1;
+  animation: toast-in 0.2s ease-out;
+}
+
+.toast-prompt {
+  color: var(--text-muted, #64748b);
+  font-size: 10px;
+}
+
+.toast.success { border-left-color: var(--success, var(--green, #10b981)); }
+.toast.error   { border-left-color: var(--danger, var(--red, #ef4444)); }
+.toast.info    { border-left-color: var(--primary, var(--accent, #3b82f6)); }
+
+@keyframes toast-in {
+  from { transform: translateY(8px); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
+}

@@ -1,0 +1,481 @@
+27/07/2026 08:48:54 [0] 00-Always: Community successfully loaded XSLT library
+27/07/2026 08:48:54 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+27/07/2026 08:48:54 [0] 00-Always: Starting.
+27/07/2026 08:48:54 [0] 00-Always: Host 127.0.0.1.
+27/07/2026 08:48:54 [0] 00-Always: Port 9033.
+27/07/2026 08:48:54 [0] 50-Warning: Setting datastore version number to v3.
+27/07/2026 08:48:54 [0] 30-Normal: Created Default Role: everyone.
+27/07/2026 08:48:54 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+27/07/2026 08:48:54 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+27/07/2026 08:48:54 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+27/07/2026 08:48:54 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+27/07/2026 08:48:54 [0] 00-Always: Licensed for 1000 agents per user.
+27/07/2026 08:48:54 [0] 00-Always: Licensed for unlimited concurrent users.
+27/07/2026 08:48:54 [0] 00-Always: Licensed for Alerting 
+27/07/2026 08:48:54 [0] 00-Always: Licensed for Community 
+27/07/2026 08:48:54 [0] 00-Always: Licensed for 99999999 users.
+27/07/2026 08:48:54 [0] 00-Always: Started.
+27/07/2026 08:48:55 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+27/07/2026 08:48:55 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+29/08/2026 10:54:01 [0] 00-Always: Community successfully loaded XSLT library
+29/08/2026 10:54:01 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+29/08/2026 10:54:01 [0] 00-Always: Starting.
+29/08/2026 10:54:01 [0] 00-Always: Host 127.0.0.1.
+29/08/2026 10:54:01 [0] 00-Always: Port 9033.
+29/08/2026 10:54:01 [0] 50-Warning: Setting datastore version number to v3.
+29/08/2026 10:54:02 [0] 30-Normal: Created Default Role: everyone.
+29/08/2026 10:54:02 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+29/08/2026 10:54:02 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+29/08/2026 10:54:02 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+29/08/2026 10:54:02 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+29/08/2026 10:54:02 [0] 00-Always: Licensed for 1000 agents per user.
+29/08/2026 10:54:02 [0] 00-Always: Licensed for unlimited concurrent users.
+29/08/2026 10:54:02 [0] 00-Always: Licensed for Alerting 
+29/08/2026 10:54:02 [0] 00-Always: Licensed for Community 
+29/08/2026 10:54:02 [0] 00-Always: Licensed for 99999999 users.
+29/08/2026 10:54:02 [0] 00-Always: Started.
+29/08/2026 10:54:02 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+29/08/2026 10:54:02 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+29/08/2026 10:55:07 [0] 00-Always: Warning: Could not connect to the Data DRE to configure database privileges.
+29/08/2026 10:56:12 [0] 00-Always: Warning: Could not connect to the Data DRE to configure database privileges.
+29/08/2026 11:06:27 [0] 00-Always: Community successfully loaded XSLT library
+29/08/2026 11:06:27 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+29/08/2026 11:06:27 [0] 00-Always: Starting.
+29/08/2026 11:06:27 [0] 00-Always: Host 127.0.0.1.
+29/08/2026 11:06:27 [0] 00-Always: Port 9033.
+29/08/2026 11:06:27 [0] 50-Warning: Setting datastore version number to v3.
+29/08/2026 11:06:27 [0] 30-Normal: Created Default Role: everyone.
+29/08/2026 11:06:27 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+29/08/2026 11:06:27 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+29/08/2026 11:06:27 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+29/08/2026 11:06:27 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+29/08/2026 11:06:27 [0] 00-Always: Licensed for 1000 agents per user.
+29/08/2026 11:06:27 [0] 00-Always: Licensed for unlimited concurrent users.
+29/08/2026 11:06:27 [0] 00-Always: Licensed for Alerting 
+29/08/2026 11:06:27 [0] 00-Always: Licensed for Community 
+29/08/2026 11:06:27 [0] 00-Always: Licensed for 99999999 users.
+29/08/2026 11:06:27 [0] 00-Always: Started.
+29/08/2026 11:06:27 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+29/08/2026 11:06:27 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+29/08/2026 11:22:18 [0] 00-Always: Community successfully loaded XSLT library
+29/08/2026 11:22:18 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+29/08/2026 11:22:18 [0] 00-Always: Starting.
+29/08/2026 11:22:18 [0] 00-Always: Host 127.0.0.1.
+29/08/2026 11:22:18 [0] 00-Always: Port 9033.
+29/08/2026 11:22:18 [0] 50-Warning: Setting datastore version number to v3.
+29/08/2026 11:22:19 [0] 30-Normal: Created Default Role: everyone.
+29/08/2026 11:22:19 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+29/08/2026 11:22:19 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+29/08/2026 11:22:19 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+29/08/2026 11:22:19 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+29/08/2026 11:22:19 [0] 00-Always: Licensed for 1000 agents per user.
+29/08/2026 11:22:19 [0] 00-Always: Licensed for unlimited concurrent users.
+29/08/2026 11:22:19 [0] 00-Always: Licensed for Alerting 
+29/08/2026 11:22:19 [0] 00-Always: Licensed for Community 
+29/08/2026 11:22:19 [0] 00-Always: Licensed for 99999999 users.
+29/08/2026 11:22:19 [0] 00-Always: Started.
+29/08/2026 11:22:19 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+29/08/2026 11:22:19 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+29/08/2026 11:27:25 [0] 00-Always: Community successfully loaded XSLT library
+29/08/2026 11:27:25 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+29/08/2026 11:27:25 [0] 00-Always: Starting.
+29/08/2026 11:27:25 [0] 00-Always: Host 127.0.0.1.
+29/08/2026 11:27:25 [0] 00-Always: Port 9033.
+29/08/2026 11:27:25 [0] 50-Warning: Setting datastore version number to v3.
+29/08/2026 11:27:25 [0] 30-Normal: Created Default Role: everyone.
+29/08/2026 11:27:25 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+29/08/2026 11:27:25 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+29/08/2026 11:27:25 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+29/08/2026 11:27:26 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+29/08/2026 11:27:26 [0] 00-Always: Licensed for 1000 agents per user.
+29/08/2026 11:27:26 [0] 00-Always: Licensed for unlimited concurrent users.
+29/08/2026 11:27:26 [0] 00-Always: Licensed for Alerting 
+29/08/2026 11:27:26 [0] 00-Always: Licensed for Community 
+29/08/2026 11:27:26 [0] 00-Always: Licensed for 99999999 users.
+29/08/2026 11:27:26 [0] 00-Always: Started.
+29/08/2026 11:27:26 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+29/08/2026 11:27:26 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+29/08/2026 11:32:28 [0] 00-Always: Community successfully loaded XSLT library
+29/08/2026 11:32:28 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+29/08/2026 11:32:28 [0] 00-Always: Starting.
+29/08/2026 11:32:28 [0] 00-Always: Host 127.0.0.1.
+29/08/2026 11:32:28 [0] 00-Always: Port 9033.
+29/08/2026 11:32:29 [0] 50-Warning: Setting datastore version number to v3.
+29/08/2026 11:32:29 [0] 30-Normal: Created Default Role: everyone.
+29/08/2026 11:32:29 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+29/08/2026 11:32:29 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+29/08/2026 11:32:29 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+29/08/2026 11:32:29 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+29/08/2026 11:32:29 [0] 00-Always: Licensed for 1000 agents per user.
+29/08/2026 11:32:29 [0] 00-Always: Licensed for unlimited concurrent users.
+29/08/2026 11:32:29 [0] 00-Always: Licensed for Alerting 
+29/08/2026 11:32:29 [0] 00-Always: Licensed for Community 
+29/08/2026 11:32:29 [0] 00-Always: Licensed for 99999999 users.
+29/08/2026 11:32:29 [0] 00-Always: Started.
+29/08/2026 11:32:29 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+29/08/2026 11:32:29 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+29/08/2026 15:50:21 [0] 00-Always: Community successfully loaded XSLT library
+29/08/2026 15:50:21 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+29/08/2026 15:50:21 [0] 00-Always: Starting.
+29/08/2026 15:50:21 [0] 00-Always: Host 127.0.0.1.
+29/08/2026 15:50:21 [0] 00-Always: Port 9033.
+29/08/2026 15:50:21 [0] 50-Warning: Setting datastore version number to v3.
+29/08/2026 15:50:22 [0] 30-Normal: Created Default Role: everyone.
+29/08/2026 15:50:22 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+29/08/2026 15:50:22 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+29/08/2026 15:50:22 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+29/08/2026 15:50:22 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+29/08/2026 15:50:22 [0] 00-Always: Licensed for 1000 agents per user.
+29/08/2026 15:50:22 [0] 00-Always: Licensed for unlimited concurrent users.
+29/08/2026 15:50:22 [0] 00-Always: Licensed for Alerting 
+29/08/2026 15:50:22 [0] 00-Always: Licensed for Community 
+29/08/2026 15:50:22 [0] 00-Always: Licensed for 99999999 users.
+29/08/2026 15:50:22 [0] 00-Always: Started.
+29/08/2026 15:50:22 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+29/08/2026 15:50:22 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+29/08/2026 15:57:27 [0] 00-Always: Warning: Could not connect to the Data DRE to configure database privileges.
+29/08/2026 16:21:59 [0] 00-Always: Community successfully loaded XSLT library
+29/08/2026 16:21:59 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+29/08/2026 16:21:59 [0] 00-Always: Starting.
+29/08/2026 16:21:59 [0] 00-Always: Host 127.0.0.1.
+29/08/2026 16:21:59 [0] 00-Always: Port 9033.
+29/08/2026 16:21:59 [0] 50-Warning: Setting datastore version number to v3.
+29/08/2026 16:21:59 [0] 30-Normal: Created Default Role: everyone.
+29/08/2026 16:21:59 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+29/08/2026 16:21:59 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+29/08/2026 16:21:59 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+29/08/2026 16:21:59 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+29/08/2026 16:21:59 [0] 00-Always: Licensed for 1000 agents per user.
+29/08/2026 16:21:59 [0] 00-Always: Licensed for unlimited concurrent users.
+29/08/2026 16:21:59 [0] 00-Always: Licensed for Alerting 
+29/08/2026 16:21:59 [0] 00-Always: Licensed for Community 
+29/08/2026 16:21:59 [0] 00-Always: Licensed for 99999999 users.
+29/08/2026 16:21:59 [0] 00-Always: Started.
+29/08/2026 16:21:59 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+29/08/2026 16:21:59 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+29/08/2026 17:10:51 [0] 00-Always: Warning: Could not connect to the Data DRE to configure database privileges.
+30/08/2026 07:43:37 [0] 00-Always: Community successfully loaded XSLT library
+30/08/2026 07:43:37 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+30/08/2026 07:43:37 [0] 00-Always: Starting.
+30/08/2026 07:43:37 [0] 00-Always: Host 127.0.0.1.
+30/08/2026 07:43:37 [0] 00-Always: Port 9033.
+30/08/2026 07:43:37 [0] 50-Warning: Setting datastore version number to v3.
+30/08/2026 07:43:37 [0] 30-Normal: Created Default Role: everyone.
+30/08/2026 07:43:37 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+30/08/2026 07:43:37 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+30/08/2026 07:43:37 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+30/08/2026 07:43:38 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+30/08/2026 07:43:39 [0] 00-Always: Licensed for 1000 agents per user.
+30/08/2026 07:43:39 [0] 00-Always: Licensed for unlimited concurrent users.
+30/08/2026 07:43:39 [0] 00-Always: Licensed for Alerting 
+30/08/2026 07:43:39 [0] 00-Always: Licensed for Community 
+30/08/2026 07:43:39 [0] 00-Always: Licensed for 99999999 users.
+30/08/2026 07:43:39 [0] 00-Always: Started.
+30/08/2026 07:43:39 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+30/08/2026 07:43:39 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+30/08/2026 08:18:16 [0] 00-Always: Community successfully loaded XSLT library
+30/08/2026 08:18:16 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+30/08/2026 08:18:16 [0] 00-Always: Starting.
+30/08/2026 08:18:16 [0] 00-Always: Host 127.0.0.1.
+30/08/2026 08:18:16 [0] 00-Always: Port 9033.
+30/08/2026 08:18:16 [0] 50-Warning: Setting datastore version number to v3.
+30/08/2026 08:18:17 [0] 30-Normal: Created Default Role: everyone.
+30/08/2026 08:18:17 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+30/08/2026 08:18:17 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+30/08/2026 08:18:17 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+30/08/2026 08:18:18 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+30/08/2026 08:18:18 [0] 00-Always: Licensed for 1000 agents per user.
+30/08/2026 08:18:18 [0] 00-Always: Licensed for unlimited concurrent users.
+30/08/2026 08:18:18 [0] 00-Always: Licensed for Alerting 
+30/08/2026 08:18:18 [0] 00-Always: Licensed for Community 
+30/08/2026 08:18:18 [0] 00-Always: Licensed for 99999999 users.
+30/08/2026 08:18:18 [0] 00-Always: Started.
+30/08/2026 08:18:18 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+30/08/2026 08:18:18 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+30/08/2026 09:02:51 [0] 00-Always: Community successfully loaded XSLT library
+30/08/2026 09:02:51 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+30/08/2026 09:02:51 [0] 00-Always: Starting.
+30/08/2026 09:02:51 [0] 00-Always: Host 127.0.0.1.
+30/08/2026 09:02:51 [0] 00-Always: Port 9033.
+30/08/2026 09:02:51 [0] 50-Warning: Setting datastore version number to v3.
+30/08/2026 09:02:51 [0] 30-Normal: Created Default Role: everyone.
+30/08/2026 09:02:51 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+30/08/2026 09:02:51 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+30/08/2026 09:02:51 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+30/08/2026 09:02:52 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+30/08/2026 09:02:52 [0] 00-Always: Licensed for 1000 agents per user.
+30/08/2026 09:02:52 [0] 00-Always: Licensed for unlimited concurrent users.
+30/08/2026 09:02:52 [0] 00-Always: Licensed for Alerting 
+30/08/2026 09:02:52 [0] 00-Always: Licensed for Community 
+30/08/2026 09:02:52 [0] 00-Always: Licensed for 99999999 users.
+30/08/2026 09:02:52 [0] 00-Always: Started.
+30/08/2026 09:02:52 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+30/08/2026 09:02:52 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+30/08/2026 10:17:59 [0] 00-Always: Community successfully loaded XSLT library
+30/08/2026 10:17:59 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+30/08/2026 10:17:59 [0] 00-Always: Starting.
+30/08/2026 10:17:59 [0] 00-Always: Host 127.0.0.1.
+30/08/2026 10:17:59 [0] 00-Always: Port 9033.
+30/08/2026 10:17:59 [0] 50-Warning: Setting datastore version number to v3.
+30/08/2026 10:18:00 [0] 30-Normal: Created Default Role: everyone.
+30/08/2026 10:18:00 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+30/08/2026 10:18:00 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+30/08/2026 10:18:00 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+30/08/2026 10:18:01 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+30/08/2026 10:18:01 [0] 00-Always: Licensed for 1000 agents per user.
+30/08/2026 10:18:01 [0] 00-Always: Licensed for unlimited concurrent users.
+30/08/2026 10:18:01 [0] 00-Always: Licensed for Alerting 
+30/08/2026 10:18:01 [0] 00-Always: Licensed for Community 
+30/08/2026 10:18:01 [0] 00-Always: Licensed for 99999999 users.
+30/08/2026 10:18:01 [0] 00-Always: Started.
+30/08/2026 10:18:01 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+30/08/2026 10:18:01 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+30/08/2026 10:36:05 [0] 00-Always: Community successfully loaded XSLT library
+30/08/2026 10:36:05 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+30/08/2026 10:36:05 [0] 00-Always: Starting.
+30/08/2026 10:36:05 [0] 00-Always: Host 127.0.0.1.
+30/08/2026 10:36:05 [0] 00-Always: Port 9033.
+30/08/2026 10:36:05 [0] 50-Warning: Setting datastore version number to v3.
+30/08/2026 10:36:06 [0] 30-Normal: Created Default Role: everyone.
+30/08/2026 10:36:06 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+30/08/2026 10:36:06 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+30/08/2026 10:36:06 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+30/08/2026 10:36:06 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+30/08/2026 10:36:06 [0] 00-Always: Licensed for 1000 agents per user.
+30/08/2026 10:36:06 [0] 00-Always: Licensed for unlimited concurrent users.
+30/08/2026 10:36:06 [0] 00-Always: Licensed for Alerting 
+30/08/2026 10:36:06 [0] 00-Always: Licensed for Community 
+30/08/2026 10:36:06 [0] 00-Always: Licensed for 99999999 users.
+30/08/2026 10:36:06 [0] 00-Always: Started.
+30/08/2026 10:36:06 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+30/08/2026 10:36:06 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+30/08/2026 12:11:32 [0] 00-Always: Community successfully loaded XSLT library
+30/08/2026 12:11:32 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+30/08/2026 12:11:32 [0] 00-Always: Starting.
+30/08/2026 12:11:32 [0] 00-Always: Host 127.0.0.1.
+30/08/2026 12:11:32 [0] 00-Always: Port 9033.
+30/08/2026 12:11:32 [0] 50-Warning: Setting datastore version number to v3.
+30/08/2026 12:11:33 [0] 30-Normal: Created Default Role: everyone.
+30/08/2026 12:11:33 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+30/08/2026 12:11:33 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+30/08/2026 12:11:33 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+30/08/2026 12:11:34 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+30/08/2026 12:11:34 [0] 00-Always: Licensed for 1000 agents per user.
+30/08/2026 12:11:34 [0] 00-Always: Licensed for unlimited concurrent users.
+30/08/2026 12:11:34 [0] 00-Always: Licensed for Alerting 
+30/08/2026 12:11:34 [0] 00-Always: Licensed for Community 
+30/08/2026 12:11:34 [0] 00-Always: Licensed for 99999999 users.
+30/08/2026 12:11:34 [0] 00-Always: Started.
+30/08/2026 12:11:34 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+30/08/2026 12:11:34 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+30/08/2026 14:15:03 [0] 00-Always: Community successfully loaded XSLT library
+30/08/2026 14:15:03 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+30/08/2026 14:15:03 [0] 00-Always: Starting.
+30/08/2026 14:15:03 [0] 00-Always: Host 127.0.0.1.
+30/08/2026 14:15:03 [0] 00-Always: Port 9033.
+30/08/2026 14:15:03 [0] 50-Warning: Setting datastore version number to v3.
+30/08/2026 14:15:04 [0] 30-Normal: Created Default Role: everyone.
+30/08/2026 14:15:04 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+30/08/2026 14:15:04 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+30/08/2026 14:15:04 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+30/08/2026 14:15:04 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+30/08/2026 14:15:04 [0] 00-Always: Licensed for 1000 agents per user.
+30/08/2026 14:15:04 [0] 00-Always: Licensed for unlimited concurrent users.
+30/08/2026 14:15:04 [0] 00-Always: Licensed for Alerting 
+30/08/2026 14:15:04 [0] 00-Always: Licensed for Community 
+30/08/2026 14:15:04 [0] 00-Always: Licensed for 99999999 users.
+30/08/2026 14:15:04 [0] 00-Always: Started.
+30/08/2026 14:15:04 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+30/08/2026 14:15:04 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+30/08/2026 20:01:51 [0] 00-Always: Community successfully loaded XSLT library
+30/08/2026 20:01:51 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+30/08/2026 20:01:51 [0] 00-Always: Starting.
+30/08/2026 20:01:51 [0] 00-Always: Host 127.0.0.1.
+30/08/2026 20:01:51 [0] 00-Always: Port 9033.
+30/08/2026 20:01:51 [0] 50-Warning: Setting datastore version number to v3.
+30/08/2026 20:01:52 [0] 30-Normal: Created Default Role: everyone.
+30/08/2026 20:01:52 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+30/08/2026 20:01:52 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+30/08/2026 20:01:52 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+30/08/2026 20:01:52 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+30/08/2026 20:01:52 [0] 00-Always: Licensed for 1000 agents per user.
+30/08/2026 20:01:52 [0] 00-Always: Licensed for unlimited concurrent users.
+30/08/2026 20:01:52 [0] 00-Always: Licensed for Alerting 
+30/08/2026 20:01:52 [0] 00-Always: Licensed for Community 
+30/08/2026 20:01:52 [0] 00-Always: Licensed for 99999999 users.
+30/08/2026 20:01:52 [0] 00-Always: Started.
+30/08/2026 20:01:52 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+30/08/2026 20:01:52 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+09/09/2026 17:37:02 [0] 00-Always: Community successfully loaded XSLT library
+09/09/2026 17:37:02 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+09/09/2026 17:37:02 [0] 00-Always: Starting.
+09/09/2026 17:37:02 [0] 00-Always: Host 127.0.0.1.
+09/09/2026 17:37:02 [0] 00-Always: Port 9033.
+09/09/2026 17:37:02 [0] 50-Warning: Setting datastore version number to v3.
+09/09/2026 17:37:03 [0] 30-Normal: Created Default Role: everyone.
+09/09/2026 17:37:03 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+09/09/2026 17:37:03 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+09/09/2026 17:37:03 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+09/09/2026 17:37:03 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+09/09/2026 17:37:03 [0] 00-Always: Licensed for 1000 agents per user.
+09/09/2026 17:37:03 [0] 00-Always: Licensed for unlimited concurrent users.
+09/09/2026 17:37:03 [0] 00-Always: Licensed for Alerting 
+09/09/2026 17:37:03 [0] 00-Always: Licensed for Community 
+09/09/2026 17:37:03 [0] 00-Always: Licensed for 99999999 users.
+09/09/2026 17:37:03 [0] 00-Always: Started.
+09/09/2026 17:37:03 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+09/09/2026 17:37:03 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+10/09/2026 06:00:06 [0] 00-Always: Community successfully loaded XSLT library
+10/09/2026 06:00:06 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+10/09/2026 06:00:06 [0] 00-Always: Starting.
+10/09/2026 06:00:06 [0] 00-Always: Host 127.0.0.1.
+10/09/2026 06:00:06 [0] 00-Always: Port 9033.
+10/09/2026 06:00:06 [0] 50-Warning: Setting datastore version number to v3.
+10/09/2026 06:00:07 [0] 30-Normal: Created Default Role: everyone.
+10/09/2026 06:00:07 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+10/09/2026 06:00:07 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+10/09/2026 06:00:07 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+10/09/2026 06:00:08 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+10/09/2026 06:00:08 [0] 00-Always: Licensed for 1000 agents per user.
+10/09/2026 06:00:08 [0] 00-Always: Licensed for unlimited concurrent users.
+10/09/2026 06:00:08 [0] 00-Always: Licensed for Alerting 
+10/09/2026 06:00:08 [0] 00-Always: Licensed for Community 
+10/09/2026 06:00:08 [0] 00-Always: Licensed for 99999999 users.
+10/09/2026 06:00:08 [0] 00-Always: Started.
+10/09/2026 06:00:08 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+10/09/2026 06:00:08 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+11/09/2026 22:58:31 [0] 00-Always: Community successfully loaded XSLT library
+11/09/2026 22:58:31 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+11/09/2026 22:58:31 [0] 00-Always: Starting.
+11/09/2026 22:58:31 [0] 00-Always: Host 127.0.0.1.
+11/09/2026 22:58:31 [0] 00-Always: Port 9033.
+11/09/2026 22:58:31 [0] 50-Warning: Setting datastore version number to v3.
+11/09/2026 22:58:32 [0] 30-Normal: Created Default Role: everyone.
+11/09/2026 22:58:32 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+11/09/2026 22:58:32 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+11/09/2026 22:58:32 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+11/09/2026 22:58:32 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+11/09/2026 22:58:32 [0] 00-Always: Licensed for 1000 agents per user.
+11/09/2026 22:58:32 [0] 00-Always: Licensed for unlimited concurrent users.
+11/09/2026 22:58:32 [0] 00-Always: Licensed for Alerting 
+11/09/2026 22:58:32 [0] 00-Always: Licensed for Community 
+11/09/2026 22:58:32 [0] 00-Always: Licensed for 99999999 users.
+11/09/2026 22:58:32 [0] 00-Always: Started.
+11/09/2026 22:58:32 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+11/09/2026 22:58:32 [3] 30-Normal: Indexer successfully established connection with Agent DRE.
+11/09/2026 23:20:52 [0] 00-Always: Community successfully loaded XSLT library
+11/09/2026 23:20:52 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+11/09/2026 23:20:52 [0] 00-Always: Starting.
+11/09/2026 23:20:52 [0] 00-Always: Host 127.0.0.1.
+11/09/2026 23:20:52 [0] 00-Always: Port 9033.
+11/09/2026 23:20:52 [0] 50-Warning: Setting datastore version number to v3.
+11/09/2026 23:20:53 [0] 30-Normal: Created Default Role: everyone.
+11/09/2026 23:20:53 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+11/09/2026 23:20:53 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+11/09/2026 23:20:53 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+11/09/2026 23:20:53 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+11/09/2026 23:20:53 [0] 00-Always: Licensed for 1000 agents per user.
+11/09/2026 23:20:53 [0] 00-Always: Licensed for unlimited concurrent users.
+11/09/2026 23:20:53 [0] 00-Always: Licensed for Alerting 
+11/09/2026 23:20:53 [0] 00-Always: Licensed for Community 
+11/09/2026 23:20:53 [0] 00-Always: Licensed for 99999999 users.
+11/09/2026 23:20:53 [0] 00-Always: Started.
+11/09/2026 23:20:53 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+11/09/2026 23:20:53 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+12/09/2026 01:12:06 [0] 00-Always: Warning: Could not connect to the Data DRE to configure database privileges.
+12/09/2026 15:08:06 [0] 00-Always: Community successfully loaded XSLT library
+12/09/2026 15:08:06 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+12/09/2026 15:08:06 [0] 00-Always: Starting.
+12/09/2026 15:08:06 [0] 00-Always: Host 127.0.0.1.
+12/09/2026 15:08:06 [0] 00-Always: Port 9033.
+12/09/2026 15:08:06 [0] 50-Warning: Setting datastore version number to v3.
+12/09/2026 15:08:07 [0] 30-Normal: Created Default Role: everyone.
+12/09/2026 15:08:07 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+12/09/2026 15:08:07 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+12/09/2026 15:08:07 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+12/09/2026 15:08:07 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+12/09/2026 15:08:07 [0] 00-Always: Licensed for 1000 agents per user.
+12/09/2026 15:08:07 [0] 00-Always: Licensed for unlimited concurrent users.
+12/09/2026 15:08:07 [0] 00-Always: Licensed for Alerting 
+12/09/2026 15:08:07 [0] 00-Always: Licensed for Community 
+12/09/2026 15:08:07 [0] 00-Always: Licensed for 99999999 users.
+12/09/2026 15:08:07 [0] 00-Always: Started.
+12/09/2026 15:08:07 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+12/09/2026 15:08:07 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+15/09/2026 08:50:33 [0] 00-Always: Community successfully loaded XSLT library
+15/09/2026 08:50:33 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+15/09/2026 08:50:33 [0] 00-Always: Starting.
+15/09/2026 08:50:33 [0] 00-Always: Host 127.0.0.1.
+15/09/2026 08:50:33 [0] 00-Always: Port 9033.
+15/09/2026 08:50:33 [0] 50-Warning: Setting datastore version number to v3.
+15/09/2026 08:50:35 [0] 30-Normal: Created Default Role: everyone.
+15/09/2026 08:50:35 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+15/09/2026 08:50:35 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+15/09/2026 08:50:35 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+15/09/2026 08:50:35 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+15/09/2026 08:50:35 [0] 00-Always: Licensed for 1000 agents per user.
+15/09/2026 08:50:35 [0] 00-Always: Licensed for unlimited concurrent users.
+15/09/2026 08:50:35 [0] 00-Always: Licensed for Alerting 
+15/09/2026 08:50:35 [0] 00-Always: Licensed for Community 
+15/09/2026 08:50:35 [0] 00-Always: Licensed for 99999999 users.
+15/09/2026 08:50:35 [0] 00-Always: Started.
+15/09/2026 08:50:36 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+15/09/2026 08:50:36 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+15/09/2026 21:28:24 [0] 00-Always: Community successfully loaded XSLT library
+15/09/2026 21:28:24 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+15/09/2026 21:28:24 [0] 00-Always: Starting.
+15/09/2026 21:28:24 [0] 00-Always: Host 127.0.0.1.
+15/09/2026 21:28:24 [0] 00-Always: Port 9033.
+15/09/2026 21:28:24 [0] 50-Warning: Setting datastore version number to v3.
+15/09/2026 21:28:25 [0] 30-Normal: Created Default Role: everyone.
+15/09/2026 21:28:25 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+15/09/2026 21:28:25 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+15/09/2026 21:28:25 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+15/09/2026 21:28:25 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+15/09/2026 21:28:25 [0] 00-Always: Licensed for 1000 agents per user.
+15/09/2026 21:28:25 [0] 00-Always: Licensed for unlimited concurrent users.
+15/09/2026 21:28:25 [0] 00-Always: Licensed for Alerting 
+15/09/2026 21:28:25 [0] 00-Always: Licensed for Community 
+15/09/2026 21:28:25 [0] 00-Always: Licensed for 99999999 users.
+15/09/2026 21:28:25 [0] 00-Always: Started.
+15/09/2026 21:28:25 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+15/09/2026 21:28:25 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+15/09/2026 21:44:49 [0] 00-Always: Community successfully loaded XSLT library
+15/09/2026 21:44:49 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+15/09/2026 21:44:49 [0] 00-Always: Starting.
+15/09/2026 21:44:49 [0] 00-Always: Host 127.0.0.1.
+15/09/2026 21:44:49 [0] 00-Always: Port 9033.
+15/09/2026 21:44:50 [0] 50-Warning: Setting datastore version number to v3.
+15/09/2026 21:44:50 [0] 30-Normal: Created Default Role: everyone.
+15/09/2026 21:44:50 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+15/09/2026 21:44:50 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+15/09/2026 21:44:50 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+15/09/2026 21:44:50 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+15/09/2026 21:44:50 [0] 00-Always: Licensed for 1000 agents per user.
+15/09/2026 21:44:50 [0] 00-Always: Licensed for unlimited concurrent users.
+15/09/2026 21:44:50 [0] 00-Always: Licensed for Alerting 
+15/09/2026 21:44:50 [0] 00-Always: Licensed for Community 
+15/09/2026 21:44:50 [0] 00-Always: Licensed for 99999999 users.
+15/09/2026 21:44:50 [0] 00-Always: Started.
+15/09/2026 21:44:50 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+15/09/2026 21:44:50 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+16/09/2026 13:34:44 [0] 00-Always: Community successfully loaded XSLT library
+16/09/2026 13:34:44 [0] 00-Always: IDOLServer Version 26.3.0 Build 1989089.
+16/09/2026 13:34:44 [0] 00-Always: Starting.
+16/09/2026 13:34:44 [0] 00-Always: Host 127.0.0.1.
+16/09/2026 13:34:44 [0] 00-Always: Port 9033.
+16/09/2026 13:34:44 [0] 50-Warning: Setting datastore version number to v3.
+16/09/2026 13:34:45 [0] 30-Normal: Created Default Role: everyone.
+16/09/2026 13:34:45 [0] 00-Always: Successfully initialised AES encryption for security info strings.
+16/09/2026 13:34:45 [0] 00-Always: Loaded security library ./modules/user_autnsecurity version 26.3.0.1989089.
+16/09/2026 13:34:45 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+16/09/2026 13:34:45 [0] 00-Always: Community has established a SSL connection with Agent DRE successfully
+16/09/2026 13:34:45 [0] 00-Always: Licensed for 1000 agents per user.
+16/09/2026 13:34:45 [0] 00-Always: Licensed for unlimited concurrent users.
+16/09/2026 13:34:45 [0] 00-Always: Licensed for Alerting 
+16/09/2026 13:34:45 [0] 00-Always: Licensed for Community 
+16/09/2026 13:34:45 [0] 00-Always: Licensed for 99999999 users.
+16/09/2026 13:34:45 [0] 00-Always: Started.
+16/09/2026 13:34:45 [0] 00-Always: Community has established a SSL connection with Data DRE successfully
+16/09/2026 13:34:45 [1] 30-Normal: Indexer successfully established connection with Agent DRE.
+17/09/2026 06:50:04 [0] 00-Always: Warning: Could not connect to the Data DRE to configure database privileges.
