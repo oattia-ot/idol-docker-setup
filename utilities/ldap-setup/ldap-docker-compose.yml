@@ -1,0 +1,73 @@
+version: '3.8'
+name: ${IDOL_DEPLOYMENT_TYPE:-idol-demo}
+
+services:
+
+  openldap:
+    image: osixia/openldap:1.5.0
+    container_name: openldap
+    restart: unless-stopped
+    ports:
+      - "389:389"    # LDAP (plain)
+      - "636:636"    # LDAPS (TLS)
+    environment:
+      # --- Domain ---
+      LDAP_ORGANISATION: "Example Organisation"
+      LDAP_DOMAIN: "example.com"        # Results in dc=example,dc=com
+      LDAP_BASE_DN: ""                  # Auto-derived from LDAP_DOMAIN when empty
+
+      # --- Admin credentials ---
+      LDAP_ADMIN_PASSWORD: "Admin1234!"     # ⚠ Change before production
+
+      # --- Config password (cn=config) ---
+      LDAP_CONFIG_PASSWORD: "Config1234!"  # ⚠ Change before production
+
+      # --- TLS (set to "false" to disable, "true" to enable self-signed) ---
+      LDAP_TLS: "false"
+
+      # --- Seed additional schemas ---
+      LDAP_REMOVE_CONFIG_AFTER_SETUP: "true"
+      LDAP_RFC2307BIS_SCHEMA: "false"
+    volumes:
+      - openldap_data:/var/lib/ldap
+      - openldap_config:/etc/ldap/slapd.d
+      # Uncomment to load custom LDIF files at first boot:
+      # - ./ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom
+    networks:
+      - ldap_net
+    healthcheck:
+      test: ["CMD", "ldapsearch", "-x",
+             "-H", "ldap://localhost:389",
+             "-b", "dc=example,dc=com",
+             "-D", "cn=admin,dc=example,dc=com",
+             "-w", "Admin1234!"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+
+  # ── phpLDAPadmin – browser-based LDAP GUI ─────────────────────────────────
+  phpldapadmin:
+    image: osixia/phpldapadmin:latest
+    container_name: phpldapadmin
+    restart: unless-stopped
+    ports:
+      - "7777:80"    # Open http://localhost:7777 to access the GUI
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "openldap"
+      PHPLDAPADMIN_HTTPS: "false"
+    depends_on:
+      openldap:
+        condition: service_healthy
+    networks:
+      - ldap_net
+
+volumes:
+  openldap_data:
+    driver: local
+  openldap_config:
+    driver: local
+
+networks:
+  ldap_net:
+    driver: bridge

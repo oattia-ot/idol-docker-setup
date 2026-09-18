@@ -1,0 +1,91 @@
+#
+# Copyright 2024-2025 Open Text.
+#
+# The only warranties for products and services of Open Text and its
+# affiliates and licensors ("Open Text") are as may be set forth in the
+# express warranty statements accompanying such products and services.
+# Nothing herein should be construed as constituting an additional
+# warranty. Open Text shall not be liable for technical or editorial
+# errors or omissions contained herein. The information contained herein
+# is subject to change without notice.
+#
+# Except as specifically indicated otherwise, this document contains
+# confidential information and a valid license is required for possession,
+# use or copying. If this work is provided to the U.S. Government,
+# consistent with FAR 12.211 and 12.212, Commercial Computer Software,
+# Computer Software Documentation, and Technical Data for Commercial Items
+# are licensed to the U.S. Government under vendor's standard commercial
+# license.
+#
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.saapi.config }}
+data:
+  SERVER_SERVLET_CONTEXT_PATH: "{{ .Values.saapi.ingress.path }}"
+  SEARCH_ABSTRACTOR_MGMT_BASE_PATH: {{ .Values.saapi.management.basePath | trimSuffix "/" | quote }}
+  ISOL_AUTH_SERVICE_PARTITION: "{{ .Values.auth.partition }}"
+  ISOL_OTDS_AUTH_SERVICE_PROTOCOL: "{{ .Values.auth.external.protocol }}"
+  ISOL_OTDS_AUTH_SERVICE_HOST: "{{ .Values.auth.external.host }}"
+  ISOL_OTDS_AUTH_SERVICE_PORT: "{{ .Values.auth.external.port }}"
+  ISOL_OTDS_AUTH_SERVICE_URL: "{{- include "auth.urlNorm" (dict "external" .Values.auth.external "path" .Values.auth.otdsws.ingress.prependPath) -}}"
+  ISOL_OTDS_AUTH_SERVICE_PATH: "{{- if .Values.auth.otdsws.ingress.prependPath -}}/{{- .Values.auth.otdsws.ingress.prependPath -}}{{- end -}}"
+  ISOL_OTDS_AUTH_SERVICE_UI_URL: "{{ .Values.auth.uiUrls }}"
+  ISOL_OTDS_SIMPLE_PASSWORD_POLICY: "{{- .Values.auth.simplePasswordPolicy }}"
+  ISOL_AUTH_SERVICE_REFRESH_TOKEN_EXPIRY_TIME: "{{ .Values.auth.refreshTokenExpiryTimeSeconds }}"
+  ISOL_AUTH_SERVICE_API_URL:  "{{- include "auth.urlNorm" (dict "external" .Values.auth.external "path" .Values.saapi.ingress.path ) -}}"
+  ISOL_AUTH_SERVICE_API_CLIENT: "{{ .Values.auth.apiClient }}"
+  ISOL_AUTH_SERVICE_UI_CLIENT: "{{ .Values.auth.uiClient }}"
+  ISOL_AUTH_SERVICE_TOKEN_EXPIRY_TIME: "{{ .Values.auth.tokenExpiryTimeSeconds }}"
+  ISOL_AUTH_SERVICE_BASE_REALM_ROLES: "{{ .Values.auth.baseRealmRoles }}"
+  ISOL_AUTH_SERVICE_INIT_ENABLED: {{ .Values.auth.initEnabled | quote }}
+  {{ if .Values.auth.usersFile }}ISOL_AUTH_SERVICE_USERS_FILE: "{{ .Values.auth.usersFile }}"{{ end }}
+  SEARCH_ABSTRACTOR_API_JAVA_OPTS: "{{ .Values.saapi.javaOpts }}"
+  SEARCH_ABSTRACTOR_IDOL_COMMUNITY_HOST: "{{ .Values.saapi.backendIdolHost }}"
+  SEARCH_ABSTRACTOR_IDOL_COMMUNITY_PORT: "{{ .Values.saapi.backendIdolPort }}"
+  SEARCH_ABSTRACTOR_IDOL_COMMUNITY_REPOSITORY: "{{ .Values.auth.userSecurity.repository}}"
+  SEARCH_ABSTRACTOR_IDOL_COMMUNITY_RESOURCEID: "{{ .Values.auth.userSecurity.resourceId}}"
+  SEARCH_ABSTRACTOR_IDOL_CONTENT_HOST: "{{ .Values.saapi.backendIdolContentHost }}"
+  SEARCH_ABSTRACTOR_IDOL_CONTENT_PORT: "{{ .Values.saapi.backendIdolContentPort }}"
+  SEARCH_ABSTRACTOR_IDOL_USING_DISCOVER_INDEX: {{ .Values.saapi.usingDiscoverIndex | quote }}
+  SEARCH_ABSTRACTOR_API_HOST: "{{ .Values.saapi.backendApi.name }}"
+  SEARCH_ABSTRACTOR_API_PORT: "{{ .Values.saapi.backendApi.port }}"
+  SEARCH_ABSTRACTOR_HTTP_CACHE_MAX_AGE: "{{ .Values.saapi.httpCacheMaxAge }}"
+  SEARCH_ABSTRACTOR_SESSION_API_HOST: "{{ .Values.sessionapi.service.name }}"
+  SEARCH_ABSTRACTOR_SESSION_API_PORT: "{{ .Values.sessionapi.service.port }}"
+  SEARCH_ABSTRACTOR_SESSION_LICENSOR_HOST: "{{ .Values.sessionapi.licensor.name }}"
+  SEARCH_ABSTRACTOR_SESSION_LICENSOR_PORT: "{{ .Values.sessionapi.licensor.port }}"
+  SEARCH_ABSTRACTOR_SERVER_ALLOWED_ORIGINS: "{{ .Values.saapi.allowedOrigins }}"
+  SEARCHABSTRACTOR_API_SERVICE_DATABASE_HOST: {{ .Values.saapiPostgresql.fullnameOverride | quote }}
+  SEARCHABSTRACTOR_API_SERVICE_DATABASE_PORT: {{ .Values.saapiPostgresql.service.port | quote }}
+  SEARCHABSTRACTOR_API_SERVICE_DATABASE_USERNAME: {{ .Values.saapiPostgresql.auth.username | quote }}
+  SEARCHABSTRACTOR_API_SERVICE_DATABASE_PASSWORD: {{ .Values.saapiPostgresql.auth.password | quote }}
+  SEARCHABSTRACTOR_API_SERVICE_DATABASE_NAME: {{ .Values.saapi.storage.dbName | quote }}
+  SEARCHABSTRACTOR_SESSION_SERVICE_DATABASE_APPNAME: "searchabstractor_api_service"
+  SEARCH_ABSTRACTOR_TRUSTED_CERTS_PATH: {{ .Values.saapi.security.trustedCertsPath | quote }}
+  SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE: {{ .Values.saapi.storage.maxFileSize | quote }}
+  SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE: {{ .Values.saapi.storage.maxRequestSize | quote }}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: session-api-postgres-cfg-map
+data:
+  init_script.sql: |+
+    CREATE DATABASE {{ .Values.saapi.storage.dbName }};
+    GRANT ALL PRIVILEGES ON DATABASE {{ .Values.saapi.storage.dbName }} to {{ .Values.saapiPostgresql.auth.username }}
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Values.saapi.secret }}
+data:
+  ISOL_AUTH_SERVICE_API_CLIENT_SECRET: "{{ .Values.auth.apiClientSecret | b64enc }}"
+  ISOL_AUTH_SERVICE_ADMIN_USER: "{{ .Values.auth.otdsws.adminEmail  | b64enc }}"
+  ISOL_AUTH_SERVICE_ADMIN_PASS: "{{ .Values.auth.otdsws.adminPassword  | b64enc }}"
+  ISOL_INIT_AUTH_ADMIN_USERNAME: "{{  .Values.auth.createAdminUsername | b64enc }}"
+  ISOL_INIT_AUTH_ADMIN_PASSWORD: "{{  .Values.auth.createAdminPassword | b64enc }}"
