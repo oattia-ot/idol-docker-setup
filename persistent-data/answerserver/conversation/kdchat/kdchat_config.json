@@ -1,0 +1,137 @@
+{
+  "$schema": "../schemas/task_configuration/v1/schema.json",
+  "lua_script": "kdchat_handler.lua",
+
+  "initial_task": "INITIAL",
+  "fallback_task": "FALLBACK",
+  "user_cancel": {
+    "keywords": [ "cancel", "abort", "never mind", "stop" ],
+    "case_insensitive": true,
+    "action": {
+      "response": "OK, cancelled. Ask a question, or say <strong>help</strong>."
+    }
+  },
+
+  "tasks": [
+    {
+      "id": "INITIAL",
+      "pre": {
+        "lua": "initialize_session",
+        "response": "Welcome to Knowledge Discovery chat.<br>Ask me a question and I will search your KD databases, then I am ready for the next thing — another question, or a task.<br><br>Try <strong>help</strong>, <strong>what databases</strong>, or just ask."
+      },
+      "trigger": {
+        "regex": {
+          "case_insensitive": true,
+          "pattern": "^(?:start again|start over|reset(?: chat)?|back to(?: the)? beginning)\\s*[.!?]?$"
+        }
+      }
+    },
+
+    {
+      "id": "GREET",
+      "pre": {
+        "lua": "greet"
+      },
+      "trigger": {
+        "regex": {
+          "case_insensitive": true,
+          "pattern": "^(?:hi|hello|hey|good morning|good afternoon|good evening)\\s*[.!?]?$"
+        }
+      }
+    },
+
+    {
+      "id": "HELP",
+      "pre": {
+        "lua": "show_help"
+      },
+      "trigger": {
+        "regex": {
+          "case_insensitive": true,
+          "pattern": "^(?:help|options|what can you do|how (?:do I|to) use this)\\s*[?!.]?$"
+        }
+      }
+    },
+
+    {
+      "id": "LIST_DATABASES",
+      "pre": {
+        "lua": "list_databases"
+      },
+      "trigger": {
+        "regex": {
+          "case_insensitive": true,
+          "pattern": "^(?:what|which|list|show|available)\\s+(?:are\\s+the\\s+)?(?:the\\s+)?(?:data\\s*bases?|dbs?|knowledge\\s+bases?)\\b.*$|^(?:what can you search|what do you know)\\s*[?!.]?$"
+        }
+      }
+    },
+
+    {
+      "id": "SELECT_DATABASES",
+      "pre": {
+        "lua": "prepare_database_selection"
+      },
+      "requirements": [
+        {
+          "id": "DATABASE_CHOICE",
+          "scope": "local",
+          "prompt": "{{session:DATABASE_LIST_PROMPT}}Which database should I search? Say a name, several names, or <strong>all</strong>.",
+          "prompt_required": false,
+          "validation": [ "DATABASE_VALIDATOR" ]
+        }
+      ],
+      "post": {
+        "lua": "confirm_database_selection",
+        "response": "I'll search <strong>{{session:SELECTED_DATABASE_LABEL}}</strong> from now on. Ask a question whenever you're ready."
+      },
+      "trigger": {
+        "regex": {
+          "case_insensitive": true,
+          "pattern": "\\b(?:use database|change database|select database|choose database|refine(?: my)? search|search only in)\\b"
+        }
+      }
+    },
+
+    {
+      "id": "SEARCH_ALL",
+      "pre": {
+        "lua": "search_all_databases",
+        "response": "Searching <strong>all databases</strong> again. Ask a question whenever you're ready."
+      },
+      "trigger": {
+        "regex": {
+          "case_insensitive": true,
+          "pattern": "^(?:search all(?: databases)?|all databases|use all databases|reset databases)\\s*[.!?]?$"
+        }
+      }
+    },
+
+    {
+      "id": "SHOW_SOURCES",
+      "pre": {
+        "lua": "show_last_sources"
+      },
+      "trigger": {
+        "regex": {
+          "case_insensitive": true,
+          "pattern": "^(?:sources|show sources|citations|references|where did that come from)\\s*[?!.]?$"
+        }
+      }
+    },
+
+    {
+      "id": "FALLBACK",
+      "pre": {
+        "lua": "ask_kd"
+      }
+    }
+  ],
+
+  "validators": [
+    {
+      "id": "DATABASE_VALIDATOR",
+      "lua": { "function": "database_validator" },
+      "invalid_input_lua": "set_validation_response"
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+# BEGIN COPYRIGHT NOTICE
+# Copyright 2022-2024 Open Text.
+# 
+# The only warranties for products and services of Open Text and its affiliates and licensors
+# ("Open Text") are as may be set forth in the express warranty statements accompanying such
+# products and services. Nothing herein should be construed as constituting an additional warranty.
+# Open Text shall not be liable for technical or editorial errors or omissions contained herein.
+# The information contained herein is subject to change without notice.
+#
+# END COPYRIGHT NOTICE
+
+{{ define "idolnifi.statefulset.base" -}}
+{{/* specific merges to statefulset specification */}}
+{{- $root := get . "root" | required "idolnifi.statefulset.base: missing root" -}}
+{{- $component := get . "component" | required "idolnifi.statefulset.base: missing component" -}}
+{{- $nifiCluster := get . "nifiCluster" | required "idolnifi.statefulset.base: missing nifiCluster" -}}
+metadata:
+  labels:
+    app: {{ $nifiCluster.clusterId }}
+    name: {{ $nifiCluster.clusterId }}
+spec:
+  serviceName: {{ $nifiCluster.clusterId }}
+  template:
+{{- if $component.prometheus.enabled }}
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/port: "9092"
+{{- end }}
+    spec:
+      terminationGracePeriodSeconds: 90
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      dnsPolicy: ClusterFirstWithHostNet
+      restartPolicy: Always
+      initContainers:
+      - name: ensure-conf
+        image: {{ include "idol-library.idolImage" (dict "root" $root "idolImage" $nifiCluster.image ) }}
+        imagePullPolicy: {{ default (default "IfNotPresent" $nifiCluster.image.imagePullPolicy) $root.Values.global.imagePullPolicy | quote }}
+        envFrom:
+        - configMapRef:
+            name: {{ $component.name }}-env
+            optional: false
+        - configMapRef:
+            name: {{ $component.name }}-keys-env
+            optional: false
+        resources:
+          requests:
+            cpu: {{ $nifiCluster.resources.requests.cpu }}
+            memory: {{ printf "%dMi" ( $nifiCluster.resources.requests.memoryMi | int) }}
+          limits:
+            cpu: {{ $nifiCluster.resources.limits.cpu }}
+            memory: {{ printf "%dMi" ( $nifiCluster.resources.limits.memoryMi | int) }}
+        {{- if $component.containerSecurityContext.enabled }}
+        securityContext: {{- omit $component.containerSecurityContext "enabled" | toYaml | nindent 10 }}
+          readOnlyRootFilesystem: true
+        {{- end }}
+        command:
+        - sh
+        - "-c"
+        - |
+          if [ -z "$(ls -A -- /mnt/store/nifi/conf)" ]; then
+            echo Copying files into conf directory
+            cp -rv /opt/nifi/nifi-current/conf/ /mnt/store/nifi/
+          fi
+          echo Copying files into extensions directory
+          cp -rnv /opt/nifi/nifi-current/extensions/ /mnt/store/nifi/
+        volumeMounts:
+        - name: statedata
+          mountPath: /mnt/store/nifi/conf
+          subPath: conf
+          readOnly: false
+        - name: statedata
+          mountPath: /mnt/store/nifi/extensions
+          subPath: extensions
+          readOnly: false
+      - name: wait-for-zookeeper
+        image: docker.io/busybox:1.36
+        command:
+        - sh
+        - -c
+        - |
+          echo "Connecting to Zookeeper ${NIFI_ZK_CONNECT_STRING}"
+          until nc -vzw 1 ${NIFI_ZK_CONNECT_STRING//:/ } ; do
+            echo "Waiting for zookeeper to start"
+            sleep 3
+          done
+        envFrom:
+        - configMapRef:
+            name: {{ $component.name }}-env
+            optional: false
+        - configMapRef:
+            name: {{ $component.name }}-keys-env
+            optional: false
+        resources:
+          requests:
+            cpu: 20m
+            memory: 50Mi
+          limits:
+            cpu: 20m
+            memory: 50Mi
+        {{- if $component.containerSecurityContext.enabled }}
+        securityContext: {{- omit $component.containerSecurityContext "enabled" | toYaml | nindent 10 }}
+          readOnlyRootFilesystem: true
+        {{- end }}
+      {{- if $root.Values.postgresql.enabled }}
+      - name: wait-for-postgres
+        image: docker.io/busybox:1.36
+        command:
+        - sh
+        - -c
+        - |
+          echo "Connecting to PostgreSQL pool {{ $root.Release.Name }}-postgresql-pgpool"
+          until nc -vzw 1 "{{ $root.Release.Name }}-postgresql-pgpool:5432" ; do
+            echo "Waiting for PostgreSQL pool to start"
+            sleep 3
+          done
+        resources:
+          requests:
+            cpu: 20m
+            memory: 50Mi
+          limits:
+            cpu: 20m
+            memory: 50Mi
+        {{- if $component.containerSecurityContext.enabled }}
+        securityContext: {{- omit $component.containerSecurityContext "enabled" | toYaml | nindent 10 }}
+          readOnlyRootFilesystem: true
+        {{- end }}
+      {{- end }}
+      {{- if $component.podSecurityContext.enabled }}
+      securityContext: {{- omit $component.podSecurityContext "enabled" | toYaml | nindent 8 }}
+      {{- end }}
+  volumeClaimTemplates:
+  - metadata:
+      name: statedata
+      labels: {{- include "idol-library.labels.volumeClaimTemplates" . | nindent 8 }}
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: {{ $nifiCluster.dataVolume.storageClass }}
+      resources:
+        requests:
+          storage: {{ $nifiCluster.dataVolume.volumeSize }}
+{{- end -}}
+
+{{- define "idolnifi.statefulset" }}
+{{- $root := get . "root" | required "idolnifi.statefulset: missing root" }}
+{{- $nifiCluster := get . "nifiCluster" | required "idolnifi.statefulset: missing nifiCluster" }}
+---
+{{ include "idol-library.util.merge" (dict
+  "root" $root
+  "component" $nifiCluster
+  "nifiCluster" $nifiCluster
+  "source" "idol-library.aciserver.statefulset.base.v1"
+  "destination" "idolnifi.statefulset.base" 
+  "containers" (list "idolnifi.container")
+  "volumes" (list (dict "name" "data" "emptyDir" (dict "sizeLimit" "3Gi"))
+                  (dict "name" "scripts" "configMap" (dict "name" (print $root.Values.name "-scripts") "optional" false "defaultMode" 0755))
+                  (dict "name" "prestart-scripts" "configMap" (dict "name" (print $root.Values.name "-prestart-scripts") "optional" false "defaultMode" 0755))
+                  (dict "name" "dshm" "emptyDir" (dict "medium" "Memory" "sizeLimit" $nifiCluster.resources.sharedMemory)))
+  "addConfigMap" false
+) -}}
+{{- end -}}
+
+{{- include "idolnifi.forEachCluster" (dict "root" . "tpl" "idolnifi.statefulset") }}
+
