@@ -1,0 +1,327 @@
+{
+    "flowContents": {
+        "identifier": "a99a893b-91d1-3a21-becb-cbef0be36a72",
+        "instanceIdentifier": "82ed52fc-723e-33a0-76f3-d21910d6d2bb",
+        "name": "Vector Generator Python",
+        "comments": "",
+        "position": {
+            "x": 1776.0,
+            "y": 1632.0
+        },
+        "processGroups": [],
+        "remoteProcessGroups": [],
+        "processors": [
+            {
+                "identifier": "90cd752c-8a53-32b3-830e-251d2340e7b8",
+                "instanceIdentifier": "756a049b-c1b8-3702-9745-702eaffad14e",
+                "name": "Python Embedding Generator",
+                "comments": "",
+                "position": {
+                    "x": 1176.0,
+                    "y": 1376.0
+                },
+                "type": "idol.nifi.processor.ExecuteDocumentPython",
+                "bundle": {
+                    "group": "idol.nifi",
+                    "artifact": "idol-nifi-framework",
+                    "version": "25.4.0-nifi1"
+                },
+                "properties": {
+                    "AdditionalOutputRelationships": null,
+                    "PythonScriptFunction": "handler",
+                    "RouteUntransferredTo": null,
+                    "RouteReturnedTo": "returned",
+                    "IdolPythonService": "4f198ee5-0190-1000-2325-cb16718ced39",
+                    "IdolLicenseService": "9f64332c-8d01-3949-bf85-d80a3513e14f",
+                    "py:embeddings": "# BEGIN COPYRIGHT NOTICE\n# Copyright 2024 Open Text.\n#\n# The only warranties for products and services of Open Text and its affiliates and licensors\n# (\"Open Text\") are as may be set forth in the express warranty statements accompanying such\n# products and services. Nothing herein should be construed as constituting an additional warranty.\n# Open Text shall not be liable for technical or editorial errors or omissions contained herein.\n# The information contained herein is subject to change without notice.\n#\n# END COPYRIGHT NOTICE\n\nclass OffsetPair:\n    '''\n    Stores the start and end offsets of the sub-text in a piece of text.\n    '''\n    start_offset: int\n    end_offset: int\n    \n    def __init__(self, start, end):\n        self.start_offset = start\n        self.end_offset = end\n\ndef get_chunk_offsets(tokenizer_output, max_sequence_length=128, minimum_final_chunk_length = 0, chunk_overlap=0):\n    '''\n    Determine which byte offsets from the input text will give us chunks of tokens that are of size\n    max_sequence_length and ensure that the last chunk. It's not clear that either of SentenceTransformer\n    or AutoTokenizer will help us with chunking, so it's done manually here.\n    '''\n    # Ensure that the final chunk is at least half the size of other chunks, if no value is provided (values gets set to -1 in this case).\n    if minimum_final_chunk_length == -1:\n        minimum_final_chunk_length = math.floor(max_sequence_length/2) + 1\n\n    stride_size = max_sequence_length - chunk_overlap\n    offset_mapping = tokenizer_output.offset_mapping\n\n    distance_to_end = len(offset_mapping)\n    offsets = []\n\n    if distance_to_end == 1:\n        return [OffsetPair(offset_mapping[0][0], offset_mapping[0][1])]\n\n    for ii in range(0, len(offset_mapping) - 1, stride_size):\n        if distance_to_end < minimum_final_chunk_length:\n            # If we're on the final chunk then backtrack to ensure that we use at least\n            # minimum_final_chunk_length tokens.\n            optimal_backtrack_length = minimum_final_chunk_length - distance_to_end - 1\n            actual_backtrack_length = min(optimal_backtrack_length, ii)\n\n            offsets.append(OffsetPair(offset_mapping[ii - actual_backtrack_length][0], offset_mapping[-1][1]))\n            break\n\n        # Min call required if minimum_final_chunk_length=0 to deal with the last chunk\n        chunk_end = min(ii + max_sequence_length - 1, len(tokenizer_output.input_ids) - 1)\n        if ii == 0:\n            offsets.append(OffsetPair(offset_mapping[ii][0], offset_mapping[chunk_end][1]))\n        else:\n            offsets.append(OffsetPair(offset_mapping[ii - 1][1], offset_mapping[chunk_end][1]))\n        distance_to_end -= stride_size\n        if (chunk_end == len(tokenizer_output.input_ids) - 1):\n            break\n    return offsets\n\nclass Embedder:\n    '''\n    Class for handling embeddings generation and offsets. \n    '''\n\n    def __init__(self):\n        self.last_offset = 0\n\n    def generateEmbeddings(self, text, model, tokenizer, max_seq_len, min_final_chunk, chunk_overlap):\n        from sentence_transformers import SentenceTransformer\n        from transformers import AutoTokenizer\n        if max_seq_len is None:\n            max_seq_length = model.get_max_seq_length() or 256\n        \n        tokenizer_output = tokenizer(text, return_offsets_mapping=True, add_special_tokens=False)\n        embedding_offsets = get_chunk_offsets(tokenizer_output, \n                                              max_sequence_length=max_seq_len,\n                                              minimum_final_chunk_length=min_final_chunk,\n                                              chunk_overlap=min(chunk_overlap, max_seq_len - 1))\n        \n        embeddings = {}\n        for offset_pair in embedding_offsets:\n            # Split the text into chunks based on the obtained offsets and genererate embeddings for each chunk of text.\n            text_chunk = text[offset_pair.start_offset : offset_pair.end_offset]\n\n            # compute the byte offsets for this chunk\n            byte_start_offset = len(bytearray(text[:offset_pair.start_offset], \"utf8\"))\n            byte_end_offset = byte_start_offset + len(bytearray(text_chunk, \"utf8\"))\n\n            # need to add offsets from previous sections for section-broken documents\n            actual_start_offset = byte_start_offset + self.last_offset\n            actual_end_offset = byte_end_offset + self.last_offset\n\n            # Would be nice to use tokenizer_output to generate the embeddings, just so that we don't perform\n            # tokenization/encoding twice, but the SentenceTransformer class only appears to want to deal with text.\n            embeddings[str(actual_start_offset)+\":\"+str(actual_end_offset)] = model.encode(text_chunk)\n        # get new value for last_offset\n        self.last_offset = actual_end_offset\n        return embeddings\n",
+                    "RouteTo": "success",
+                    "PythonScriptFile": "# BEGIN COPYRIGHT NOTICE\n# Copyright 2024 Open Text.\n#\n# The only warranties for products and services of Open Text and its affiliates and licensors\n# (\"Open Text\") are as may be set forth in the express warranty statements accompanying such\n# products and services. Nothing herein should be construed as constituting an additional warranty.\n# Open Text shall not be liable for technical or editorial errors or omissions contained herein.\n# The information contained herein is subject to change without notice.\n#\n# END COPYRIGHT NOTICE\n          \nfrom idolnifi import *\nimport embeddings\nimport importlib.util\n\nmodel_cache = {}\ntokenizer_cache = {}\n\nclass MyDocModifier(DocumentModifier):\n    xmlmetadata = None\n    MODEL_NAME = \"sentence-transformers/sentence-t5-large\"\n    MODEL_REVISION = \"1fc08ea477205aa54a3e5b13f0971ae16b86410a\"\n    DEVICE = \"cpu\"\n    MAX_SEQ_LEN = 128\n    MIN_FINAL_CHUNK = 50\n    CHUNK_OVERLAP = 10\n    VECTOR_FIELD = \"VECTOR\"\n\n    def __init__(self):\n        super().__init__()\n        super().preAction(self.preHandler)\n        self.embedder = embeddings.Embedder()\n        super().onContent(self.contentHandler) \n\n    def preHandler(self, postAction):\n        self.xmlmetadata = postAction.getXmlMetadata() \n\n    def contentHandler(self, contentAction):\n        def pageReader(s):\n            from sentence_transformers import SentenceTransformer\n            from transformers import AutoTokenizer\n            \n            cache_name = self.MODEL_NAME + \"-\" + self.DEVICE\n            if cache_name not in model_cache:\n                model_kwargs = {'model_name_or_path': self.MODEL_NAME, 'revision': self.MODEL_REVISION }\n                model_cache[cache_name] = SentenceTransformer(**model_kwargs).to(self.DEVICE)\n                tokenizer_cache[cache_name] = AutoTokenizer.from_pretrained(self.MODEL_NAME, revision=self.MODEL_REVISION)\n\n            tokenizer = tokenizer_cache[cache_name]\n            model = model_cache[cache_name]\n            \n            text = s.readall()\n            \n            vectors = self.embedder.generateEmbeddings(text, model, tokenizer, self.MAX_SEQ_LEN, self.MIN_FINAL_CHUNK, self.CHUNK_OVERLAP)\n            \n            for k,v in vectors.items():\n                vector = \",\".join(map(str,v)) + \";source=DRECONTENT[\" + k + \"]\"\n                self.xmlmetadata.addChild(self.VECTOR_FIELD).setValue(vector)\n            \n        contentAction.readContent(pageReader, ReadMode.READ_AND_KEEP) \n\ndef handler(flowfiledocument):\n    if not(importlib.util.find_spec('sentence_transformers') and importlib.util.find_spec('transformers')):\n        print(\"pip install: \", executePython(['-m', 'pip', 'install', '-U', 'sentence_transformers', 'transformers']))\n    logInfo(f\"Generating embeddngs for document {flowfiledocument.getReference()}\")\n    flowfiledocument.modify(MyDocModifier())"
+                },
+                "propertyDescriptors": {
+                    "AdditionalOutputRelationships": {
+                        "name": "AdditionalOutputRelationships",
+                        "displayName": "Additional output relationships",
+                        "identifiesControllerService": false,
+                        "sensitive": false
+                    },
+                    "PythonScriptFunction": {
+                        "name": "PythonScriptFunction",
+                        "displayName": "Python script function",
+                        "identifiesControllerService": false,
+                        "sensitive": false
+                    },
+                    "RouteUntransferredTo": {
+                        "name": "RouteUntransferredTo",
+                        "displayName": "Route untransferred to",
+                        "identifiesControllerService": false,
+                        "sensitive": false
+                    },
+                    "RouteReturnedTo": {
+                        "name": "RouteReturnedTo",
+                        "displayName": "Route returned to",
+                        "identifiesControllerService": false,
+                        "sensitive": false
+                    },
+                    "IdolPythonService": {
+                        "name": "IdolPythonService",
+                        "displayName": "IdolPythonService",
+                        "identifiesControllerService": false,
+                        "sensitive": false
+                    },
+                    "IdolLicenseService": {
+                        "name": "IdolLicenseService",
+                        "displayName": "Idol License Service",
+                        "identifiesControllerService": true,
+                        "sensitive": false
+                    },
+                    "py:embeddings": {
+                        "name": "py:embeddings",
+                        "displayName": "py:embeddings",
+                        "identifiesControllerService": false,
+                        "sensitive": false
+                    },
+                    "RouteTo": {
+                        "name": "RouteTo",
+                        "displayName": "Route to",
+                        "identifiesControllerService": false,
+                        "sensitive": false
+                    },
+                    "PythonScriptFile": {
+                        "name": "PythonScriptFile",
+                        "displayName": "Python script file",
+                        "identifiesControllerService": false,
+                        "sensitive": false
+                    }
+                },
+                "style": {},
+                "schedulingPeriod": "0 sec",
+                "schedulingStrategy": "TIMER_DRIVEN",
+                "executionNode": "ALL",
+                "penaltyDuration": "30 sec",
+                "yieldDuration": "1 sec",
+                "bulletinLevel": "ERROR",
+                "runDurationMillis": 0,
+                "concurrentlySchedulableTaskCount": 1,
+                "autoTerminatedRelationships": [],
+                "scheduledState": "ENABLED",
+                "retryCount": 10,
+                "retriedRelationships": [],
+                "backoffMechanism": "PENALIZE_FLOWFILE",
+                "maxBackoffPeriod": "10 mins",
+                "componentType": "PROCESSOR",
+                "groupIdentifier": "a99a893b-91d1-3a21-becb-cbef0be36a72"
+            }
+        ],
+        "inputPorts": [
+            {
+                "identifier": "397c89ae-5b03-353c-ad3f-f4a16ee5a068",
+                "instanceIdentifier": "2176a1cc-55c4-3c84-00e7-31e93df338d1",
+                "name": "Input",
+                "comments": "",
+                "position": {
+                    "x": 1232.0,
+                    "y": 1272.0
+                },
+                "type": "INPUT_PORT",
+                "concurrentlySchedulableTaskCount": 1,
+                "scheduledState": "ENABLED",
+                "allowRemoteAccess": false,
+                "componentType": "INPUT_PORT",
+                "groupIdentifier": "a99a893b-91d1-3a21-becb-cbef0be36a72"
+            }
+        ],
+        "outputPorts": [
+            {
+                "identifier": "a83510af-9b74-3182-886c-e964bc190fb4",
+                "instanceIdentifier": "53b331e7-abf5-3edc-1adc-43c56ec5541b",
+                "name": "Failures",
+                "comments": "",
+                "position": {
+                    "x": 1464.0,
+                    "y": 1592.0
+                },
+                "type": "OUTPUT_PORT",
+                "concurrentlySchedulableTaskCount": 1,
+                "scheduledState": "ENABLED",
+                "allowRemoteAccess": false,
+                "componentType": "OUTPUT_PORT",
+                "groupIdentifier": "a99a893b-91d1-3a21-becb-cbef0be36a72"
+            },
+            {
+                "identifier": "fe31c91b-4ba4-3851-89cb-87a6c84fd3b0",
+                "instanceIdentifier": "038dcbc1-bf7a-3c42-6cf6-1c07a540481b",
+                "name": "Response",
+                "comments": "",
+                "position": {
+                    "x": 1016.0,
+                    "y": 1592.0
+                },
+                "type": "OUTPUT_PORT",
+                "concurrentlySchedulableTaskCount": 1,
+                "scheduledState": "ENABLED",
+                "allowRemoteAccess": false,
+                "componentType": "OUTPUT_PORT",
+                "groupIdentifier": "a99a893b-91d1-3a21-becb-cbef0be36a72"
+            }
+        ],
+        "connections": [
+            {
+                "identifier": "e869d122-2960-327f-8f9e-64c91c476f63",
+                "instanceIdentifier": "46b3382a-7cf0-3ab3-2b1c-4e48c01fced9",
+                "name": "",
+                "source": {
+                    "id": "90cd752c-8a53-32b3-830e-251d2340e7b8",
+                    "type": "PROCESSOR",
+                    "groupId": "a99a893b-91d1-3a21-becb-cbef0be36a72",
+                    "name": "Python Embedding Generator",
+                    "comments": "",
+                    "instanceIdentifier": "756a049b-c1b8-3702-9745-702eaffad14e"
+                },
+                "destination": {
+                    "id": "a83510af-9b74-3182-886c-e964bc190fb4",
+                    "type": "OUTPUT_PORT",
+                    "groupId": "a99a893b-91d1-3a21-becb-cbef0be36a72",
+                    "name": "Failures",
+                    "comments": "",
+                    "instanceIdentifier": "53b331e7-abf5-3edc-1adc-43c56ec5541b"
+                },
+                "labelIndex": 1,
+                "zIndex": 0,
+                "selectedRelationships": [
+                    "failure"
+                ],
+                "backPressureObjectThreshold": 10000,
+                "backPressureDataSizeThreshold": "1 GB",
+                "flowFileExpiration": "0 sec",
+                "prioritizers": [],
+                "bends": [],
+                "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+                "partitioningAttribute": "",
+                "loadBalanceCompression": "DO_NOT_COMPRESS",
+                "componentType": "CONNECTION",
+                "groupIdentifier": "a99a893b-91d1-3a21-becb-cbef0be36a72"
+            },
+            {
+                "identifier": "35e3fb76-791d-34e4-b8e4-22c2036ff6f9",
+                "instanceIdentifier": "b30d873f-39ee-3612-0f8d-3366dbb3d69c",
+                "name": "",
+                "source": {
+                    "id": "397c89ae-5b03-353c-ad3f-f4a16ee5a068",
+                    "type": "INPUT_PORT",
+                    "groupId": "a99a893b-91d1-3a21-becb-cbef0be36a72",
+                    "name": "Input",
+                    "comments": "",
+                    "instanceIdentifier": "2176a1cc-55c4-3c84-00e7-31e93df338d1"
+                },
+                "destination": {
+                    "id": "90cd752c-8a53-32b3-830e-251d2340e7b8",
+                    "type": "PROCESSOR",
+                    "groupId": "a99a893b-91d1-3a21-becb-cbef0be36a72",
+                    "name": "Python Embedding Generator",
+                    "comments": "",
+                    "instanceIdentifier": "756a049b-c1b8-3702-9745-702eaffad14e"
+                },
+                "labelIndex": 1,
+                "zIndex": 0,
+                "selectedRelationships": [
+                    ""
+                ],
+                "backPressureObjectThreshold": 10000,
+                "backPressureDataSizeThreshold": "1 GB",
+                "flowFileExpiration": "0 sec",
+                "prioritizers": [],
+                "bends": [],
+                "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+                "partitioningAttribute": "",
+                "loadBalanceCompression": "DO_NOT_COMPRESS",
+                "componentType": "CONNECTION",
+                "groupIdentifier": "a99a893b-91d1-3a21-becb-cbef0be36a72"
+            },
+            {
+                "identifier": "bce2a21d-32a0-31c9-939f-6ec3d2d37624",
+                "instanceIdentifier": "6a6b55c8-5a1c-3e17-30f3-a3c81e6ec721",
+                "name": "",
+                "source": {
+                    "id": "90cd752c-8a53-32b3-830e-251d2340e7b8",
+                    "type": "PROCESSOR",
+                    "groupId": "a99a893b-91d1-3a21-becb-cbef0be36a72",
+                    "name": "Python Embedding Generator",
+                    "comments": "",
+                    "instanceIdentifier": "756a049b-c1b8-3702-9745-702eaffad14e"
+                },
+                "destination": {
+                    "id": "fe31c91b-4ba4-3851-89cb-87a6c84fd3b0",
+                    "type": "OUTPUT_PORT",
+                    "groupId": "a99a893b-91d1-3a21-becb-cbef0be36a72",
+                    "name": "Response",
+                    "comments": "",
+                    "instanceIdentifier": "038dcbc1-bf7a-3c42-6cf6-1c07a540481b"
+                },
+                "labelIndex": 1,
+                "zIndex": 0,
+                "selectedRelationships": [
+                    "success",
+                    "returned"
+                ],
+                "backPressureObjectThreshold": 10000,
+                "backPressureDataSizeThreshold": "1 GB",
+                "flowFileExpiration": "0 sec",
+                "prioritizers": [],
+                "bends": [],
+                "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
+                "partitioningAttribute": "",
+                "loadBalanceCompression": "DO_NOT_COMPRESS",
+                "componentType": "CONNECTION",
+                "groupIdentifier": "a99a893b-91d1-3a21-becb-cbef0be36a72"
+            }
+        ],
+        "labels": [],
+        "funnels": [],
+        "controllerServices": [
+            {
+                "identifier": "bf668a20-6d34-34ee-a37d-2c1b99d21cbe",
+                "instanceIdentifier": "4f198ee5-0190-1000-2325-cb16718ced39",
+                "name": "IdolPythonServiceImpl",
+                "comments": "",
+                "type": "idol.nifi.service.IdolPythonServiceImpl",
+                "bundle": {
+                    "group": "idol.nifi",
+                    "artifact": "idol-nifi-framework",
+                    "version": "24.3.0"
+                },
+                "properties": {},
+                "propertyDescriptors": {
+                    "ResourcesDirectory": {
+                        "name": "ResourcesDirectory",
+                        "displayName": "ResourcesDirectory",
+                        "identifiesControllerService": false,
+                        "sensitive": true
+                    }
+                },
+                "controllerServiceApis": [],
+                "scheduledState": "DISABLED",
+                "bulletinLevel": "WARN",
+                "componentType": "CONTROLLER_SERVICE",
+                "groupIdentifier": "a99a893b-91d1-3a21-becb-cbef0be36a72"
+            }
+        ],
+        "variables": {},
+        "defaultFlowFileExpiration": "0 sec",
+        "defaultBackPressureObjectThreshold": 10000,
+        "defaultBackPressureDataSizeThreshold": "1 GB",
+        "logFileSuffix": "",
+        "flowFileConcurrency": "UNBOUNDED",
+        "flowFileOutboundPolicy": "STREAM_WHEN_AVAILABLE",
+        "componentType": "PROCESS_GROUP"
+    },
+    "externalControllerServices": {
+        "9f64332c-8d01-3949-bf85-d80a3513e14f": {
+            "identifier": "9f64332c-8d01-3949-bf85-d80a3513e14f",
+            "name": "IdolLicenseServiceImpl"
+        }
+    },
+    "parameterContexts": {},
+    "flowEncodingVersion": "1.0",
+    "parameterProviders": {},
+    "latest": false
+}

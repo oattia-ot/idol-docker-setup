@@ -1,0 +1,27 @@
+version: '3.8'
+name: ${IDOL_DEPLOYMENT_TYPE:-idol-demo}
+
+services:
+  licenseserver:
+    hostname: licenseserver
+    mac_address: MAC-ADDRESS-PLACEHOLDER
+    container_name: licenseserver
+    build:
+      context: ./
+      dockerfile: dockerfile
+    image: licenseserver:latest
+    volumes:
+      - ./LICENSE-SERVER-NAME-PLACEHOLDER:/LICENSE-SERVER-NAME-PLACEHOLDER
+      - ./start-licenseserver.sh:/LICENSE-SERVER-NAME-PLACEHOLDER/start-licenseserver.sh
+      - PRESERVE-LICENSESERVER-CFG-PATH-PLACEHOLDER/idol.common.cfg:/LICENSE-SERVER-NAME-PLACEHOLDER/idol.common.cfg  
+      - PRESERVE-LICENSESERVER-CFG-PATH-PLACEHOLDER/licenseserver.cfg:/LICENSE-SERVER-NAME-PLACEHOLDER/licenseserver.cfg    
+      - ./ssl/intermediate:/ssl
+    ports:
+      - 20000:20000
+      - 20002:20002      
+    networks:
+      - DEPLOYMENT-TYPE-PLACEHOLDER  
+
+networks:
+  DEPLOYMENT-TYPE-PLACEHOLDER:
+    external: true                   
