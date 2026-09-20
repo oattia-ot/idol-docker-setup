@@ -1,0 +1,8 @@
+[StopPhrases]
+# Custom stop phrases for Query Summary (qssp.db)
+# One phrase per line. Use %20 for spaces. Prefix with * to match anywhere in the phrase.
+שם המאשר
+מס הוראה
+ם הוראת תכ
+ם פרק ראשי
+ם הוראת תכ

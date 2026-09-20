@@ -1,0 +1,13 @@
+<insertXML>
+	<insert>
+	<!-- refer to connector documentation for example -->
+		<reference>REPLACE_ME_WITH_CONNECTOR_REFERENCE</reference>
+		<property name="PATH" value="/REPLACE_ME_WITH_DESTINATION_PATH"/>
+		<file>
+			<!-- can also use <type>content</type> with <content>BASE64_ENCODED_FILE_DATA</content>
+			<!-- refer to connector documentation fetchAction=insert for more details -->
+			<type>file</file>
+			<content>REPLACE_WITH_SOURCE_PATH</content>
+		</file>
+	</insert>
+</insertXML>

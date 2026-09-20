@@ -1,0 +1,150 @@
+{
+  "initial_task": "GREET",
+  "fallback_task": "FALLBACK",
+  "lua_script": "./conversation/longmemory/long_handlers.lua",
+  "trigger_options": {
+    "max_triggers": 4,
+    "weight_range": 40
+  },
+  "default_messages": {
+    "invalid_input": "I did not understand that. Ask a question about your documents, or say goodbye to end the session.",
+    "ambiguous_input": {
+      "message": "Which of the following did you mean: [[ITEMS]]?",
+      "item_separator": ", ",
+      "last_separator": ", or "
+    }
+  },
+  "tasks": [
+    {
+      "id": "GREET",
+      "pre": {
+        "response": "Hello. I can answer from your curated FAQ (AnswerBank), retrieved documents (RAG), or Grok. What would you like to know?"
+      }
+    },
+    {
+      "id": "FALLBACK",
+      "display_id": "ask a knowledge question",
+      "pre": {
+        "lua": "ask_answer_server"
+      },
+      "post": {
+        "routing": "FALLBACK"
+      }
+    },
+    {
+      "id": "ASK_ANSWERBANK",
+      "display_id": "search the FAQ",
+      "trigger": {
+        "simple_match": {
+          "phrases": [
+            "faq",
+            "official answer",
+            "known answer",
+            "from the answer bank",
+            "from answerbank"
+          ],
+          "case_insensitive": true
+        },
+        "weight": 80
+      },
+      "pre": {
+        "lua": "ask_answerbank"
+      },
+      "post": {
+        "routing": "FALLBACK"
+      }
+    },
+    {
+      "id": "ASK_RAG",
+      "display_id": "search the documents",
+      "trigger": {
+        "simple_match": {
+          "phrases": [
+            "from the documents",
+            "from the knowledge base",
+            "search the index",
+            "use rag",
+            "from rag"
+          ],
+          "case_insensitive": true
+        },
+        "weight": 80
+      },
+      "pre": {
+        "lua": "ask_rag"
+      },
+      "post": {
+        "routing": "FALLBACK"
+      }
+    },
+    {
+      "id": "ASK_GROK",
+      "display_id": "ask Grok",
+      "trigger": {
+        "simple_match": {
+          "phrases": [
+            "ask grok",
+            "use grok",
+            "from grok"
+          ],
+          "case_insensitive": true
+        },
+        "weight": 80
+      },
+      "pre": {
+        "lua": "ask_grok"
+      },
+      "post": {
+        "routing": "FALLBACK"
+      }
+    },
+    {
+      "id": "RESET_MEMORY",
+      "display_id": "forget this conversation",
+      "trigger": {
+        "simple_match": {
+          "phrases": [
+            "forget that",
+            "reset memory",
+            "clear history",
+            "start over",
+            "new topic"
+          ],
+          "case_insensitive": true
+        },
+        "weight": 90
+      },
+      "pre": {
+        "lua": "reset_memory",
+        "response": "Conversation memory has been cleared. Ask a new question."
+      },
+      "post": {
+        "routing": "FALLBACK"
+      }
+    },
+    {
+      "id": "GOODBYE",
+      "display_id": "end the conversation",
+      "trigger": {
+        "simple_match": {
+          "phrases": [
+            "bye",
+            "goodbye",
+            "exit",
+            "quit",
+            "that's all",
+            "thats all",
+            "thank you",
+            "thanks",
+            "end session"
+          ],
+          "case_insensitive": true
+        },
+        "weight": 95
+      },
+      "pre": {
+        "response": "Goodbye. This session will expire after idle timeout."
+      }
+    }
+  ]
+}

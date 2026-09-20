@@ -1,0 +1,121 @@
+# BEGIN COPYRIGHT NOTICE
+# Copyright 2023 Open Text.
+# 
+# The only warranties for products and services of Open Text and its affiliates and licensors
+# ("Open Text") are as may be set forth in the express warranty statements accompanying such
+# products and services. Nothing herein should be construed as constituting an additional warranty.
+# Open Text shall not be liable for technical or editorial errors or omissions contained herein.
+# The information contained herein is subject to change without notice.
+#
+# END COPYRIGHT NOTICE
+{{- define "idolnifi.nifi.ingress-metrics" }}
+{{ $root := get . "root" | required "idolnifi.nifi.ingress-metrics: missing nifiCluster" }}
+{{ $nifiCluster := get . "nifiCluster" | required "idolnifi.nifi.ingress-metrics: missing nifiCluster" }}
+{{ $nifiClustersLen := get . "nifiClustersLen" | required "idolniif.nifi.ingress-metrics: missing nifiClustersLen" }}
+{{- if and $root.Values.prometheus.enabled $nifiCluster.ingress.enabled }}
+{{- /*
+ nginx ingress needs path capture to achieve prefix type routing
+*/}}
+{{- $pathSuffix := "" }}
+{{- $pathType := "Prefix" }}
+{{- if eq $root.Values.ingressType "nginx" }}
+{{- $pathSuffix = "(.*)"}}
+{{- $pathType = "ImplementationSpecific" }}
+{{- end }}
+---
+{{- if eq $root.Values.ingressType "gateway" }}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ $nifiCluster.clusterId }}-metrics
+  labels: {{- include "idol-library.labels" (dict "root" $root "component" $nifiCluster) | nindent 4 }}
+spec:
+  parentRefs:
+  - name: {{ $nifiCluster.ingress.gateway.name | required "Must specify ingress.gateway.name, having set ingressType=gateway" }}
+  {{- if $nifiCluster.ingress.gateway.namespace }}
+    namespace: {{ $nifiCluster.ingress.gateway.namespace }}
+  {{- end }}
+  hostnames: [{{ $nifiCluster.ingress.host }}]
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value:  {{ print ($nifiClustersLen | plural "" (print "/" $nifiCluster.clusterId)) "/metrics/" | quote }}
+    backendRefs:
+    - name: {{ $nifiCluster.clusterId }}
+      port: 9092
+    filters:
+    - type: RequestHeaderModifier
+      requestHeaderModifier:
+        add:
+        - name: X-Forwarded-Prefix
+          value: {{ print ($nifiClustersLen | plural "" (print "/" $nifiCluster.clusterId)) "/metrics/" }}
+        - name: X-Forwarded-Proto
+          value: {{ ternary "https" "http" (eq $nifiCluster.ingress.gateway.protocol "https") }}
+        - name: X-Forwarded-Host
+          value: {{ $nifiCluster.ingress.host }}
+        - name: X-Forwarded-Port
+          value: {{ $nifiCluster.ingress.port | quote }}
+    {{- if (or $nifiCluster.ingress.gateway.requestTimeout $nifiCluster.ingress.gateway.backendTimeout) }}
+    timeouts:
+      {{- if $nifiCluster.ingress.gateway.requestTimeout }}
+      request: {{ $nifiCluster.ingress.gateway.requestTimeout }}
+      {{- end -}}
+      {{- if $nifiCluster.ingress.gateway.backendTimeout }}
+      backendRequest: {{ $nifiCluster.ingress.gateway.backendTimeout }}
+      {{- end -}}
+    {{- end -}}
+{{- else }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $nifiCluster.clusterId }}-metrics
+  labels: {{- include "idol-library.labels" (dict "root" $root "component" $nifiCluster) | nindent 4 }}
+  annotations:
+    app.kubernetes.io/name: nifi-metrics
+    app.kubernetes.io/part-of: {{ $nifiCluster.clusterId }}
+{{- if eq $root.Values.ingressType "nginx" }}
+    nginx.ingress.kubernetes.io/rewrite-target: /metrics$1
+    nginx.ingress.kubernetes.io/proxy-body-size: {{ $root.Values.ingressProxyBodySize }}
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+{{- else if eq $root.Values.ingressType "haproxy" }}
+    haproxy.router.openshift.io/rewrite-target: /metrics
+    haproxy.router.openshift.io/proxy-body-size: {{ $root.Values.ingressProxyBodySize }}
+{{- end }}
+{{/* ingress setup is very dependent on cluster ingress controller so allow user value annotations */ -}}
+{{ with $nifiCluster.ingress.annotations }}
+{{- toYaml . | trim | indent 4 }}
+{{- end }}
+spec:
+{{- if $root.Values.ingressClassName }}
+  ingressClassName: {{ $root.Values.ingressClassName | quote }}
+{{- end }}
+{{- if $nifiCluster.ingress.metricsTLS.secretName }}
+  tls:
+  - hosts:
+      - {{ $nifiCluster.ingress.host }}
+    secretName: {{ $nifiCluster.ingress.metricsTLS.secretName }}
+{{- end }}
+  rules:
+  - http:
+      paths:
+      - path: {{ print ($nifiClustersLen | plural "" (print "/" $nifiCluster.clusterId)) "/metrics/" $pathSuffix | quote }}
+        pathType: {{ $pathType }}
+        backend:
+          service:
+            name: {{ $nifiCluster.clusterId }}
+            port:
+              name: metrics
+{{- if $nifiCluster.ingress.metricsHost }}
+    host: {{ $nifiCluster.ingress.metricsHost | quote }}
+{{- end }}
+{{ if $nifiCluster.ingress.metricsTLS.secretName -}}
+---
+{{ include "idol-library.ingress.secret" (dict "tls" $nifiCluster.ingress.metricsTLS) -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- include "idolnifi.forEachCluster" (dict "root" . "tpl" "idolnifi.nifi.ingress-metrics") }}

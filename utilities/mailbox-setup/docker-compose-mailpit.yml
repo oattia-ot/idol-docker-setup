@@ -1,0 +1,116 @@
+# =============================================================================
+# Docker Compose for Mailpit - Email Testing Server with REST API
+# =============================================================================
+#
+# Purpose:
+#   Lightweight, developer-friendly email server for testing.
+#   - Captures all emails sent via SMTP (no real delivery)
+#   - Modern web UI for viewing emails and attachments
+#   - Full REST API for automation and integration testing
+#   - Perfect for the OpenText Knowledge Discovery PoC email simulation
+#
+# Quick Start:
+#   docker compose -f docker-compose-mailpit.yml up -d
+#
+# Access:
+#   Web UI + Interactive API docs:  http://localhost:8025
+#   SMTP Server (for sending test emails): localhost:1025
+#
+# API Examples (run these after starting):
+#
+#   # List all captured messages (JSON)
+#   curl -s http://localhost:8025/api/v1/messages | jq
+#
+#   # Search messages (supports advanced filters)
+#   curl -s "http://localhost:8025/api/v1/search?query=from:example.com subject:invoice" | jq
+#
+#   # Get details of a specific message (replace {ID} with real ID from above)
+#   curl -s http://localhost:8025/api/v1/message/{ID} | jq
+#
+#   # Delete all messages
+#   curl -X DELETE http://localhost:8025/api/v1/messages
+#
+#   # Send a test email via HTTP API (v1.26+)
+#   curl -X POST http://localhost:8025/api/v1/send \
+#     -H "Content-Type: application/json" \
+#     -d '{
+#       "from": "test@example.com",
+#       "to": ["recipient@example.com"],
+#       "subject": "Test via API",
+#       "html": "<p>Hello from Mailpit API!</p>"
+#     }'
+#
+#   # Real-time updates via WebSocket (advanced)
+#   # wscat -c ws://localhost:8025/ws
+#
+# Sending test emails via SMTP (examples):
+#   - Use any email client pointed at localhost:1025 (no auth by default in this config)
+#   - Or use swaks: swaks --to test@local --from sender@local --server localhost:1025
+#   - Or Python:
+#       python -c "
+#       import smtplib
+#       from email.mime.text import MIMEText
+#       msg = MIMEText('Test body')
+#       msg['Subject'] = 'Hello from Python'
+#       msg['From'] = 'sender@example.com'
+#       msg['To'] = 'recipient@example.com'
+#       with smtplib.SMTP('localhost', 1025) as s:
+#           s.send_message(msg)
+#       print('Email sent!')
+#       "
+#
+# Useful Environment Variables (see https://mailpit.axllent.org/docs/configuration/):
+#   MP_MAX_MESSAGES=5000          # Max messages to keep in memory/db
+#   MP_DATABASE=/data/mailpit.db  # Persistent storage location
+#   MP_SMTP_AUTH_ACCEPT_ANY=1     # Accept any username/password (great for testing)
+#   MP_SMTP_AUTH_ALLOW_INSECURE=1 # Allow plaintext auth (testing only)
+#
+# =============================================================================
+
+version: '3.8'
+
+services:
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: mailpit-test-server
+    restart: unless-stopped
+
+    ports:
+      # Web UI + REST API (and interactive docs at /api/v1/)
+      - "8025:8025"
+      # SMTP port for receiving test emails
+      - "1025:1025"
+
+    environment:
+      # Recommended for development/testing
+      MP_MAX_MESSAGES: 5000
+      MP_DATABASE: /data/mailpit.db
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+      # Optional: Enable verbose logging
+      # MP_VERBOSE: 1
+
+    volumes:
+      # Persistent storage for messages and database
+      - mailpit-data:/data
+
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:8025/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+    # Optional: resource limits for PoC/testing environments
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+
+volumes:
+  mailpit-data:
+    driver: local

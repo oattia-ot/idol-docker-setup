@@ -1,0 +1,101 @@
+###
+# Copyright (c) 2019-2020 Micro Focus or one of its affiliates.
+#
+# Licensed under the MIT License (the "License"); you may not use this file
+# except in compliance with the License.
+#
+# The only warranties for products and services of Micro Focus and its affiliates
+# and licensors ("Micro Focus") are as may be set forth in the express warranty
+# statements accompanying such products and services. Nothing herein should be
+# construed as constituting an additional warranty. Micro Focus shall not be
+# liable for technical or editorial errors or omissions contained herein. The
+# information contained herein is subject to change without notice.
+###
+
+# This is designed to be used atop of docker-compose.yml
+# Therefore the incantation to use this is something like
+# docker-compose -f docker-compose.yml -f docker-compose.ssl.yml up 
+
+version: "3.8"
+name: ${IDOL_DEPLOYMENT_TYPE:-idol-demo}
+
+# bind mount holding certificates
+x-ssl-volume: &ssl-volume
+  type: bind
+  source: ./ssl/intermediate
+  target: /ssl
+
+services:
+  idol-nifi:
+    environment:
+      - USE_SSL=true
+    volumes:
+      - ./nifi/flow/basic.ssl.xml:/opt/nifi/flow/this_flow.xml:ro # this controls which NiFi flow is used
+      - *ssl-volume
+  idol-content:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-content-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-content.key.pem  
+    volumes:
+      - *ssl-volume
+  idol-agentstore:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-agentstore-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-agentstore.key.pem    
+    volumes:
+      - *ssl-volume
+  idol-category:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-category-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-category.key.pem       
+    volumes:
+      - *ssl-volume      
+  idol-categorisation-agentstore:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-categorisation-agentstore-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-categorisation-agentstore.key.pem       
+    volumes:
+      - *ssl-volume
+  idol-community:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-community-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-community.key.pem       
+    volumes:
+      - *ssl-volume
+  idol-view:
+    env_file:
+      - idol_ssl.env  
+    environment:
+      - IDOL_SSL_COMPONENT_CERT_PATH=/ssl/certs/idol-view-fullchain.cert.pem
+      - IDOL_SSL_COMPONENT_KEY_PATH=/ssl/certs/idol-view.key.pem
+    volumes:
+      - *ssl-volume
+  idol-find:
+    env_file:
+      - idol_ssl.env
+    environment:
+      - IDOL_UI_CFG=config_ssl.json
+      - IDOL_UI_STARTUP_SCRIPT=ui_start_ssl.sh
+      # PKCS12 cert for Find's Tomcat SSL listener
+      - IDOL_UI_SSL_PKCS_FILE=/ssl/certs/idol-find.pkcs12
+      - IDOL_UI_SSL_PKCS_PASS=${IDOL_CERT_KEYSTORE_PASS}
+      # Intermediate CA PKCS12 (imported into Find's truststore)
+      - IDOL_UI_SSL_CA_PKCS12=/ssl/certs/intermediate.pkcs12
+      - IDOL_UI_SSL_CA_PASS=${IDOL_CERT_KEYSTORE_PASS}
+      # Root CA cert (also imported into truststore)
+      - IDOL_UI_ROOT_CERTIFICATE=/ssl/certs/ca.cert.pem         
+    depends_on:
+      - idol-community
+      - idol-view
+    volumes:
+      - *ssl-volume
