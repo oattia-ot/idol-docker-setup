@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Idol Monitoring • Detailed View</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --border: #334155;
+      --text: #e2e8f0;
+      --primary: #3b82f6;
+      --success: #10b981;
+      --warning: #f59e0b;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .header .icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: white;
+    }
+    h1 { margin: 0; font-size: 2.25rem; }
+    .subtitle { color: #94a3b8; font-size: 1.1rem; margin-top: 0.25rem; }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--primary);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn:hover { background: #1d4ed8; transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+    .status-available { background: rgba(16,185,129,.15); color: var(--success); border: 1px solid rgba(16,185,129,.3); }
+    .status-unavailable { background: rgba(245,158,11,.15); color: var(--warning); border: 1px solid rgba(245,158,11,.3); }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .feature {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+    .feature h4 { margin: 0 0 0.5rem; font-size: 1rem; }
+    .feature p { margin: 0; font-size: 0.9rem; color: #94a3b8; }
+
+    .footer-note {
+      font-size: 0.85rem;
+      color: #64748b;
+      text-align: center;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="icon"><i class="fas fa-chart-line"></i></div>
+      <div>
+        <h1>Idol Monitoring</h1>
+        <div class="subtitle">Detailed observability dashboard for your IDOL deployment</div>
+      </div>
+      <div style="margin-left:auto; text-align:right;">
+        <div id="page-status" class="status-pill status-available">
+          <i class="fas fa-check-circle"></i> <span>Available</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="section-title"><i class="fas fa-info-circle" style="color:#3b82f6"></i> Overview</h2>
+      <p style="max-width:720px; color:#cbd5e1;">
+        This dedicated view provides deep visibility into your IDOL Docker services, container health, 
+        metrics, logs, and infrastructure status. It aggregates data from the full monitoring stack 
+        (Prometheus, Grafana, Loki, cAdvisor, Dozzle, Yacht, Dockge, and the custom Config Monitor).
+      </p>
+
+      <div style="margin-top:1.75rem;">
+        <button id="btn-open-live" class="btn" style="display:none;">
+          <i class="fas fa-external-link-alt"></i> Open Live Monitor Dashboard
+        </button>
+        <a href="index.html" class="btn btn-secondary" style="margin-left:0.75rem;">
+          <i class="fas fa-arrow-left"></i> Back to Main Dashboard
+        </a>
+      </div>
+
+      <div id="cli-fallback" style="display:none; margin-top:1.5rem; background:#0f172a; border:1px solid var(--border); border-radius:12px; padding:1.25rem;">
+        <h4 style="margin:0 0 0.5rem; color:#fbbf24;"><i class="fas fa-terminal"></i> Live monitor is not running</h4>
+        <p style="margin:0 0 0.75rem; color:#94a3b8; font-size:0.9rem;">
+          The dashboard at <span style="font-family:monospace;">localhost:5011</span> isn't reachable yet. Start the monitor-ui service with:
+        </p>
+        <pre style="background:#020617; border:1px solid #1e293b; border-radius:8px; padding:0.9rem; overflow-x:auto; margin:0;"><code style="font-family:monospace; color:#e2e8f0;">cd idol-docker-setup/idol-monitoring
+./monitor.sh start monitor-ui</code></pre>
+        <p style="margin:0.75rem 0 0; color:#64748b; font-size:0.85rem;">
+          Then refresh this page, or wait for the automatic 60s recheck, to enable the live dashboard button.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="section-title"><i class="fas fa-cogs"></i> Key Capabilities</h2>
+      <div class="feature-grid">
+        <div class="feature">
+          <h4><i class="fas fa-heartbeat" style="color:#10b981"></i> Real-time Health</h4>
+          <p>Live CPU, memory, uptime and Docker status for every idol-* container.</p>
+        </div>
+        <div class="feature">
+          <h4><i class="fas fa-chart-bar" style="color:#3b82f6"></i> Metrics &amp; Dashboards</h4>
+          <p>Grafana + Prometheus for historical trends and custom alerting.</p>
+        </div>
+        <div class="feature">
+          <h4><i class="fas fa-file-alt" style="color:#f59e0b"></i> Centralized Logging</h4>
+          <p>Dozzle, Loki + Promtail for structured log search across all services.</p>
+        </div>
+        <div class="feature">
+          <h4><i class="fas fa-layer-group" style="color:#8b5cf6"></i> Container Management</h4>
+          <p>Yacht &amp; Dockge for visual Docker Compose and stack management.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      Idol Monitoring • Powered by the IDOL Docker Setup Toolkit • 
+      <span style="font-family:monospace;">localhost:5011</span> is the primary live endpoint
+    </div>
+  </div>
+
+  <script type="module">
+    import { isPageAccessible } from '../static/js/core/accessibility-check.js';
+    import { createToaster } from '../static/js/core/ui/toast/toast.js';
+
+    const toast = createToaster('toastWrap'); // reuse existing toast container if present, or create one
+    if (!document.getElementById('toastWrap')) {
+      const t = document.createElement('div');
+      t.id = 'toastWrap';
+      t.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:99999;';
+      document.body.appendChild(t);
+    }
+
+    // Check status of the live monitor on load
+    async function updatePageStatus() {
+      const statusEl = document.getElementById('page-status');
+      const btnEl = document.getElementById('btn-open-live');
+      const cliEl = document.getElementById('cli-fallback');
+      const liveUrl = 'http://localhost:5011';
+
+      const accessible = await isPageAccessible(liveUrl);
+      if (accessible) {
+        statusEl.className = 'status-pill status-available';
+        statusEl.innerHTML = `<i class="fas fa-check-circle"></i> <span>Live endpoint reachable</span>`;
+        btnEl.style.display = 'inline-flex';
+        cliEl.style.display = 'none';
+      } else {
+        statusEl.className = 'status-pill status-unavailable';
+        statusEl.innerHTML = `<i class="fas fa-exclamation-triangle"></i> <span>Live endpoint unreachable</span>`;
+        btnEl.style.display = 'none';
+        cliEl.style.display = 'block';
+      }
+    }
+
+    // Primary action with accessibility guard
+    document.getElementById('btn-open-live').addEventListener('click', async () => {
+      const liveUrl = 'http://localhost:5011';
+      const accessible = await isPageAccessible(liveUrl);
+
+      if (!accessible) {
+        const msg = '⚠️ Idol Monitoring Live Dashboard is currently unavailable.<br>The page could not be reached. It may be temporarily down or the monitoring stack is not running.';
+        // Simple accessible alert (or use existing toast system)
+        const alertBox = document.createElement('div');
+        alertBox.style.cssText = 'position:fixed;inset:0;background:rgba(15,23,42,.85);display:flex;align-items:center;justify-content:center;z-index:999999;';
+        alertBox.innerHTML = `
+          <div style="background:#1e293b;border:1px solid #334155;border-radius:12px;max-width:420px;padding:1.5rem;text-align:center;">
+            <div style="font-size:1.1rem;margin-bottom:1rem;color:#fbbf24;"><i class="fas fa-exclamation-triangle"></i> Service Unavailable</div>
+            <div style="color:#e2e8f0;margin-bottom:1.5rem;">${msg}</div>
+            <button id="close-alert" style="padding:0.6rem 1.5rem;border-radius:8px;border:1px solid #334155;background:transparent;color:#e2e8f0;cursor:pointer;">Close</button>
+          </div>
+        `;
+        document.body.appendChild(alertBox);
+        alertBox.querySelector('#close-alert').onclick = () => alertBox.remove();
+        alertBox.onclick = (e) => { if (e.target === alertBox) alertBox.remove(); };
+        return;
+      }
+
+      // Success → open in new tab (consistent with other monitoring tools)
+      window.open(liveUrl, '_blank', 'noopener');
+    });
+
+    // Boot
+    updatePageStatus();
+    // Optional: re-check every 60s
+    setInterval(updatePageStatus, 60000);
+
+    console.log('%c[Idol Monitoring] Detailed page initialized with accessibility guard', 'color:#64748b');
+  </script>
+</body>
+</html>
